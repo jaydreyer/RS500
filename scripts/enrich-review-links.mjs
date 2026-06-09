@@ -10,6 +10,8 @@ const USER_AGENT = "Spin500Reviews/0.1 (https://github.com/jaydreyer/RS500)"
 const REQUEST_TIMEOUT_MS = 12000
 const MUSICBRAINZ_DELAY_MS = 1100
 const MAX_REVIEW_LINKS = 8
+const ROLLING_STONE_500_URL =
+  "https://au.rollingstone.com/music/music-lists/best-albums-of-all-time-32520/"
 
 const SOURCE_LABELS = new Map([
   ["allmusic.com", "AllMusic"],
@@ -81,7 +83,7 @@ function printHelp() {
   node scripts/enrich-review-links.mjs --dry-run --limit 20
   node scripts/enrich-review-links.mjs --force --start-rank 1 --end-rank 100
 
-Review links are sourced from MusicBrainz release-group URL relationships.
+Review links are sourced from Rolling Stone 500 list anchors and MusicBrainz release-group URL relationships.
 MusicBrainz requires a meaningful User-Agent and at most one request per second.
 
 Options:
@@ -224,26 +226,46 @@ function normalizeReviewLinks(relations) {
 }
 
 function getLinkPriority(link) {
+  if (link.source === "Rolling Stone 500") {
+    return -10
+  }
+
   const sourceIndex = SOURCE_PRIORITY.indexOf(link.source)
   const sourcePriority = sourceIndex === -1 ? SOURCE_PRIORITY.length : sourceIndex
   return sourcePriority * 10 + (link.kind === "review" ? 0 : 1)
 }
 
+function buildRollingStone500Link(album) {
+  const page = Math.floor((500 - album.rank) / 50) + 1
+  const url =
+    page === 1
+      ? `${ROLLING_STONE_500_URL}#list-item-${album.rank}`
+      : `${ROLLING_STONE_500_URL}?list_page=${page}#list-item-${album.rank}`
+
+  return {
+    source: "Rolling Stone 500",
+    url,
+    kind: "list",
+  }
+}
+
 async function fetchReviewLinks(album) {
   const releaseGroupId = getMusicBrainzReleaseGroupId(album)
   if (!releaseGroupId) {
-    return []
+    return [buildRollingStone500Link(album)]
   }
 
   const url = `https://musicbrainz.org/ws/2/release-group/${releaseGroupId}?inc=url-rels&fmt=json`
   const releaseGroup = await fetchJson(url)
-  return normalizeReviewLinks(releaseGroup.relations)
+  return [buildRollingStone500Link(album), ...normalizeReviewLinks(releaseGroup.relations)]
+    .sort((left, right) => getLinkPriority(left) - getLinkPriority(right))
+    .slice(0, MAX_REVIEW_LINKS)
 }
 
 async function writeDataFiles(data) {
   data.source.generatedAt = new Date().toISOString()
   data.source.reviewLinks =
-    "MusicBrainz release-group URL relationships with review/reference sources"
+    "Rolling Stone Australia 500 list anchors plus MusicBrainz release-group URL relationships with review/reference sources"
 
   await fs.writeFile(DATA_JSON, `${JSON.stringify(data, null, 2)}\n`)
 
