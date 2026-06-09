@@ -254,15 +254,15 @@ a {
 
 .catalog-row {
   display: grid;
-  grid-template-columns: 56px 40px minmax(0, 1.5fr) minmax(0, 1fr) 60px 110px;
+  grid-template-columns: 56px 64px minmax(0, 1.5fr) minmax(0, 1fr) 60px 110px;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
 }
 
 @media (max-width: 640px) {
   .catalog-row {
-    grid-template-columns: 44px 40px minmax(0, 1fr) auto;
-    gap: 11px;
+    grid-template-columns: 40px 56px minmax(0, 1fr) auto;
+    gap: 10px;
   }
 
   .catalog-artist,

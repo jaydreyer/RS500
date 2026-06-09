@@ -54,14 +54,25 @@ export default async function AlbumDetailPage({
             title={detail.album.title}
             className="cover-lift relative w-full rounded-md"
           />
+          <div className="mt-3 grid grid-cols-2 border-y border-[var(--line-strong)] py-3">
+            <div>
+              <div className="tag">RS rank</div>
+              <div className="mono mt-1 text-2xl font-bold text-[var(--ink)]">
+                #{detail.album.rank}
+              </div>
+            </div>
+            <div className="border-l border-[var(--line-strong)] pl-4">
+              <div className="tag">Released</div>
+              <div className="mono mt-1 text-2xl font-bold text-[var(--ink)]">
+                {detail.album.year}
+              </div>
+            </div>
+          </div>
           <ServiceLinks
             spotifyUrl={detail.album.spotifyUrl}
             appleMusicUrl={detail.album.appleMusicUrl}
             className="mt-4"
           />
-          <p className="mono mt-3 text-center text-[11px] text-[var(--ink-faint)]">
-            RS rank #{detail.album.rank} / {detail.album.year}
-          </p>
         </div>
 
         <div className="min-w-0 py-1">

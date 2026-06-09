@@ -223,7 +223,7 @@ function CatalogRow({
         rank={album.rank}
         src={album.coverUrl}
         title={album.title}
-        className="cover-lift size-10 rounded-sm"
+        className="cover-lift size-14 rounded-sm sm:size-16"
       />
       <span className="min-w-0 text-left">
         <span className="block truncate font-display text-lg font-extrabold text-[var(--ink)] transition-colors group-hover:text-[var(--accent)]">
