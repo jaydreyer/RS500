@@ -108,7 +108,7 @@ Important Phase 1 context:
 
 Phase 2 goal:
 - Implement login.
-- Implement signup with server-side invite-code validation against CREW_INVITE_CODE.
+- Implement signup with server-side invite-code validation against `VINYL-NIGHT`.
 - Store/display display_name.
 - Add authenticated app layout and logout/session handling.
 - Ensure unauthenticated users only see the auth screen.

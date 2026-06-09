@@ -15,9 +15,10 @@ Required values:
 - `NEXT_PUBLIC_PB_URL`: PocketBase base URL, for example `http://127.0.0.1:8090` locally or the Cloudflare Tunnel URL in production.
 - `PB_ADMIN_EMAIL`: PocketBase superuser email for seed/admin scripts and trusted server-side invite signup.
 - `PB_ADMIN_PASSWORD`: PocketBase superuser password for seed/admin scripts and trusted server-side invite signup.
-- `CREW_INVITE_CODE`: Server-only shared crew invite code for Phase 2 signup.
 
-Do not expose `PB_ADMIN_EMAIL`, `PB_ADMIN_PASSWORD`, or `CREW_INVITE_CODE` to browser code.
+The shared signup code is `VINYL-NIGHT` and is validated by the Next.js server action before account creation.
+
+Do not expose `PB_ADMIN_EMAIL` or `PB_ADMIN_PASSWORD` to browser code.
 
 ## Migrations
 
@@ -32,7 +33,7 @@ Added Phase 1 migrations:
 
 Added Phase 2 migration:
 
-- `1781006404_lock_users_signup.js`: locks direct public `users` creation so signup can only happen through the Next.js trusted server action after `CREW_INVITE_CODE` validation. PocketBase superusers can still create users from the dashboard.
+- `1781006404_lock_users_signup.js`: locks direct public `users` creation so signup can only happen through the Next.js trusted server action after invite-code validation. PocketBase superusers can still create users from the dashboard.
 
 Run migrations from the PocketBase directory that contains or can see this app's `pb_migrations` folder. A local development example:
 
@@ -49,7 +50,7 @@ PocketBase API rule note: `null` rules are locked to superusers. Empty-string ru
 Phase 2 uses email/password auth against the PocketBase `users` collection:
 
 - Signup posts to a Next.js server action.
-- The server action validates `CREW_INVITE_CODE` before touching PocketBase.
+- The server action validates `VINYL-NIGHT` before touching PocketBase.
 - The server action authenticates as `_superusers`, creates the `users` record with `display_name`, then logs the new user in.
 - Login posts to a Next.js server action and calls `users.authWithPassword`.
 - The authenticated PocketBase token/record are stored in an HTTP-only `pb_auth` cookie.

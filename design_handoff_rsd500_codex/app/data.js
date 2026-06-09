@@ -142,7 +142,7 @@
   const CURRENT_WEEK = '2026-W23';
   const WEEKS = ['2026-W23','2026-W22','2026-W21','2026-W20','2026-W19'];
   const ME = 'u_you';
-  const INVITE_CODE = 'NEEDLE-DROP';
+  const INVITE_CODE = 'VINYL-NIGHT';
 
   window.RSD = {
     MEMBERS, ALBUMS, byId, LISTENS, REACTIONS,

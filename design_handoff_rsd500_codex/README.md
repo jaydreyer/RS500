@@ -156,7 +156,7 @@ Big cover, **Play on Spotify** button, RS rank/year, crew average + count, "who 
 | `app/app.jsx` | Root, routing, nav, demo realtime, tweaks |
 | `tweaks-panel.jsx` | Dev tweak-panel scaffold (not needed in prod) |
 
-**To view the prototype:** open `RSD 500 Randomizer.html` in a browser (needs internet for font/React CDNs). Sign up with invite code `NEEDLE-DROP`.
+**To view the prototype:** open `RSD 500 Randomizer.html` in a browser (needs internet for font/React CDNs). Sign up with invite code `VINYL-NIGHT`.
 
 ---
 

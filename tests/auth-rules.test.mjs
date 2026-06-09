@@ -1,18 +1,18 @@
 import assert from "node:assert/strict"
 import test from "node:test"
 
-import { validateSignupInput } from "../lib/auth-rules.ts"
+import { CREW_INVITE_CODE, validateSignupInput } from "../lib/auth-rules.ts"
 
 test("invite-code signup accepts the configured code case-insensitively", () => {
   assert.equal(
     validateSignupInput(
       {
-        inviteCode: " needle-drop ",
+        inviteCode: " vinyl-night ",
         displayName: "Mavis",
         email: "mavis@example.com",
         password: "correcthorse",
       },
-      "NEEDLE-DROP",
+      CREW_INVITE_CODE,
     ),
     null,
   )
@@ -27,7 +27,7 @@ test("invite-code signup rejects invalid codes before account creation", () => {
         email: "mavis@example.com",
         password: "correcthorse",
       },
-      "NEEDLE-DROP",
+      CREW_INVITE_CODE,
     ),
     "That invite code is not valid. Ask the crew.",
   )

@@ -61,7 +61,7 @@ function Auth({ onEnter }) {
 
             <div style={{ display: 'grid', gap: 12 }}>
               {mode === 'signup' && (
-                <Field label="Invite code" hint="try NEEDLE-DROP">
+                <Field label="Invite code" hint="try VINYL-NIGHT">
                   <input value={code} onChange={e => { setCode(e.target.value); setErr(null); }} placeholder="CREW-CODE"
                     style={{ ...inputStyle, fontFamily: 'var(--font-mono)', letterSpacing: '0.12em', textTransform: 'uppercase' }} />
                 </Field>

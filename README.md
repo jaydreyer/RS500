@@ -28,7 +28,8 @@ Required variables:
 - `NEXT_PUBLIC_PB_URL`: PocketBase URL, for example `http://127.0.0.1:8090`.
 - `PB_ADMIN_EMAIL`: PocketBase superuser email for migrations/import/signup.
 - `PB_ADMIN_PASSWORD`: PocketBase superuser password.
-- `CREW_INVITE_CODE`: server-only invite code required for signup.
+
+The shared signup code is `VINYL-NIGHT` and is validated server-side.
 
 Run PocketBase with this repo's migrations directory:
 
@@ -67,7 +68,7 @@ The tests cover invite-code validation, draw/rating rule helpers, stats threshol
 
 ## Deployment
 
-Deploy the Next.js app to Vercel with the same environment variables set in Vercel project settings. `NEXT_PUBLIC_PB_URL` should point at the owner's reachable PocketBase URL. Keep `PB_ADMIN_EMAIL`, `PB_ADMIN_PASSWORD`, and `CREW_INVITE_CODE` server-only.
+Deploy the Next.js app to Vercel with the same environment variables set in Vercel project settings. `NEXT_PUBLIC_PB_URL` should point at the owner's reachable PocketBase URL. Keep `PB_ADMIN_EMAIL` and `PB_ADMIN_PASSWORD` server-only.
 
 Before production use:
 

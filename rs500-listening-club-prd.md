@@ -428,7 +428,7 @@ Environment variables:
 - `NEXT_PUBLIC_PB_URL`
 - `PB_ADMIN_EMAIL` for seed/admin scripts
 - `PB_ADMIN_PASSWORD` for seed/admin scripts
-- `CREW_INVITE_CODE`
+- Fixed shared signup code: `VINYL-NIGHT`
 
 ## 13. Implementation Phases
 
@@ -504,7 +504,7 @@ Design files to read:
 Build:
 
 - Implement login.
-- Implement signup with server-side invite-code validation against `CREW_INVITE_CODE`.
+- Implement signup with server-side invite-code validation against `VINYL-NIGHT`.
 - Store/display `display_name`.
 - Add authenticated app layout and logout/session handling.
 - Ensure unauthenticated users only see the auth screen.

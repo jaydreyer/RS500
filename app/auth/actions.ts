@@ -8,7 +8,7 @@ import {
   createSuperuserPocketBase,
   setAuthCookie,
 } from "@/lib/auth";
-import { validateSignupInput } from "@/lib/auth-rules";
+import { CREW_INVITE_CODE, validateSignupInput } from "@/lib/auth-rules";
 import { getSignupAlbumAssignment } from "@/lib/signup-album-assignment";
 import { getIsoWeekKey } from "@/lib/week";
 
@@ -134,7 +134,7 @@ function validateSignup({
       email,
       password,
     },
-    process.env.CREW_INVITE_CODE,
+    CREW_INVITE_CODE,
   );
 }
 

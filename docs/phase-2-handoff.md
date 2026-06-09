@@ -2,7 +2,7 @@
 
 ## What Was Built
 
-- Implemented invite-gated signup with server-side validation against `CREW_INVITE_CODE`.
+- Implemented invite-gated signup with server-side validation against `VINYL-NIGHT`.
 - Added PocketBase email/password login through Next.js server actions.
 - Added logout/session clearing through a server action.
 - Stored authenticated PocketBase session data in an HTTP-only `pb_auth` cookie.
@@ -85,7 +85,7 @@ Then start Phase 3 from the PRD.
 
 Important Phase 2 context:
 - Auth is implemented with Next.js server actions and PocketBase users auth.
-- Signup validates CREW_INVITE_CODE server-side before creating a PocketBase user.
+- Signup validates `VINYL-NIGHT` server-side before creating a PocketBase user.
 - Direct public PocketBase users creation is locked by pb_migrations/1781006404_lock_users_signup.js.
 - The app stores the PocketBase auth token/record in an HTTP-only pb_auth cookie.
 - app/(club)/layout.tsx redirects unauthenticated users to /auth.
