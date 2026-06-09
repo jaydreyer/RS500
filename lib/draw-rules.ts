@@ -30,7 +30,7 @@ export function parseRatingValue(value: FormDataEntryValue | null, ratingScale: 
   const precision = ratingScale.precision ?? getPrecisionFromStep(ratingScale.step ?? 1);
   const decimalPattern =
     precision > 0
-      ? new RegExp(`^\\d+(?:\\.\\d{1,${precision}})?$`)
+      ? new RegExp(`^(?:\\d+(?:\\.\\d{1,${precision}})?|\\.\\d{1,${precision}})$`)
       : /^\d+$/;
 
   if (!decimalPattern.test(rawValue)) {

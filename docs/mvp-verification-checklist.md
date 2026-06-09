@@ -18,7 +18,7 @@ Status legend:
 | A user with an unrated fresh pick cannot draw again. | Verified | `lib/draw.ts` checks active fresh pick; `npm test` covers active-fresh guard. |
 | Drawing an already-heard album records a `skip` listen with `status = rated`, rating, optional take, and `rated_at`. | Verified | Production QA: Test One logged PJ Harvey, `Rid of Me` as an already-heard skip with rating/take/rated timestamp. |
 | Drawing an unheard album creates a `fresh` listen with `status = listening`, null rating, and null `rated_at`. | Verified | Production QA: Test Two drew Aretha Franklin, `I Never Loved a Man the Way I Love You` as a fresh listening pick. |
-| Rating a fresh pick updates it to `status = rated`, sets rating, optional take, and `rated_at`. | Verified | Production QA: Test One rated Shania Twain, `Come On Over` as a fresh pick with rating/take/rated timestamp. Automated tests cover one-decimal rating validation. |
+| Rating a fresh pick updates it to `status = rated`, sets rating, optional take, and `rated_at`. | Verified | Production QA: Test One rated Shania Twain, `Come On Over` as a fresh pick with rating/take/rated timestamp. Automated tests cover 0-10 one-decimal rating validation. |
 | A user can only create/edit their own listens and reactions. | Verified | PocketBase rules and server actions enforce ownership. |
 | All authenticated members can read everyone's board activity. | Verified | Production QA: Test One and Test Two both used The Board and saw cross-member activity. |
 | A user can have only one reaction row per listen. | Verified | PocketBase migration adds unique `reactions(listen, user)` index. |

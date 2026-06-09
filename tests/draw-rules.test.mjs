@@ -35,14 +35,19 @@ test("active fresh guard only allows unrated fresh picks", () => {
 })
 
 test("rating parser allows one decimal place within scale bounds", () => {
-  const scale = { min: 1, max: 10, step: 0.1, precision: 1 }
+  const scale = { min: 0, max: 10, step: 0.1, precision: 1 }
 
+  assert.equal(parseRatingValue("0", scale), 0)
+  assert.equal(parseRatingValue("0.0", scale), 0)
+  assert.equal(parseRatingValue(".9", scale), 0.9)
+  assert.equal(parseRatingValue("0.9", scale), 0.9)
   assert.equal(parseRatingValue("10", scale), 10)
   assert.equal(parseRatingValue("10.0", scale), 10)
   assert.equal(parseRatingValue("9.1", scale), 9.1)
   assert.equal(parseRatingValue("6.7", scale), 6.7)
   assert.throws(() => parseRatingValue("9.12", scale), DrawRuleError)
-  assert.throws(() => parseRatingValue("0.9", scale), DrawRuleError)
+  assert.throws(() => parseRatingValue(".", scale), DrawRuleError)
+  assert.throws(() => parseRatingValue("-.1", scale), DrawRuleError)
   assert.throws(() => parseRatingValue("10.1", scale), DrawRuleError)
 })
 

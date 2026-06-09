@@ -32,6 +32,7 @@ Added Phase 1 migrations:
 - `1781006401_create_albums_collection.js`: creates read-only-to-members `albums` with a unique `rank` index.
 - `1781006402_create_listens_collection.js`: creates `listens` with authenticated read access, owner create/update rules, locked deletes, and a unique `(user, album)` index.
 - `1781006403_create_reactions_collection.js`: creates `reactions` with authenticated read access, owner create/update/delete rules, and a unique `(listen, user)` index.
+- `1781006408_allow_zero_ratings.js`: lowers the `listens.rating` minimum to `0` so decimal ratings like `0.9` and `0.0` are valid.
 
 Added Phase 2 migration:
 
