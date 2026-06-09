@@ -1,0 +1,3502 @@
+[
+  {
+    "rank": 1,
+    "title": "What’s Going On",
+    "artist": "Marvin Gaye",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/c1fa4d2c-ec62-37d5-b01d-6df7f8fd2c90/front-500"
+  },
+  {
+    "rank": 2,
+    "title": "Pet Sounds",
+    "artist": "The Beach Boys",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/fdd96703-7b21-365e-bdea-38029fbeb84e/front-500"
+  },
+  {
+    "rank": 3,
+    "title": "Blue",
+    "artist": "Joni Mitchell",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/42d725fb-a8b7-388c-8866-3b02789af326/front-500"
+  },
+  {
+    "rank": 4,
+    "title": "Songs in the Key of Life",
+    "artist": "Stevie Wonder",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/ea88b09b-fd34-33cf-a3e5-25a3a2fb4c6f/front-500"
+  },
+  {
+    "rank": 5,
+    "title": "Abbey Road",
+    "artist": "The Beatles",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/9162580e-5df4-32de-80cc-f45a8d8a9b1d/front-500"
+  },
+  {
+    "rank": 6,
+    "title": "Nevermind",
+    "artist": "Nirvana",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/1b022e01-4da6-387b-8658-8678046e4cef/front-500"
+  },
+  {
+    "rank": 7,
+    "title": "Rumours",
+    "artist": "Fleetwood Mac",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/416bb5e5-c7d1-3977-8fd7-7c9daf6c2be6/front-500"
+  },
+  {
+    "rank": 8,
+    "title": "Purple Rain",
+    "artist": "Prince and The Revolution",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/b93a7c47-a6d4-33f2-9034-53fdd991f4ba/front-500"
+  },
+  {
+    "rank": 9,
+    "title": "Blood on the Tracks",
+    "artist": "Bob Dylan",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/9c1b8072-eb1d-33d2-af8c-984d46e40902/front-500"
+  },
+  {
+    "rank": 10,
+    "title": "The Miseducation of Lauryn Hill",
+    "artist": "Lauryn Hill",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/8691d12c-abd8-385c-b1eb-d841190124f7/front-500"
+  },
+  {
+    "rank": 11,
+    "title": "Revolver",
+    "artist": "The Beatles",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/72d15666-99a7-321e-b1f3-a3f8c09dff9f/front-500"
+  },
+  {
+    "rank": 12,
+    "title": "Thriller",
+    "artist": "Michael Jackson",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/f32fab67-77dd-3937-addc-9062e28e4c37/front-500"
+  },
+  {
+    "rank": 13,
+    "title": "I Never Loved a Man the Way I Love You",
+    "artist": "Aretha Franklin",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/7d8f07a7-4c64-3afb-8daf-8f1d4df89a78/front-500"
+  },
+  {
+    "rank": 14,
+    "title": "Exile on Main St.",
+    "artist": "The Rolling Stones",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/4838a3c9-fd2b-30a5-83eb-e32545b5d7fc/front-500"
+  },
+  {
+    "rank": 15,
+    "title": "It Takes a Nation of Millions to Hold Us Back",
+    "artist": "Public Enemy",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/01921d99-9d15-3fce-8734-46e58327cfb7/front-500"
+  },
+  {
+    "rank": 16,
+    "title": "London Calling",
+    "artist": "The Clash",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/8d73e45e-7ca1-3cb4-ae28-6da76196c17c/front-500"
+  },
+  {
+    "rank": 17,
+    "title": "My Beautiful Dark Twisted Fantasy",
+    "artist": "Kanye West",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/5d6e21e1-deb5-428e-bb42-c2a567f3619b/front-500"
+  },
+  {
+    "rank": 18,
+    "title": "Highway 61 Revisited",
+    "artist": "Bob Dylan",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/fb48b1dc-412f-36aa-8820-1023c08c46c6/front-500"
+  },
+  {
+    "rank": 19,
+    "title": "To Pimp a Butterfly",
+    "artist": "Kendrick Lamar",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/d9103c72-3807-4378-9ce7-b6f3e8fdd547/front-500"
+  },
+  {
+    "rank": 20,
+    "title": "Kid A",
+    "artist": "Radiohead",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/e75c0549-ad55-39e3-8025-c72c5d4a3c5d/front-500"
+  },
+  {
+    "rank": 21,
+    "title": "Born to Run",
+    "artist": "Bruce Springsteen",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/39b22944-7503-3937-8bba-09b17281cc6a/front-500"
+  },
+  {
+    "rank": 22,
+    "title": "Ready to Die",
+    "artist": "The Notorious B.I.G.",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/5afcfeac-118a-35e6-af0d-35ec9003354d/front-500"
+  },
+  {
+    "rank": 23,
+    "title": "The Velvet Underground & Nico",
+    "artist": "The Velvet Underground & Nico",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/5cbd9d7b-597a-3c5e-bfd1-c2b364215560/front-500"
+  },
+  {
+    "rank": 24,
+    "title": "Sgt. Pepper’s Lonely Hearts Club Band",
+    "artist": "The Beatles",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/9f7a4c28-8fa2-3113-929c-c47a9f7982c3/front-500"
+  },
+  {
+    "rank": 25,
+    "title": "Tapestry",
+    "artist": "Carole King",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/6e4f39e6-3403-39d7-81c6-8e61a990d509/front-500"
+  },
+  {
+    "rank": 26,
+    "title": "Horses",
+    "artist": "Patti Smith",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/ff8f533c-3cb3-3877-9209-11f433edaad2/front-500"
+  },
+  {
+    "rank": 27,
+    "title": "Enter the Wu‐Tang (36 Chambers)",
+    "artist": "Wu‐Tang Clan",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/610fb60f-900a-3c42-ac7d-f6b6aa8035f9/front-500"
+  },
+  {
+    "rank": 28,
+    "title": "Voodoo",
+    "artist": "D’Angelo",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/9605c075-c64c-366b-ad7f-ec98523fc162/front-500"
+  },
+  {
+    "rank": 29,
+    "title": "The Beatles",
+    "artist": "The Beatles",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/055be730-dcad-31bf-b550-45ba9c202aa3/front-500"
+  },
+  {
+    "rank": 30,
+    "title": "Are You Experienced",
+    "artist": "The Jimi Hendrix Experience",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/da40e720-2097-3730-8a7f-0c2ddbff4a96/front-500"
+  },
+  {
+    "rank": 31,
+    "title": "Kind of Blue",
+    "artist": "Miles Davis",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/8e8a594f-2175-38c7-a871-abb68ec363e7/front-500"
+  },
+  {
+    "rank": 32,
+    "title": "Lemonade",
+    "artist": "Beyoncé",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/c1f22e07-7bdf-4a4f-8b50-7747c1091ef6/front-500"
+  },
+  {
+    "rank": 33,
+    "title": "Back to Black",
+    "artist": "Amy Winehouse",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/6eac2e57-ee50-36f8-b0c4-c4c847a2c098/front-500"
+  },
+  {
+    "rank": 34,
+    "title": "Innervisions",
+    "artist": "Stevie Wonder",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/e626b377-74c5-3b97-8f16-8cef5e1c04ea/front-500"
+  },
+  {
+    "rank": 35,
+    "title": "Rubber Soul",
+    "artist": "The Beatles",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/dca03435-8adb-30a5-ba82-5a162267ff38/front-500"
+  },
+  {
+    "rank": 36,
+    "title": "Off the Wall",
+    "artist": "Michael Jackson",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/ee749c63-5699-38e0-b565-7e84414648d9/front-500"
+  },
+  {
+    "rank": 37,
+    "title": "The Chronic",
+    "artist": "Dr. Dre",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/ad444843-7160-33d7-b0c9-fc99f2c14a99/front-500"
+  },
+  {
+    "rank": 38,
+    "title": "Blonde on Blonde",
+    "artist": "Bob Dylan",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/329fb554-2a81-3d8a-8e22-ec2c66810019/front-500"
+  },
+  {
+    "rank": 39,
+    "title": "Remain in Light",
+    "artist": "Talking Heads",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/f6b1b900-6108-32f0-abbd-2855af9151eb/front-500"
+  },
+  {
+    "rank": 40,
+    "title": "The Rise and Fall of Ziggy Stardust and the Spiders From Mars",
+    "artist": "David Bowie",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/6c9ae3dd-32ad-472c-96be-69d0a3536261/front-500"
+  },
+  {
+    "rank": 41,
+    "title": "Let It Bleed",
+    "artist": "The Rolling Stones",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/784c0edd-0f37-33a2-9ca5-dff87b4f999c/front-500"
+  },
+  {
+    "rank": 42,
+    "title": "OK Computer",
+    "artist": "Radiohead",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/b1392450-e666-3926-a536-22c65f834433/front-500"
+  },
+  {
+    "rank": 43,
+    "title": "The Low End Theory",
+    "artist": "A Tribe Called Quest",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/c3733436-fcba-3c08-b082-d548df5c5139/front-500"
+  },
+  {
+    "rank": 44,
+    "title": "Illmatic",
+    "artist": "Nas",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/28298e2c-4d70-3eed-a0f5-a3280c662b3d/front-500"
+  },
+  {
+    "rank": 45,
+    "title": "Sign “☮︎” the Times",
+    "artist": "Prince",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/90718403-7634-3786-84bf-2053a7bd4f4c/front-500"
+  },
+  {
+    "rank": 46,
+    "title": "Graceland",
+    "artist": "Paul Simon",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/19847822-1430-3380-9cf1-bc45545b34ac/front-500"
+  },
+  {
+    "rank": 47,
+    "title": "Ramones",
+    "artist": "Ramones",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/7de1e321-4a53-3feb-b83e-f1dab88bf952/front-500"
+  },
+  {
+    "rank": 48,
+    "title": "Legend: The Best of Bob Marley and The Wailers",
+    "artist": "Bob Marley & The Wailers",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/1a4c52cd-483a-347c-93f9-4d512767c7ba/front-500"
+  },
+  {
+    "rank": 49,
+    "title": "Aquemini",
+    "artist": "OutKast",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/eb655897-6cc5-3fc1-b9ed-5008eb80c682/front-500"
+  },
+  {
+    "rank": 50,
+    "title": "The Blueprint",
+    "artist": "Jay‐Z",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/11ae8c9c-27c1-3308-9761-edb87c8f54ea/front-500"
+  },
+  {
+    "rank": 51,
+    "title": "The Great Twenty‐Eight",
+    "artist": "Chuck Berry",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/d7da8113-a582-3656-9412-74e17a9a447e/front-500"
+  },
+  {
+    "rank": 52,
+    "title": "Station to Station",
+    "artist": "David Bowie",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/686cdbd1-b400-32d8-8cb8-9317a2e41a58/front-500"
+  },
+  {
+    "rank": 53,
+    "title": "Electric Ladyland",
+    "artist": "The Jimi Hendrix Experience",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/47ba2d59-5544-34a4-b108-dc08c0956298/front-500"
+  },
+  {
+    "rank": 54,
+    "title": "Star Time",
+    "artist": "James Brown",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/7f5132f0-1d58-3d83-be6a-e32d22219e17/front-500"
+  },
+  {
+    "rank": 55,
+    "title": "The Dark Side of the Moon",
+    "artist": "Pink Floyd",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/f5093c06-23e3-404f-aeaa-40f72885ee3a/front-500"
+  },
+  {
+    "rank": 56,
+    "title": "Exile in Guyville",
+    "artist": "Liz Phair",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/c186db82-9988-367e-8486-2e38e9b6c8db/front-500"
+  },
+  {
+    "rank": 57,
+    "title": "The Band",
+    "artist": "The Band",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/ea337405-285f-3846-9049-5e3addf149fc/front-500"
+  },
+  {
+    "rank": 58,
+    "title": "[Led Zeppelin IV]",
+    "artist": "Led Zeppelin",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/2e61da88-39e9-3473-81d2-c964cb394952/front-500"
+  },
+  {
+    "rank": 59,
+    "title": "Talking Book",
+    "artist": "Stevie Wonder",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/58c6d809-bfa7-3b25-acf3-a99d53402b08/front-500"
+  },
+  {
+    "rank": 60,
+    "title": "Astral Weeks",
+    "artist": "Van Morrison",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/7d568f14-d86e-3584-97d0-c1824599de04/front-500"
+  },
+  {
+    "rank": 61,
+    "title": "Paid in Full",
+    "artist": "Eric B. & Rakim",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/e124668d-731c-3d2f-bd38-facf91df5e27/front-500"
+  },
+  {
+    "rank": 62,
+    "title": "Appetite for Destruction",
+    "artist": "Guns N’ Roses",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/a0b94d0a-210b-4b15-bd1d-93be2196c14a/front-500"
+  },
+  {
+    "rank": 63,
+    "title": "Aja",
+    "artist": "Steely Dan",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/8588c5a5-b491-37a4-8d51-2227346a072e/front-500"
+  },
+  {
+    "rank": 64,
+    "title": "Stankonia",
+    "artist": "OutKast",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/00d2cd53-21c9-3738-b683-56847b7b0040/front-500"
+  },
+  {
+    "rank": 65,
+    "title": "Live at the Apollo, 1962",
+    "artist": "James Brown",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/a2bad96f-a572-38f2-b362-5865dedc0d35/front-500"
+  },
+  {
+    "rank": 66,
+    "title": "A Love Supreme",
+    "artist": "John Coltrane",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/77cf47ba-58cd-3f3d-a5f9-79bf89860421/front-500"
+  },
+  {
+    "rank": 67,
+    "title": "Reasonable Doubt",
+    "artist": "Jaÿ‐Z",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/a7f852ba-08bc-36f1-92f3-4dc127f4b70a/front-500"
+  },
+  {
+    "rank": 68,
+    "title": "Hounds of Love",
+    "artist": "Kate Bush",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/017f2a37-a78f-3578-9611-fa40408e5d90/front-500"
+  },
+  {
+    "rank": 69,
+    "title": "Jagged Little Pill",
+    "artist": "Alanis Morissette",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/ee3d18ed-d6a8-37c7-a964-41bbdb6d59f1/front-500"
+  },
+  {
+    "rank": 70,
+    "title": "Straight Outta Compton",
+    "artist": "N.W.A",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/fed1608d-80b7-38d2-aeb8-c6357f0d4c23/front-500"
+  },
+  {
+    "rank": 71,
+    "title": "Exodus",
+    "artist": "Bob Marley & The Wailers",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/c5650313-60f3-34d3-92e4-300545133792/front-500"
+  },
+  {
+    "rank": 72,
+    "title": "Harvest",
+    "artist": "Neil Young",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/b25419cf-71bf-3a54-8cd4-2161c61056a0/front-500"
+  },
+  {
+    "rank": 73,
+    "title": "Loveless",
+    "artist": "My Bloody Valentine",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/cb76227e-3ac0-3002-9a10-615a5b73cc59/front-500"
+  },
+  {
+    "rank": 74,
+    "title": "The College Dropout",
+    "artist": "Kanye West",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/8a01217e-6947-3927-a39b-6691104694f1/front-500"
+  },
+  {
+    "rank": 75,
+    "title": "Lady Soul",
+    "artist": "Aretha Franklin",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/05571372-5b11-39b7-89c5-1c02589a27c8/front-500"
+  },
+  {
+    "rank": 76,
+    "title": "Superfly",
+    "artist": "Curtis Mayfield",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/3f68cf91-b4f0-39ef-8318-93dc064a53ba/front-500"
+  },
+  {
+    "rank": 77,
+    "title": "Who’s Next",
+    "artist": "The Who",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/9584e28b-66a7-3846-8d52-b3008a283539/front-500"
+  },
+  {
+    "rank": 78,
+    "title": "The Sun Sessions",
+    "artist": "Elvis Presley",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/2ac479cc-0126-3709-bb55-7028e4c559ef/front-500"
+  },
+  {
+    "rank": 79,
+    "title": "Blonde",
+    "artist": "Frank Ocean",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/0da340a0-6ad7-4fc2-a272-6f94393a7831/front-500"
+  },
+  {
+    "rank": 80,
+    "title": "Never Mind the Bollocks Here’s the Sex Pistols",
+    "artist": "Sex Pistols",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/e959a4b3-6306-3c45-9df6-e7241dae9ea3/front-500"
+  },
+  {
+    "rank": 81,
+    "title": "BEYONCÉ",
+    "artist": "Beyoncé",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/8596171e-23b2-4bdd-8f1c-11960df0ecbe/front-500"
+  },
+  {
+    "rank": 82,
+    "title": "There’s a Riot Goin’ On",
+    "artist": "Sly & the Family Stone",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/d8b8448a-2634-3e92-ac86-cf55e018f825/front-500"
+  },
+  {
+    "rank": 83,
+    "title": "Dusty in Memphis",
+    "artist": "Dusty Springfield",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/aac8700b-8f62-30fc-ac2a-23b6cb37e3c3/front-500"
+  },
+  {
+    "rank": 84,
+    "title": "Back in Black",
+    "artist": "AC/DC",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/d3bc1a64-7561-3787-b680-0003aa50f8f1/front-500"
+  },
+  {
+    "rank": 85,
+    "title": "John Lennon/Plastic Ono Band",
+    "artist": "John Lennon/Plastic Ono Band",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/8be83468-4917-390d-82b6-d890f058cd22/front-500"
+  },
+  {
+    "rank": 86,
+    "title": "The Doors",
+    "artist": "The Doors",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/8ebffd15-06c3-3b88-a761-ec18c5513287/front-500"
+  },
+  {
+    "rank": 87,
+    "title": "Bitches Brew",
+    "artist": "Miles Davis",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/a9e30282-5b37-3f92-b897-b9659a1a312b/front-500"
+  },
+  {
+    "rank": 88,
+    "title": "Hunky Dory",
+    "artist": "David Bowie",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/743b0b2e-a23a-3182-950e-232f8cb0dfb7/front-500"
+  },
+  {
+    "rank": 89,
+    "title": "Baduizm",
+    "artist": "Erykah Badu",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/45536412-c62c-34fc-9524-0bac1d2542c1/front-500"
+  },
+  {
+    "rank": 90,
+    "title": "After the Gold Rush",
+    "artist": "Neil Young",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/b6a3952b-9977-351c-a80a-73e023143858/front-500"
+  },
+  {
+    "rank": 91,
+    "title": "Darkness on the Edge of Town",
+    "artist": "Bruce Springsteen",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/b613123b-a234-3f48-9c45-e05bf4e6b9e7/front-500"
+  },
+  {
+    "rank": 92,
+    "title": "Axis: Bold as Love",
+    "artist": "The Jimi Hendrix Experience",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/d0b1e21e-cef6-4575-8d92-1afea1894ca3/front-500"
+  },
+  {
+    "rank": 93,
+    "title": "Supa Dupa Fly",
+    "artist": "Missy Misdemeanor Elliott",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/45a68d94-6923-38c1-a6dd-4cfc1cdc193a/front-500"
+  },
+  {
+    "rank": 94,
+    "title": "Fun House",
+    "artist": "The Stooges",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/edd57263-df77-3f1a-8803-8beb5d5b1a64/front-500"
+  },
+  {
+    "rank": 95,
+    "title": "Take Care",
+    "artist": "Drake",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/47809021-4515-4215-beea-db3f5dfb6267/front-500"
+  },
+  {
+    "rank": 96,
+    "title": "Automatic for the People",
+    "artist": "R.E.M.",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/c86c6af9-d10e-3079-b34b-30b682a797eb/front-500"
+  },
+  {
+    "rank": 97,
+    "title": "Master of Puppets",
+    "artist": "Metallica",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/3d00fb45-f8ab-3436-a8e1-b4bfc4d66913/front-500"
+  },
+  {
+    "rank": 98,
+    "title": "Car Wheels on a Gravel Road",
+    "artist": "Lucinda Williams",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/493de006-33bf-3404-9bb7-1f3b0c22ce05/front-500"
+  },
+  {
+    "rank": 99,
+    "title": "Red",
+    "artist": "Taylor Swift",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/a73cecde-0923-40ad-aad1-e8c24ba6c3d2/front-500"
+  },
+  {
+    "rank": 100,
+    "title": "Music From Big Pink",
+    "artist": "The Band",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/466fddac-8006-3e71-bbe7-7aa0f587aa88/front-500"
+  },
+  {
+    "rank": 101,
+    "title": "Led Zeppelin",
+    "artist": "Led Zeppelin",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/0f18ec88-aa87-38a9-8a65-f03d81763560/front-500"
+  },
+  {
+    "rank": 102,
+    "title": "The Clash",
+    "artist": "The Clash",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/ca91cb5a-7ecc-3c46-84a0-0d4951889374/front-500"
+  },
+  {
+    "rank": 103,
+    "title": "3 Feet High and Rising",
+    "artist": "De La Soul",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/5243f39c-c344-3989-a0f6-2a2f75a9d827/front-500"
+  },
+  {
+    "rank": 104,
+    "title": "Sticky Fingers",
+    "artist": "The Rolling Stones",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/4a4213d0-f224-3d51-bcca-476f61162681/front-500"
+  },
+  {
+    "rank": 105,
+    "title": "At Fillmore East",
+    "artist": "The Allman Brothers Band",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/d757b87e-4a3b-38ec-9246-548baeff5ceb/front-500"
+  },
+  {
+    "rank": 106,
+    "title": "Live Through This",
+    "artist": "Hole",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/fe676d05-f97c-303a-890b-da53c69e5d42/front-500"
+  },
+  {
+    "rank": 107,
+    "title": "Marquee Moon",
+    "artist": "Television",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/2b9f99d8-becf-3fc3-86a6-2bdd4cef93fe/front-500"
+  },
+  {
+    "rank": 108,
+    "title": "When the Pawn Hits the Conflicts He Thinks Like a King What He Knows Throws the Blows When He Goes to the Fight and He’ll Win the Whole Thing ’Fore He Enters the Ring There’s No Body to Batter When Your Mind Is Your Might So When You Go Solo, You Hold Your Own Hand and Remember That Depth Is the Greatest of Heights and If You Know Where You Stand, Then You Know Where to Land and If You Fall It Won’t Matter, Cuz You’ll Know That You’re Right",
+    "artist": "Fiona Apple",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/3d3ff0b9-5858-33f3-9d67-8ba5977899a8/front-500"
+  },
+  {
+    "rank": 109,
+    "title": "Transformer",
+    "artist": "Lou Reed",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/6c8345df-f822-33af-b64a-eff2e46941b9/front-500"
+  },
+  {
+    "rank": 110,
+    "title": "Court and Spark",
+    "artist": "Joni Mitchell",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/3bd19e28-698e-3b7e-a8ec-f872bf001651/front-500"
+  },
+  {
+    "rank": 111,
+    "title": "Control",
+    "artist": "Janet Jackson",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/b23d3137-df51-3047-a6a5-b5efbde50f22/front-500"
+  },
+  {
+    "rank": 112,
+    "title": "Goodbye Yellow Brick Road",
+    "artist": "Elton John",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/80df0f1b-4ce7-348a-aa1b-0d31ebff111a/front-500"
+  },
+  {
+    "rank": 113,
+    "title": "The Queen Is Dead",
+    "artist": "The Smiths",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/d8dde278-482c-3cc8-a530-fea70476f3a5/front-500"
+  },
+  {
+    "rank": 114,
+    "title": "Is This It",
+    "artist": "The Strokes",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/efea26d1-a016-30f6-b8e2-bc8c02336b0a/front-500"
+  },
+  {
+    "rank": 115,
+    "title": "good kid, m.A.A.d city",
+    "artist": "Kendrick Lamar",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/499c19c8-0dab-4824-884b-6191d145e95b/front-500"
+  },
+  {
+    "rank": 116,
+    "title": "Disintegration",
+    "artist": "The Cure",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/494bf606-d2f7-36d0-8340-eadad8601d2b/front-500"
+  },
+  {
+    "rank": 117,
+    "title": "Late Registration",
+    "artist": "Kanye West",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/c563d738-3841-31ce-b29d-ec6b40fd1e7b/front-500"
+  },
+  {
+    "rank": 118,
+    "title": "Hotel California",
+    "artist": "Eagles",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/836f349a-0434-3e8b-a0bc-261f77a9f99c/front-500"
+  },
+  {
+    "rank": 119,
+    "title": "Stand!",
+    "artist": "Sly and the Family Stone",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/86871123-60e4-30a5-aae3-36e810e0964b/front-500"
+  },
+  {
+    "rank": 120,
+    "title": "Moondance",
+    "artist": "Van Morrison",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/16506432-d133-3b2f-a504-dc88966dad2a/front-500"
+  },
+  {
+    "rank": 121,
+    "title": "This Year’s Model",
+    "artist": "Elvis Costello",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/5e8117f4-a87f-3732-be5f-313c7e5b308d/front-500"
+  },
+  {
+    "rank": 122,
+    "title": "The Downward Spiral",
+    "artist": "Nine Inch Nails",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release/299d12ca-adee-4730-80df-61f4be276754/front-500"
+  },
+  {
+    "rank": 123,
+    "title": "Led Zeppelin II",
+    "artist": "Led Zeppelin",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/33b4653d-006e-3cc1-8afb-386b15a6cd6e/front-500"
+  },
+  {
+    "rank": 124,
+    "title": "Achtung Baby",
+    "artist": "U2",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/744c7a1b-ac79-35c4-bd92-7e2c6a24c8d8/front-500"
+  },
+  {
+    "rank": 125,
+    "title": "Paul’s Boutique",
+    "artist": "Beastie Boys",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/b534aa01-d621-31ba-9278-38a500e3cdca/front-500"
+  },
+  {
+    "rank": 126,
+    "title": "My Life",
+    "artist": "Mary J. Blige",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/49acb129-7958-3132-988c-bb85955b1c3c/front-500"
+  },
+  {
+    "rank": 127,
+    "title": "Modern Sounds in Country and Western Music",
+    "artist": "Ray Charles",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/38671d62-32bd-399d-abbd-0f685c2fd4a3/front-500"
+  },
+  {
+    "rank": 128,
+    "title": "A Night at the Opera",
+    "artist": "Queen",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/6b47c9a0-b9e1-3df9-a5e8-50a6ce0dbdbd/front-500"
+  },
+  {
+    "rank": 129,
+    "title": "The Wall",
+    "artist": "Pink Floyd",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/f2026101-945b-3d05-9ef4-aa718fc3feef/front-500"
+  },
+  {
+    "rank": 130,
+    "title": "1999",
+    "artist": "Prince",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/561be5b7-a39c-3866-859d-d86f30816ae7/front-500"
+  },
+  {
+    "rank": 131,
+    "title": "Dummy",
+    "artist": "Portishead",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/48140466-cff6-3222-bd55-63c27e43190d/front-500"
+  },
+  {
+    "rank": 132,
+    "title": "40 Greatest Hits",
+    "artist": "Hank Williams",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/4a48eaed-2b09-3147-b310-187bfc692849/front-500"
+  },
+  {
+    "rank": 133,
+    "title": "Hejira",
+    "artist": "Joni Mitchell",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/039f2ae4-36dd-3608-9103-67ce7f6c9288/front-500"
+  },
+  {
+    "rank": 134,
+    "title": "The Score",
+    "artist": "Fugees (Refugee Camp)",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/dd2203dd-a149-316b-ad7f-a303dc4fc459/front-500"
+  },
+  {
+    "rank": 135,
+    "title": "The Joshua Tree",
+    "artist": "U2",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/6f3e9fa6-be7a-3de8-a2b2-2072ece8a54d/front-500"
+  },
+  {
+    "rank": 136,
+    "title": "Maggot Brain",
+    "artist": "Funkadelic",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/a334e612-e736-3b4f-82b4-c4dfb774983c/front-500"
+  },
+  {
+    "rank": 137,
+    "title": "21",
+    "artist": "Adele",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/e4174758-d333-4a8e-a31f-dd0edd51518e/front-500"
+  },
+  {
+    "rank": 138,
+    "title": "The Immaculate Collection",
+    "artist": "Madonna",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/b14e9927-081e-4a07-b0f7-8ddf22319b27/front-500"
+  },
+  {
+    "rank": 139,
+    "title": "Paranoid",
+    "artist": "Black Sabbath",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/cc053745-c447-3566-8f27-bed5438c9133/front-500"
+  },
+  {
+    "rank": 140,
+    "title": "Catch a Fire",
+    "artist": "The Wailers",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/63a3ac2f-5d63-3132-98d3-b00385d9a3a2/front-500"
+  },
+  {
+    "rank": 141,
+    "title": "Doolittle",
+    "artist": "Pixies",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/1aa41b19-5a72-341b-bd91-4cf61d1dab6b/front-500"
+  },
+  {
+    "rank": 142,
+    "title": "Born in the U.S.A.",
+    "artist": "Bruce Springsteen",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/3c39a076-8e52-38f2-8076-260d0672fb23/front-500"
+  },
+  {
+    "rank": 143,
+    "title": "The Velvet Underground",
+    "artist": "The Velvet Underground",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/a616dcf5-7a1f-3afe-a53b-27281c2bf75e/front-500"
+  },
+  {
+    "rank": 144,
+    "title": "Physical Graffiti",
+    "artist": "Led Zeppelin",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/116c9490-6af4-3827-8261-2d5b1f508fe7/front-500"
+  },
+  {
+    "rank": 145,
+    "title": "The Marshall Mathers LP",
+    "artist": "Eminem",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/b0fa91c8-0996-38f1-ab84-797f58d7c4eb/front-500"
+  },
+  {
+    "rank": 146,
+    "title": "Parallel Lines",
+    "artist": "Blondie",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/0c1a4d70-5926-3ae8-aa25-466fe65639fe/front-500"
+  },
+  {
+    "rank": 147,
+    "title": "Grace",
+    "artist": "Jeff Buckley",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/ea29c347-696f-3165-986d-7bad1394b178/front-500"
+  },
+  {
+    "rank": 148,
+    "title": "channel ORANGE",
+    "artist": "Frank Ocean",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/f8f4167d-897c-4b25-a171-638374d1dfa4/front-500"
+  },
+  {
+    "rank": 149,
+    "title": "John Prine",
+    "artist": "John Prine",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/a13154a4-14a1-3344-ae14-3bea728ebe58/front-500"
+  },
+  {
+    "rank": 150,
+    "title": "Nebraska",
+    "artist": "Bruce Springsteen",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/324aee0c-36ec-35c1-9c93-b67a1d428037/front-500"
+  },
+  {
+    "rank": 151,
+    "title": "Faith",
+    "artist": "George Michael",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/4e61585f-f341-3174-85cf-afad8df46fbe/front-500"
+  },
+  {
+    "rank": 152,
+    "title": "Pretenders",
+    "artist": "Pretenders",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/448c8d23-3118-397f-9b81-a560c799f27a/front-500"
+  },
+  {
+    "rank": 153,
+    "title": "Rid of Me",
+    "artist": "PJ Harvey",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/c1bb54cc-751d-300c-ba29-d7502d571c2d/front-500"
+  },
+  {
+    "rank": 154,
+    "title": "Amazing Grace",
+    "artist": "Aretha Franklin",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/9e9b6cb5-2398-3aa7-b0c3-80c73e30b663/front-500"
+  },
+  {
+    "rank": 155,
+    "title": "The Black Album",
+    "artist": "Jay‐Z",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/77befaa0-662e-3d84-ba45-c862e16dc109/front-500"
+  },
+  {
+    "rank": 156,
+    "title": "Let It Be",
+    "artist": "The Replacements",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/2c644807-3b5d-39d4-8c65-dec603bf3f3a/front-500"
+  },
+  {
+    "rank": 157,
+    "title": "(What’s the Story) Morning Glory?",
+    "artist": "Oasis",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/cc7e6348-cc55-31fa-aeb2-748a46a81cb3/front-500"
+  },
+  {
+    "rank": 158,
+    "title": "Mama’s Gun",
+    "artist": "Erykah Badu",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/25bdfd28-72ca-3d1f-88fc-dcf67df91720/front-500"
+  },
+  {
+    "rank": 159,
+    "title": "Synchronicity",
+    "artist": "The Police",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/f6df6292-fd40-37c3-bd61-22c53abfe773/front-500"
+  },
+  {
+    "rank": 160,
+    "title": "Ten",
+    "artist": "Pearl Jam",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/cea5d18a-1924-3cda-bebc-38933834b25d/front-500"
+  },
+  {
+    "rank": 161,
+    "title": "Crosby, Stills & Nash",
+    "artist": "Crosby, Stills & Nash",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/a2735d5f-27c0-3176-85df-e77f669dcca1/front-500"
+  },
+  {
+    "rank": 162,
+    "title": "Different Class",
+    "artist": "Pulp",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/88f69eab-8f07-343b-847c-b944ad33dfcf/front-500"
+  },
+  {
+    "rank": 163,
+    "title": "Saturday Night Fever: The Original Movie Sound Track",
+    "artist": "Various Artists",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/6e9a06a8-c8bb-3ea9-877a-417e74bb1c2e/front-500"
+  },
+  {
+    "rank": 164,
+    "title": "At Folsom Prison",
+    "artist": "Johnny Cash",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/6b4ea595-3378-3019-be5f-058412670791/front-500"
+  },
+  {
+    "rank": 165,
+    "title": "Murmur",
+    "artist": "R.E.M.",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/de790d3d-a35c-364c-a8fb-adfb73084a45/front-500"
+  },
+  {
+    "rank": 166,
+    "title": "20 Golden Greats",
+    "artist": "Buddy Holly",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/5e762b33-2f63-3124-9912-251dbb1c0a83/front-500"
+  },
+  {
+    "rank": 167,
+    "title": "Violator",
+    "artist": "Depeche Mode",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/71f1482e-e63f-3b2c-811b-939f62708f2a/front-500"
+  },
+  {
+    "rank": 168,
+    "title": "Can’t Buy a Thrill",
+    "artist": "Steely Dan",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/9d73a864-2976-3286-b6c1-8aabc7407737/front-500"
+  },
+  {
+    "rank": 169,
+    "title": "The Stranger",
+    "artist": "Billy Joel",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/735bcee6-6be6-3957-af15-d21ba2bd355b/front-500"
+  },
+  {
+    "rank": 170,
+    "title": "Disraeli Gears",
+    "artist": "Cream",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/bbd66e31-ac27-3432-81a7-0d4b4b4c5de5/front-500"
+  },
+  {
+    "rank": 171,
+    "title": "Daydream Nation",
+    "artist": "Sonic Youth",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/24769a99-8189-3d8c-947e-dbc8574dad5c/front-500"
+  },
+  {
+    "rank": 172,
+    "title": "Bridge Over Troubled Water",
+    "artist": "Simon and Garfunkel",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/c39f7f80-d42f-3669-9653-230f8e922083/front-500"
+  },
+  {
+    "rank": 173,
+    "title": "In Utero",
+    "artist": "Nirvana",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/2a0981fb-9593-3019-864b-ce934d97a16e/front-500"
+  },
+  {
+    "rank": 174,
+    "title": "The Harder They Come",
+    "artist": "Various Artists",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/71188e04-90b4-35ff-81c0-06316efdc749/front-500"
+  },
+  {
+    "rank": 175,
+    "title": "DAMN.",
+    "artist": "Kendrick Lamar",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/b88655ba-7469-48b8-a296-b9011ab73ef3/front-500"
+  },
+  {
+    "rank": 176,
+    "title": "Fear of a Black Planet",
+    "artist": "Public Enemy",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/13cf2244-c850-304d-bc46-b30e3f10e0cc/front-500"
+  },
+  {
+    "rank": 177,
+    "title": "Every Picture Tells a Story",
+    "artist": "Rod Stewart",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/d4e7be0c-6db3-372e-aee6-e048dbb9ac51/front-500"
+  },
+  {
+    "rank": 178,
+    "title": "Otis Blue / Otis Redding Sings Soul",
+    "artist": "Otis Redding",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/2c8fd4f3-1523-3604-97dd-18ba222e2f3b/front-500"
+  },
+  {
+    "rank": 179,
+    "title": "Life After Death",
+    "artist": "The Notorious B.I.G.",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/132d78be-baa5-3301-aba5-933409e3f848/front-500"
+  },
+  {
+    "rank": 180,
+    "title": "Forever Changes",
+    "artist": "Love",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/c7035bc6-6101-326f-992c-401d451c1716/front-500"
+  },
+  {
+    "rank": 181,
+    "title": "Bringing It All Back Home",
+    "artist": "Bob Dylan",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/6cadda7c-fbd0-3b19-9546-56915e3305d8/front-500"
+  },
+  {
+    "rank": 182,
+    "title": "Sweet Baby James",
+    "artist": "James Taylor",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/a3a2756d-93b4-37c6-8b82-513070ef58d6/front-500"
+  },
+  {
+    "rank": 183,
+    "title": "Brown Sugar",
+    "artist": "D’Angelo",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/a4591f67-48d9-36ae-bc68-2deb954d0a15/front-500"
+  },
+  {
+    "rank": 184,
+    "title": "She’s So Unusual",
+    "artist": "Cyndi Lauper",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/46d415e9-39b7-3978-9e3d-d9d8a32c6751/front-500"
+  },
+  {
+    "rank": 185,
+    "title": "Beggars Banquet",
+    "artist": "The Rolling Stones",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/6e672bbd-7c7f-32f8-8335-c603be99d13b/front-500"
+  },
+  {
+    "rank": 186,
+    "title": "Blood Sugar Sex Magik",
+    "artist": "Red Hot Chili Peppers",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/68bee70d-b425-3813-aca7-dd7b912c3d11/front-500"
+  },
+  {
+    "rank": 187,
+    "title": "AmeriKKKa’s Most Wanted",
+    "artist": "Ice Cube",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/f7e8792d-4aaf-389c-b0e5-a4bbae2bacdf/front-500"
+  },
+  {
+    "rank": 188,
+    "title": "Electric Warrior",
+    "artist": "T. Rex",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/e53310bf-8ccc-3d7f-a0b7-5ca4dbababcb/front-500"
+  },
+  {
+    "rank": 189,
+    "title": "Dig Me Out",
+    "artist": "Sleater‐Kinney",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/209b45b7-8b2f-3e07-b194-efff9cde80dd/front-500"
+  },
+  {
+    "rank": 190,
+    "title": "Tommy",
+    "artist": "The Who",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/0e587339-406a-3d21-8678-73e46e250379/front-500"
+  },
+  {
+    "rank": 191,
+    "title": "At Last!",
+    "artist": "Etta James",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/56933d06-34a0-3a49-8e42-7c39f8c356dd/front-500"
+  },
+  {
+    "rank": 192,
+    "title": "Licensed to Ill",
+    "artist": "Beastie Boys",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/57f5e7c8-2a6e-34a0-b4cd-0e77695bc36f/front-500"
+  },
+  {
+    "rank": 193,
+    "title": "Willy and the Poor Boys",
+    "artist": "Creedence Clearwater Revival",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/5fdea541-32fc-3b17-b7c4-50b40f65203d/front-500"
+  },
+  {
+    "rank": 194,
+    "title": "Bad",
+    "artist": "Michael Jackson",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/a5711a77-42d1-3f4c-830c-e27a96f0800f/front-500"
+  },
+  {
+    "rank": 195,
+    "title": "Songs of Leonard Cohen",
+    "artist": "Leonard Cohen",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/34291a49-8df9-304e-bd39-16b11d829d5f/front-500"
+  },
+  {
+    "rank": 196,
+    "title": "Body Talk",
+    "artist": "Robyn",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/1e151a63-e906-4903-b108-b3ecf21218b4/front-500"
+  },
+  {
+    "rank": 197,
+    "title": "Meet The Beatles!",
+    "artist": "The Beatles",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/c2c696fc-6beb-3dfb-bb15-7bb021ebeb5d/front-500"
+  },
+  {
+    "rank": 198,
+    "title": "The B‐52’s",
+    "artist": "The B‐52s",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/68699ffe-f5fd-337a-8bb9-8a196157afa8/front-500"
+  },
+  {
+    "rank": 199,
+    "title": "Slanted and Enchanted",
+    "artist": "Pavement",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/869f9eac-2a40-3a41-80a3-6bf2297a7cbc/front-500"
+  },
+  {
+    "rank": 200,
+    "title": "Diamond Life",
+    "artist": "Sade",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/af2a0c41-e612-3232-949d-bdca340c407c/front-500"
+  },
+  {
+    "rank": 201,
+    "title": "Midnight Marauders",
+    "artist": "A Tribe Called Quest",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/c2afedfb-034a-3683-ad47-e4404cd7c485/front-500"
+  },
+  {
+    "rank": 202,
+    "title": "Homogenic",
+    "artist": "Björk",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/810272e0-aef1-3d85-b2d3-e512e87fc38c/front-500"
+  },
+  {
+    "rank": 203,
+    "title": "Pink Moon",
+    "artist": "Nick Drake",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/740ec10a-e887-38a6-a04d-fe2069c9e2a7/front-500"
+  },
+  {
+    "rank": 204,
+    "title": "Graduation",
+    "artist": "Kanye West",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/d44c50ad-61fd-3fce-95fc-27024d7f1d30/front-500"
+  },
+  {
+    "rank": 205,
+    "title": "Tea for the Tillerman",
+    "artist": "Cat Stevens",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/418678e7-2807-3bed-a305-11b4181e533e/front-500"
+  },
+  {
+    "rank": 206,
+    "title": "Low",
+    "artist": "David Bowie",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/f6a51281-56c4-3538-b915-65a9d4eb29b5/front-500"
+  },
+  {
+    "rank": 207,
+    "title": "Eagles",
+    "artist": "Eagles",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/23eafc30-3978-37fb-bfa0-8058aa1eb81a/front-500"
+  },
+  {
+    "rank": 208,
+    "title": "Tha Carter III",
+    "artist": "Lil Wayne",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/cb688885-74b2-4e9b-a18c-6102866151f2/front-500"
+  },
+  {
+    "rank": 209,
+    "title": "Raising Hell",
+    "artist": "Run‐D.M.C.",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/a209c0a5-e9b2-37ff-a76d-df5bc405a0e8/front-500"
+  },
+  {
+    "rank": 210,
+    "title": "The Birth of Soul",
+    "artist": "Ray Charles",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/e4463406-ea59-39a6-a39b-aaa82a166633/front-500"
+  },
+  {
+    "rank": 211,
+    "title": "Unknown Pleasures",
+    "artist": "Joy Division",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/42352def-1aab-3000-b548-895ebd869cb6/front-500"
+  },
+  {
+    "rank": 212,
+    "title": "Wild Is the Wind",
+    "artist": "Nina Simone",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/b4433a3e-d5ad-3d99-965c-96bfb6a0f071/front-500"
+  },
+  {
+    "rank": 213,
+    "title": "The Idler Wheel Is Wiser Than the Driver of the Screw and Whipping Cords Will Serve You More Than Ropes Will Ever Do",
+    "artist": "Fiona Apple",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/6086062c-f943-4b85-b1cb-43558425ec1c/front-500"
+  },
+  {
+    "rank": 214,
+    "title": "Wildflowers",
+    "artist": "Tom Petty",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/80a0451a-d135-3517-96e4-3629dc4f66b9/front-500"
+  },
+  {
+    "rank": 215,
+    "title": "American Beauty",
+    "artist": "Grateful Dead",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/994c2c59-d32f-304e-8f53-bda17a254f52/front-500"
+  },
+  {
+    "rank": 216,
+    "title": "Either/Or",
+    "artist": "Elliott Smith",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/dfb85157-313b-3f5f-8739-a5162bcb6345/front-500"
+  },
+  {
+    "rank": 217,
+    "title": "Definitely Maybe",
+    "artist": "Oasis",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/451dca98-c118-32e1-9244-c47ca9c3c0f9/front-500"
+  },
+  {
+    "rank": 218,
+    "title": "CrazySexyCool",
+    "artist": "TLC",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/3d886c06-a4c7-3431-be87-2b2940f07acd/front-500"
+  },
+  {
+    "rank": 219,
+    "title": "Only Built 4 Cuban Linx…",
+    "artist": "Raekwon",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/ab981b48-9a7b-34c4-b46a-f6266317ce7c/front-500"
+  },
+  {
+    "rank": 220,
+    "title": "Déjà vu",
+    "artist": "Crosby, Stills, Nash & Young",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/3412fd44-c6e6-3a3b-b91a-964a055192ec/front-500"
+  },
+  {
+    "rank": 221,
+    "title": "Rage Against the Machine",
+    "artist": "Rage Against the Machine",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/1305859b-8937-397f-9c33-39f62eb672fb/front-500"
+  },
+  {
+    "rank": 222,
+    "title": "Ray of Light",
+    "artist": "Madonna",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/cb93e87f-5d21-3447-a6e8-22d44f9b0d7a/front-500"
+  },
+  {
+    "rank": 223,
+    "title": "Imagine",
+    "artist": "John Lennon",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/f242f304-0f1f-33a5-81a2-7a965b30e3b5/front-500"
+  },
+  {
+    "rank": 224,
+    "title": "Fly",
+    "artist": "Dixie Chicks",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/e1fbdc3d-2aa4-345d-ae0e-40bfb1552431/front-500"
+  },
+  {
+    "rank": 225,
+    "title": "Yankee Hotel Foxtrot",
+    "artist": "Wilco",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/95f2ba4b-2dd9-38d1-8158-a416a391489c/front-500"
+  },
+  {
+    "rank": 226,
+    "title": "Layla and Other Assorted Love Songs",
+    "artist": "Derek and the Dominos",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/ba53dcbd-9328-3cf7-bc72-179b4512867e/front-500"
+  },
+  {
+    "rank": 227,
+    "title": "Here’s Little Richard",
+    "artist": "Little Richard",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/a987042b-4fe0-35bb-9cca-7ff44b1ff5b4/front-500"
+  },
+  {
+    "rank": 228,
+    "title": "De La Soul Is Dead",
+    "artist": "De La Soul",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/0be4cdd5-ed37-3842-82ba-7f9983a34473/front-500"
+  },
+  {
+    "rank": 229,
+    "title": "The Ultimate Collection",
+    "artist": "Patsy Cline",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/c9557863-40a4-31ce-afba-6322dea9e254/front-500"
+  },
+  {
+    "rank": 230,
+    "title": "ANTI",
+    "artist": "Rihanna",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/0c482acd-35a2-466b-b833-ef5f2f1297d4/front-500"
+  },
+  {
+    "rank": 231,
+    "title": "Damn the Torpedoes",
+    "artist": "Tom Petty and the Heartbreakers",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/871631b9-651c-3c2e-88ae-3a2491d9eb6b/front-500"
+  },
+  {
+    "rank": 232,
+    "title": "Giant Steps",
+    "artist": "John Coltrane",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/2cdca11d-3e45-3152-93e5-4d2a4ddb1bc6/front-500"
+  },
+  {
+    "rank": 233,
+    "title": "Little Earthquakes",
+    "artist": "Tori Amos",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/cb10018e-e795-3b62-b9d6-f143d188e496/front-500"
+  },
+  {
+    "rank": 234,
+    "title": "Master of Reality",
+    "artist": "Black Sabbath",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/e51e9779-2edc-3b39-959c-299fdb5ed940/front-500"
+  },
+  {
+    "rank": 235,
+    "title": "Metallica",
+    "artist": "Metallica",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/e8f70201-8899-3f0c-9e07-5d6495bc8046/front-500"
+  },
+  {
+    "rank": 236,
+    "title": "Discovery",
+    "artist": "Daft Punk",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/48117b90-a16e-34ca-a514-19c702df1158/front-500"
+  },
+  {
+    "rank": 237,
+    "title": "Red Headed Stranger",
+    "artist": "Willie Nelson",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/b51ba291-2490-3132-a85d-2094de795b63/front-500"
+  },
+  {
+    "rank": 238,
+    "title": "Trans Europa Express",
+    "artist": "Kraftwerk",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/33101a28-ae05-3a69-873c-684e336fe2df/front-500"
+  },
+  {
+    "rank": 239,
+    "title": "Criminal Minded",
+    "artist": "Boogie Down Productions",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/420e3df4-6322-3399-8144-29ef7eb62e42/front-500"
+  },
+  {
+    "rank": 240,
+    "title": "Live at the Harlem Square Club, 1963",
+    "artist": "Sam Cooke",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/1c17ea9a-97d1-33ed-930f-f4c28222d37f/front-500"
+  },
+  {
+    "rank": 241,
+    "title": "Blue Lines",
+    "artist": "Massive Attack",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/8b6f133a-2fdf-3cc2-b84d-1c889adc0939/front-500"
+  },
+  {
+    "rank": 242,
+    "title": "Loaded",
+    "artist": "The Velvet Underground",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/4be9d91f-6ed7-34b8-aa5e-45be79819273/front-500"
+  },
+  {
+    "rank": 243,
+    "title": "Odessey and Oracle",
+    "artist": "The Zombies",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/9a4a9ebf-f4f7-3dba-9b80-0b274cbc80f9/front-500"
+  },
+  {
+    "rank": 244,
+    "title": "808s & Heartbreak",
+    "artist": "Kanye West",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/1c1b50ec-828b-3d7c-9b1b-54cb1fe97d55/front-500"
+  },
+  {
+    "rank": 245,
+    "title": "Heaven or Las Vegas",
+    "artist": "Cocteau Twins",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/12fab6b9-4eaf-33b0-963e-cae03ac332fe/front-500"
+  },
+  {
+    "rank": 246,
+    "title": "Mama Said Knock You Out",
+    "artist": "L.L. Cool J",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/a1440823-4a3f-38c3-8649-a346a86fe1ec/front-500"
+  },
+  {
+    "rank": 247,
+    "title": "Love Deluxe",
+    "artist": "Sade",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/e4a67add-6aab-390c-bb82-53939fb9cd0a/front-500"
+  },
+  {
+    "rank": 248,
+    "title": "American Idiot",
+    "artist": "Green Day",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/de9bf827-a9b0-348b-a7c9-556c03c3fb07/front-500"
+  },
+  {
+    "rank": 249,
+    "title": "Whitney Houston",
+    "artist": "Whitney Houston",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/131d12c0-e720-31df-a2f9-d9abd868ceaf/front-500"
+  },
+  {
+    "rank": 250,
+    "title": "Singles Going Steady",
+    "artist": "Buzzcocks",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/6a537b72-0bd3-38c5-8aa1-0527e6e9a2f3/front-500"
+  },
+  {
+    "rank": 251,
+    "title": "Honky Château",
+    "artist": "Elton John",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/e17f2d6e-7849-37f9-a6d8-cda4d59cea28/front-500"
+  },
+  {
+    "rank": 252,
+    "title": "Q: Are We Not Men? A: We Are Devo!",
+    "artist": "DEVO",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/60a754f9-50e1-346a-97db-925a1e2ad7e0/front-500"
+  },
+  {
+    "rank": 253,
+    "title": "The Piper at the Gates of Dawn",
+    "artist": "Pink Floyd",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/6792b6d1-4e65-3c3c-9d20-d08aa1dcfc60/front-500"
+  },
+  {
+    "rank": 254,
+    "title": "Head Hunters",
+    "artist": "Herbie Hancock",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/322f18bb-5491-38e9-9044-c0a468651eec/front-500"
+  },
+  {
+    "rank": 255,
+    "title": "The Freewheelin’ Bob Dylan",
+    "artist": "Bob Dylan",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/169b62aa-c3a5-3ed9-bed1-cc47c4bc51ad/front-500"
+  },
+  {
+    "rank": 256,
+    "title": "Tracy Chapman",
+    "artist": "Tracy Chapman",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/a738bdf1-f610-30aa-9ae7-9a4f90d6f2d7/front-500"
+  },
+  {
+    "rank": 257,
+    "title": "Coat of Many Colors",
+    "artist": "Dolly Parton",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/2c98f21a-e2af-3412-a253-de9a1e06d7f7/front-500"
+  },
+  {
+    "rank": 258,
+    "title": "The Hissing of Summer Lawns",
+    "artist": "Joni Mitchell",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/169a1a7e-f91e-3b10-a136-d94eba6eee2e/front-500"
+  },
+  {
+    "rank": 259,
+    "title": "Pearl",
+    "artist": "Janis Joplin",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/99878359-e736-3cdc-a225-548ad17d1c76/front-500"
+  },
+  {
+    "rank": 260,
+    "title": "Cut",
+    "artist": "The Slits",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release/826dea98-e427-351e-a692-adc00a74f5a0/front-500"
+  },
+  {
+    "rank": 261,
+    "title": "Check Your Head",
+    "artist": "Beastie Boys",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/b0935b00-1380-3777-b79d-bd49ef5fb9c0/front-500"
+  },
+  {
+    "rank": 262,
+    "title": "Power, Corruption & Lies",
+    "artist": "New Order",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/16cc9dfc-594d-3fb9-b789-3e1bfcb6f9f8/front-500"
+  },
+  {
+    "rank": 263,
+    "title": "A Hard Day’s Night",
+    "artist": "The Beatles",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/06281c4d-112d-33b0-a25b-df63b420eae7/front-500"
+  },
+  {
+    "rank": 264,
+    "title": "Wish You Were Here",
+    "artist": "Pink Floyd",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/1a272023-10d3-38ee-bab3-317b55fcc21d/front-500"
+  },
+  {
+    "rank": 265,
+    "title": "Wowee Zowee",
+    "artist": "Pavement",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/fa79988d-62b5-3039-9169-ed0d17d53296/front-500"
+  },
+  {
+    "rank": 266,
+    "title": "Help!",
+    "artist": "The Beatles",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/0d44e1cb-c6e0-3453-8b68-4d2082f05421/front-500"
+  },
+  {
+    "rank": 267,
+    "title": "Double Nickels on the Dime",
+    "artist": "Minutemen",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/0bcb9f3e-e341-3ed5-ac5b-8ed5e17f9a7e/front-500"
+  },
+  {
+    "rank": 268,
+    "title": "Sail Away",
+    "artist": "Randy Newman",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/d1c0b3db-6b93-3b9d-9479-0d60486120cb/front-500"
+  },
+  {
+    "rank": 269,
+    "title": "Yeezus",
+    "artist": "Kanye West",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/5d4d0f2d-9be7-4922-bc9a-cbd2880b12c2/front-500"
+  },
+  {
+    "rank": 270,
+    "title": "Golden Hour",
+    "artist": "Kacey Musgraves",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/56713bde-f9de-4097-bbe3-41d9d7af32c4/front-500"
+  },
+  {
+    "rank": 271,
+    "title": "What’s the 411?",
+    "artist": "Mary J. Blige",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/8debe6e5-7fd1-35ee-9d3f-96523536b9f8/front-500"
+  },
+  {
+    "rank": 272,
+    "title": "White Light/White Heat",
+    "artist": "The Velvet Underground",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/fc0885e0-0284-3f9d-81ee-17c5e7196346/front-500"
+  },
+  {
+    "rank": 273,
+    "title": "Entertainment!",
+    "artist": "Gang of Four",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/d0493944-992b-3534-9174-8320c1879837/front-500"
+  },
+  {
+    "rank": 274,
+    "title": "Sweetheart of the Rodeo",
+    "artist": "The Byrds",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/2a02ea31-7a7f-3a46-8a46-aebfac434a81/front-500"
+  },
+  {
+    "rank": 275,
+    "title": "Curtis",
+    "artist": "Curtis Mayfield",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/0c24e81f-b710-3e24-a4fa-12950e153585/front-500"
+  },
+  {
+    "rank": 276,
+    "title": "The Bends",
+    "artist": "Radiohead",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/b8048f24-c026-3398-b23a-b5e50716cbc7/front-500"
+  },
+  {
+    "rank": 277,
+    "title": "The Diary of Alicia Keys",
+    "artist": "Alicia Keys",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/e53e291f-9a9c-38a0-96e0-86a9b63b776d/front-500"
+  },
+  {
+    "rank": 278,
+    "title": "Houses of the Holy",
+    "artist": "Led Zeppelin",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/9b5006e5-b276-3a05-bcdd-8d986842320b/front-500"
+  },
+  {
+    "rank": 279,
+    "title": "MTV Unplugged in New York",
+    "artist": "Nirvana",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/fb3770f6-83fb-32b7-85c4-1f522a92287e/front-500"
+  },
+  {
+    "rank": 280,
+    "title": "Get Rich or Die Tryin’",
+    "artist": "50 Cent",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/f624ead2-e4ba-4e52-bea5-4362b1c67b14/front-500"
+  },
+  {
+    "rank": 281,
+    "title": "Nilsson Schmilsson",
+    "artist": "Nilsson",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/19a185f4-f683-3d00-9571-7378ea276068/front-500"
+  },
+  {
+    "rank": 282,
+    "title": "In the Wee Small Hours",
+    "artist": "Frank Sinatra",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/5a5d9938-38a9-3f32-b03b-8f14f62b880a/front-500"
+  },
+  {
+    "rank": 283,
+    "title": "Bad Girls",
+    "artist": "Donna Summer",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/f7568cc7-4c09-3a47-abbc-593e7aaac7d6/front-500"
+  },
+  {
+    "rank": 284,
+    "title": "Down Every Road",
+    "artist": "Merle Haggard",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/cea6248e-5d05-33be-b6c4-a8a284fe5b3e/front-500"
+  },
+  {
+    "rank": 285,
+    "title": "3rd",
+    "artist": "Big Star",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/c52726bf-b188-373a-8cf0-95c3ed422fba/front-500"
+  },
+  {
+    "rank": 286,
+    "title": "Californication",
+    "artist": "Red Hot Chili Peppers",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/ca5dfcc3-83fb-3eee-9061-c27296b77b2c/front-500"
+  },
+  {
+    "rank": 287,
+    "title": "Mr. Tambourine Man",
+    "artist": "The Byrds",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/2b83d3e4-d461-31d6-9e2a-c99b69421e28/front-500"
+  },
+  {
+    "rank": 288,
+    "title": "The Modern Lovers",
+    "artist": "The Modern Lovers",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/91e1f88a-f081-3639-9972-0d46b3d3b616/front-500"
+  },
+  {
+    "rank": 289,
+    "title": "Post",
+    "artist": "Björk",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/b2a6e057-087d-3ae5-a6e5-7f5fa39808ff/front-500"
+  },
+  {
+    "rank": 290,
+    "title": "Speakerboxxx / The Love Below",
+    "artist": "OutKast",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/fa64febd-61e0-346e-aaa2-04564ed4f0a3/front-500"
+  },
+  {
+    "rank": 291,
+    "title": "The Writing’s on the Wall",
+    "artist": "Destiny’s Child",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/7bfda0d3-5747-3f7c-a60f-065b6ea29db1/front-500"
+  },
+  {
+    "rank": 292,
+    "title": "Van Halen",
+    "artist": "Van Halen",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/43a0e8b5-6059-397f-81e6-b8df5a648496/front-500"
+  },
+  {
+    "rank": 293,
+    "title": "Last Splash",
+    "artist": "The Breeders",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/7aaf0618-292c-3474-bfbc-d831baf710cf/front-500"
+  },
+  {
+    "rank": 294,
+    "title": "Weezer",
+    "artist": "Weezer",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/c7b245c9-8099-32ea-af95-893acedde2cf/front-500"
+  },
+  {
+    "rank": 295,
+    "title": "Random Access Memories",
+    "artist": "Daft Punk",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/aa997ea0-2936-40bd-884d-3af8a0e064dc/front-500"
+  },
+  {
+    "rank": 296,
+    "title": "Rust Never Sleeps",
+    "artist": "Neil Young & Crazy Horse",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/a710c7c7-46e6-36ca-9c3c-87c8e79f8daf/front-500"
+  },
+  {
+    "rank": 297,
+    "title": "So",
+    "artist": "Peter Gabriel",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/be3cc3e7-bdb0-3c13-a60b-a985b30eb603/front-500"
+  },
+  {
+    "rank": 298,
+    "title": "Full Moon Fever",
+    "artist": "Tom Petty",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/ffbef03e-3651-39db-8a2f-e140dc5aa219/front-500"
+  },
+  {
+    "rank": 299,
+    "title": "Live at the Regal",
+    "artist": "B.B. King",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/a4d2a86c-bbd6-352b-b9fa-f9da86df842c/front-500"
+  },
+  {
+    "rank": 300,
+    "title": "Come On Over",
+    "artist": "Shania Twain",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/45bcf3e0-a274-3bdd-9130-299a5ef780ea/front-500"
+  },
+  {
+    "rank": 301,
+    "title": "New York Dolls",
+    "artist": "New York Dolls",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/4cdd4c59-e38f-382b-b01c-e69829faa69c/front-500"
+  },
+  {
+    "rank": 302,
+    "title": "Tonight’s the Night",
+    "artist": "Neil Young",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/e0207e33-af06-3862-baba-f42ca722de0d/front-500"
+  },
+  {
+    "rank": 303,
+    "title": "The Definitive Collection",
+    "artist": "ABBA",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/e2996feb-86b9-3550-88ec-f1c9c9af3961/front-500"
+  },
+  {
+    "rank": 304,
+    "title": "Just As I Am",
+    "artist": "Bill Withers",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/a72ee504-15b5-343c-bfd7-e71f9272e0e5/front-500"
+  },
+  {
+    "rank": 305,
+    "title": "Alive!",
+    "artist": "KISS",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/aa876c87-138c-339b-8176-abacb4e45259/front-500"
+  },
+  {
+    "rank": 306,
+    "title": "I’m Still in Love With You",
+    "artist": "Al Green",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/4a40960b-44b3-313c-8540-cde054d41bd9/front-500"
+  },
+  {
+    "rank": 307,
+    "title": "Portrait of a Legend 1951–1964",
+    "artist": "Sam Cooke",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/38d697fd-bdf6-3800-bbff-2078456d4c4c/front-500"
+  },
+  {
+    "rank": 308,
+    "title": "Here Come the Warm Jets",
+    "artist": "Brian Eno",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/90d9be4c-30be-3e28-949a-66ee22c3a63a/front-500"
+  },
+  {
+    "rank": 309,
+    "title": "Closer",
+    "artist": "Joy Division",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/852f9715-24b3-37d5-b8a5-456f5e19b41e/front-500"
+  },
+  {
+    "rank": 310,
+    "title": "Pink Flag",
+    "artist": "Wire",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/9facb8b5-4b02-3f28-9f4a-61cb9b8fd7aa/front-500"
+  },
+  {
+    "rank": 311,
+    "title": "On the Beach",
+    "artist": "Neil Young",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/f4174531-b783-3786-b75f-4fe61a8f6333/front-500"
+  },
+  {
+    "rank": 312,
+    "title": "A Seat at the Table",
+    "artist": "Solange",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/331a7ba1-fae2-4881-b434-554f46c13746/front-500"
+  },
+  {
+    "rank": 313,
+    "title": "Stories From the City, Stories From the Sea",
+    "artist": "PJ Harvey",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/71641af7-d122-326a-b0bb-f76a8d09810c/front-500"
+  },
+  {
+    "rank": 314,
+    "title": "One in a Million",
+    "artist": "Aaliyah",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/776a71f8-2071-3743-aab4-83436df1b366/front-500"
+  },
+  {
+    "rank": 315,
+    "title": "EL MAL QUERER",
+    "artist": "ROSALÍA",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/bb525db3-81e4-4c05-b529-23fa05f35c12/front-500"
+  },
+  {
+    "rank": 316,
+    "title": "The Who Sell Out",
+    "artist": "The Who",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/aa02a102-f7b5-3584-8d21-bd9c560effb6/front-500"
+  },
+  {
+    "rank": 317,
+    "title": "Lady in Satin",
+    "artist": "Billie Holiday",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/cf7bc239-a3ba-3d87-80e5-261f750cb560/front-500"
+  },
+  {
+    "rank": 318,
+    "title": "The Velvet Rope",
+    "artist": "Janet Jackson",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/5bb501c6-2e78-393d-bcac-27d7d1b44a27/front-500"
+  },
+  {
+    "rank": 319,
+    "title": "The Stone Roses",
+    "artist": "The Stone Roses",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/88b86fe0-26f5-3949-817a-8082145e704d/front-500"
+  },
+  {
+    "rank": 320,
+    "title": "Los Angeles",
+    "artist": "X",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/700da083-bd95-3301-91f1-af571a001414/front-500"
+  },
+  {
+    "rank": 321,
+    "title": "Norman Fucking Rockwell!",
+    "artist": "Lana Del Rey",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/24fd0887-9e83-42e3-b27e-e7f89ead4c03/front-500"
+  },
+  {
+    "rank": 322,
+    "title": "From Elvis in Memphis",
+    "artist": "Elvis Presley",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/2a753764-89d5-3b72-8dff-8c599f1ea925/front-500"
+  },
+  {
+    "rank": 323,
+    "title": "Sandinista!",
+    "artist": "The Clash",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/ff729e76-b7c5-3877-bf7d-bbad4fde43cb/front-500"
+  },
+  {
+    "rank": 324,
+    "title": "A Rush of Blood to the Head",
+    "artist": "Coldplay",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/120c786d-a3b2-3c19-b4ff-2b7b3b4435bf/front-500"
+  },
+  {
+    "rank": 325,
+    "title": "All Killer No Filler! The Jerry Lee Lewis Anthology",
+    "artist": "Jerry Lee Lewis",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/d452a649-644b-326d-b9cf-418f39ac2902/front-500"
+  },
+  {
+    "rank": 326,
+    "title": "Dirty Mind",
+    "artist": "Prince",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/4f19b946-6ecb-3801-9248-cc44e9e9a284/front-500"
+  },
+  {
+    "rank": 327,
+    "title": "Live at Leeds",
+    "artist": "The Who",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/0ba3b960-9b4b-3191-bcc5-1e51169e5955/front-500"
+  },
+  {
+    "rank": 328,
+    "title": "Modern Vampires of the City",
+    "artist": "Vampire Weekend",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/eb143c5a-9a85-4bce-a78c-f7faf72c0169/front-500"
+  },
+  {
+    "rank": 329,
+    "title": "Endtroducing.....",
+    "artist": "DJ Shadow",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/4b2186f5-ff00-3227-ae11-783ba93e1089/front-500"
+  },
+  {
+    "rank": 330,
+    "title": "Aftermath",
+    "artist": "The Rolling Stones",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/26987c39-5914-483b-a897-d43ce6aad9b1/front-500"
+  },
+  {
+    "rank": 331,
+    "title": "Like a Prayer",
+    "artist": "Madonna",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/1f75a8df-176c-3d23-8f1f-b0c8935682ec/front-500"
+  },
+  {
+    "rank": 332,
+    "title": "Elvis Presley",
+    "artist": "Elvis Presley",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/2ebeec96-6ef7-3d4d-943c-0b4a2af1d7cc/front-500"
+  },
+  {
+    "rank": 333,
+    "title": "Still Bill",
+    "artist": "Bill Withers",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/63544e97-de86-3096-8702-250590ae5f90/front-500"
+  },
+  {
+    "rank": 334,
+    "title": "Abraxas",
+    "artist": "Santana",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/43424c73-fc58-36b0-b9cf-f8b057ac0603/front-500"
+  },
+  {
+    "rank": 335,
+    "title": "The Basement Tapes",
+    "artist": "Bob Dylan & The Band",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/47873729-6db0-3431-99e7-0292e939dadf/front-500"
+  },
+  {
+    "rank": 336,
+    "title": "Avalon",
+    "artist": "Roxy Music",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/4b51d75c-ca0e-3ea7-9950-639eda1f7d1a/front-500"
+  },
+  {
+    "rank": 337,
+    "title": "John Wesley Harding",
+    "artist": "Bob Dylan",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/32981714-597a-32dd-9f29-b2f7566fed89/front-500"
+  },
+  {
+    "rank": 338,
+    "title": "Another Green World",
+    "artist": "Eno",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/7d5a684e-73a3-325c-a59c-34c9a941d8d6/front-500"
+  },
+  {
+    "rank": 339,
+    "title": "Rhythm Nation 1814",
+    "artist": "Janet Jackson",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/20aaac17-e4e8-373c-99cc-211321b82832/front-500"
+  },
+  {
+    "rank": 340,
+    "title": "Doggystyle",
+    "artist": "Snoop Doggy Dogg",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/649762c9-8785-3d9c-803d-2f0496f168e5/front-500"
+  },
+  {
+    "rank": 341,
+    "title": "Siamese Dream",
+    "artist": "Smashing Pumpkins",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/a159e102-18bb-42ca-a59e-5f96a7eff241/front-500"
+  },
+  {
+    "rank": 342,
+    "title": "Let It Be",
+    "artist": "The Beatles",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/bff544a7-56e0-3ed6-9e0f-3b676cca9111/front-500"
+  },
+  {
+    "rank": 343,
+    "title": "Greatest Hits",
+    "artist": "Sly & the Family Stone",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/320b576b-aa9c-3c5e-8631-178e81841866/front-500"
+  },
+  {
+    "rank": 344,
+    "title": "Funky Kingston",
+    "artist": "Toots & The Maytals",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/dc7f2fc9-19ff-33e9-aa0d-3c81f91ca633/front-500"
+  },
+  {
+    "rank": 345,
+    "title": "The Wild, the Innocent & The E Street Shuffle",
+    "artist": "Bruce Springsteen",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/4b443e66-52a7-3cc9-a522-0dc64a6a51dc/front-500"
+  },
+  {
+    "rank": 346,
+    "title": "AM",
+    "artist": "Arctic Monkeys",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/a348ba2f-f8b3-4686-b928-e63d8d94d543/front-500"
+  },
+  {
+    "rank": 347,
+    "title": "Liquid Swords",
+    "artist": "Genius/GZA",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/6075a004-e983-3a00-8a13-50af32f0e200/front-500"
+  },
+  {
+    "rank": 348,
+    "title": "Time (The Revelator)",
+    "artist": "Gillian Welch",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/4f9a9d35-b16d-3b7b-80d0-32b29683633f/front-500"
+  },
+  {
+    "rank": 349,
+    "title": "Kick Out the Jams",
+    "artist": "MC5",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/44410403-45d3-30fa-ba48-d16664bf6fb3/front-500"
+  },
+  {
+    "rank": 350,
+    "title": "Music of My Mind",
+    "artist": "Stevie Wonder",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/5a253b10-e9f8-334c-b343-7f14e92402c2/front-500"
+  },
+  {
+    "rank": 351,
+    "title": "For Your Pleasure",
+    "artist": "Roxy Music",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/72fd9993-17b8-3402-9f8d-c39cb3d2c27e/front-500"
+  },
+  {
+    "rank": 352,
+    "title": "The Slim Shady LP",
+    "artist": "Eminem",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/be725de4-4633-3c8a-9a03-f2c4392b6e0d/front-500"
+  },
+  {
+    "rank": 353,
+    "title": "The Cars",
+    "artist": "The Cars",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/36172f3d-9b55-37f1-9fd4-0cbd2f3af0ce/front-500"
+  },
+  {
+    "rank": 354,
+    "title": "Germfree Adolescents",
+    "artist": "X‐Ray Spex",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/02c1c972-b5a1-3b8f-be3f-83dfb9373def/front-500"
+  },
+  {
+    "rank": 355,
+    "title": "Black Sabbath",
+    "artist": "Black Sabbath",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/826c9743-a3f0-3479-bf06-8df2e140ef1d/front-500"
+  },
+  {
+    "rank": 356,
+    "title": "Gris-Gris",
+    "artist": "Dr. John, the Night Tripper",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/8ceb6d06-3a60-37eb-81de-9cc8fe538e16/front-500"
+  },
+  {
+    "rank": 357,
+    "title": "Rain Dogs",
+    "artist": "Tom Waits",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/fb25a883-2270-3ec4-8c62-85c7ed857e6f/front-500"
+  },
+  {
+    "rank": 358,
+    "title": "Goo",
+    "artist": "Sonic Youth",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/8114542a-d659-3b5f-a11f-cf86ed7fa84d/front-500"
+  },
+  {
+    "rank": 359,
+    "title": "Radio City",
+    "artist": "Big Star",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/dea0867d-45d1-3366-8147-1b78f924a137/front-500"
+  },
+  {
+    "rank": 360,
+    "title": "One Nation Under a Groove",
+    "artist": "Funkadelic",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/9d084107-b712-3599-ab62-ac76fe3756b5/front-500"
+  },
+  {
+    "rank": 361,
+    "title": "The Black Parade",
+    "artist": "My Chemical Romance",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/bcba43e7-2f72-3b60-b234-577e77fd2d9e/front-500"
+  },
+  {
+    "rank": 362,
+    "title": "Never Too Much",
+    "artist": "Luther Vandross",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/6e49186d-ce5c-3686-86cd-021f0ce1eda3/front-500"
+  },
+  {
+    "rank": 363,
+    "title": "Mothership Connection",
+    "artist": "Parliament",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/cb69bfc6-a15c-34cd-b1af-76b6481bf09a/front-500"
+  },
+  {
+    "rank": 364,
+    "title": "More Songs About Buildings and Food",
+    "artist": "Talking Heads",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/2cecb2c0-cac3-3c55-8083-577308746230/front-500"
+  },
+  {
+    "rank": 365,
+    "title": "Madvillainy",
+    "artist": "Madvillain",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/ab570ccb-b06b-3746-8147-4903163ba895/front-500"
+  },
+  {
+    "rank": 366,
+    "title": "Rocks",
+    "artist": "Aerosmith",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/775d9a2d-effc-35c8-b80a-f9a4e4206d27/front-500"
+  },
+  {
+    "rank": 367,
+    "title": "If You’re Reading This It’s Too Late",
+    "artist": "Drake",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/68d79778-aceb-486c-88a7-0abb3665344b/front-500"
+  },
+  {
+    "rank": 368,
+    "title": "All Things Must Pass",
+    "artist": "George Harrison",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/d4b0f3e2-e3eb-3531-b305-ed8105cb5be4/front-500"
+  },
+  {
+    "rank": 369,
+    "title": "The Infamous…",
+    "artist": "Mobb Deep",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/03f3c216-bd40-322b-ac8a-254816ff5573/front-500"
+  },
+  {
+    "rank": 370,
+    "title": "Tha Carter II",
+    "artist": "Lil Wayne",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/d97d9f3b-3dc1-3330-a240-b84b74e62044/front-500"
+  },
+  {
+    "rank": 371,
+    "title": "Anthology",
+    "artist": "The Temptations",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/1df9d775-7593-4e0a-bb55-3035948de6c5/front-500"
+  },
+  {
+    "rank": 372,
+    "title": "Cheap Thrills",
+    "artist": "Big Brother & the Holding Company",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/02de8887-e93b-3ea6-8b6d-de072a159bba/front-500"
+  },
+  {
+    "rank": 373,
+    "title": "Hot Buttered Soul",
+    "artist": "Isaac Hayes",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/e76d4f75-f09b-3f5b-aca9-44ac4489e58d/front-500"
+  },
+  {
+    "rank": 374,
+    "title": "King of the Delta Blues Singers",
+    "artist": "Robert Johnson",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/2609603b-cd7d-3ccf-aa58-94c38defac2c/front-500"
+  },
+  {
+    "rank": 375,
+    "title": "Dookie",
+    "artist": "Green Day",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/314cffd4-daa5-3337-85e5-e54165a96113/front-500"
+  },
+  {
+    "rank": 376,
+    "title": "In the Aeroplane Over the Sea",
+    "artist": "Neutral Milk Hotel",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/8f310800-045b-3e12-8268-50b3d33a2267/front-500"
+  },
+  {
+    "rank": 377,
+    "title": "Fever to Tell",
+    "artist": "Yeah Yeah Yeahs",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/e8e2d824-dd32-3b24-9c7c-24619fbe86a9/front-500"
+  },
+  {
+    "rank": 378,
+    "title": "Run‐D.M.C.",
+    "artist": "Run‐D.M.C.",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/eec6f4a7-b992-34df-8984-af0fe00550e0/front-500"
+  },
+  {
+    "rank": 379,
+    "title": "Moving Pictures",
+    "artist": "Rush",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/40e30dc1-55ac-33e1-85d3-1f1508140bfc/front-500"
+  },
+  {
+    "rank": 380,
+    "title": "Mingus Ah Um",
+    "artist": "Charles Mingus",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/48ec720b-2fc2-35dd-8130-5b186c4abcbc/front-500"
+  },
+  {
+    "rank": 381,
+    "title": "(pronounced ’lĕh-’nérd ’skin-’nérd)",
+    "artist": "Lynyrd Skynyrd",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/33446893-8c9f-30b6-aa73-d719df371430/front-500"
+  },
+  {
+    "rank": 382,
+    "title": "Currents",
+    "artist": "Tame Impala",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/08aa7a6c-3e43-4459-87b2-e47faf3a088a/front-500"
+  },
+  {
+    "rank": 383,
+    "title": "Mezzanine",
+    "artist": "Massive Attack",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/6f9f6899-c0d3-311d-ae87-a10ae6bc53a9/front-500"
+  },
+  {
+    "rank": 384,
+    "title": "The Kinks Are the Village Green Preservation Society",
+    "artist": "The Kinks",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/4516a30e-939c-3b2b-a8ea-f94ae418d3a6/front-500"
+  },
+  {
+    "rank": 385,
+    "title": "Rocket to Russia",
+    "artist": "Ramones",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/dd959091-dba1-32b8-8159-0090959ce75b/front-500"
+  },
+  {
+    "rank": 386,
+    "title": "Donuts",
+    "artist": "J Dilla",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/6b78c33a-64c4-3472-99e9-be45a392acb4/front-500"
+  },
+  {
+    "rank": 387,
+    "title": "In Rainbows",
+    "artist": "Radiohead",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/6e335887-60ba-38f0-95af-fae7774336bf/front-500"
+  },
+  {
+    "rank": 388,
+    "title": "Young, Gifted and Black",
+    "artist": "Aretha Franklin",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/f62ec525-7158-37c1-8535-6eaac62435b3/front-500"
+  },
+  {
+    "rank": 389,
+    "title": "The Emancipation of Mimi",
+    "artist": "Mariah Carey",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/2391debf-38aa-3a90-888e-51f857131e98/front-500"
+  },
+  {
+    "rank": 390,
+    "title": "Surfer Rosa",
+    "artist": "Pixies",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/74e36cbc-a747-3ebf-a60e-51e656c87741/front-500"
+  },
+  {
+    "rank": 391,
+    "title": "Kaleidoscope",
+    "artist": "Kelis",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/4ea68d9e-7e06-30ea-8b29-3d8195b302c7/front-500"
+  },
+  {
+    "rank": 392,
+    "title": "Proud Mary: The Best of Ike and Tina Turner",
+    "artist": "Ike & Tina Turner",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/c504f95d-265a-3d94-b888-9571712351ec/front-500"
+  },
+  {
+    "rank": 393,
+    "title": "1989",
+    "artist": "Taylor Swift",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/4d9ec1c2-58ec-48a4-aa0a-916718adead0/front-500"
+  },
+  {
+    "rank": 394,
+    "title": "Diana",
+    "artist": "Diana Ross",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/fd07981b-fe56-3218-8df6-bcbe6992c96e/front-500"
+  },
+  {
+    "rank": 395,
+    "title": "Black Messiah",
+    "artist": "D’Angelo and The Vanguard",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/b3d96626-4d46-4012-b6cb-e8d8b192a4f1/front-500"
+  },
+  {
+    "rank": 396,
+    "title": "Something/Anything?",
+    "artist": "Todd Rundgren",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/edbaf38a-ba3c-3d21-981c-879fe4ac6c76/front-500"
+  },
+  {
+    "rank": 397,
+    "title": "WHEN WE ALL FALL ASLEEP, WHERE DO WE GO?",
+    "artist": "Billie Eilish",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/72375978-a9a1-4254-b957-85565c716b7e/front-500"
+  },
+  {
+    "rank": 398,
+    "title": "The Raincoats",
+    "artist": "The Raincoats",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/044a7a01-ab8f-4781-a4de-183718abb936/front-500"
+  },
+  {
+    "rank": 399,
+    "title": "SMiLE",
+    "artist": "Brian Wilson",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/7eea3a40-7c24-34f9-aa48-958edb5145c5/front-500"
+  },
+  {
+    "rank": 400,
+    "title": "Beauty and the Beat",
+    "artist": "Go‐Go’s",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/8b64edc9-1a59-3840-8b12-85a4e19cf48a/front-500"
+  },
+  {
+    "rank": 401,
+    "title": "Blondie",
+    "artist": "Blondie",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/e0400e1e-2dd9-3bed-9538-614998b3702c/front-500"
+  },
+  {
+    "rank": 402,
+    "title": "Expensive Shit",
+    "artist": "Fela Ransome Kuti",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/b16d9280-f25e-3648-8a8e-1141efd55669/front-500"
+  },
+  {
+    "rank": 403,
+    "title": "Supreme Clientele",
+    "artist": "Ghostface Killah",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/e54744e2-7646-304d-abb8-2952671da3bb/front-500"
+  },
+  {
+    "rank": 404,
+    "title": "Rapture",
+    "artist": "Anita Baker",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/b544c1b2-9190-34ac-8d03-348c86a77cb2/front-500"
+  },
+  {
+    "rank": 405,
+    "title": "Nuggets: Original Artyfacts From the First Psychedelic Era, 1965–1968",
+    "artist": "Various Artists",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/8692651e-a7df-3903-a47e-8a28bc1b492c/front-500"
+  },
+  {
+    "rank": 406,
+    "title": "69 Love Songs",
+    "artist": "The Magnetic Fields",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/5dfac852-1aed-35b2-93b6-e8f9c93fe521/front-500"
+  },
+  {
+    "rank": 407,
+    "title": "Everybody Knows This Is Nowhere",
+    "artist": "Neil Young with Crazy Horse",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/f61603ab-ef6b-386b-a5e0-aaefc00543f1/front-500"
+  },
+  {
+    "rank": 408,
+    "title": "Ace of Spades",
+    "artist": "Motörhead",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/51d51de2-0312-4798-8529-bed2ae2581c6/front-500"
+  },
+  {
+    "rank": 409,
+    "title": "Workingman’s Dead",
+    "artist": "Grateful Dead",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/6fdb82d8-9aee-35ed-8092-8434866bab7f/front-500"
+  },
+  {
+    "rank": 410,
+    "title": "Wild Honey",
+    "artist": "The Beach Boys",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/25db75ad-e1e3-3941-85bd-291009a5f00d/front-500"
+  },
+  {
+    "rank": 411,
+    "title": "“Love and Theft”",
+    "artist": "Bob Dylan",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/9980ffe5-c5b5-3a83-8c1e-1ec6618f97ca/front-500"
+  },
+  {
+    "rank": 412,
+    "title": "Going to a Go‐Go",
+    "artist": "Smokey Robinson and The Miracles",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/88762473-682d-3544-a9e7-1bb3c5dddaf1/front-500"
+  },
+  {
+    "rank": 413,
+    "title": "Cosmo’s Factory",
+    "artist": "Creedence Clearwater Revival",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/3a31800f-1916-3f4c-a7ae-26b783d00670/front-500"
+  },
+  {
+    "rank": 414,
+    "title": "Risqué",
+    "artist": "Chic",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/baa74317-3f23-3f0b-a996-c68f52c61f13/front-500"
+  },
+  {
+    "rank": 415,
+    "title": "Look‐Ka Py Py",
+    "artist": "The Meters",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/fb2a15ff-c773-3297-9d15-2dd4eee92e4c/front-500"
+  },
+  {
+    "rank": 416,
+    "title": "Things Fall Apart",
+    "artist": "The Roots",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/8f341430-85b9-3a66-875f-ed1202868393/front-500"
+  },
+  {
+    "rank": 417,
+    "title": "The Shape of Jazz to Come",
+    "artist": "Ornette Coleman",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/5879cfca-e1d0-3ef4-8014-3b284832ed18/front-500"
+  },
+  {
+    "rank": 418,
+    "title": "Brothers in Arms",
+    "artist": "Dire Straits",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/b02f651e-32a1-30ae-bc23-070b59170278/front-500"
+  },
+  {
+    "rank": 419,
+    "title": "Chief",
+    "artist": "Eric Church",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/979e5e4d-0c1d-46c0-9fda-fa9b6fce89a6/front-500"
+  },
+  {
+    "rank": 420,
+    "title": "That’s the Way of the World",
+    "artist": "Earth, Wind & Fire",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/e9845207-8ae3-36db-b0e1-2efcdb46687d/front-500"
+  },
+  {
+    "rank": 421,
+    "title": "Arular",
+    "artist": "M.I.A.",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/32d38e25-27e8-45bc-b79b-931f5a609546/front-500"
+  },
+  {
+    "rank": 422,
+    "title": "Let’s Get It On",
+    "artist": "Marvin Gaye",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/120c822e-3cd2-3652-975c-d687256a7931/front-500"
+  },
+  {
+    "rank": 423,
+    "title": "I Can Hear the Heart Beating as One",
+    "artist": "Yo La Tengo",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/901ddfef-b428-3022-a7b9-429f56513831/front-500"
+  },
+  {
+    "rank": 424,
+    "title": "Odelay",
+    "artist": "Beck",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/df0bfd42-78a9-40c3-a45f-a12e10d446f8/front-500"
+  },
+  {
+    "rank": 425,
+    "title": "Paul Simon",
+    "artist": "Paul Simon",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/602d0c54-2901-3469-a683-a5a50f3e5260/front-500"
+  },
+  {
+    "rank": 426,
+    "title": "Lucinda Williams",
+    "artist": "Lucinda Williams",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/9868b6bf-6bf5-3d62-bdb9-a312694c34f1/front-500"
+  },
+  {
+    "rank": 427,
+    "title": "Call Me",
+    "artist": "Al Green",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/edafb37c-f392-3765-9dbd-80616dcb2ad7/front-500"
+  },
+  {
+    "rank": 428,
+    "title": "New Day Rising",
+    "artist": "Hüsker Dü",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/5ae570d2-65c1-3da5-9a1b-dbb98ca7c3d2/front-500"
+  },
+  {
+    "rank": 429,
+    "title": "Reach Out",
+    "artist": "Four Tops",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/6fdc3cfa-7bac-3b19-aa87-94947ef40ffa/front-500"
+  },
+  {
+    "rank": 430,
+    "title": "My Aim Is True",
+    "artist": "Elvis Costello",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/c7a4740f-2729-3895-8498-08c521886a95/front-500"
+  },
+  {
+    "rank": 431,
+    "title": "How Will the Wolf Survive?",
+    "artist": "Los Lobos",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/2478de4b-9470-311b-be17-68fb79388e89/front-500"
+  },
+  {
+    "rank": 432,
+    "title": "Confessions",
+    "artist": "Usher",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/0ee013ee-5f59-35d5-b6b8-26a0cb3e4372/front-500"
+  },
+  {
+    "rank": 433,
+    "title": "Sound of Silver",
+    "artist": "LCD Soundsystem",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/5cbcdd9f-4b7d-3b3c-b9f2-6b0e75971157/front-500"
+  },
+  {
+    "rank": 434,
+    "title": "Crooked Rain, Crooked Rain",
+    "artist": "Pavement",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/4f348977-6f44-39f9-b243-071927ecc6a4/front-500"
+  },
+  {
+    "rank": 435,
+    "title": "Actually",
+    "artist": "Pet Shop Boys",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/6de9a233-13dd-30b5-ad30-61c5814774c5/front-500"
+  },
+  {
+    "rank": 436,
+    "title": "All Eyez on Me",
+    "artist": "2Pac",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/e2621417-9236-36b4-9f9e-376c416dc4b0/front-500"
+  },
+  {
+    "rank": 437,
+    "title": "Screamadelica",
+    "artist": "Primal Scream",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/48a1839c-f4e0-3223-831f-fc36ca6ff7cf/front-500"
+  },
+  {
+    "rank": 438,
+    "title": "Parklife",
+    "artist": "Blur",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/67461c8e-d864-3910-9bf4-39e44357aac9/front-500"
+  },
+  {
+    "rank": 439,
+    "title": "Sex Machine",
+    "artist": "James Brown",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/640919d2-e786-354d-a9d5-3151e4621cb4/front-500"
+  },
+  {
+    "rank": 440,
+    "title": "Coal Miner’s Daughter",
+    "artist": "Loretta Lynn",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/edca17e1-d696-3fc8-a22a-06d232f1f48f/front-500"
+  },
+  {
+    "rank": 441,
+    "title": "Blackout",
+    "artist": "Britney Spears",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/0b8e14e1-d44d-3770-8617-5c6137a444a8/front-500"
+  },
+  {
+    "rank": 442,
+    "title": "Beauty Behind the Madness",
+    "artist": "The Weeknd",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/a85b8aff-fcbc-4431-95ba-d8c20bbfb77e/front-500"
+  },
+  {
+    "rank": 443,
+    "title": "Scary Monsters… and Super Creeps",
+    "artist": "David Bowie",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/bb13cb45-254c-3a61-89a5-15d22a97e6d6/front-500"
+  },
+  {
+    "rank": 444,
+    "title": "Extraordinary Machine",
+    "artist": "Fiona Apple",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/81c98a74-56ba-355e-8d63-83e12a63dace/front-500"
+  },
+  {
+    "rank": 445,
+    "title": "Close to the Edge",
+    "artist": "Yes",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/5a59b948-1961-32ff-80d9-e970c7d4ebe9/front-500"
+  },
+  {
+    "rank": 446,
+    "title": "Journey in Satchidananda",
+    "artist": "Alice Coltrane featuring Pharoah Sanders",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/cf154081-2678-3778-95cf-cd31c4ea5dfe/front-500"
+  },
+  {
+    "rank": 447,
+    "title": "X 100PRE",
+    "artist": "Bad Bunny",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/68f8c63d-3e54-4f26-8ce3-41a7bc1ca7fd/front-500"
+  },
+  {
+    "rank": 448,
+    "title": "Complete & Unbelievable: The Otis Redding Dictionary of Soul",
+    "artist": "Otis Redding",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/aeea2d91-3d98-389e-92fc-ff0db34762be/front-500"
+  },
+  {
+    "rank": 449,
+    "title": "Elephant",
+    "artist": "The White Stripes",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/d85b9684-4277-3565-b89b-115c8b4b7fd3/front-500"
+  },
+  {
+    "rank": 450,
+    "title": "RAM",
+    "artist": "Paul & Linda McCartney",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/434d4068-8404-359a-9585-3376d3d1680d/front-500"
+  },
+  {
+    "rank": 451,
+    "title": "First Take",
+    "artist": "Roberta Flack",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/4455c04d-9368-4dc5-b35d-6ff8c407921f/front-500"
+  },
+  {
+    "rank": 452,
+    "title": "Anthology",
+    "artist": "Diana Ross & The Supremes",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/3fb673f7-3ced-4d78-8a05-0c550d1db6b0/front-500"
+  },
+  {
+    "rank": 453,
+    "title": "Pretty Hate Machine",
+    "artist": "Nine Inch Nails",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/fcb872a2-7ef9-3ed0-bd4a-7c55c78179b6/front-500"
+  },
+  {
+    "rank": 454,
+    "title": "Ege Bamyası",
+    "artist": "Can",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/a4b405a6-0577-3b77-b46d-06af1b98fbd2/front-500"
+  },
+  {
+    "rank": 455,
+    "title": "Bo Diddley / Go Bo Diddley",
+    "artist": "Bo Diddley",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/8dfbac86-ac5f-320a-8fea-2c4f41f98af9/front-500"
+  },
+  {
+    "rank": 456,
+    "title": "Greatest Hits",
+    "artist": "Al Green",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/9421508e-362a-38e8-ba54-658513768862/front-500"
+  },
+  {
+    "rank": 457,
+    "title": "I Do Not Want What I Haven’t Got",
+    "artist": "Sinéad O’Connor",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/9747bcfe-7c42-35ac-8c3e-7ecac9f1227b/front-500"
+  },
+  {
+    "rank": 458,
+    "title": "Southeastern",
+    "artist": "Jason Isbell",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/47e4fe0d-8be7-4bdc-b5e7-5b0409ed6afc/front-500"
+  },
+  {
+    "rank": 459,
+    "title": "Man on the Moon: The End of Day",
+    "artist": "Kid Cudi",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/1b4bb003-db4c-4858-84ec-817aaca09501/front-500"
+  },
+  {
+    "rank": 460,
+    "title": "Melodrama",
+    "artist": "Lorde",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/668e80e0-b35e-4471-9788-0a3d797fe42c/front-500"
+  },
+  {
+    "rank": 461,
+    "title": "For Emma, Forever Ago",
+    "artist": "Bon Iver",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/187935b5-a0a4-3e6f-9684-48b67a5190a1/front-500"
+  },
+  {
+    "rank": 462,
+    "title": "The Gilded Palace of Sin",
+    "artist": "The Flying Burrito Bros.",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/ddc45051-45c3-3cdf-b213-c30c35df8639/front-500"
+  },
+  {
+    "rank": 463,
+    "title": "Eli and the Thirteenth Confession",
+    "artist": "Laura Nyro",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/c5410670-fce4-3139-9fab-6806d79171c5/front-500"
+  },
+  {
+    "rank": 464,
+    "title": "3+3",
+    "artist": "The Isley Brothers",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/4e71149d-e632-32f5-9d9f-83cb8d6e3757/front-500"
+  },
+  {
+    "rank": 465,
+    "title": "The Best of the Classic Years",
+    "artist": "King Sunny Adé",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/d66265fa-f8e3-3b79-ab11-23eddd92f3ce/front-500"
+  },
+  {
+    "rank": 466,
+    "title": "The Beach Boys Today!",
+    "artist": "The Beach Boys",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/2b581513-39cc-3a81-9c50-79a8dbf5c031/front-500"
+  },
+  {
+    "rank": 467,
+    "title": "BLACKsummers’night",
+    "artist": "Maxwell",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/65579f48-3ba4-489a-9b1a-6108925055c9/front-500"
+  },
+  {
+    "rank": 468,
+    "title": "Some Girls",
+    "artist": "The Rolling Stones",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/b44bc358-a28f-3a1f-b07e-604910f12d37/front-500"
+  },
+  {
+    "rank": 469,
+    "title": "Clandestino",
+    "artist": "Manu Chao",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/24a451c9-a8f3-33f9-a4fc-5e2d00cb7816/front-500"
+  },
+  {
+    "rank": 470,
+    "title": "400 Degreez",
+    "artist": "Juvenile",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/08399f8b-c114-3080-b548-7599af1ebc5c/front-500"
+  },
+  {
+    "rank": 471,
+    "title": "Surrealistic Pillow",
+    "artist": "Jefferson Airplane",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/e6440cd2-5e8e-367d-bc49-cc042b5ef524/front-500"
+  },
+  {
+    "rank": 472,
+    "title": "Ctrl",
+    "artist": "SZA",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/8f892c1b-0709-4cf4-9711-493892a9eb9b/front-500"
+  },
+  {
+    "rank": 473,
+    "title": "Barrio fino",
+    "artist": "Daddy Yankee",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/5fa20be8-ea07-31bd-a915-f12a3ab8495e/front-500"
+  },
+  {
+    "rank": 474,
+    "title": "#1 Record",
+    "artist": "Big Star",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/18ec10a7-864f-3f1b-8d68-5cb622165b20/front-500"
+  },
+  {
+    "rank": 475,
+    "title": "Sheryl Crow",
+    "artist": "Sheryl Crow",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/9d95366b-4d7b-360a-a847-19286e55f98d/front-500"
+  },
+  {
+    "rank": 476,
+    "title": "Kimono My House",
+    "artist": "Sparks",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/0539b843-2228-36f5-965d-f370d05f66c3/front-500"
+  },
+  {
+    "rank": 477,
+    "title": "Moanin’ in the Moonlight",
+    "artist": "Howlin’ Wolf",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/75d0f3a2-5938-3f4d-b845-174b81eace3b/front-500"
+  },
+  {
+    "rank": 478,
+    "title": "Something Else by The Kinks",
+    "artist": "The Kinks",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/ab0ea2d3-a273-3d7f-855b-f9930a1395cf/front-500"
+  },
+  {
+    "rank": 479,
+    "title": "Amor Prohibido",
+    "artist": "Selena",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/bc5e0495-4db9-3dae-9883-104d5df6b2cc/front-500"
+  },
+  {
+    "rank": 480,
+    "title": "The Weight of These Wings",
+    "artist": "Miranda Lambert",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/6a9f6cf0-2316-46a7-b8e2-71d356ac737d/front-500"
+  },
+  {
+    "rank": 481,
+    "title": "If You’re Feeling Sinister",
+    "artist": "Belle and Sebastian",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/66be5deb-75d5-3737-9037-1c745891d3ec/front-500"
+  },
+  {
+    "rank": 482,
+    "title": "Bizarre Ride II the Pharcyde",
+    "artist": "The Pharcyde",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/c799ef0c-f038-364b-972b-51f52d794781/front-500"
+  },
+  {
+    "rank": 483,
+    "title": "The Anthology",
+    "artist": "Muddy Waters",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/43c8d4a1-0e92-3600-ba93-d75359480498/front-500"
+  },
+  {
+    "rank": 484,
+    "title": "Born This Way",
+    "artist": "Lady Gaga",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/2e3b231b-ab9f-4d85-950a-48708a1cc2fb/front-500"
+  },
+  {
+    "rank": 485,
+    "title": "I Want to See the Bright Lights Tonight",
+    "artist": "Richard & Linda Thompson",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/b35625b1-200d-3692-b02a-08bd4f693ef8/front-500"
+  },
+  {
+    "rank": 486,
+    "title": "Continuum",
+    "artist": "John Mayer",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/21e886f7-db66-3103-beb4-da9323adddc7/front-500"
+  },
+  {
+    "rank": 487,
+    "title": "Damaged",
+    "artist": "Black Flag",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/2cf40300-0f67-3136-9b84-57104f1f7a50/front-500"
+  },
+  {
+    "rank": 488,
+    "title": "The Stooges",
+    "artist": "The Stooges",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/18037a41-2695-3a8f-a732-f6653a7f125b/front-500"
+  },
+  {
+    "rank": 489,
+    "title": "Back to Mono (1958–1969)",
+    "artist": "Phil Spector",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/683391cb-533a-3b66-a072-c62e735f167d/front-500"
+  },
+  {
+    "rank": 490,
+    "title": "Heart Like a Wheel",
+    "artist": "Linda Ronstadt",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/3a026caf-ae4f-3b51-9d70-bb85ba6e1e7d/front-500"
+  },
+  {
+    "rank": 491,
+    "title": "Fine Line",
+    "artist": "Harry Styles",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/b9990da8-7953-4e64-aea5-065ca9cd3cb7/front-500"
+  },
+  {
+    "rank": 492,
+    "title": "Nick of Time",
+    "artist": "Bonnie Raitt",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/182a8072-0513-3aa2-b812-9f7a9692731a/front-500"
+  },
+  {
+    "rank": 493,
+    "title": "Here, My Dear",
+    "artist": "Marvin Gaye",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/225a6648-d4d2-3b89-986b-6e515e7a94f0/front-500"
+  },
+  {
+    "rank": 494,
+    "title": "Presenting the Fabulous Ronettes Featuring Veronica",
+    "artist": "The Ronettes",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/b24ffd1d-1cbc-32bd-bf45-b76b30792b8d/front-500"
+  },
+  {
+    "rank": 495,
+    "title": "II",
+    "artist": "Boyz II Men",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/6eaebb45-8911-3d0b-8ef3-914726356144/front-500"
+  },
+  {
+    "rank": 496,
+    "title": "Dónde están los ladrones?",
+    "artist": "Shakira",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/3197ee5d-696e-374f-8df3-042f1c0fd3a5/front-500"
+  },
+  {
+    "rank": 497,
+    "title": "The Indestructible Beat of Soweto",
+    "artist": "Various Artists",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/afa0750e-eee6-320f-845a-ad0ae891bd9b/front-500"
+  },
+  {
+    "rank": 498,
+    "title": "Suicide",
+    "artist": "Suicide",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/702d4a53-9f00-3f57-a723-e5e267518454/front-500"
+  },
+  {
+    "rank": 499,
+    "title": "Ask Rufus",
+    "artist": "Rufus featuring Chaka Khan",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/cb6327b8-4ef5-3ca2-bbe2-260473c457cd/front-500"
+  },
+  {
+    "rank": 500,
+    "title": "Funeral",
+    "artist": "Arcade Fire",
+    "ok": true,
+    "cover_url": "https://coverartarchive.org/release-group/05affa96-5959-32da-8d75-1c9eb985ca59/front-500"
+  }
+]
