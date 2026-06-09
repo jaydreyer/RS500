@@ -3,9 +3,9 @@
     "name": "MusicBrainz release-group series: Rolling Stone: 500 Greatest Albums of All Time: 2020 edition",
     "url": "https://musicbrainz.org/series/6a4b53b9-2756-4afe-93f2-306039d41910",
     "coverArt": "Cover Art Archive release-group front-500 endpoints",
-    "generatedAt": "2026-06-09T05:25:59.420Z",
+    "generatedAt": "2026-06-09T06:00:22.394Z",
     "streamingLinks": "Apple Search API; Spotify Web API when SPOTIFY_CLIENT_ID/SPOTIFY_CLIENT_SECRET are configured; Spotify album search fallback when --spotify-search-fallback is used",
-    "reviewLinks": "MusicBrainz release-group URL relationships with review/reference sources"
+    "reviewLinks": "MusicBrainz release-group URL relationships with review/reference sources; Rate Your Music excluded because direct links are unreliable"
   },
   "albums": [
     {
@@ -30,11 +30,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/n825",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/marvin_gaye/whats_going_on/",
-          "kind": "reference"
         }
       ]
     },
@@ -60,11 +55,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/5h3n",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_beach_boys/pet_sounds/",
-          "kind": "reference"
         }
       ]
     },
@@ -90,11 +80,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/rvzb",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/joni_mitchell/blue/",
-          "kind": "reference"
         }
       ]
     },
@@ -120,11 +105,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/j5p2",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/stevie_wonder/songs_in_the_key_of_life/",
-          "kind": "reference"
         }
       ]
     },
@@ -150,11 +130,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/cwvr",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_beatles/abbey_road/",
-          "kind": "reference"
         }
       ]
     },
@@ -185,11 +160,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/9pj9",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/nirvana/nevermind/",
-          "kind": "reference"
         }
       ]
     },
@@ -215,11 +185,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/c6b6",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/fleetwood-mac/rumours/",
-          "kind": "reference"
         }
       ]
     },
@@ -245,11 +210,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/6qxm",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/prince_and_the_revolution/purple_rain/",
-          "kind": "reference"
         },
         {
           "source": "laut.de",
@@ -285,11 +245,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/659x",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/bob_dylan/blood_on_the_tracks/",
-          "kind": "reference"
         }
       ]
     },
@@ -325,11 +280,6 @@
           "source": "Entertainment Weekly",
           "url": "http://www.ew.com/ew/article/0,,284625,00.html",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/lauryn_hill/the_miseducation_of_lauryn_hill/",
-          "kind": "reference"
         }
       ]
     },
@@ -355,11 +305,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/xz25",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_beatles/revolver/",
-          "kind": "reference"
         },
         {
           "source": "laut.de",
@@ -392,11 +337,6 @@
           "kind": "review"
         },
         {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/michael_jackson/thriller/",
-          "kind": "reference"
-        },
-        {
           "source": "Rolling Stone Germany",
           "url": "https://www.rollingstone.de/reviews/michael-jackson-thriller/",
           "kind": "review"
@@ -425,11 +365,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/bdf9",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/aretha_franklin/i_never_loved_a_man_the_way_i_love_you/",
-          "kind": "reference"
         }
       ]
     },
@@ -455,11 +390,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/w2f9",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_rolling_stones/exile_on_main_st_/",
-          "kind": "reference"
         }
       ]
     },
@@ -485,11 +415,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/56gb",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/public_enemy/it_takes_a_nation_of_millions_to_hold_us_back/",
-          "kind": "reference"
         }
       ]
     },
@@ -515,11 +440,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/c3cz",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_clash/london_calling/",
-          "kind": "reference"
         }
       ]
     },
@@ -550,11 +470,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/jngw",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/kanye_west/my_beautiful_dark_twisted_fantasy/",
-          "kind": "reference"
         }
       ]
     },
@@ -580,11 +495,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/z2f9",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/bob_dylan/highway_61_revisited/",
-          "kind": "reference"
         }
       ]
     },
@@ -604,11 +514,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0002835159",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/kendrick_lamar/to_pimp_a_butterfly_f1/",
           "kind": "reference"
         }
       ]
@@ -642,11 +547,6 @@
           "kind": "review"
         },
         {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/radiohead/kid_a/",
-          "kind": "reference"
-        },
-        {
           "source": "Sputnikmusic",
           "url": "https://www.sputnikmusic.com/review/32295/Radiohead-Kid-A/",
           "kind": "review"
@@ -675,11 +575,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/gmjw",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/bruce-springsteen/born-to-run/",
-          "kind": "reference"
         }
       ]
     },
@@ -699,11 +594,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000118068",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_notorious_b_i_g_/ready_to_die/",
           "kind": "reference"
         }
       ]
@@ -730,11 +620,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/fq4h",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_velvet_underground_nico/the_velvet_underground_and_nico_f1/",
-          "kind": "reference"
         }
       ]
     },
@@ -760,11 +645,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/5dcz",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_beatles/sgt__peppers_lonely_hearts_club_band/",
-          "kind": "reference"
         }
       ]
     },
@@ -795,11 +675,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/xdgb",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/carole_king/tapestry/",
-          "kind": "reference"
         }
       ]
     },
@@ -830,11 +705,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/vqbd",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/patti_smith/horses/",
-          "kind": "reference"
         }
       ]
     },
@@ -860,11 +730,6 @@
           "source": "Pitchfork",
           "url": "https://pitchfork.com/reviews/albums/wu-tang-clan-enter-the-wu-tang-36-chambers/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/wu_tang_clan/enter_the_wu_tang__36_chambers_/",
-          "kind": "reference"
         }
       ]
     },
@@ -895,11 +760,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/z8hf",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/dangelo/voodoo/",
-          "kind": "reference"
         }
       ]
     },
@@ -935,11 +795,6 @@
           "source": "NME",
           "url": "http://www.nme.com/reviews/461",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_beatles/the_beatles__white_album__f13/",
-          "kind": "reference"
         },
         {
           "source": "Bootlegzone",
@@ -980,11 +835,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/c3gb",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_jimi_hendrix_experience/are_you_experienced/",
-          "kind": "reference"
         }
       ]
     },
@@ -1010,11 +860,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/fr25",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/miles_davis/kind_of_blue/",
-          "kind": "reference"
         }
       ]
     },
@@ -1040,11 +885,6 @@
           "source": "Metacritic",
           "url": "https://www.metacritic.com/music/lemonade/beyonce",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/beyonce/lemonade/",
-          "kind": "reference"
         }
       ]
     },
@@ -1070,11 +910,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/89vr",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/amy_winehouse/back_to_black/",
-          "kind": "reference"
         },
         {
           "source": "laut.de",
@@ -1110,11 +945,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/m9cg",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/stevie_wonder/innervisions/",
-          "kind": "reference"
         }
       ]
     },
@@ -1140,11 +970,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/5gn8",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_beatles/rubber_soul_f1/",
-          "kind": "reference"
         },
         {
           "source": "Bootlegzone",
@@ -1175,11 +1000,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/mq3n",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/michael_jackson/off_the_wall/",
-          "kind": "reference"
         }
       ]
     },
@@ -1205,11 +1025,6 @@
           "source": "Pitchfork",
           "url": "https://pitchfork.com/reviews/albums/dr-dre-the-chronic/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/dr__dre/the_chronic/",
-          "kind": "reference"
         }
       ]
     },
@@ -1235,11 +1050,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/hmjw",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/bob_dylan/blonde_on_blonde/",
-          "kind": "reference"
         }
       ]
     },
@@ -1265,11 +1075,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/bcnv",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/talking-heads/remain-in-light/",
-          "kind": "reference"
         }
       ]
     },
@@ -1295,11 +1100,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/2hf9",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/david-bowie/the-rise-and-fall-of-ziggy-stardust-and-the-spiders-from-mars/",
-          "kind": "reference"
         },
         {
           "source": "Illustrated-db-discography Nl",
@@ -1330,11 +1130,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/6hmq",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_rolling_stones/let_it_bleed/",
-          "kind": "reference"
         }
       ]
     },
@@ -1365,11 +1160,6 @@
           "source": "Entertainment Weekly",
           "url": "http://www.ew.com/ew/article/0,,20202376,00.html",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/radiohead/ok_computer/",
-          "kind": "reference"
         },
         {
           "source": "Articles Chicagotribune",
@@ -1415,11 +1205,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/w9rg",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/a_tribe_called_quest/the_low_end_theory/",
-          "kind": "reference"
         }
       ]
     },
@@ -1445,11 +1230,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/42d3",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/nas/illmatic/",
-          "kind": "reference"
         }
       ]
     },
@@ -1475,11 +1255,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/5fhj",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/prince/sign_%E2%98%AE_the_times_f3/",
-          "kind": "reference"
         }
       ]
     },
@@ -1505,11 +1280,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/983q",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/paul_simon/graceland/",
-          "kind": "reference"
         }
       ]
     },
@@ -1535,11 +1305,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/g3gb",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/ramones/ramones/",
-          "kind": "reference"
         }
       ]
     },
@@ -1560,11 +1325,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000194760",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/comp/bob-marley-and-the-wailers/legend-the-best-of-bob-marley-and-the-wailers/",
-          "kind": "reference"
         }
       ]
     },
@@ -1584,11 +1344,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000043056",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/outkast/aquemini/",
           "kind": "reference"
         }
       ]
@@ -1632,11 +1387,6 @@
           "kind": "review"
         },
         {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/jay_z/the_blueprint/",
-          "kind": "reference"
-        },
-        {
           "source": "Latimes",
           "url": "https://www.latimes.com/archives/la-xpm-2001-sep-16-ca-46241-story.html",
           "kind": "review"
@@ -1664,11 +1414,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000189144",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/comp/chuck-berry/the-great-twenty-eight/",
           "kind": "reference"
         }
       ]
@@ -1712,11 +1457,6 @@
           "kind": "review"
         },
         {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/david-bowie/station-to-station/",
-          "kind": "reference"
-        },
-        {
           "source": "Independent",
           "url": "https://www.independent.co.uk/arts-entertainment/music/reviews/album-david-bowie-station-to-station-super-deluxe-limited-edition-emi-2081275.html",
           "kind": "review"
@@ -1750,11 +1490,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/h2f9",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_jimi_hendrix_experience/electric_ladyland/",
-          "kind": "reference"
         }
       ]
     },
@@ -1807,11 +1542,6 @@
           "kind": "review"
         },
         {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/pink-floyd/the-dark-side-of-the-moon/",
-          "kind": "reference"
-        },
-        {
           "source": "Mixdownmag Au",
           "url": "http://mixdownmag.com.au/gear-rundown-pink-floyds-dark-side-moon",
           "kind": "review"
@@ -1834,11 +1564,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000618547",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/liz_phair/exile_in_guyville/",
           "kind": "reference"
         }
       ]
@@ -1865,11 +1590,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/3mgw",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_band/the_band/",
-          "kind": "reference"
         }
       ]
     },
@@ -1895,11 +1615,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/zpzf",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/led_zeppelin/led_zeppelin__iv_/",
-          "kind": "reference"
         }
       ]
     },
@@ -1930,11 +1645,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/xm63",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/stevie_wonder/talking_book/",
-          "kind": "reference"
         }
       ]
     },
@@ -1955,11 +1665,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000190975",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/van_morrison/astral_weeks/",
-          "kind": "reference"
         }
       ]
     },
@@ -1979,11 +1684,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000193005",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/eric_b__and_rakim/paid_in_full/",
           "kind": "reference"
         }
       ]
@@ -2010,11 +1710,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/8xjw",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/guns_n_roses/appetite_for_destruction/",
-          "kind": "reference"
         }
       ]
     },
@@ -2040,11 +1735,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/cq9p",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/steely-dan/aja/",
-          "kind": "reference"
         }
       ]
     },
@@ -2070,11 +1760,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/v5m5",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/outkast/stankonia/",
-          "kind": "reference"
         }
       ]
     },
@@ -2100,11 +1785,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/nvn8",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/james-brown/live-at-the-apollo/",
-          "kind": "reference"
         }
       ]
     },
@@ -2124,11 +1804,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000187827",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/john_coltrane/a_love_supreme/",
           "kind": "reference"
         }
       ]
@@ -2150,11 +1825,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000181538",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/jay_z/reasonable_doubt/",
-          "kind": "reference"
         }
       ]
     },
@@ -2175,11 +1845,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000193149",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/kate_bush/hounds_of_love/",
-          "kind": "reference"
         }
       ]
     },
@@ -2199,11 +1864,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000644720",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/alanis_morissette/jagged_little_pill/",
           "kind": "reference"
         }
       ]
@@ -2230,11 +1890,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/6q63",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/n_w_a/straight_outta_compton/",
-          "kind": "reference"
         }
       ]
     },
@@ -2260,11 +1915,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/8dcz",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/bob_marley_and_the_wailers/exodus/",
-          "kind": "reference"
         }
       ]
     },
@@ -2284,11 +1934,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000192539",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/neil_young/harvest/",
           "kind": "reference"
         }
       ]
@@ -2315,11 +1960,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/q2dp",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/my_bloody_valentine/loveless/",
-          "kind": "reference"
         }
       ]
     },
@@ -2357,11 +1997,6 @@
           "kind": "review"
         },
         {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/kanye_west/the_college_dropout/",
-          "kind": "reference"
-        },
-        {
           "source": "Sputnikmusic",
           "url": "https://www.sputnikmusic.com/review/5216/Kanye-West-The-College-Dropout/",
           "kind": "review"
@@ -2390,11 +2025,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/qgcg",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/aretha_franklin/lady_soul/",
-          "kind": "reference"
         }
       ]
     },
@@ -2420,11 +2050,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/nvzf",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/curtis-mayfield/superfly-1/",
-          "kind": "reference"
         }
       ]
     },
@@ -2455,11 +2080,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/98zf",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the-who/whos-next/",
-          "kind": "reference"
         }
       ]
     },
@@ -2480,11 +2100,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000192717",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/comp/elvis-presley/the-sun-sessions/",
-          "kind": "reference"
         }
       ]
     },
@@ -2504,11 +2119,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0002974584",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/frank-ocean/blonde/",
           "kind": "reference"
         }
       ]
@@ -2535,11 +2145,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/r9gw",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/sex_pistols/never_mind_the_bollocks_heres_the_sex_pistols_f9/",
-          "kind": "reference"
         }
       ]
     },
@@ -2565,11 +2170,6 @@
           "source": "Metacritic",
           "url": "https://www.metacritic.com/music/beyonce/beyonce",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/beyonce/beyonce/",
-          "kind": "reference"
         }
       ]
     },
@@ -2595,11 +2195,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/m328",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/sly_and_the_family_stone/theres_a_riot_goin_on/",
-          "kind": "reference"
         }
       ]
     },
@@ -2625,11 +2220,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/8vzf",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/dusty_springfield/dusty_in_memphis/",
-          "kind": "reference"
         },
         {
           "source": "Avclub",
@@ -2660,11 +2250,6 @@
           "source": "Pitchfork",
           "url": "https://pitchfork.com/reviews/albums/acdc-back-in-black/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/ac_dc/back-in-black/",
-          "kind": "reference"
         }
       ]
     },
@@ -2690,11 +2275,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/9r9p",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/john_lennon_plastic_ono_band/john_lennon___plastic_ono_band/",
-          "kind": "reference"
         }
       ]
     },
@@ -2720,11 +2300,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/xnwx",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_doors/the_doors/",
-          "kind": "reference"
         }
       ]
     },
@@ -2744,11 +2319,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000188019",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/miles_davis/bitches_brew/",
           "kind": "reference"
         }
       ]
@@ -2775,11 +2345,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/5jqv",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/david-bowie/hunky-dory/",
-          "kind": "reference"
         }
       ]
     },
@@ -2810,11 +2375,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/dxw6",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/erykah-badu/baduizm/",
-          "kind": "reference"
         }
       ]
     },
@@ -2835,11 +2395,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000192439",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/neil_young/after_the_gold_rush/",
-          "kind": "reference"
         }
       ]
     },
@@ -2859,11 +2414,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000191913",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/bruce-springsteen/darkness-on-the-edge-of-town/",
           "kind": "reference"
         },
         {
@@ -2895,11 +2445,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/rmjw",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_jimi_hendrix_experience/axis__bold_as_love/",
-          "kind": "reference"
         }
       ]
     },
@@ -2920,11 +2465,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000594733",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/missy_misdemeanor_elliott/supa_dupa_fly/",
-          "kind": "reference"
         }
       ]
     },
@@ -2944,11 +2484,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000197626",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_stooges/fun_house/",
           "kind": "reference"
         }
       ]
@@ -2975,11 +2510,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/zvpn",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/drake/take_care/",
-          "kind": "reference"
         }
       ]
     },
@@ -3005,11 +2535,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/mgn8",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/r_e_m_/automatic_for_the_people/",
-          "kind": "reference"
         }
       ]
     },
@@ -3035,11 +2560,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/j59x",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/metallica/master-of-puppets/",
-          "kind": "reference"
         },
         {
           "source": "Ripplemusic Blogspot",
@@ -3082,11 +2602,6 @@
           "kind": "review"
         },
         {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/lucinda_williams/car_wheels_on_a_gravel_road/",
-          "kind": "reference"
-        },
-        {
           "source": "Avclub",
           "url": "http://www.avclub.com/review/lucinda-williams-emcar-wheels-on-a-gravel-roadem-21618",
           "kind": "review"
@@ -3120,11 +2635,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/pjcg",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/taylor_swift/red/",
-          "kind": "reference"
         }
       ]
     },
@@ -3144,11 +2654,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000189052",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_band/music_from_big_pink/",
           "kind": "reference"
         }
       ]
@@ -3175,11 +2680,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/3pvh",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/led_zeppelin/led_zeppelin/",
-          "kind": "reference"
         }
       ]
     },
@@ -3205,11 +2705,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/92f9",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_clash/the_clash/",
-          "kind": "reference"
         }
       ]
     },
@@ -3235,11 +2730,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/nmw6",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/de_la_soul/3_feet_high_and_rising/",
-          "kind": "reference"
         }
       ]
     },
@@ -3277,11 +2767,6 @@
           "kind": "review"
         },
         {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_rolling_stones/sticky_fingers/",
-          "kind": "reference"
-        },
-        {
           "source": "Sputnikmusic",
           "url": "https://www.sputnikmusic.com/review/1197/The-Rolling-Stones-Sticky-Fingers/",
           "kind": "review"
@@ -3315,11 +2800,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/c2cz",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_allman_brothers_band/at_fillmore_east_f2/",
-          "kind": "reference"
         }
       ]
     },
@@ -3345,11 +2825,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/443n",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/hole/live_through_this/",
-          "kind": "reference"
         }
       ]
     },
@@ -3375,11 +2850,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/gqhj",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/television/marquee_moon/",
-          "kind": "reference"
         },
         {
           "source": "Rhinomedia",
@@ -3410,11 +2880,6 @@
           "source": "Pitchfork",
           "url": "https://pitchfork.com/reviews/albums/fiona-apple-when-the-pawn/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/fiona_apple/when_the_pawn___/",
-          "kind": "reference"
         }
       ]
     },
@@ -3440,11 +2905,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/nzwx",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/lou_reed/transformer/",
-          "kind": "reference"
         },
         {
           "source": "Sputnikmusic",
@@ -3475,11 +2935,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/fznv",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/joni_mitchell/court_and_spark/",
-          "kind": "reference"
         }
       ]
     },
@@ -3499,11 +2954,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000650289",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/janet-jackson/control/",
           "kind": "reference"
         },
         {
@@ -3535,11 +2985,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/3bm5",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/elton_john/goodbye_yellow_brick_road/",
-          "kind": "reference"
         }
       ]
     },
@@ -3565,11 +3010,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/nwvr",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_smiths/the_queen_is_dead/",
-          "kind": "reference"
         }
       ]
     },
@@ -3595,11 +3035,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/hmqv",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_strokes/is_this_it/",
-          "kind": "reference"
         },
         {
           "source": "Vh1",
@@ -3632,11 +3067,6 @@
           "kind": "review"
         },
         {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/kendrick_lamar/good_kid__m_a_a_d_city/",
-          "kind": "reference"
-        },
-        {
           "source": "Chorus Reviews",
           "url": "https://chorus.reviews/albums/kendrick-lamar-good-kid-maad-city",
           "kind": "review"
@@ -3665,11 +3095,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/jqrj",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the-cure/disintegration/",
-          "kind": "reference"
         }
       ]
     },
@@ -3695,11 +3120,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/xx4h",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/kanye_west/late_registration/",
-          "kind": "reference"
         }
       ]
     },
@@ -3719,11 +3139,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000189884",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/eagles/hotel_california/",
           "kind": "reference"
         }
       ]
@@ -3750,11 +3165,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/63dp",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/sly_and_the_family_stone/stand_/",
-          "kind": "reference"
         }
       ]
     },
@@ -3774,11 +3184,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000191087",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/van_morrison/moondance/",
           "kind": "reference"
         }
       ]
@@ -3800,11 +3205,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000189632",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/elvis_costello/this_years_model/",
-          "kind": "reference"
         }
       ]
     },
@@ -3824,11 +3224,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000110711",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/nine_inch_nails/the_downward_spiral/",
           "kind": "reference"
         }
       ]
@@ -3855,11 +3250,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/hxhj",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/led_zeppelin/led_zeppelin_ii/",
-          "kind": "reference"
         }
       ]
     },
@@ -3885,11 +3275,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/2j8r",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/u2/achtung-baby/",
-          "kind": "reference"
         }
       ]
     },
@@ -3915,11 +3300,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/bq3n",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/beastie_boys/pauls_boutique/",
-          "kind": "reference"
         }
       ]
     },
@@ -3945,11 +3325,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/vp8r",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/mary-j-blige/my-life/",
-          "kind": "reference"
         }
       ]
     },
@@ -3969,11 +3344,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000197935",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/ray_charles/modern_sounds_in_country_and_western_music/",
           "kind": "reference"
         }
       ]
@@ -4000,11 +3370,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/g59x",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/queen/a_night_at_the_opera/",
-          "kind": "reference"
         }
       ]
     },
@@ -4030,11 +3395,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/9qw6",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/pink-floyd/the-wall/",
-          "kind": "reference"
         }
       ]
     },
@@ -4054,11 +3414,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000191482",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/prince/1999/",
           "kind": "reference"
         },
         {
@@ -4092,11 +3447,6 @@
           "kind": "review"
         },
         {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/portishead/dummy/",
-          "kind": "reference"
-        },
-        {
           "source": "Web Archive",
           "url": "https://web.archive.org/web/20160414185744/http://ssmt-reviews.com/artist/portishead.html",
           "kind": "review"
@@ -4119,11 +3469,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000652598",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/comp/hank-williams/40-greatest-hits/",
           "kind": "reference"
         }
       ]
@@ -4150,11 +3495,6 @@
           "source": "Pitchfork",
           "url": "https://pitchfork.com/reviews/albums/joni-mitchell-hejira/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/joni_mitchell/hejira/",
-          "kind": "reference"
         }
       ]
     },
@@ -4185,11 +3525,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/3h25",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/fugees/the_score/",
-          "kind": "reference"
         }
       ]
     },
@@ -4215,11 +3550,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/dg54",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/u2/the-joshua-tree/",
-          "kind": "reference"
         }
       ]
     },
@@ -4245,11 +3575,6 @@
           "source": "Pitchfork",
           "url": "https://pitchfork.com/reviews/albums/funkadelic-maggot-brain/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/funkadelic/maggot_brain/",
-          "kind": "reference"
         }
       ]
     },
@@ -4287,11 +3612,6 @@
           "kind": "review"
         },
         {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/adele_f1/21/",
-          "kind": "reference"
-        },
-        {
           "source": "Telegraph",
           "url": "http://www.telegraph.co.uk/culture/music/cdreviews/8269649/Adele-21-CD-of-the-week-review.html",
           "kind": "review"
@@ -4320,11 +3640,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000310812",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/comp/madonna/the_immaculate_collection/",
-          "kind": "reference"
         }
       ]
     },
@@ -4350,11 +3665,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/6v63",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/black-sabbath/paranoid/",
-          "kind": "reference"
         }
       ]
     },
@@ -4380,11 +3690,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/vvp2",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/bob_marley_and_the_wailers/catch_a_fire_f1/",
-          "kind": "reference"
         }
       ]
     },
@@ -4410,11 +3715,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/g9jw",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/pixies/doolittle/",
-          "kind": "reference"
         },
         {
           "source": "Inmusicwetrust",
@@ -4450,11 +3750,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/j2f9",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/bruce-springsteen/born-in-the-u_s_a/",
-          "kind": "reference"
         }
       ]
     },
@@ -4474,11 +3769,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000022405",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_velvet_underground/the_velvet_underground/",
           "kind": "reference"
         }
       ]
@@ -4505,11 +3795,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/2xrg",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/led_zeppelin/physical_graffiti/",
-          "kind": "reference"
         }
       ]
     },
@@ -4529,11 +3814,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000062949",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/eminem/the_marshall_mathers_lp/",
           "kind": "reference"
         }
       ]
@@ -4560,11 +3840,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/mf54",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/blondie/parallel-lines-8/",
-          "kind": "reference"
         }
       ]
     },
@@ -4590,11 +3865,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/5fmq",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/jeff_buckley/grace/",
-          "kind": "reference"
         }
       ]
     },
@@ -4620,11 +3890,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/h5pn",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/frank_ocean/channel_orange/",
-          "kind": "reference"
         }
       ]
     },
@@ -4644,11 +3909,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000654683",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/john_prine/john_prine/",
           "kind": "reference"
         }
       ]
@@ -4675,11 +3935,6 @@
           "source": "Rolling Stone",
           "url": "https://www.rollingstone.com/music/music-news/bruce-springsteen-electric-nebraska-box-set-1235421364/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/bruce-springsteen/nebraska/",
-          "kind": "reference"
         },
         {
           "source": "Brucespringsteen",
@@ -4722,11 +3977,6 @@
           "kind": "review"
         },
         {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/george_michael/faith/",
-          "kind": "reference"
-        },
-        {
           "source": "Slant",
           "url": "http://www.slantmagazine.com/music/review/george-michael-faith-special-edition/2381",
           "kind": "review"
@@ -4755,11 +4005,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000387388",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/pretenders/pretenders/",
-          "kind": "reference"
         }
       ]
     },
@@ -4785,11 +4030,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/9x3q",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/pj-harvey/rid-of-me/",
-          "kind": "reference"
         }
       ]
     },
@@ -4809,11 +4049,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000196687",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/aretha-franklin/amazing-grace/",
           "kind": "reference"
         }
       ]
@@ -4840,11 +4075,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/cjm5",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/jay_z/the_black_album/",
-          "kind": "reference"
         }
       ]
     },
@@ -4864,11 +4094,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000097642",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_replacements/let_it_be/",
           "kind": "reference"
         }
       ]
@@ -4895,11 +4120,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/fqw6",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/oasis/_whats_the_story__morning_glory_/",
-          "kind": "reference"
         },
         {
           "source": "laut.de",
@@ -4930,11 +4150,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/r26m",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/erykahbadu/mamas_gun/",
-          "kind": "reference"
         }
       ]
     },
@@ -4960,11 +4175,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/6cp2",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the-police/synchronicity-6/",
-          "kind": "reference"
         }
       ]
     },
@@ -4990,11 +4200,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/xfhj",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/pearl-jam/ten/",
-          "kind": "reference"
         }
       ]
     },
@@ -5014,11 +4219,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000650036",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/crosby__stills_and_nash/crosby__stills_and_nash/",
           "kind": "reference"
         }
       ]
@@ -5052,11 +4252,6 @@
           "kind": "review"
         },
         {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/pulp/different_class/",
-          "kind": "reference"
-        },
-        {
           "source": "Fp Nightfall Fr",
           "url": "http://fp.nightfall.fr/index_9036_pulp-second-class.html",
           "kind": "review"
@@ -5079,11 +4274,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000650741",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/comp/various_artists_f2/saturday_night_fever__the_original_movie_sound_track/",
           "kind": "reference"
         }
       ]
@@ -5110,11 +4300,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/bnp2",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/johnny_cash/at_folsom_prison/",
-          "kind": "reference"
         }
       ]
     },
@@ -5140,11 +4325,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/9cp2",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/r_e_m_/murmur/",
-          "kind": "reference"
         }
       ]
     },
@@ -5187,11 +4367,6 @@
           "kind": "reference"
         },
         {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/depeche-mode/violator/",
-          "kind": "reference"
-        },
-        {
           "source": "Tvtropes",
           "url": "https://tvtropes.org/pmwiki/pmwiki.php/Music/Violator",
           "kind": "review"
@@ -5225,11 +4400,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/bvhf",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/steely-dan/cant-buy-a-thrill/",
-          "kind": "reference"
         }
       ]
     },
@@ -5260,11 +4430,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/fh54",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/billy_joel/the_stranger/",
-          "kind": "reference"
         }
       ]
     },
@@ -5290,11 +4455,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/hdcz",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/cream/disraeli_gears/",
-          "kind": "reference"
         }
       ]
     },
@@ -5315,11 +4475,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000652888",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/sonic_youth/daydream_nation/",
-          "kind": "reference"
         }
       ]
     },
@@ -5339,11 +4494,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000191730",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/simon_and_garfunkel/bridge_over_troubled_water/",
           "kind": "reference"
         }
       ]
@@ -5377,11 +4527,6 @@
           "kind": "review"
         },
         {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/nirvana/in_utero/",
-          "kind": "reference"
-        },
-        {
           "source": "Rolling Stone Germany",
           "url": "https://www.rollingstone.de/reviews/nirvana-in-utero/",
           "kind": "review"
@@ -5410,11 +4555,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000276412",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/comp/various_artists_f2/the_harder_they_come/",
-          "kind": "reference"
         }
       ]
     },
@@ -5434,11 +4574,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0003040142",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/kendrick-lamar/damn/",
           "kind": "reference"
         },
         {
@@ -5465,11 +4600,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000206260",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/public_enemy/fear_of_a_black_planet/",
-          "kind": "reference"
         }
       ]
     },
@@ -5495,11 +4625,6 @@
           "source": "Pitchfork",
           "url": "https://pitchfork.com/reviews/albums/rod-stewart-every-picture-tells-a-story/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/rod_stewart/every_picture_tells_a_story/",
-          "kind": "reference"
         }
       ]
     },
@@ -5525,11 +4650,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/2dhj",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/otis_redding/otis_blue__otis_redding_sings_soul/",
-          "kind": "reference"
         }
       ]
     },
@@ -5549,11 +4669,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000176659",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_notorious_b_i_g_/life_after_death/",
           "kind": "reference"
         }
       ]
@@ -5580,11 +4695,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/hj8c",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/love/forever_changes/",
-          "kind": "reference"
         }
       ]
     },
@@ -5605,11 +4715,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000193642",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/bob_dylan/bringing_it_all_back_home/",
-          "kind": "reference"
         }
       ]
     },
@@ -5629,11 +4734,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000196017",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/james_taylor/sweet_baby_james/",
           "kind": "reference"
         }
       ]
@@ -5665,11 +4765,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/2np2",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/dangelo/brown_sugar/",
-          "kind": "reference"
         }
       ]
     },
@@ -5695,11 +4790,6 @@
           "source": "Pitchfork",
           "url": "https://pitchfork.com/reviews/albums/cyndi-lauper-shes-so-unusual/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/cyndi_lauper/shes_so_unusual/",
-          "kind": "reference"
         }
       ]
     },
@@ -5725,11 +4815,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/jpzf",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_rolling_stones/beggars_banquet/",
-          "kind": "reference"
         }
       ]
     },
@@ -5755,11 +4840,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/6j4h",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/red_hot_chili_peppers/blood_sugar_sex_magik/",
-          "kind": "reference"
         }
       ]
     },
@@ -5785,11 +4865,6 @@
           "source": "Pitchfork",
           "url": "https://pitchfork.com/reviews/albums/ice-cube-amerikkkas-most-wanted/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/ice_cube/amerikkkas_most_wanted/",
-          "kind": "reference"
         }
       ]
     },
@@ -5815,11 +4890,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/5wmq",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/t__rex/electric_warrior/",
-          "kind": "reference"
         }
       ]
     },
@@ -5839,11 +4909,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000020758",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/sleater_kinney/dig_me_out/",
           "kind": "reference"
         }
       ]
@@ -5870,11 +4935,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/chdp",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the-who/tommy/",
-          "kind": "reference"
         }
       ]
     },
@@ -5895,11 +4955,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000194402",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/etta_james/at_last_/",
-          "kind": "reference"
         }
       ]
     },
@@ -5919,11 +4974,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000649870",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/beastie_boys/licensed_to_ill/",
           "kind": "reference"
         },
         {
@@ -5950,11 +5000,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000193432",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/creedence_clearwater_revival/willy_and_the_poor_boys/",
-          "kind": "reference"
         }
       ]
     },
@@ -5980,11 +5025,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/gxb6",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/michael_jackson/bad/",
-          "kind": "reference"
         }
       ]
     },
@@ -6010,11 +5050,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/3f54",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/leonard_cohen/songs_of_leonard_cohen/",
-          "kind": "reference"
         }
       ]
     },
@@ -6045,11 +5080,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/x8b6",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/comp/robyn/body_talk/",
-          "kind": "reference"
         }
       ]
     },
@@ -6069,11 +5099,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000312204",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the-beatles/meet-the-beatles-18/",
           "kind": "reference"
         }
       ]
@@ -6100,11 +5125,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/xd4h",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_b_52s/the_b_52s/",
-          "kind": "reference"
         }
       ]
     },
@@ -6130,11 +5150,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/vrnv",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/pavement/slanted_and_enchanted/",
-          "kind": "reference"
         }
       ]
     },
@@ -6160,11 +5175,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/45gw",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/sade/diamond_life/",
-          "kind": "reference"
         }
       ]
     },
@@ -6184,11 +5194,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000621393",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/a_tribe_called_quest/midnight_marauders/",
           "kind": "reference"
         }
       ]
@@ -6210,11 +5215,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000026812",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/bjork/homogenic/",
-          "kind": "reference"
         }
       ]
     },
@@ -6234,11 +5234,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000315191",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/nick-drake/pink-moon/",
           "kind": "reference"
         }
       ]
@@ -6265,11 +5260,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/82bd",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/kanye_west/graduation/",
-          "kind": "reference"
         }
       ]
     },
@@ -6289,11 +5279,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000650824",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/cat-stevens/tea-for-the-tillerman/",
           "kind": "reference"
         },
         {
@@ -6337,11 +5322,6 @@
           "kind": "review"
         },
         {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/david-bowie/low/",
-          "kind": "reference"
-        },
-        {
           "source": "Rolling Stone Germany",
           "url": "https://www.rollingstone.de/reviews/david-bowie-low/",
           "kind": "review"
@@ -6375,11 +5355,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000189885",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/eagles/eagles/",
-          "kind": "reference"
         }
       ]
     },
@@ -6410,11 +5385,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/6cn8",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/lil_wayne/tha_carter_iii/",
-          "kind": "reference"
         }
       ]
     },
@@ -6434,11 +5404,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000191574",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/run_d_m_c_/raising_hell/",
           "kind": "reference"
         }
       ]
@@ -6485,11 +5450,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/zc3n",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/joy-division/unknown-pleasures/",
-          "kind": "reference"
         }
       ]
     },
@@ -6509,11 +5469,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000313297",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/nina_simone/wild_is_the_wind/",
           "kind": "reference"
         }
       ]
@@ -6540,11 +5495,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/j2d3",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/fiona_apple/the_idler_wheel_is_wiser_than_the_driver_of_the_screw_and_whipping_cords_will_serve_you_more_than_ropes_will_ever_do/",
-          "kind": "reference"
         }
       ]
     },
@@ -6564,11 +5514,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000119270",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/tom-petty/wildflowers/",
           "kind": "reference"
         }
       ]
@@ -6590,11 +5535,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000192627",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/grateful-dead/american-beauty/",
-          "kind": "reference"
         }
       ]
     },
@@ -6614,11 +5554,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000092082",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/elliott_smith/either___or_f2/",
           "kind": "reference"
         }
       ]
@@ -6645,11 +5580,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/w4xm",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/oasis/definitely_maybe/",
-          "kind": "reference"
         }
       ]
     },
@@ -6675,11 +5605,6 @@
           "source": "Pitchfork",
           "url": "https://pitchfork.com/reviews/albums/tlc-crazysexycool/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/tlc/crazysexycool/",
-          "kind": "reference"
         }
       ]
     },
@@ -6700,11 +5625,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000171262",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/chef_raekwon/only_built_4_cuban_linx___/",
-          "kind": "reference"
         }
       ]
     },
@@ -6724,11 +5644,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000193436",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/crosby__stills__nash_and_young/deja_vu/",
           "kind": "reference"
         }
       ]
@@ -6755,11 +5670,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/9wzf",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/rage-against-the-machine/rage-against-the-machine/",
-          "kind": "reference"
         }
       ]
     },
@@ -6779,11 +5689,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000033767",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/madonna/ray_of_light/",
           "kind": "reference"
         }
       ]
@@ -6810,11 +5715,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/dhd3",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/john_lennon/imagine/",
-          "kind": "reference"
         }
       ]
     },
@@ -6834,11 +5734,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000048383",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/dixie_chicks/fly/",
           "kind": "reference"
         }
       ]
@@ -6865,11 +5760,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/8zbd",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/wilco/yankee_hotel_foxtrot/",
-          "kind": "reference"
         },
         {
           "source": "Paste",
@@ -6900,11 +5790,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/b3zb",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/derek_and_the_dominos/layla_and_other_assorted_love_songs/",
-          "kind": "reference"
         }
       ]
     },
@@ -6924,11 +5809,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000199608",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/little_richard/heres_little_richard/",
           "kind": "reference"
         }
       ]
@@ -6950,11 +5830,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000266894",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/de-la-soul/de-la-soul-is-dead/",
-          "kind": "reference"
         }
       ]
     },
@@ -6975,11 +5850,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000101114",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/comp/patsy_cline/the_ultimate_collection/",
-          "kind": "reference"
         }
       ]
     },
@@ -6999,11 +5869,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0002888391",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/rihanna/anti/",
           "kind": "reference"
         }
       ]
@@ -7030,11 +5895,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/68b6",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/tom_petty_and_the_heartbreakers/damn_the_torpedoes/",
-          "kind": "reference"
         }
       ]
     },
@@ -7054,11 +5914,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000604243",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/john_coltrane/giant_steps/",
           "kind": "reference"
         }
       ]
@@ -7085,11 +5940,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/zfrj",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/tori-amos/little-earthquakes/",
-          "kind": "reference"
         }
       ]
     },
@@ -7115,11 +5965,6 @@
           "source": "Rolling Stone",
           "url": "https://www.rollingstone.com/music/music-album-reviews/master-of-reality-102188/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/black-sabbath/master-of-reality/",
-          "kind": "reference"
         }
       ]
     },
@@ -7150,11 +5995,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/8b8c",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/metallica/metallica/",
-          "kind": "reference"
         }
       ]
     },
@@ -7185,11 +6025,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/jh3n",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/daft_punk/discovery/",
-          "kind": "reference"
         }
       ]
     },
@@ -7209,11 +6044,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000650551",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/willie_nelson/red_headed_stranger/",
           "kind": "reference"
         }
       ]
@@ -7240,11 +6070,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/fgfd",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/kraftwerk/trans_europa_express/",
-          "kind": "reference"
         }
       ]
     },
@@ -7290,11 +6115,6 @@
           "source": "Pitchfork",
           "url": "https://pitchfork.com/reviews/albums/sam-cooke-one-night-stand-live-at-the-harlem-square-club-1963/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/sam-cooke/live-at-the-harlem-square-club-1963/",
-          "kind": "reference"
         }
       ]
     },
@@ -7320,11 +6140,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/zgnv",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/massive-attack/blue-lines/",
-          "kind": "reference"
         }
       ]
     },
@@ -7344,11 +6159,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000196213",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_velvet_underground/loaded/",
           "kind": "reference"
         }
       ]
@@ -7375,11 +6185,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/d8p2",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the-zombies/odessey-and-oracle-5/",
-          "kind": "reference"
         }
       ]
     },
@@ -7405,11 +6210,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/36f9",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/kanye_west/808s_and_heartbreak/",
-          "kind": "reference"
         }
       ]
     },
@@ -7429,11 +6229,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000316429",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/cocteau_twins/heaven_or_las_vegas/",
           "kind": "reference"
         }
       ]
@@ -7455,11 +6250,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000309159",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/ll_cool_j/mama_said_knock_you_out/",
-          "kind": "reference"
         }
       ]
     },
@@ -7479,11 +6269,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000616233",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/sade/love_deluxe/",
           "kind": "reference"
         }
       ]
@@ -7510,11 +6295,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/3j3n",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/green_day/american_idiot/",
-          "kind": "reference"
         }
       ]
     },
@@ -7534,11 +6314,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000650265",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/whitney_houston/whitney_houston/",
           "kind": "reference"
         },
         {
@@ -7570,11 +6345,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/wqw6",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/comp/buzzcocks/singles-going-steady/",
-          "kind": "reference"
         }
       ]
     },
@@ -7600,11 +6370,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/pf3q",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/elton_john/honky_chateau/",
-          "kind": "reference"
         }
       ]
     },
@@ -7624,11 +6389,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000195665",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/devo/q__are_we_not_men__a__we_are_devo_/",
           "kind": "reference"
         }
       ]
@@ -7655,11 +6415,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/d59x",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/pink-floyd/the-piper-at-the-gates-of-dawn/",
-          "kind": "reference"
         }
       ]
     },
@@ -7685,11 +6440,6 @@
           "source": "Pitchfork",
           "url": "https://pitchfork.com/reviews/albums/herbie-hancock-head-hunters/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/herbie-hancock/head-hunters/",
-          "kind": "reference"
         }
       ]
     },
@@ -7709,11 +6459,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000198752",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/bob-dylan/the-freewheelin-bob-dylan/",
           "kind": "reference"
         },
         {
@@ -7740,11 +6485,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000199023",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/tracy_chapman/tracy_chapman/",
-          "kind": "reference"
         }
       ]
     },
@@ -7765,11 +6505,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000244403",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/dolly_parton/coat_of_many_colors/",
-          "kind": "reference"
         }
       ]
     },
@@ -7789,11 +6524,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000191041",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/joni_mitchell/the_hissing_of_summer_lawns/",
           "kind": "reference"
         }
       ]
@@ -7820,11 +6550,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/h5xm",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/janis_joplin/pearl/",
-          "kind": "reference"
         }
       ]
     },
@@ -7850,11 +6575,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/c94h",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_slits/cut/",
-          "kind": "reference"
         }
       ]
     },
@@ -7874,11 +6594,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000279571",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/beastie_boys/check_your_head/",
           "kind": "reference"
         }
       ]
@@ -7905,11 +6620,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/bpwx",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/new_order/power__corruption_and_lies/",
-          "kind": "reference"
         }
       ]
     },
@@ -7935,11 +6645,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/4mcg",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_beatles/a_hard_days_night/",
-          "kind": "reference"
         }
       ]
     },
@@ -7972,11 +6677,6 @@
           "kind": "review"
         },
         {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/pink-floyd/wish-you-were-here/",
-          "kind": "reference"
-        },
-        {
           "source": "laut.de",
           "url": "https://laut.de/Pink-Floyd/Alben/Wish-You-Were-Here-50th-Anniversary-126289",
           "kind": "review"
@@ -7999,11 +6699,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000126291",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/pavement/wowee_zowee/",
           "kind": "reference"
         },
         {
@@ -8037,11 +6732,6 @@
           "kind": "review"
         },
         {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_beatles/help__f1/",
-          "kind": "reference"
-        },
-        {
           "source": "Bootlegzone",
           "url": "http://www.bootlegzone.com/album.php?name=cdm428&section=1",
           "kind": "review"
@@ -8064,11 +6754,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000193728",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/minutemen/double_nickels_on_the_dime/",
           "kind": "reference"
         },
         {
@@ -8095,11 +6780,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000193617",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/randy_newman/sail_away/",
-          "kind": "reference"
         }
       ]
     },
@@ -8125,11 +6805,6 @@
           "source": "Pitchfork",
           "url": "http://pitchfork.com/reviews/albums/18172-kanye-west-yeezus/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/kanye_west/yeezus/",
-          "kind": "reference"
         }
       ]
     },
@@ -8149,11 +6824,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0003148566",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/kacey-musgraves/golden-hour/",
           "kind": "reference"
         }
       ]
@@ -8180,11 +6850,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/84qv",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/mary_j__blige/whats_the_411_/",
-          "kind": "reference"
         }
       ]
     },
@@ -8204,11 +6869,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000192323",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_velvet_underground/white_light___white_heat_f3/",
           "kind": "reference"
         },
         {
@@ -8235,11 +6895,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000645285",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/gang_of_four/entertainment_/",
-          "kind": "reference"
         }
       ]
     },
@@ -8259,11 +6914,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000653106",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_byrds/sweetheart_of_the_rodeo/",
           "kind": "reference"
         },
         {
@@ -8295,11 +6945,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/ddzf",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/curtis_mayfield/curtis/",
-          "kind": "reference"
         }
       ]
     },
@@ -8325,11 +6970,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/f8p2",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/radiohead/the_bends/",
-          "kind": "reference"
         }
       ]
     },
@@ -8355,11 +6995,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/68vr",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/alicia-keys/the-diary-of-alicia-keys/",
-          "kind": "reference"
         }
       ]
     },
@@ -8379,11 +7014,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000190648",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/led_zeppelin/houses_of_the_holy/",
           "kind": "reference"
         }
       ]
@@ -8417,11 +7047,6 @@
           "kind": "review"
         },
         {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/nirvana/mtv_unplugged_in_new_york/",
-          "kind": "reference"
-        },
-        {
           "source": "Livenirvana",
           "url": "http://www.livenirvana.com/bootography/review0158.html?filename=americanacoustictour1993",
           "kind": "review"
@@ -8450,11 +7075,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/p9mq",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/50_cent/get_rich_or_die_tryin/",
-          "kind": "reference"
         }
       ]
     },
@@ -8475,11 +7095,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000331436",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/nilsson/nilsson_schmilsson/",
-          "kind": "reference"
         }
       ]
     },
@@ -8499,11 +7114,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000650776",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/frank_sinatra/in_the_wee_small_hours/",
           "kind": "reference"
         }
       ]
@@ -8550,11 +7160,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000180907",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/comp/merle-haggard/down-every-road-1962-1994/",
-          "kind": "reference"
         }
       ]
     },
@@ -8574,11 +7179,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000273581",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/big_star/3rd/",
           "kind": "reference"
         }
       ]
@@ -8617,11 +7217,6 @@
           "kind": "review"
         },
         {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/red_hot_chili_peppers/californication/",
-          "kind": "reference"
-        },
-        {
           "source": "Avclub",
           "url": "http://www.avclub.com/review/red-hot-chili-peppers-emcalifornicationem-21308",
           "kind": "review"
@@ -8645,11 +7240,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000198797",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_byrds/mr__tambourine_man/",
-          "kind": "reference"
         }
       ]
     },
@@ -8669,11 +7259,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000654368",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_modern_lovers/the_modern_lovers/",
           "kind": "reference"
         }
       ]
@@ -8705,11 +7290,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/3pm5",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/bjork/post/",
-          "kind": "reference"
         }
       ]
     },
@@ -8735,11 +7315,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/h5zf",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/outkast/speakerboxxx___the_love_below/",
-          "kind": "reference"
         }
       ]
     },
@@ -8760,11 +7335,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000241813",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/destinys_child/the_writings_on_the_wall/",
-          "kind": "reference"
         }
       ]
     },
@@ -8784,11 +7354,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000196169",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/van_halen/van_halen/",
           "kind": "reference"
         }
       ]
@@ -8815,11 +7380,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/8vd3",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_breeders/last_splash/",
-          "kind": "reference"
         }
       ]
     },
@@ -8850,11 +7410,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/j8jw",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/weezer/weezer__blue_album_/",
-          "kind": "reference"
         }
       ]
     },
@@ -8882,11 +7437,6 @@
           "kind": "review"
         },
         {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/daft_punk/random_access_memories/",
-          "kind": "reference"
-        },
-        {
           "source": "Thequietus",
           "url": "http://thequietus.com/articles/12374-daft-punk-random-access-memories-review",
           "kind": "review"
@@ -8909,11 +7459,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000104616",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/neil_young_and_crazy_horse/rust_never_sleeps/",
           "kind": "reference"
         }
       ]
@@ -8940,11 +7485,6 @@
           "source": "Pitchfork",
           "url": "https://pitchfork.com/reviews/albums/peter-gabriel-so/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/peter_gabriel/so/",
-          "kind": "reference"
         }
       ]
     },
@@ -8970,11 +7510,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/hfhj",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/tom_petty/full_moon_fever/",
-          "kind": "reference"
         }
       ]
     },
@@ -8994,11 +7529,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000650357",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/b_b-king/live-at-the-regal/",
           "kind": "reference"
         }
       ]
@@ -9025,11 +7555,6 @@
           "source": "Pitchfork",
           "url": "https://pitchfork.com/reviews/albums/shania-twain-come-on-over/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/shania-twain/come-on-over/",
-          "kind": "reference"
         }
       ]
     },
@@ -9055,11 +7580,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/9hmq",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/new_york_dolls/new_york_dolls/",
-          "kind": "reference"
         }
       ]
     },
@@ -9079,11 +7599,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000192440",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/neil-young/tonights-the-night/",
           "kind": "reference"
         }
       ]
@@ -9105,11 +7620,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000591451",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/comp/abba/the-definitive-collection/",
-          "kind": "reference"
         }
       ]
     },
@@ -9129,11 +7639,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000398977",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/bill_withers/just_as_i_am/",
           "kind": "reference"
         }
       ]
@@ -9160,11 +7665,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/vdcz",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/kiss/alive_/",
-          "kind": "reference"
         }
       ]
     },
@@ -9190,11 +7690,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/f9jw",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/al_green/im_still_in_love_with_you/",
-          "kind": "reference"
         }
       ]
     },
@@ -9220,11 +7715,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/rjn8",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/comp/sam-cooke/portrait-of-a-legend-1951-1964/",
-          "kind": "reference"
         }
       ]
     },
@@ -9250,11 +7740,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/69n8",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/eno/here_come_the_warm_jets/",
-          "kind": "reference"
         }
       ]
     },
@@ -9275,11 +7760,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000198508",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/joy-division/closer/",
-          "kind": "reference"
         }
       ]
     },
@@ -9299,11 +7779,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000192366",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/wire/pink_flag/",
           "kind": "reference"
         }
       ]
@@ -9330,11 +7805,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/n5zf",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/neil_young/on_the_beach/",
-          "kind": "reference"
         }
       ]
     },
@@ -9380,11 +7850,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/cmdp",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/pj-harvey/stories-from-the-city-stories-from-the-sea/",
-          "kind": "reference"
         }
       ]
     },
@@ -9405,11 +7870,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000185422",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/aaliyah/one_in_a_million/",
-          "kind": "reference"
         }
       ]
     },
@@ -9429,11 +7889,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0003212018",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/rosalia/el-mal-querer/",
           "kind": "reference"
         }
       ]
@@ -9460,11 +7915,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/gpzf",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the-who/the-who-sell-out/",
-          "kind": "reference"
         }
       ]
     },
@@ -9484,11 +7934,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000660667",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/billie-holiday-with-ray-ellis-and-his-orchestra/lady-in-satin-1/",
           "kind": "reference"
         }
       ]
@@ -9515,11 +7960,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/pnhf",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/janet/the-velvet-rope/",
-          "kind": "reference"
         },
         {
           "source": "Inmusicwetrust",
@@ -9550,11 +7990,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/q6rg",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_stone_roses/the_stone_roses/",
-          "kind": "reference"
         }
       ]
     },
@@ -9574,11 +8009,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000319061",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/x/los-angeles-4/",
           "kind": "reference"
         }
       ]
@@ -9605,11 +8035,6 @@
           "source": "Pitchfork",
           "url": "https://pitchfork.com/reviews/albums/lana-del-rey-norman-fucking-rockwell/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/lana-del-rey/norman-fucking-rockwell/",
-          "kind": "reference"
         }
       ]
     },
@@ -9629,11 +8054,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000262451",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/elvis_presley/from_elvis_in_memphis/",
           "kind": "reference"
         }
       ]
@@ -9660,11 +8080,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/6d63",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_clash/sandinista_/",
-          "kind": "reference"
         }
       ]
     },
@@ -9692,11 +8107,6 @@
           "kind": "review"
         },
         {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/coldplay/a_rush_of_blood_to_the_head/",
-          "kind": "reference"
-        },
-        {
           "source": "Indielondon",
           "url": "https://www.indielondon.co.uk/music/cd_coldplay_rushofblood.html",
           "kind": "review"
@@ -9720,11 +8130,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000098184",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/comp/jerry-lee-lewis/the-jerry-lee-lewis-anthology-all-killer-no-filler.p/",
-          "kind": "reference"
         }
       ]
     },
@@ -9744,11 +8149,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000191363",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/prince/dirty_mind/",
           "kind": "reference"
         }
       ]
@@ -9775,11 +8175,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/j3gb",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_who/live_at_leeds/",
-          "kind": "reference"
         }
       ]
     },
@@ -9805,11 +8200,6 @@
           "source": "Pitchfork",
           "url": "http://pitchfork.com/reviews/albums/17963-vampire-weekend-modern-vampires-of-the-city/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/vampire_weekend/modern_vampires_of_the_city/",
-          "kind": "reference"
         }
       ]
     },
@@ -9835,11 +8225,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/qw4z",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/dj_shadow/endtroducing______f1/",
-          "kind": "reference"
         }
       ]
     },
@@ -9860,11 +8245,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000191599",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_rolling_stones/aftermath/",
-          "kind": "reference"
         }
       ]
     },
@@ -9884,11 +8264,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000198738",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/madonna/like_a_prayer/",
           "kind": "reference"
         }
       ]
@@ -9915,11 +8290,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/6h25",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/elvis_presley/elvis_presley/",
-          "kind": "reference"
         }
       ]
     },
@@ -9945,11 +8315,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/zcx2",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/bill_withers/still_bill/",
-          "kind": "reference"
         }
       ]
     },
@@ -9969,11 +8334,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000191745",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/santana/abraxas/",
           "kind": "reference"
         }
       ]
@@ -9995,11 +8355,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000199753",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/bob-dylan-and-the-band/the-basement-tapes/",
-          "kind": "reference"
         }
       ]
     },
@@ -10019,11 +8374,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000195549",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/roxy_music/avalon/",
           "kind": "reference"
         }
       ]
@@ -10045,11 +8395,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000189848",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/bob_dylan/john_wesley_harding/",
-          "kind": "reference"
         }
       ]
     },
@@ -10069,11 +8414,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000650120",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/eno/another_green_world/",
           "kind": "reference"
         }
       ]
@@ -10095,11 +8435,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000532143",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/janet_jackson/rhythm_nation_1814/",
-          "kind": "reference"
         }
       ]
     },
@@ -10119,11 +8454,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000106179",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/snoop_doggy_dogg/doggystyle/",
           "kind": "reference"
         }
       ]
@@ -10155,11 +8485,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/dmcg",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/smashing-pumpkins/siamese-dream/",
-          "kind": "reference"
         }
       ]
     },
@@ -10180,11 +8505,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000192939",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_beatles/let_it_be/",
-          "kind": "reference"
         }
       ]
     },
@@ -10204,11 +8524,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000191777",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/comp/sly_and_the_family_stone/greatest-hits/",
           "kind": "reference"
         }
       ]
@@ -10240,11 +8555,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/cvn8",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/toots_and_the_maytals/funky_kingston_f1/",
-          "kind": "reference"
         }
       ]
     },
@@ -10265,11 +8575,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000195809",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/bruce-springsteen/the-wild-the-innocent-and-the-e-street-shuffle/",
-          "kind": "reference"
         }
       ]
     },
@@ -10289,11 +8594,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0002557264",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/arctic_monkeys/am_f2/",
           "kind": "reference"
         }
       ]
@@ -10320,11 +8620,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/gh5c",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/genius_gza/liquid_swords/",
-          "kind": "reference"
         }
       ]
     },
@@ -10350,11 +8645,6 @@
           "source": "Pitchfork",
           "url": "https://pitchfork.com/reviews/albums/gillian-welch-time-the-revelator/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/gillian-welch/time-the-revelator/",
-          "kind": "reference"
         }
       ]
     },
@@ -10374,11 +8664,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000263578",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/mc5/kick_out_the_jams/",
           "kind": "reference"
         }
       ]
@@ -10435,11 +8720,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/3jqv",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/roxy_music/for_your_pleasure/",
-          "kind": "reference"
         }
       ]
     },
@@ -10459,11 +8739,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000601851",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/eminem/the_slim_shady_lp/",
           "kind": "reference"
         },
         {
@@ -10495,11 +8770,6 @@
           "source": "Pitchfork",
           "url": "http://pitchfork.com/reviews/albums/1319-the-cars-deluxe-edition/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_cars/the_cars/",
-          "kind": "reference"
         }
       ]
     },
@@ -10519,11 +8789,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000088203",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/x_ray_spex/germfree_adolescents_f6/",
           "kind": "reference"
         }
       ]
@@ -10550,11 +8815,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/r3gb",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/black-sabbath/black-sabbath/",
-          "kind": "reference"
         }
       ]
     },
@@ -10574,11 +8834,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000263588",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/dr__john__the_night_tripper/gris_gris/",
           "kind": "reference"
         }
       ]
@@ -10600,11 +8855,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000192250",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/tom_waits/rain_dogs/",
-          "kind": "reference"
         }
       ]
     },
@@ -10625,11 +8875,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000308187",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/sonic_youth/goo/",
-          "kind": "reference"
         }
       ]
     },
@@ -10649,11 +8894,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000467133",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/big-star/radio-city-1/",
           "kind": "reference"
         }
       ]
@@ -10680,11 +8920,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/4828",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/funkadelic/one_nation_under_a_groove/",
-          "kind": "reference"
         }
       ]
     },
@@ -10705,11 +8940,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000563300",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/my-chemical-romance/the-black-parade/",
-          "kind": "reference"
         }
       ]
     },
@@ -10729,11 +8959,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000192280",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/luther-vandross/never-too-much/",
           "kind": "reference"
         }
       ]
@@ -10760,11 +8985,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/hgcz",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/parliament/mothership_connection/",
-          "kind": "reference"
         }
       ]
     },
@@ -10784,11 +9004,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000650866",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/talking_heads/more_songs_about_buildings_and_food/",
           "kind": "reference"
         }
       ]
@@ -10810,11 +9025,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000335176",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/madvillain/madvillainy/",
-          "kind": "reference"
         }
       ]
     },
@@ -10834,11 +9044,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000649813",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/aerosmith/rocks/",
           "kind": "reference"
         }
       ]
@@ -10860,11 +9065,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0002825574",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/mixtape/drake/if_youre_reading_this_its_too_late/",
-          "kind": "reference"
         }
       ]
     },
@@ -10884,11 +9084,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000194979",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/george_harrison/all_things_must_pass/",
           "kind": "reference"
         }
       ]
@@ -10915,11 +9110,6 @@
           "source": "Pitchfork",
           "url": "https://pitchfork.com/reviews/albums/19240-mobb-deep-the-infamous-the-infamous-mobb-deep/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/mobb_deep/the_infamous/",
-          "kind": "reference"
         }
       ]
     },
@@ -10945,11 +9135,6 @@
           "source": "Rolling Stone",
           "url": "http://www.rollingstone.com/artists/9005/albums/album/8871591/rid/8878233/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/lil_wayne/tha_carter_ii/",
-          "kind": "reference"
         }
       ]
     },
@@ -10970,11 +9155,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000192045",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/comp/the-temptations/anthology-the-temptations-1964-73/",
-          "kind": "reference"
         }
       ]
     },
@@ -10994,11 +9174,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000194385",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/big_brother_and_the_holding_company/cheap_thrills/",
           "kind": "reference"
         }
       ]
@@ -11030,11 +9205,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/rhj9",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/isaac_hayes/hot_buttered_soul/",
-          "kind": "reference"
         }
       ]
     },
@@ -11060,11 +9230,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/pcpn",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/comp/robert-johnson/king-of-the-delta-blues-singers/",
-          "kind": "reference"
         }
       ]
     },
@@ -11090,11 +9255,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/pzqv",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/green_day/dookie/",
-          "kind": "reference"
         }
       ]
     },
@@ -11120,11 +9280,6 @@
           "source": "Pitchfork",
           "url": "http://pitchfork.com/reviews/albums/5758-in-the-aeroplane-over-the-sea/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/neutral_milk_hotel/in_the_aeroplane_over_the_sea/",
-          "kind": "reference"
         }
       ]
     },
@@ -11150,11 +9305,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/h24h",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/yeah_yeah_yeahs/fever_to_tell/",
-          "kind": "reference"
         }
       ]
     },
@@ -11174,11 +9324,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000650722",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/run_d_m_c_/run_d_m_c_/",
           "kind": "reference"
         }
       ]
@@ -11205,11 +9350,6 @@
           "source": "Pitchfork",
           "url": "https://pitchfork.com/reviews/albums/rush-moving-pictures-40th-anniversary/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/rush/moving-pictures/",
-          "kind": "reference"
         },
         {
           "source": "Superdeluxeedition",
@@ -11240,11 +9380,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000188531",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/charles_mingus/mingus_ah_um/",
-          "kind": "reference"
         }
       ]
     },
@@ -11265,11 +9400,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000190876",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/lynyrd_skynyrd/_pronounced_leh_nerd_skin_nerd__f4/",
-          "kind": "reference"
         }
       ]
     },
@@ -11289,11 +9419,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0002848644",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/tame_impala/currents/",
           "kind": "reference"
         }
       ]
@@ -11320,11 +9445,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/mh8c",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/massive_attack/mezzanine/",
-          "kind": "reference"
         }
       ]
     },
@@ -11350,11 +9470,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/jfmq",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_kinks/the_kinks_are_the_village_green_preservation_society/",
-          "kind": "reference"
         }
       ]
     },
@@ -11380,11 +9495,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/rh28",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/ramones/rocket-to-russia/",
-          "kind": "reference"
         }
       ]
     },
@@ -11410,11 +9520,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/qvd3",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/j_dilla/donuts/",
-          "kind": "reference"
         }
       ]
     },
@@ -11440,11 +9545,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/hfvr",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/radiohead/in_rainbows/",
-          "kind": "reference"
         }
       ]
     },
@@ -11470,11 +9570,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/p6vh",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/aretha_franklin/young__gifted_and_black/",
-          "kind": "reference"
         }
       ]
     },
@@ -11532,11 +9627,6 @@
           "kind": "review"
         },
         {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/pixies/surfer_rosa/",
-          "kind": "reference"
-        },
-        {
           "source": "Rolling Stone Germany",
           "url": "https://www.rollingstone.de/reviews/the-cure-wish/",
           "kind": "review"
@@ -11565,11 +9655,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/b3wx",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/kelis/kaleidoscope/",
-          "kind": "reference"
         }
       ]
     },
@@ -11589,11 +9674,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000263313",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/comp/ike-and-tina-turner/proud-mary-the-best-of-ike-and-tina-turner/",
           "kind": "reference"
         }
       ]
@@ -11620,11 +9700,6 @@
           "source": "Metacritic",
           "url": "https://www.metacritic.com/music/1989/taylor-swift",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/taylor_swift/1989/",
-          "kind": "reference"
         }
       ]
     },
@@ -11655,11 +9730,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/wm4h",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/diana_ross/diana/",
-          "kind": "reference"
         }
       ]
     },
@@ -11685,11 +9755,6 @@
           "source": "Pitchfork",
           "url": "https://pitchfork.com/reviews/albums/20078-black-messiah/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/dangelo_and_the_vanguard/black_messiah/",
-          "kind": "reference"
         }
       ]
     },
@@ -11709,11 +9774,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000191577",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/todd_rundgren/something___anything__f1/",
           "kind": "reference"
         }
       ]
@@ -11752,11 +9812,6 @@
           "kind": "review"
         },
         {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/billie-eilish/when-we-all-fall-asleep-where-do-we-go/",
-          "kind": "reference"
-        },
-        {
           "source": "laut.de",
           "url": "https://www.laut.de/Billie-Eilish/Alben/When-We-All-Fall-Asleep,-Where-Do-We-Go-111556",
           "kind": "review"
@@ -11790,11 +9845,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/9fwx",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the-raincoats/the-raincoats/",
-          "kind": "reference"
         }
       ]
     },
@@ -11820,11 +9870,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/f4w6",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/brian_wilson/smile/",
-          "kind": "reference"
         }
       ]
     },
@@ -11850,11 +9895,6 @@
           "source": "Pitchfork",
           "url": "https://pitchfork.com/reviews/albums/the-go-gos-beauty-and-the-beat/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/go_gos/beauty_and_the_beat/",
-          "kind": "reference"
         }
       ]
     },
@@ -11874,11 +9914,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000590317",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/blondie/blondie/",
           "kind": "reference"
         }
       ]
@@ -11900,11 +9935,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000958870",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/fela_ransome_kuti_and_africa_70/expensive_shit/",
-          "kind": "reference"
         }
       ]
     },
@@ -11924,11 +9954,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000601236",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/ghostface_killah/supreme_clientele/",
           "kind": "reference"
         }
       ]
@@ -11960,11 +9985,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/wm5c",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/anita_baker/rapture/",
-          "kind": "reference"
         }
       ]
     },
@@ -11990,11 +10010,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/p2x2",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/comp/various-artists/nuggets-original-artyfacts-from-the-first-psychedelic-era-1965%E2%80%931968/",
-          "kind": "reference"
         }
       ]
     },
@@ -12014,11 +10029,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000601205",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_magnetic_fields/69_love_songs/",
           "kind": "reference"
         },
         {
@@ -12045,11 +10055,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000651011",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/neil-young-with-crazy-horse/everybody-knows-this-is-nowhere/",
-          "kind": "reference"
         }
       ]
     },
@@ -12075,11 +10080,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/cdcz",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/motorhead/ace_of_spades/",
-          "kind": "reference"
         }
       ]
     },
@@ -12100,11 +10100,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000651044",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/grateful-dead/workingmans-dead/",
-          "kind": "reference"
         }
       ]
     },
@@ -12124,11 +10119,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000625283",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the-beach-boys/wild-honey/",
           "kind": "reference"
         }
       ]
@@ -12155,11 +10145,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/54hj",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/bob_dylan/love_and_theft/",
-          "kind": "reference"
         }
       ]
     },
@@ -12185,11 +10170,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/9vhf",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/smokey_robinson_and_the_miracles/going_to_a_go_go/",
-          "kind": "reference"
         }
       ]
     },
@@ -12209,11 +10189,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000232241",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/creedence_clearwater_revival/cosmos_factory/",
           "kind": "reference"
         }
       ]
@@ -12240,11 +10215,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/6pj9",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/chic/risque/",
-          "kind": "reference"
         }
       ]
     },
@@ -12292,11 +10262,6 @@
           "kind": "reference"
         },
         {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_roots/things_fall_apart/",
-          "kind": "reference"
-        },
-        {
           "source": "Avclub",
           "url": "http://www.avclub.com/review/the-roots-emthings-fall-apartem-21340",
           "kind": "review"
@@ -12319,11 +10284,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000187968",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/ornette_coleman/the_shape_of_jazz_to_come/",
           "kind": "reference"
         }
       ]
@@ -12350,11 +10310,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/86rg",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/dire_straits/brothers_in_arms/",
-          "kind": "reference"
         }
       ]
     },
@@ -12374,11 +10329,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0002165105",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/eric_church/chief/",
           "kind": "reference"
         }
       ]
@@ -12405,11 +10355,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/wrb6",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/earth__wind_and_fire/thats_the_way_of_the_world/",
-          "kind": "reference"
         }
       ]
     },
@@ -12435,11 +10380,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/j5f9",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/m_i_a__f2/arular/",
-          "kind": "reference"
         }
       ]
     },
@@ -12465,11 +10405,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/5crg",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/marvin_gaye/lets_get_it_on/",
-          "kind": "reference"
         }
       ]
     },
@@ -12489,11 +10424,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000593102",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/yo_la_tengo/i_can_hear_the_heart_beating_as_one/",
           "kind": "reference"
         },
         {
@@ -12542,11 +10472,6 @@
           "kind": "review"
         },
         {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/beck_/odelay/",
-          "kind": "reference"
-        },
-        {
           "source": "laut.de",
           "url": "https://laut.de/Beck/Alben/Odelay-28859",
           "kind": "review"
@@ -12580,11 +10505,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000197568",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/paul_simon/paul_simon/",
-          "kind": "reference"
         }
       ]
     },
@@ -12604,11 +10524,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000202452",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/lucinda-williams/lucinda-williams/",
           "kind": "reference"
         }
       ]
@@ -12630,11 +10545,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000201371",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/al_green/call_me/",
-          "kind": "reference"
         }
       ]
     },
@@ -12654,11 +10564,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000194219",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/husker_du/new_day_rising/",
           "kind": "reference"
         },
         {
@@ -12690,11 +10595,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/q9jw",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/four_tops/reach_out/",
-          "kind": "reference"
         }
       ]
     },
@@ -12720,11 +10620,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/x6hj",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/elvis-costello/my-aim-is-true/",
-          "kind": "reference"
         }
       ]
     },
@@ -12775,11 +10670,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/gnhj",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/usher/confessions/",
-          "kind": "reference"
         }
       ]
     },
@@ -12805,11 +10695,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/66cz",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/lcd_soundsystem/sound_of_silver/",
-          "kind": "reference"
         }
       ]
     },
@@ -12829,11 +10714,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000107665",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/pavement/crooked_rain__crooked_rain/",
           "kind": "reference"
         }
       ]
@@ -12855,11 +10735,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000197381",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/pet_shop_boys/actually/",
-          "kind": "reference"
         }
       ]
     },
@@ -12879,11 +10754,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000183802",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/2pac/all_eyez_on_me/",
           "kind": "reference"
         }
       ]
@@ -12910,11 +10780,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/f4qv",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/primal_scream/screamadelica/",
-          "kind": "reference"
         }
       ]
     },
@@ -12940,11 +10805,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/q94h",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/blur/parklife/",
-          "kind": "reference"
         }
       ]
     },
@@ -12965,11 +10825,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000473838",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/james-brown/sex-machine-16/",
-          "kind": "reference"
         }
       ]
     },
@@ -12989,11 +10844,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000691676",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/loretta_lynn/coal_miners_daughter/",
           "kind": "reference"
         }
       ]
@@ -13025,11 +10875,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/9qdp",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/britney_spears/blackout/",
-          "kind": "reference"
         }
       ]
     },
@@ -13049,11 +10894,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0002860864",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_weeknd/beauty_behind_the_madness/",
           "kind": "reference"
         }
       ]
@@ -13075,11 +10915,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000251983",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/david-bowie/scary-monsters-and-super-creeps/",
-          "kind": "reference"
         }
       ]
     },
@@ -13100,11 +10935,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000398095",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/fiona_apple/extraordinary_machine/",
-          "kind": "reference"
         }
       ]
     },
@@ -13124,11 +10954,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000692219",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/yes/close-to-the-edge/",
           "kind": "reference"
         }
       ]
@@ -13155,11 +10980,6 @@
           "source": "Pitchfork",
           "url": "https://pitchfork.com/reviews/albums/alice-coltrane-journey-in-satchidananda/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/alice_coltrane_featuring_pharoah_sanders/journey_in_satchidananda/",
-          "kind": "reference"
         }
       ]
     },
@@ -13179,11 +10999,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0003239818",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/bad-bunny/x-100pre/",
           "kind": "reference"
         }
       ]
@@ -13210,11 +11025,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/mwjw",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/otis_redding/complete_and_unbelievable__the_otis_redding_dictionary_of_soul/",
-          "kind": "reference"
         }
       ]
     },
@@ -13247,11 +11057,6 @@
           "kind": "review"
         },
         {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_white_stripes/elephant/",
-          "kind": "reference"
-        },
-        {
           "source": "laut.de",
           "url": "http://www.laut.de/lautstark/cd-reviews/w/white_stripes/elephant/index.htm",
           "kind": "review"
@@ -13275,11 +11080,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000198052",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/paul_and_linda_mccartney/ram/",
-          "kind": "reference"
         }
       ]
     },
@@ -13299,11 +11099,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000193572",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/roberta-flack/first-take/",
           "kind": "reference"
         }
       ]
@@ -13325,11 +11120,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000982334",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/comp/diana-ross-and-the-supremes/anthology/",
-          "kind": "reference"
         }
       ]
     },
@@ -13350,11 +11140,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000207551",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/nine_inch_nails/pretty_hate_machine/",
-          "kind": "reference"
         }
       ]
     },
@@ -13374,11 +11159,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000200400",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/can/ege_bamyasi/",
           "kind": "reference"
         }
       ]
@@ -13420,11 +11200,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000190077",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/comp/al_green/greatest_hits_f1/",
-          "kind": "reference"
         }
       ]
     },
@@ -13444,11 +11219,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000654778",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/sinead_oconnor/i_do_not_want_what_i_havent_got/",
           "kind": "reference"
         }
       ]
@@ -13470,11 +11240,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0002540499",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/jason-isbell/southeastern/",
-          "kind": "reference"
         }
       ]
     },
@@ -13495,11 +11260,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000822711",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/kid_cudi/man_on_the_moon__the_end_of_day/",
-          "kind": "reference"
         }
       ]
     },
@@ -13519,11 +11279,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0003031925",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/lorde/melodrama/",
           "kind": "reference"
         }
       ]
@@ -13550,11 +11305,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/4rqv",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/bon_iver/for_emma__forever_ago/",
-          "kind": "reference"
         }
       ]
     },
@@ -13580,11 +11330,6 @@
           "source": "Pitchfork",
           "url": "https://pitchfork.com/reviews/albums/the-flying-burrito-brothers-the-gilded-palace-of-sin/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_flying_burrito_bros/the_gilded_palace_of_sin/",
-          "kind": "reference"
         }
       ]
     },
@@ -13604,11 +11349,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000651047",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/laura_nyro/eli_and_the_thirteenth_confession/",
           "kind": "reference"
         }
       ]
@@ -13635,11 +11375,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/rp9x",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the-isley-brothers/3-3/",
-          "kind": "reference"
         }
       ]
     },
@@ -13660,11 +11395,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000018870",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/comp/king-sunny-ade/the-best-of-the-classic-years/",
-          "kind": "reference"
         }
       ]
     },
@@ -13684,11 +11414,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000115529",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the-beach-boys/the-beach-boys-today/",
           "kind": "reference"
         }
       ]
@@ -13740,11 +11465,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/z56m",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_rolling_stones/some_girls/",
-          "kind": "reference"
         }
       ]
     },
@@ -13764,11 +11484,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000043420",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/manu_chao/clandestino/",
           "kind": "reference"
         }
       ]
@@ -13790,11 +11505,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000242048",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/juvenile/400-degreez/",
-          "kind": "reference"
         }
       ]
     },
@@ -13814,11 +11524,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000591676",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/jefferson_airplane/surrealistic_pillow/",
           "kind": "reference"
         }
       ]
@@ -13845,11 +11550,6 @@
           "source": "Pitchfork",
           "url": "https://pitchfork.com/reviews/albums/sza-ctrl/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/sza/ctrl/",
-          "kind": "reference"
         }
       ]
     },
@@ -13880,11 +11580,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/fg3n",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/daddy_yankee/barrio_fino/",
-          "kind": "reference"
         }
       ]
     },
@@ -13904,11 +11599,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000459534",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/big_star/_1_record/",
           "kind": "reference"
         }
       ]
@@ -13935,11 +11625,6 @@
           "source": "Pitchfork",
           "url": "https://pitchfork.com/reviews/albums/sheryl-crow-sheryl-crow/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/sheryl_crow/sheryl_crow/",
-          "kind": "reference"
         }
       ]
     },
@@ -13959,11 +11644,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000050287",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/sparks/kimono_my_house/",
           "kind": "reference"
         }
       ]
@@ -13985,11 +11665,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000313784",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/comp/howlin-wolf/moanin-in-the-moonlight/",
-          "kind": "reference"
         }
       ]
     },
@@ -14009,11 +11684,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000199387",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_kinks/something_else_by_the_kinks/",
           "kind": "reference"
         }
       ]
@@ -14065,11 +11735,6 @@
           "source": "Album of the Year",
           "url": "http://www.albumoftheyear.org/album/63456-miranda-lambert-the-weight-of-these-wings.php",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/miranda-lambert/the-weight-of-these-wings/",
-          "kind": "reference"
         }
       ]
     },
@@ -14089,11 +11754,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000019993",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/belle_and_sebastian/if_youre_feeling_sinister/",
           "kind": "reference"
         }
       ]
@@ -14125,11 +11785,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/j428",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_pharcyde/bizarre_ride_ii_the_pharcyde/",
-          "kind": "reference"
         }
       ]
     },
@@ -14149,11 +11804,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000012893",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/comp/muddy-waters/the-anthology/",
           "kind": "reference"
         }
       ]
@@ -14180,11 +11830,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/5pzb",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/lady-gaga/born-this-way/",
-          "kind": "reference"
         }
       ]
     },
@@ -14215,11 +11860,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/dcw6",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/richard_and_linda_thompson/i_want_to_see_the_bright_lights_tonight/",
-          "kind": "reference"
         }
       ]
     },
@@ -14267,11 +11907,6 @@
           "kind": "review"
         },
         {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/black_flag/damaged/",
-          "kind": "reference"
-        },
-        {
           "source": "Web Archive",
           "url": "https://web.archive.org/web/20160414193559/http://ssmt-reviews.com/artist/black_flag.html",
           "kind": "review"
@@ -14300,11 +11935,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/8f54",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the-stooges/the-stooges/",
-          "kind": "reference"
         }
       ]
     },
@@ -14324,11 +11954,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000206684",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/comp/phil_spector/back_to_mono__1958_1969_/",
           "kind": "reference"
         }
       ]
@@ -14375,11 +12000,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0003333652",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/harry-styles/fine-line/",
-          "kind": "reference"
         }
       ]
     },
@@ -14405,11 +12025,6 @@
           "source": "Pitchfork",
           "url": "https://pitchfork.com/reviews/albums/bonnie-raitt-nick-of-time/",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/bonnie-raitt/nick-of-time/",
-          "kind": "reference"
         }
       ]
     },
@@ -14430,11 +12045,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000112616",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/marvin_gaye/here__my_dear/",
-          "kind": "reference"
         }
       ]
     },
@@ -14454,11 +12064,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000862389",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/the_ronettes/presenting_the_fabulous_ronettes_featuring_veronica/",
           "kind": "reference"
         },
         {
@@ -14485,11 +12090,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000626004",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/boyz_ii_men/ii/",
-          "kind": "reference"
         }
       ]
     },
@@ -14509,11 +12109,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000045951",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/shakira/donde-estan-los-ladrones/",
           "kind": "reference"
         }
       ]
@@ -14535,11 +12130,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000346412",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/various-artists/the-indestructible-beat-of-soweto-2/",
-          "kind": "reference"
         }
       ]
     },
@@ -14560,11 +12150,6 @@
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000690243",
           "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/suicide/suicide/",
-          "kind": "reference"
         }
       ]
     },
@@ -14584,11 +12169,6 @@
         {
           "source": "AllMusic",
           "url": "https://www.allmusic.com/album/mw0000678148",
-          "kind": "reference"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/rufus_featuring_chaka_khan/ask_rufus/",
           "kind": "reference"
         }
       ]
@@ -14615,11 +12195,6 @@
           "source": "BBC Music",
           "url": "https://www.bbc.co.uk/music/reviews/dpgb",
           "kind": "review"
-        },
-        {
-          "source": "Rate Your Music",
-          "url": "https://rateyourmusic.com/release/album/arcade_fire/funeral/",
-          "kind": "reference"
         }
       ]
     }

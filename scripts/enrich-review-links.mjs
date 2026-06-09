@@ -23,7 +23,6 @@ const SOURCE_LABELS = new Map([
   ["pastemagazine.com", "Paste"],
   ["pitchfork.com", "Pitchfork"],
   ["popmatters.com", "PopMatters"],
-  ["rateyourmusic.com", "Rate Your Music"],
   ["rollingstone.com", "Rolling Stone"],
   ["rollingstone.de", "Rolling Stone Germany"],
   ["slantmagazine.com", "Slant"],
@@ -40,7 +39,6 @@ const SOURCE_PRIORITY = [
   "NME",
   "Entertainment Weekly",
   "Album of the Year",
-  "Rate Your Music",
 ]
 
 function parseArgs(argv) {
