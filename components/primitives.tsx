@@ -65,15 +65,17 @@ export function ClubAvatar({
 export function ScoreBadge({
   score,
   label = `/${RATING_SCALE.max}`,
+  emptyLabel = "listening",
 }: {
   score?: number | null;
   label?: string;
+  emptyLabel?: string;
 }) {
   if (score == null) {
     return (
       <span className="inline-flex items-center gap-2 rounded-md border border-[var(--line-strong)] bg-[var(--paper-2)] px-2.5 py-1 text-xs text-[var(--ink-soft)]">
         <span className="size-2 rounded-full bg-[var(--accent)] animate-pulse-dot" />
-        listening
+        {emptyLabel}
       </span>
     );
   }

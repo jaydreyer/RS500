@@ -16,6 +16,7 @@ import {
   parseTake,
   rateDrawnSkip,
   rateFreshPick,
+  replaceUnavailablePick,
 } from "@/lib/draw";
 
 const REVIEW_WRITE_RATE_LIMIT = {
@@ -99,6 +100,32 @@ export async function skipRatingAction(
     return {
       status: "success",
       message: `Skipped and logged: ${listen.album.title} - ${formatRating(rating)}/${RATING_SCALE.max}.`,
+      listen,
+    };
+  } catch (error) {
+    return handleActionError(error);
+  }
+}
+
+export async function replaceUnavailablePickAction(
+  _previousState: WeekActionState,
+  formData: FormData,
+): Promise<WeekActionState> {
+  try {
+    const listenId = parseListenId(formData.get("listenId"));
+    const { pb, user } = await getAuthenticatedPocketBase();
+    const listen = await replaceUnavailablePick({
+      pb,
+      userId: user.id,
+      listenId,
+    });
+    revalidatePath("/week");
+    revalidatePath("/catalog");
+    revalidatePath("/history");
+
+    return {
+      status: "success",
+      message: `Logged unavailable on Spotify. Your replacement is ${listen.album.title}.`,
       listen,
     };
   } catch (error) {

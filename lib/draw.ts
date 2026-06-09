@@ -164,6 +164,33 @@ export async function rateDrawnSkip({
   return mapListen(updated);
 }
 
+export async function replaceUnavailablePick({
+  pb,
+  userId,
+  listenId,
+}: {
+  pb: PocketBase;
+  userId: string;
+  listenId: string;
+}) {
+  const listen = await getOwnedListen(pb, userId, listenId);
+  assertActiveFresh(listen);
+
+  await pb.collection("listens").update(
+    listenId,
+    {
+      kind: "skip",
+      status: "rated",
+      rating: null,
+      take: "Unavailable on Spotify.",
+      rated_at: new Date().toISOString(),
+    },
+    { requestKey: null },
+  );
+
+  return drawAlbum(pb, userId);
+}
+
 export async function rateFreshPick({
   pb,
   userId,

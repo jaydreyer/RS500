@@ -9,6 +9,7 @@ import {
   drawAction,
   freshRatingAction,
   keepFreshPickAction,
+  replaceUnavailablePickAction,
   skipRatingAction,
 } from "@/app/(club)/week/actions";
 import { AlbumCover } from "@/components/album-cover";
@@ -43,6 +44,10 @@ export function WeekDrawMachine({ weekState }: { weekState: WeekState }) {
   );
   const [skipState, skipFormAction, isSkipPending] = useActionState(
     skipRatingAction,
+    initialWeekActionState,
+  );
+  const [replaceState, replaceFormAction, isReplacePending] = useActionState(
+    replaceUnavailablePickAction,
     initialWeekActionState,
   );
 
@@ -122,6 +127,24 @@ export function WeekDrawMachine({ weekState }: { weekState: WeekState }) {
   }, [skipState, router]);
 
   useEffect(() => {
+    if (replaceState.status === "success" && replaceState.listen) {
+      const timer = window.setTimeout(() => {
+        setDrawnListen(replaceState.listen);
+        setPhase("presented");
+        setToast(replaceState.message);
+        router.refresh();
+      }, 0);
+
+      return () => window.clearTimeout(timer);
+    }
+
+    if (replaceState.status === "error") {
+      const timer = window.setTimeout(() => setToast(replaceState.message), 0);
+      return () => window.clearTimeout(timer);
+    }
+  }, [replaceState, router]);
+
+  useEffect(() => {
     if (!toast) {
       return;
     }
@@ -182,8 +205,10 @@ export function WeekDrawMachine({ weekState }: { weekState: WeekState }) {
               listen={drawnListen}
               keepAction={keepFormAction}
               skipAction={skipFormAction}
+              replaceAction={replaceFormAction}
               isKeepPending={isKeepPending}
               isSkipPending={isSkipPending}
+              isReplacePending={isReplacePending}
               onHeard={() => setPhase("rate-skip")}
               onReset={resetMachine}
             />
@@ -191,7 +216,13 @@ export function WeekDrawMachine({ weekState }: { weekState: WeekState }) {
         </div>
       </div>
 
-      {activeFresh && phase === "idle" && <NowListening listen={activeFresh} />}
+      {activeFresh && phase === "idle" && (
+        <NowListening
+          listen={activeFresh}
+          replaceAction={replaceFormAction}
+          isReplacePending={isReplacePending}
+        />
+      )}
 
       {toast && (
         <div className="fixed bottom-24 left-1/2 z-50 w-[min(92vw,420px)] -translate-x-1/2 rounded-md border border-[var(--line-strong)] bg-[var(--card)] px-4 py-3 text-sm text-[var(--ink)] shadow-[var(--shadow)]">
@@ -256,8 +287,10 @@ function PresentedFace({
   listen,
   keepAction,
   skipAction,
+  replaceAction,
   isKeepPending,
   isSkipPending,
+  isReplacePending,
   onHeard,
   onReset,
 }: {
@@ -265,8 +298,10 @@ function PresentedFace({
   listen: ListenSummary;
   keepAction: (payload: FormData) => void;
   skipAction: (payload: FormData) => void;
+  replaceAction: (payload: FormData) => void;
   isKeepPending: boolean;
   isSkipPending: boolean;
+  isReplacePending: boolean;
   onHeard: () => void;
   onReset: () => void;
 }) {
@@ -305,6 +340,12 @@ function PresentedFace({
             <Button type="button" variant="ghost" size="lg" onClick={onHeard}>
               Yes, rate it and redraw
             </Button>
+            <form action={replaceAction}>
+              <input type="hidden" name="listenId" value={listen.id} />
+              <Button type="submit" variant="ghost" size="lg" disabled={isReplacePending}>
+                {isReplacePending ? "REPLACING..." : "Can't find it - replace"}
+              </Button>
+            </form>
           </div>
           <p className="tag mt-4">honor system / skips are public</p>
         </div>
@@ -335,7 +376,15 @@ function PresentedFace({
   );
 }
 
-function NowListening({ listen }: { listen: ListenSummary }) {
+function NowListening({
+  listen,
+  replaceAction,
+  isReplacePending,
+}: {
+  listen: ListenSummary;
+  replaceAction: (payload: FormData) => void;
+  isReplacePending: boolean;
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [rateState, rateFormAction, isRatePending] = useActionState(
     freshRatingAction,
@@ -374,9 +423,17 @@ function NowListening({ listen }: { listen: ListenSummary }) {
           </div>
         </div>
         {!isOpen && (
-          <Button type="button" variant="accent" onClick={() => setIsOpen(true)}>
-            I have finished - rate it
-          </Button>
+          <div className="flex flex-wrap gap-3">
+            <Button type="button" variant="accent" onClick={() => setIsOpen(true)}>
+              I have finished - rate it
+            </Button>
+            <form action={replaceAction}>
+              <input type="hidden" name="listenId" value={listen.id} />
+              <Button type="submit" variant="ghost" disabled={isReplacePending}>
+                {isReplacePending ? "REPLACING..." : "Can't find it - replace"}
+              </Button>
+            </form>
+          </div>
         )}
       </div>
 

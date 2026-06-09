@@ -9,9 +9,11 @@ import { formatRating, RATING_SCALE } from "@/lib/config";
 import {
   DrawRuleError,
   parseAlbumId,
+  parseListenId,
   parseRating,
   parseTake,
   rateKnownAlbum,
+  replaceUnavailablePick,
 } from "@/lib/draw";
 
 const REVIEW_WRITE_RATE_LIMIT = {
@@ -22,6 +24,12 @@ const REVIEW_WRITE_RATE_LIMIT = {
 type AlbumRatingActionState = {
   status: "idle" | "success" | "error";
   message: string | null;
+};
+
+type AlbumReplacementActionState = {
+  status: "idle" | "success" | "error";
+  message: string | null;
+  replacementAlbumId: string | null;
 };
 
 export async function knownAlbumRatingAction(
@@ -74,6 +82,48 @@ export async function knownAlbumRatingAction(
         error instanceof DrawRuleError
           ? error.message
           : "Something went sideways while saving that rating.",
+    };
+  }
+}
+
+export async function replaceUnavailableAlbumAction(
+  _previousState: AlbumReplacementActionState,
+  formData: FormData,
+): Promise<AlbumReplacementActionState> {
+  try {
+    const listenId = parseListenId(formData.get("listenId"));
+    const albumId = parseAlbumId(formData.get("albumId"));
+    const { pb, user } = await getAuthenticatedPocketBase();
+    const replacement = await replaceUnavailablePick({
+      pb,
+      userId: user.id,
+      listenId,
+    });
+
+    revalidatePath(`/albums/${albumId}`);
+    revalidatePath(`/albums/${replacement.album.id}`);
+    revalidatePath("/catalog");
+    revalidatePath("/history");
+    revalidatePath("/stats");
+    revalidatePath("/week");
+
+    return {
+      status: "success",
+      message: `Logged unavailable on Spotify. Your replacement is ${replacement.album.title}.`,
+      replacementAlbumId: replacement.album.id,
+    };
+  } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized.") {
+      redirect("/auth");
+    }
+
+    return {
+      status: "error",
+      message:
+        error instanceof DrawRuleError
+          ? error.message
+          : "Something went sideways while replacing that pick.",
+      replacementAlbumId: null,
     };
   }
 }

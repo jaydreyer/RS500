@@ -258,7 +258,7 @@ function ListenStatus({ listen }: { listen?: CatalogListen }) {
   return (
     <span className="inline-flex items-center gap-2">
       {listen.kind === "skip" && <span className="tag">already heard</span>}
-      <ScoreBadge score={listen.rating} label={`/${RATING_SCALE.max}`} />
+      <ScoreBadge score={listen.rating} label={`/${RATING_SCALE.max}`} emptyLabel="no score" />
     </span>
   );
 }

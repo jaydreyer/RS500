@@ -297,7 +297,7 @@ function MemberListenRow({
         {listen.status === "listening" ? (
           <ScoreBadge score={null} />
         ) : (
-          <ScoreBadge score={listen.rating} label={`/${RATING_SCALE.max}`} />
+          <ScoreBadge score={listen.rating} label={`/${RATING_SCALE.max}`} emptyLabel="no score" />
         )}
         <span className="sr-only">{member.displayName}</span>
       </div>

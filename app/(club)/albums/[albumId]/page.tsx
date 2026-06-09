@@ -204,7 +204,7 @@ function ListenRow({ listen }: { listen: AlbumDetailListen }) {
             listening
           </span>
         ) : (
-          <ScoreBadge score={listen.rating} label={`/${RATING_SCALE.max}`} />
+          <ScoreBadge score={listen.rating} label={`/${RATING_SCALE.max}`} emptyLabel="no score" />
         )}
       </div>
     </div>
