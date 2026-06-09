@@ -34,7 +34,7 @@ Status legend:
 
 - `npm run lint`: passed.
 - `npm run typecheck`: passed.
-- `npm test`: passed, 11 tests.
+- `npm test`: passed, 17 tests.
 - `npm run build`: passed.
 - HTTP route checks: `/auth` returns 200; `/week`, `/board`, `/catalog`, `/history`, `/stats`, and `/albums/example` redirect unauthenticated users to `/auth`.
 - Desktop and mobile visual browser pass: blocked in this session because the in-app browser refused local navigation with `ERR_BLOCKED_BY_CLIENT`.

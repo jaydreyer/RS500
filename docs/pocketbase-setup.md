@@ -15,8 +15,10 @@ Required values:
 - `NEXT_PUBLIC_PB_URL`: PocketBase base URL, for example `http://127.0.0.1:8090` locally or the Cloudflare Tunnel URL in production.
 - `PB_ADMIN_EMAIL`: PocketBase superuser email for seed/admin scripts and trusted server-side invite signup.
 - `PB_ADMIN_PASSWORD`: PocketBase superuser password for seed/admin scripts and trusted server-side invite signup.
+- `CREW_INVITE_CODE`: Shared signup code used by the Next.js server action before account creation.
+- `SERVER_ACTION_ALLOWED_ORIGINS`: Comma-separated trusted hosts for Next.js Server Actions.
 
-The shared signup code is `VINYL-NIGHT` and is validated by the Next.js server action before account creation.
+Rotate `CREW_INVITE_CODE` before production use.
 
 Do not expose `PB_ADMIN_EMAIL` or `PB_ADMIN_PASSWORD` to browser code.
 
@@ -50,7 +52,7 @@ PocketBase API rule note: `null` rules are locked to superusers. Empty-string ru
 Phase 2 uses email/password auth against the PocketBase `users` collection:
 
 - Signup posts to a Next.js server action.
-- The server action validates `VINYL-NIGHT` before touching PocketBase.
+- The server action validates `CREW_INVITE_CODE` before touching PocketBase.
 - The server action authenticates as `_superusers`, creates the `users` record with `display_name`, then logs the new user in.
 - Login posts to a Next.js server action and calls `users.authWithPassword`.
 - The authenticated PocketBase token/record are stored in an HTTP-only `pb_auth` cookie.

@@ -387,7 +387,7 @@ function ServiceLinks({ album }: { album: BoardListen["album"] }) {
           key={link.label}
           href={link.href}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           className={cn(
             buttonVariants({ variant: "ghost", size: "sm" }),
             "h-8 px-2 text-[11px]",

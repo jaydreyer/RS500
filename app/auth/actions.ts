@@ -1,5 +1,6 @@
 "use server";
 
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 import {
@@ -8,12 +9,23 @@ import {
   createSuperuserPocketBase,
   setAuthCookie,
 } from "@/lib/auth";
-import { CREW_INVITE_CODE, validateSignupInput } from "@/lib/auth-rules";
+import { validateSignupInput } from "@/lib/auth-rules";
+import { consumeRateLimit, type RateLimitOptions } from "@/lib/rate-limit";
 import { getSignupAlbumAssignment } from "@/lib/signup-album-assignment";
 import { getIsoWeekKey } from "@/lib/week";
 
 export type AuthFormState = {
   message: string | null;
+};
+
+const SIGNUP_RATE_LIMIT: RateLimitOptions = {
+  limit: 8,
+  windowMs: 15 * 60 * 1000,
+};
+
+const LOGIN_RATE_LIMIT: RateLimitOptions = {
+  limit: 10,
+  windowMs: 10 * 60 * 1000,
 };
 
 export async function signupAction(
@@ -24,6 +36,11 @@ export async function signupAction(
   const displayName = getFormValue(formData, "displayName");
   const email = getFormValue(formData, "email").toLowerCase();
   const password = getFormValue(formData, "password");
+
+  const rateLimitError = await checkAuthRateLimit("signup", email, SIGNUP_RATE_LIMIT);
+  if (rateLimitError) {
+    return { message: rateLimitError };
+  }
 
   const validationError = validateSignup({
     inviteCode,
@@ -94,6 +111,11 @@ export async function loginAction(
     return { message: "Enter your email and password." };
   }
 
+  const rateLimitError = await checkAuthRateLimit("login", email, LOGIN_RATE_LIMIT);
+  if (rateLimitError) {
+    return { message: rateLimitError };
+  }
+
   try {
     const pb = createPocketBase();
     await pb.collection("users").authWithPassword(email, password, {
@@ -130,7 +152,7 @@ function validateSignup({
       email,
       password,
     },
-    CREW_INVITE_CODE,
+    getCrewInviteCode(),
   );
 }
 
@@ -181,4 +203,46 @@ function getErrorResponseData(error: unknown) {
   }
 
   return null;
+}
+
+function getCrewInviteCode() {
+  return process.env.CREW_INVITE_CODE;
+}
+
+async function checkAuthRateLimit(scope: "signup" | "login", email: string, options: RateLimitOptions) {
+  const identity = await getRequestIdentity();
+  const normalizedEmail = email || "missing-email";
+  const checks = [
+    consumeRateLimit(`${scope}:ip:${identity}`, options),
+    consumeRateLimit(`${scope}:email:${normalizedEmail}`, options),
+  ];
+  const blocked = checks.find((result) => !result.allowed);
+
+  if (!blocked) {
+    return null;
+  }
+
+  return `Too many attempts. Try again in ${formatRetryAfter(blocked.retryAfterSeconds)}.`;
+}
+
+async function getRequestIdentity() {
+  const headerStore = await headers();
+  const forwardedFor = headerStore.get("x-forwarded-for")?.split(",")[0]?.trim();
+
+  return (
+    forwardedFor ||
+    headerStore.get("x-real-ip")?.trim() ||
+    headerStore.get("cf-connecting-ip")?.trim() ||
+    "unknown-ip"
+  );
+}
+
+function formatRetryAfter(seconds: number) {
+  const minutes = Math.ceil(seconds / 60);
+
+  if (minutes <= 1) {
+    return "about 1 minute";
+  }
+
+  return `about ${minutes} minutes`;
 }

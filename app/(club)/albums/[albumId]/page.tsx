@@ -210,7 +210,7 @@ function ReviewLinks({ links, className }: { links: AlbumReviewLink[]; className
             key={`${link.source}-${link.url}`}
             href={link.url}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="group flex min-h-9 items-center justify-between gap-3 rounded-sm border border-[var(--line)] bg-[var(--card)] px-2.5 py-2 text-sm text-[var(--ink)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
           >
             <span className="min-w-0 truncate font-display font-extrabold">{link.source}</span>
@@ -252,7 +252,7 @@ function ServiceLinks({
           key={link.href}
           href={link.href}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           className={cn(
             buttonVariants({ variant: index === 0 ? "accent" : "ghost" }),
             "w-full",

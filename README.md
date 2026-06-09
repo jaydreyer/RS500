@@ -28,8 +28,10 @@ Required variables:
 - `NEXT_PUBLIC_PB_URL`: PocketBase URL, for example `http://127.0.0.1:8090`.
 - `PB_ADMIN_EMAIL`: PocketBase superuser email for migrations/import/signup.
 - `PB_ADMIN_PASSWORD`: PocketBase superuser password.
+- `CREW_INVITE_CODE`: Shared invite code for server-side signup validation.
+- `SERVER_ACTION_ALLOWED_ORIGINS`: Comma-separated trusted hosts for Next.js Server Actions, for example `localhost:3000` locally and your production app host in deployment.
 
-The shared signup code is `VINYL-NIGHT` and is validated server-side.
+Rotate the shared signup code before production use; it is validated server-side.
 
 Run PocketBase with this repo's migrations directory:
 
