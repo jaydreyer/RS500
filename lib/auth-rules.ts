@@ -5,6 +5,8 @@ export type SignupInput = {
   password: string;
 };
 
+export const CREW_INVITE_CODE = process.env.CREW_INVITE_CODE;
+
 export function validateSignupInput(input: SignupInput, expectedInviteCode: string | undefined) {
   if (!expectedInviteCode) {
     return "Signup is not configured yet.";

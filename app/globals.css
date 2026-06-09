@@ -260,7 +260,8 @@ a {
 }
 
 .catalog-table {
-  display: flow-root;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
   isolation: isolate;
 }
 
