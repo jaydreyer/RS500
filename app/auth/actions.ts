@@ -1,0 +1,162 @@
+"use server";
+
+import { redirect } from "next/navigation";
+
+import {
+  clearAuthCookie,
+  createPocketBase,
+  createSuperuserPocketBase,
+  setAuthCookie,
+} from "@/lib/auth";
+import { validateSignupInput } from "@/lib/auth-rules";
+
+export type AuthFormState = {
+  message: string | null;
+};
+
+export const initialAuthFormState: AuthFormState = {
+  message: null,
+};
+
+export async function signupAction(
+  _previousState: AuthFormState,
+  formData: FormData,
+): Promise<AuthFormState> {
+  const inviteCode = getFormValue(formData, "inviteCode");
+  const displayName = getFormValue(formData, "displayName");
+  const email = getFormValue(formData, "email").toLowerCase();
+  const password = getFormValue(formData, "password");
+
+  const validationError = validateSignup({
+    inviteCode,
+    displayName,
+    email,
+    password,
+  });
+  if (validationError) {
+    return { message: validationError };
+  }
+
+  try {
+    const adminPb = await createSuperuserPocketBase();
+    await adminPb.collection("users").create(
+      {
+        email,
+        password,
+        passwordConfirm: password,
+        display_name: displayName,
+      },
+      { requestKey: null },
+    );
+
+    const userPb = createPocketBase();
+    await userPb.collection("users").authWithPassword(email, password, {
+      requestKey: null,
+    });
+    await setAuthCookie(userPb);
+  } catch (error) {
+    return { message: formatPocketBaseError(error, "Could not create that account.") };
+  }
+
+  redirect("/week");
+}
+
+export async function loginAction(
+  _previousState: AuthFormState,
+  formData: FormData,
+): Promise<AuthFormState> {
+  const email = getFormValue(formData, "email").toLowerCase();
+  const password = getFormValue(formData, "password");
+
+  if (!email || !password) {
+    return { message: "Enter your email and password." };
+  }
+
+  try {
+    const pb = createPocketBase();
+    await pb.collection("users").authWithPassword(email, password, {
+      requestKey: null,
+    });
+    await setAuthCookie(pb);
+  } catch (error) {
+    return { message: formatPocketBaseError(error, "That login did not work.") };
+  }
+
+  redirect("/week");
+}
+
+export async function logoutAction() {
+  await clearAuthCookie();
+  redirect("/auth");
+}
+
+function validateSignup({
+  inviteCode,
+  displayName,
+  email,
+  password,
+}: {
+  inviteCode: string;
+  displayName: string;
+  email: string;
+  password: string;
+}) {
+  return validateSignupInput(
+    {
+      inviteCode,
+      displayName,
+      email,
+      password,
+    },
+    process.env.CREW_INVITE_CODE,
+  );
+}
+
+function getFormValue(formData: FormData, key: string) {
+  const value = formData.get(key);
+  return typeof value === "string" ? value.trim() : "";
+}
+
+function formatPocketBaseError(error: unknown, fallback: string) {
+  const responseData = getErrorResponseData(error);
+
+  if (responseData && typeof responseData === "object") {
+    const fieldMessages = Object.values(responseData)
+      .map((detail) => {
+        if (detail && typeof detail === "object" && "message" in detail) {
+          return String(detail.message);
+        }
+
+        return "";
+      })
+      .filter(Boolean);
+
+    if (fieldMessages.length > 0) {
+      return fieldMessages.join(" ");
+    }
+  }
+
+  return fallback;
+}
+
+function getErrorResponseData(error: unknown) {
+  if (!error || typeof error !== "object") {
+    return null;
+  }
+
+  if ("data" in error) {
+    const data = error.data;
+    if (data && typeof data === "object" && "data" in data) {
+      return data.data;
+    }
+  }
+
+  if ("response" in error) {
+    const response = error.response;
+    if (response && typeof response === "object" && "data" in response) {
+      return response.data;
+    }
+  }
+
+  return null;
+}
