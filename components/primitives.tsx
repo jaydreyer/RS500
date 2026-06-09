@@ -100,7 +100,7 @@ export function RatingInput({
 }
 
 export function ReactionRow() {
-  const reactions = ["fire", "100", "heart"];
+  const reactions = ["🔥", "💯", "❤️"];
 
   return (
     <div className="flex items-center gap-2">

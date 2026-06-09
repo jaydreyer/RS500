@@ -21,11 +21,15 @@ import { formatIsoWeekLabel } from "@/lib/week";
 
 type Phase = "idle" | "spinning" | "presented" | "rate-skip" | "kept";
 
+const DRAW_LOCK_DELAY_MS = 1450;
+const DRAW_REVEAL_DELAY_MS = 1950;
+
 export function WeekDrawMachine({ weekState }: { weekState: WeekState }) {
   const router = useRouter();
   const [phase, setPhase] = useState<Phase>("idle");
   const [drawnListen, setDrawnListen] = useState<ListenSummary | null>(null);
   const [scramble, setScramble] = useState("000");
+  const [spinCue, setSpinCue] = useState("spinning the crate...");
   const [toast, setToast] = useState<string | null>(null);
   const [drawState, drawFormAction, isDrawPending] = useActionState(
     drawAction,
@@ -56,12 +60,13 @@ export function WeekDrawMachine({ weekState }: { weekState: WeekState }) {
     if (drawState.status === "success" && drawState.listen) {
       const settleTimer = window.setTimeout(() => {
         setScramble(String(drawState.listen?.album.rank ?? 0).padStart(3, "0"));
-      }, 0);
+        setSpinCue("needle dropped...");
+      }, DRAW_LOCK_DELAY_MS);
 
       const revealTimer = window.setTimeout(() => {
         setDrawnListen(drawState.listen);
         setPhase("presented");
-      }, 420);
+      }, DRAW_REVEAL_DELAY_MS);
 
       return () => {
         window.clearTimeout(settleTimer);
@@ -130,6 +135,7 @@ export function WeekDrawMachine({ weekState }: { weekState: WeekState }) {
     setDrawnListen(null);
     setPhase("spinning");
     setScramble("000");
+    setSpinCue("digging through the crate...");
   }
 
   function resetMachine() {
@@ -153,7 +159,7 @@ export function WeekDrawMachine({ weekState }: { weekState: WeekState }) {
 
       <div className="hard-panel overflow-hidden rounded-lg">
         <div className="flex items-center justify-between border-b border-dashed border-[var(--line-strong)] bg-[var(--paper-2)] px-5 py-3">
-          <span className="tag">RSD / 500 RANDOMIZER</span>
+          <span className="tag">SPIN / 500 RANDOMIZER</span>
           <span className="mono text-[11px] text-[var(--ink-faint)]">{poolText}</span>
         </div>
         <div className="relative grid min-h-[500px] place-items-center overflow-hidden px-5 py-10 md:px-8">
@@ -167,7 +173,7 @@ export function WeekDrawMachine({ weekState }: { weekState: WeekState }) {
               action={drawFormAction}
             />
           )}
-          {phase === "spinning" && <SpinFace scramble={scramble} />}
+          {phase === "spinning" && <SpinFace scramble={scramble} cue={spinCue} />}
           {(phase === "presented" || phase === "rate-skip" || phase === "kept") && drawnListen && (
             <PresentedFace
               phase={phase}
@@ -233,12 +239,12 @@ function IdleFace({
   );
 }
 
-function SpinFace({ scramble }: { scramble: string }) {
+function SpinFace({ scramble, cue }: { scramble: string; cue: string }) {
   return (
     <div className="text-center">
       <RecordIcon className="mx-auto mb-6 size-48 animate-spin-record motion-reduce:animate-none" />
       <div className="mono text-7xl font-bold text-[var(--accent)] md:text-9xl">#{scramble}</div>
-      <div className="tag mt-3">spinning the crate...</div>
+      <div className="tag mt-3">{cue}</div>
     </div>
   );
 }

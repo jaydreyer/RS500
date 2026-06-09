@@ -19,7 +19,7 @@ export function BrandMark({
         <span className="size-1.5 rounded-full bg-[var(--paper)]" />
       </span>
       <span className="font-display text-xl font-extrabold">
-        RSD <span className="text-[var(--accent)]">500</span>
+        Spin <span className="text-[var(--accent)]">500</span>
       </span>
     </Link>
   );

@@ -14,7 +14,17 @@ import { RATING_SCALE } from "@/lib/config";
 import { cn } from "@/lib/utils";
 import type { BoardListen, BoardMember, BoardReaction, BoardState } from "@/lib/board";
 
-const QUICK_EMOJI = ["fire", "100", "heart", "wow", "eyes"];
+const QUICK_REACTIONS = [
+  { key: "fire", emoji: "🔥", label: "Fire" },
+  { key: "100", emoji: "💯", label: "One hundred" },
+  { key: "heart", emoji: "❤️", label: "Love" },
+  { key: "wow", emoji: "🤯", label: "Mind blown" },
+  { key: "eyes", emoji: "👀", label: "Watching" },
+] as const;
+
+type RealtimeRecord = Record<string, unknown> & {
+  expand?: Record<string, unknown>;
+};
 
 export function BoardClient({
   initialState,
@@ -56,7 +66,9 @@ export function BoardClient({
           pb.collection("listens").subscribe(
             "*",
             (event) => {
-              setLiveMessage(formatLiveMessage("listen", event.action));
+              setLiveMessage(
+                formatLiveMessage("listen", event.action, event.record, initialState),
+              );
               router.refresh();
             },
             {
@@ -67,7 +79,9 @@ export function BoardClient({
             },
           ),
           pb.collection("reactions").subscribe("*", (event) => {
-            setLiveMessage(formatLiveMessage("reaction", event.action));
+            setLiveMessage(
+              formatLiveMessage("reaction", event.action, event.record, initialState),
+            );
             router.refresh();
           }),
         ]);
@@ -92,7 +106,7 @@ export function BoardClient({
       cancelled = true;
       void Promise.all(unsubscribers.map((unsubscribe) => unsubscribe()));
     };
-  }, [initialState.weekKey, pb, router]);
+  }, [initialState, pb, router]);
 
   return (
     <section className="mx-auto w-full max-w-[1180px]">
@@ -267,6 +281,7 @@ function ReactionEditor({
   const [comment, setComment] = useState(existing?.comment ?? "");
   const [message, setMessage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+  const selectedReactionKey = getReactionKey(emoji);
 
   function saveReaction(nextEmoji = emoji, nextComment = comment) {
     setMessage(null);
@@ -285,25 +300,25 @@ function ReactionEditor({
     <div className="grid gap-2">
       <div className="flex flex-wrap items-center gap-1.5">
         <SmilePlus className="mr-1 size-4 text-[var(--ink-faint)]" aria-hidden="true" />
-        {QUICK_EMOJI.map((quickEmoji) => (
+        {QUICK_REACTIONS.map((reaction) => (
           <button
-            key={quickEmoji}
+            key={reaction.key}
             type="button"
-            title={quickEmoji}
-            aria-label={`React ${quickEmoji}`}
+            title={reaction.label}
+            aria-label={`React ${reaction.emoji} ${reaction.label}`}
             onClick={() => {
-              const nextEmoji = emoji === quickEmoji ? "" : quickEmoji;
+              const nextEmoji = selectedReactionKey === reaction.key ? "" : reaction.key;
               setEmoji(nextEmoji);
               saveReaction(nextEmoji, comment);
             }}
             className={cn(
-              "mono rounded-full border px-2 py-1 text-[10px] transition-colors",
-              emoji === quickEmoji
+              "rounded-full border px-2.5 py-1 text-sm leading-none transition-colors",
+              selectedReactionKey === reaction.key
                 ? "border-[var(--accent)] bg-[var(--accent)] text-[var(--accent-ink)]"
                 : "border-[var(--line-strong)] bg-[var(--paper-2)] text-[var(--ink-soft)] hover:text-[var(--ink)]",
             )}
           >
-            {quickEmoji}
+            {reaction.emoji}
           </button>
         ))}
       </div>
@@ -361,9 +376,9 @@ function ReactionChips({ reactions }: { reactions: BoardReaction[] }) {
         <span
           key={reaction.id}
           title={reaction.user.displayName}
-          className="mono rounded-full border border-[var(--line-strong)] bg-[var(--paper-2)] px-2 py-1 text-[10px] text-[var(--ink-soft)]"
+          className="rounded-full border border-[var(--line-strong)] bg-[var(--paper-2)] px-2 py-1 text-sm leading-none text-[var(--ink-soft)]"
         >
-          {reaction.emoji}
+          {displayEmoji(reaction.emoji)}
         </span>
       ))}
     </div>
@@ -435,26 +450,104 @@ function Stat({
   );
 }
 
-function formatLiveMessage(collection: "listen" | "reaction", action: string) {
+function formatLiveMessage(
+  collection: "listen" | "reaction",
+  action: string,
+  record: RealtimeRecord,
+  state: BoardState,
+) {
   if (collection === "listen") {
+    const userId = asString(record.user);
+    const memberName = getMemberName(state.members, userId, state.currentUser.id);
+    const album = getExpandedObject(record, "album");
+    const title = asString(album?.title);
+    const rank = asNumber(album?.rank);
+    const status = asString(record.status);
+    const rating = asNumber(record.rating);
+    const albumLabel = title ? `${rank ? `#${rank}: ` : ""}${title}` : "a fresh pick";
+
     if (action === "create") {
-      return "A fresh pick hit the board.";
+      return `${memberName} drew ${albumLabel}.`;
     }
 
     if (action === "update") {
-      return "A board pick was updated.";
+      if (status === "rated" && rating != null) {
+        return `${memberName} rated ${title || "their pick"} ${rating}/${RATING_SCALE.max}.`;
+      }
+
+      return `${memberName} updated ${title || "their pick"}.`;
     }
 
     return "The board changed.";
   }
 
+  const actorId = asString(record.user);
+  const listenId = asString(record.listen);
+  const actorName = getMemberName(state.members, actorId, state.currentUser.id);
+  const listen = state.listens.find((entry) => entry.id === listenId);
+  const targetName = listen
+    ? getPossessiveName(getMemberName(state.members, listen.userId, state.currentUser.id))
+    : "a crew";
+  const emoji = displayEmoji(asString(record.emoji));
+  const comment = asString(record.comment);
+
   if (action === "create") {
-    return "A new reaction landed.";
+    if (emoji && comment) {
+      return `${actorName} reacted ${emoji} and commented on ${targetName} pick.`;
+    }
+
+    if (emoji) {
+      return `${actorName} reacted ${emoji} to ${targetName} pick.`;
+    }
+
+    return `${actorName} commented on ${targetName} pick.`;
   }
 
   if (action === "update") {
-    return "A reaction was edited.";
+    return `${actorName} updated a reaction on ${targetName} pick.`;
   }
 
   return "The reaction row changed.";
+}
+
+function displayEmoji(value: string) {
+  return QUICK_REACTIONS.find((reaction) => reaction.key === value)?.emoji ?? value;
+}
+
+function getReactionKey(value: string) {
+  return QUICK_REACTIONS.find(
+    (reaction) => reaction.key === value || reaction.emoji === value,
+  )?.key;
+}
+
+function getMemberName(members: BoardMember[], memberId: string, currentUserId: string) {
+  if (memberId === currentUserId) {
+    return "You";
+  }
+
+  return members.find((member) => member.id === memberId)?.displayName || "Someone";
+}
+
+function getPossessiveName(name: string) {
+  if (name === "You") {
+    return "your";
+  }
+
+  return name.endsWith("s") ? `${name}'` : `${name}'s`;
+}
+
+function getExpandedObject(record: RealtimeRecord, key: string) {
+  const value = record.expand?.[key];
+  const expanded = Array.isArray(value) ? value[0] : value;
+  return expanded && typeof expanded === "object"
+    ? (expanded as Record<string, unknown>)
+    : null;
+}
+
+function asString(value: unknown) {
+  return typeof value === "string" ? value.trim() : "";
+}
+
+function asNumber(value: unknown) {
+  return typeof value === "number" && Number.isFinite(value) ? value : null;
 }

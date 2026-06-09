@@ -169,7 +169,7 @@ function ListenRow({ listen }: { listen: AlbumDetailListen }) {
         <div className="flex flex-wrap items-center gap-2">
           <span className="font-display font-extrabold">{listen.user.displayName}</span>
           <span className="tag rounded-sm border border-[var(--line-strong)] px-1.5 py-0.5">
-            {listen.kind === "skip" ? "heard" : "fresh"}
+            {listen.kind === "skip" ? "already heard" : "fresh"}
           </span>
           <span className="tag">{listen.week}</span>
         </div>

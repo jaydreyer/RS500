@@ -18,7 +18,7 @@ const FILTERS: Array<{ key: FilterKey; label: string }> = [
   { key: "all", label: "All" },
   { key: "logged", label: "Logged" },
   { key: "unlogged", label: "Unlogged" },
-  { key: "heard", label: "Heard" },
+  { key: "heard", label: "Already Heard" },
 ];
 
 export function CatalogClient({ initialState }: { initialState: CatalogState }) {
@@ -260,7 +260,7 @@ function ListenStatus({ listen }: { listen?: CatalogListen }) {
 
   return (
     <span className="inline-flex items-center gap-2">
-      {listen.kind === "skip" && <span className="tag">heard</span>}
+      {listen.kind === "skip" && <span className="tag">already heard</span>}
       <ScoreBadge score={listen.rating} label={`/${RATING_SCALE.max}`} />
     </span>
   );
