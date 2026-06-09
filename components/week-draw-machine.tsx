@@ -13,6 +13,7 @@ import {
 } from "@/app/(club)/week/actions";
 import { AlbumCover } from "@/components/album-cover";
 import { Eyebrow, RatingInput } from "@/components/primitives";
+import { ReviewTextarea } from "@/components/review-textarea";
 import { Button } from "@/components/ui/button";
 import { RATING_SCALE } from "@/lib/config";
 import { TAKE_MAX_LENGTH } from "@/lib/draw-rules";
@@ -411,6 +412,7 @@ function RatingForm({
   errorMessage?: string | null;
 }) {
   const [rating, setRating] = useState("");
+  const [take, setTake] = useState("");
   const inputId = useMemo(() => `take-${listenId}`, [listenId]);
 
   return (
@@ -421,13 +423,16 @@ function RatingForm({
       <label className="sr-only" htmlFor={inputId}>
         Review
       </label>
-      <textarea
+      <ReviewTextarea
         id={inputId}
         name="take"
+        value={take}
+        onChange={setTake}
         maxLength={TAKE_MAX_LENGTH}
         placeholder="review (optional)"
         rows={5}
-        className="input-control max-w-xl resize-y text-left leading-6"
+        containerClassName="max-w-xl"
+        className="text-left"
       />
       {errorMessage && <p className="text-sm text-[var(--accent)]">{errorMessage}</p>}
       <Button type="submit" variant="accent" size="lg" disabled={!rating.trim() || pending}>

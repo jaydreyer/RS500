@@ -5,6 +5,7 @@ import { notFound, redirect } from "next/navigation";
 import { AlbumRatingPanel } from "@/components/album-rating-panel";
 import { AlbumCover } from "@/components/album-cover";
 import { ClubAvatar, Eyebrow, ScoreBadge } from "@/components/primitives";
+import { ReviewMarkdown } from "@/components/review-markdown";
 import { buttonVariants } from "@/components/ui/button";
 import { getAuthenticatedPocketBase } from "@/lib/auth";
 import { getAlbumDetailState, type AlbumDetailListen, type AlbumReviewLink } from "@/lib/catalog";
@@ -191,9 +192,9 @@ function ListenRow({ listen }: { listen: AlbumDetailListen }) {
           <span className="tag">{listen.week}</span>
         </div>
         {listen.take && (
-          <p className="mt-1 line-clamp-4 whitespace-pre-wrap font-quote text-sm italic leading-relaxed text-[var(--ink-soft)]">
-            &quot;{listen.take}&quot;
-          </p>
+          <ReviewMarkdown className="mt-1 line-clamp-4 font-quote text-sm leading-relaxed text-[var(--ink-soft)]">
+            {listen.take}
+          </ReviewMarkdown>
         )}
       </div>
       <div className="shrink-0">

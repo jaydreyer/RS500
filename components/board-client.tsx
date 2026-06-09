@@ -9,6 +9,7 @@ import PocketBase, { BaseAuthStore, type UnsubscribeFunc } from "pocketbase";
 import { upsertReactionAction } from "@/app/(club)/board/actions";
 import { AlbumCover } from "@/components/album-cover";
 import { ClubAvatar, ScoreBadge } from "@/components/primitives";
+import { ReviewMarkdown } from "@/components/review-markdown";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { formatRating, RATING_SCALE } from "@/lib/config";
 import { mapStoredRating } from "@/lib/listen-rating";
@@ -242,9 +243,9 @@ function BoardCard({
 
       <div className="px-4 pb-4">
         {pick.take ? (
-          <p className="max-h-64 overflow-auto whitespace-pre-wrap rounded-md border-l-2 border-[var(--accent)] bg-[var(--paper-2)] px-3 py-2 font-quote text-lg italic leading-relaxed text-[var(--ink)]">
-            &quot;{pick.take}&quot;
-          </p>
+          <ReviewMarkdown className="max-h-64 overflow-auto rounded-md border-l-2 border-[var(--accent)] bg-[var(--paper-2)] px-3 py-2 font-quote text-lg leading-relaxed text-[var(--ink)]">
+            {pick.take}
+          </ReviewMarkdown>
         ) : (
           <p className="tag rounded-md border border-dashed border-[var(--line-strong)] px-3 py-2">
             {listening ? "review drops when they rate it" : "no review logged"}

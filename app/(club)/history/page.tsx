@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 
 import { AlbumCover } from "@/components/album-cover";
 import { ClubAvatar, ScoreBadge } from "@/components/primitives";
+import { ReviewMarkdown } from "@/components/review-markdown";
 import { RouteShell } from "@/components/route-shell";
 import { getAuthenticatedPocketBase } from "@/lib/auth";
 import { formatRating, RATING_SCALE } from "@/lib/config";
@@ -287,9 +288,9 @@ function MemberListenRow({
           {listen.album.artist} / #{listen.album.rank} / {listen.weekLabel}
         </p>
         {listen.take && (
-          <p className="mt-2 line-clamp-3 whitespace-pre-wrap font-quote text-base italic leading-relaxed text-[var(--ink-soft)]">
-            &quot;{listen.take}&quot;
-          </p>
+          <ReviewMarkdown className="mt-2 line-clamp-3 font-quote text-base leading-relaxed text-[var(--ink-soft)]">
+            {listen.take}
+          </ReviewMarkdown>
         )}
       </div>
       <div className="shrink-0 self-center">

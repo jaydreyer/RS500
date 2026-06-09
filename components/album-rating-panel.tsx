@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 
 import { knownAlbumRatingAction } from "@/app/(club)/albums/[albumId]/actions";
 import { ScoreBadge } from "@/components/primitives";
+import { ReviewMarkdown } from "@/components/review-markdown";
+import { ReviewTextarea } from "@/components/review-textarea";
 import { Button } from "@/components/ui/button";
 import { RATING_SCALE } from "@/lib/config";
 import { TAKE_MAX_LENGTH } from "@/lib/draw-rules";
@@ -79,9 +81,9 @@ export function AlbumRatingPanel({
       </div>
 
       {initialListen?.take && !isEditing && (
-        <p className="mt-3 whitespace-pre-wrap font-quote text-lg italic leading-relaxed text-[var(--ink-soft)]">
-          &quot;{initialListen.take}&quot;
-        </p>
+        <ReviewMarkdown className="mt-3 font-quote text-lg leading-relaxed text-[var(--ink-soft)]">
+          {initialListen.take}
+        </ReviewMarkdown>
       )}
 
       {isEditing && (
@@ -103,15 +105,14 @@ export function AlbumRatingPanel({
           <label className="sr-only" htmlFor={takeId}>
             Review
           </label>
-          <textarea
+          <ReviewTextarea
             id={takeId}
             name="take"
             value={take}
-            onChange={(event) => setTake(event.target.value)}
+            onChange={setTake}
             maxLength={TAKE_MAX_LENGTH}
             placeholder="review (optional)"
             rows={5}
-            className="input-control resize-y leading-6"
           />
           {state.message && (
             <p
