@@ -262,7 +262,27 @@ function titleArtistKey(album) {
 }
 
 function equalJson(left, right) {
-  return JSON.stringify(left ?? null) === JSON.stringify(right ?? null)
+  return stableJsonStringify(left ?? null) === stableJsonStringify(right ?? null)
+}
+
+function stableJsonStringify(value) {
+  return JSON.stringify(sortJsonKeys(value))
+}
+
+function sortJsonKeys(value) {
+  if (Array.isArray(value)) {
+    return value.map((item) => sortJsonKeys(item))
+  }
+
+  if (!value || typeof value !== "object") {
+    return value
+  }
+
+  return Object.fromEntries(
+    Object.keys(value)
+      .sort()
+      .map((key) => [key, sortJsonKeys(value[key])]),
+  )
 }
 
 export function hasAlbumChanges(existing, nextAlbum) {
