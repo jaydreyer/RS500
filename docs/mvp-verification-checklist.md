@@ -44,4 +44,4 @@ Status legend:
 - Verify invalid signup in-browser.
 - Verify active-pick blocking remains visible after a fresh pick is kept but before rating.
 - Verify Catalog, History, Stats, and Album Detail with seeded cover and service URL data.
-- Clean up test users/listens/reactions before launch, unless keeping them for future QA.
+- Test users/listens/reactions were cleaned from PocketBase after production QA; the album catalog remains seeded.
