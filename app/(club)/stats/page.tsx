@@ -5,7 +5,7 @@ import { AlbumCover } from "@/components/album-cover";
 import { ClubAvatar, ScoreBadge } from "@/components/primitives";
 import { RouteShell } from "@/components/route-shell";
 import { getAuthenticatedPocketBase } from "@/lib/auth";
-import { RATING_SCALE, STATS_SAMPLE_THRESHOLD } from "@/lib/config";
+import { formatRating, RATING_SCALE, STATS_SAMPLE_THRESHOLD } from "@/lib/config";
 import {
   formatAverage,
   getHistoryState,
@@ -274,7 +274,8 @@ function SharedAlbumRow({
           {summary.album.artist}
         </p>
         <p className="tag mt-1">
-          avg {summary.averageRating.toFixed(1)} / spread {summary.spread}
+          avg {summary.averageRating.toFixed(1)} / spread{" "}
+          {formatRating(Number(summary.spread.toFixed(RATING_SCALE.precision)))}
         </p>
       </div>
       <div className="flex flex-wrap gap-2 md:justify-end">
@@ -309,7 +310,9 @@ function ScoreChip({
     >
       <ClubAvatar initials={member?.initials ?? "??"} size="sm" />
       <span className="max-w-[96px] truncate text-sm font-bold">{label}</span>
-      <span className="font-display text-xl font-extrabold">{listen.rating}</span>
+      <span className="font-display text-xl font-extrabold">
+        {listen.rating == null ? "-" : formatRating(listen.rating)}
+      </span>
       <span className="mono text-[10px] text-[var(--ink-faint)]">/{RATING_SCALE.max}</span>
     </Link>
   );

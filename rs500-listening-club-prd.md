@@ -104,7 +104,7 @@ This keeps the mechanic simple: listen before drawing again. Already-heard skip 
 
 ### 3.7 Rating
 
-Default scale is integer 1-10.
+Default scale is 1-10 with one decimal place.
 
 Expose the rating scale as a single config constant so it can later be swapped for another scale, such as 5 stars with halves.
 

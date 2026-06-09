@@ -409,13 +409,12 @@ function RatingForm({
   hint?: string;
   errorMessage?: string | null;
 }) {
-  const [rating, setRating] = useState<number | null>(null);
+  const [rating, setRating] = useState("");
   const inputId = useMemo(() => `take-${listenId}`, [listenId]);
 
   return (
     <form action={action} className="grid place-items-center gap-4 text-center">
       <input type="hidden" name="listenId" value={listenId} />
-      <input type="hidden" name="rating" value={rating ?? ""} />
       {hint && <p className="tag">{hint}</p>}
       <RatingInput value={rating} onChange={setRating} />
       <label className="sr-only" htmlFor={inputId}>
@@ -429,7 +428,7 @@ function RatingForm({
         className="input-control max-w-md"
       />
       {errorMessage && <p className="text-sm text-[var(--accent)]">{errorMessage}</p>}
-      <Button type="submit" variant="accent" size="lg" disabled={rating == null || pending}>
+      <Button type="submit" variant="accent" size="lg" disabled={!rating.trim() || pending}>
         {pending ? "SAVING..." : buttonLabel}
       </Button>
     </form>

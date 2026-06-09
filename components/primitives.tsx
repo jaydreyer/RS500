@@ -3,7 +3,7 @@
 import { Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { RATING_SCALE } from "@/lib/config";
+import { formatRating, RATING_SCALE } from "@/lib/config";
 import { cn } from "@/lib/utils";
 
 export function Eyebrow({
@@ -64,7 +64,7 @@ export function ScoreBadge({
 
   return (
     <span className="inline-flex items-baseline rounded-md bg-[var(--ink)] px-2.5 py-1 font-display font-extrabold text-[var(--paper)] shadow-[0_10px_18px_-14px_#000]">
-      <span className="text-lg leading-none">{score}</span>
+      <span className="text-lg leading-none">{formatRating(score)}</span>
       <span className="mono ml-0.5 text-[10px] opacity-70">{label}</span>
     </span>
   );
@@ -73,28 +73,51 @@ export function ScoreBadge({
 export function RatingInput({
   value,
   onChange,
+  min = RATING_SCALE.min,
   max = RATING_SCALE.max,
+  step = RATING_SCALE.step,
 }: {
-  value?: number | null;
-  onChange?: (value: number) => void;
+  value?: string;
+  onChange?: (value: string) => void;
+  min?: number;
   max?: number;
+  step?: number;
 }) {
   return (
-    <div className="grid w-full max-w-md grid-cols-5 gap-2 sm:grid-cols-10">
-      {Array.from({ length: max }, (_, index) => index + 1).map((rating) => (
-        <button
-          key={rating}
-          type="button"
-          onClick={() => onChange?.(rating)}
-          className={cn(
-            "mono aspect-square rounded-md border border-[var(--line-strong)] bg-[var(--paper)] text-sm font-bold text-[var(--ink-soft)] transition-colors hover:border-[var(--ink)] hover:text-[var(--ink)]",
-            value === rating &&
-              "border-[var(--accent)] bg-[var(--accent)] text-[var(--accent-ink)]",
-          )}
-        >
-          {rating}
-        </button>
-      ))}
+    <div className="grid w-full max-w-md gap-3">
+      <label className="grid gap-1.5 text-left">
+        <span className="tag">rating</span>
+        <input
+          className="mono input-control text-center text-3xl font-bold"
+          inputMode="decimal"
+          max={max}
+          min={min}
+          name="rating"
+          onChange={(event) => {
+            onChange?.(event.target.value);
+          }}
+          placeholder={`${max.toFixed(1)}`}
+          step={step}
+          type="number"
+          value={value ?? ""}
+        />
+      </label>
+      <div className="grid grid-cols-5 gap-2 sm:grid-cols-10">
+        {Array.from({ length: max - min + 1 }, (_, index) => index + min).map((rating) => (
+          <button
+            key={rating}
+            type="button"
+            onClick={() => onChange?.(String(rating))}
+            className={cn(
+              "mono aspect-square rounded-md border border-[var(--line-strong)] bg-[var(--paper)] text-sm font-bold text-[var(--ink-soft)] transition-colors hover:border-[var(--ink)] hover:text-[var(--ink)]",
+              value === String(rating) &&
+                "border-[var(--accent)] bg-[var(--accent)] text-[var(--accent-ink)]",
+            )}
+          >
+            {rating}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }

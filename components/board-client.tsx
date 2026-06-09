@@ -10,7 +10,7 @@ import { upsertReactionAction } from "@/app/(club)/board/actions";
 import { AlbumCover } from "@/components/album-cover";
 import { ClubAvatar, ScoreBadge } from "@/components/primitives";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { RATING_SCALE } from "@/lib/config";
+import { formatRating, RATING_SCALE } from "@/lib/config";
 import { cn } from "@/lib/utils";
 import type { BoardListen, BoardMember, BoardReaction, BoardState } from "@/lib/board";
 
@@ -472,7 +472,7 @@ function formatLiveMessage(
 
     if (action === "update") {
       if (status === "rated" && rating != null) {
-        return `${memberName} rated ${title || "their pick"} ${rating}/${RATING_SCALE.max}.`;
+        return `${memberName} rated ${title || "their pick"} ${formatRating(rating)}/${RATING_SCALE.max}.`;
       }
 
       return `${memberName} updated ${title || "their pick"}.`;

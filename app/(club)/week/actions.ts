@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 
 import type { WeekActionState } from "@/app/(club)/week/action-state";
 import { getAuthenticatedPocketBase } from "@/lib/auth";
+import { formatRating, RATING_SCALE } from "@/lib/config";
 import {
   DrawRuleError,
   drawAlbum,
@@ -78,7 +79,7 @@ export async function skipRatingAction(
 
     return {
       status: "success",
-      message: `Skipped and logged: ${listen.album.title} - ${rating}/10.`,
+      message: `Skipped and logged: ${listen.album.title} - ${formatRating(rating)}/${RATING_SCALE.max}.`,
       listen,
     };
   } catch (error) {
@@ -106,7 +107,7 @@ export async function freshRatingAction(
 
     return {
       status: "success",
-      message: `Rated ${listen.album.title} - ${rating}/10. Your next draw is unlocked.`,
+      message: `Rated ${listen.album.title} - ${formatRating(rating)}/${RATING_SCALE.max}. Your next draw is unlocked.`,
       listen,
     };
   } catch (error) {

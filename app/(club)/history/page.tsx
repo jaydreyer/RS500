@@ -6,7 +6,7 @@ import { AlbumCover } from "@/components/album-cover";
 import { ClubAvatar, ScoreBadge } from "@/components/primitives";
 import { RouteShell } from "@/components/route-shell";
 import { getAuthenticatedPocketBase } from "@/lib/auth";
-import { RATING_SCALE } from "@/lib/config";
+import { formatRating, RATING_SCALE } from "@/lib/config";
 import {
   formatAverage,
   getHistoryState,
@@ -151,7 +151,7 @@ function HistoryCell({ listen }: { listen: HistoryListen }) {
             </span>
           ) : (
             <span className="inline-flex min-w-7 justify-center rounded-sm bg-[var(--ink)] px-1.5 py-0.5 font-display text-sm font-extrabold text-[var(--paper)] shadow-[var(--shadow)]">
-              {listen.rating}
+              {listen.rating == null ? "" : formatRating(listen.rating)}
             </span>
           )}
         </span>
