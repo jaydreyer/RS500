@@ -149,8 +149,8 @@ export function CatalogClient({ initialState }: { initialState: CatalogState }) 
         </div>
       </div>
 
-      <div className="hard-panel overflow-hidden rounded-lg">
-        <div className="catalog-row border-b border-[var(--line-strong)] bg-[var(--card)] px-4 py-3 tag">
+      <div className="catalog-table hard-panel overflow-hidden rounded-lg">
+        <div className="catalog-table-head catalog-row border-b border-[var(--line-strong)] bg-[var(--card)] px-4 py-3 tag">
           <SortHeader label="#" sortKey="rank" activeSort={sort} direction={direction} onSort={toggleSort} />
           <span />
           <SortHeader
@@ -214,7 +214,7 @@ function CatalogRow({
   return (
     <Link
       href={`/albums/${album.id}`}
-      className="catalog-row group border-b border-[var(--line)] px-4 py-3 transition-colors last:border-b-0 hover:bg-[var(--paper-2)]"
+      className="catalog-table-row catalog-row group border-b border-[var(--line)] px-4 py-3 transition-colors last:border-b-0 hover:bg-[var(--paper-2)]"
     >
       <span className="mono text-sm font-bold text-[var(--ink-faint)] transition-colors group-hover:text-[var(--accent)]">
         #{album.rank}
