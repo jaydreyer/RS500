@@ -3,6 +3,7 @@ import "server-only";
 import type PocketBase from "pocketbase";
 
 import { getClubUserAvatarUrl, type ClubUser } from "@/lib/auth";
+import { mapStoredRating } from "@/lib/listen-rating";
 import { formatIsoWeekLabel, getIsoWeekKey } from "@/lib/week";
 
 export type BoardMember = {
@@ -117,12 +118,14 @@ async function getReactionsForListens(pb: PocketBase, listenIds: string[]) {
 }
 
 function mapListen(record: RecordLike): BoardListen {
+  const status = record.status === "rated" ? "rated" : "listening";
+
   return {
     id: record.id,
     userId: asString(record.user),
     albumId: asString(record.album),
-    status: record.status === "rated" ? "rated" : "listening",
-    rating: typeof record.rating === "number" ? record.rating : null,
+    status,
+    rating: mapStoredRating(status, record.rating),
     take: asString(record.take),
     week: asString(record.week),
     ratedAt: asNullableString(record.rated_at),

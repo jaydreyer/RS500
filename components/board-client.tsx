@@ -11,6 +11,7 @@ import { AlbumCover } from "@/components/album-cover";
 import { ClubAvatar, ScoreBadge } from "@/components/primitives";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { formatRating, RATING_SCALE } from "@/lib/config";
+import { mapStoredRating } from "@/lib/listen-rating";
 import { cn } from "@/lib/utils";
 import type { BoardListen, BoardMember, BoardReaction, BoardState } from "@/lib/board";
 
@@ -486,8 +487,8 @@ function formatLiveMessage(
     const album = getExpandedObject(record, "album");
     const title = asString(album?.title);
     const rank = asNumber(album?.rank);
-    const status = asString(record.status);
-    const rating = asNumber(record.rating);
+    const status = asString(record.status) === "rated" ? "rated" : "listening";
+    const rating = mapStoredRating(status, record.rating);
     const albumLabel = title ? `${rank ? `#${rank}: ` : ""}${title}` : "a fresh pick";
 
     if (action === "create") {

@@ -2,6 +2,7 @@ import "server-only";
 
 import type PocketBase from "pocketbase";
 import { getClubUserAvatarUrl } from "@/lib/auth";
+import { mapStoredRating } from "@/lib/listen-rating";
 
 export type CatalogAlbum = {
   id: string;
@@ -170,13 +171,15 @@ function mapAlbum(record: RecordLike): CatalogAlbum {
 }
 
 function mapListen(record: RecordLike): CatalogListen {
+  const status = record.status === "rated" ? "rated" : "listening";
+
   return {
     id: record.id,
     userId: asString(record.user),
     albumId: asString(record.album),
     kind: record.kind === "skip" ? "skip" : "fresh",
-    status: record.status === "rated" ? "rated" : "listening",
-    rating: typeof record.rating === "number" ? record.rating : null,
+    status,
+    rating: mapStoredRating(status, record.rating),
     take: asString(record.take),
     week: asString(record.week),
     ratedAt: asNullableString(record.rated_at),

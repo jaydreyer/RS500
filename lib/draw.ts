@@ -11,6 +11,7 @@ import {
   normalizeTake,
   parseRatingValue,
 } from "@/lib/draw-rules";
+import { mapStoredRating } from "@/lib/listen-rating";
 import { getIsoWeekKey } from "@/lib/week";
 
 export { DrawRuleError } from "@/lib/draw-rules";
@@ -104,10 +105,8 @@ export async function drawAlbum(pb: PocketBase, userId: string): Promise<ListenS
       album: album.id,
       kind: "fresh",
       status: "listening",
-      rating: null,
       take: "",
       week: getIsoWeekKey(),
-      rated_at: null,
     },
     { requestKey: null },
   );
@@ -352,13 +351,14 @@ function assertActiveFresh(listen: RecordLike) {
 
 function mapListen(record: RecordLike): ListenSummary {
   const album = getExpandedAlbum(record);
+  const status = record.status === "rated" ? "rated" : "listening";
 
   return {
     id: record.id,
     albumId: String(record.album),
     kind: record.kind === "skip" ? "skip" : "fresh",
-    status: record.status === "rated" ? "rated" : "listening",
-    rating: typeof record.rating === "number" ? record.rating : null,
+    status,
+    rating: mapStoredRating(status, record.rating),
     take: typeof record.take === "string" ? record.take : "",
     week: typeof record.week === "string" ? record.week : "",
     ratedAt: typeof record.rated_at === "string" ? record.rated_at : null,

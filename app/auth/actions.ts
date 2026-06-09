@@ -79,10 +79,8 @@ export async function signupAction(
           album: assignedAlbum.id,
           kind: "fresh",
           status: "listening",
-          rating: null,
           take: "",
           week: getIsoWeekKey(),
-          rated_at: null,
         },
         { requestKey: null },
       );

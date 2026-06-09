@@ -61,3 +61,19 @@ test("shared albums include only albums rated by at least two members", () => {
   assert.equal(stats.sharedAlbums[0].album.id, "shared")
   assert.equal(stats.sharedAlbums[0].spread, 6)
 })
+
+test("member averages ignore unrated listens but include rated zeroes", () => {
+  const members = [
+    { id: "one", displayName: "One", initials: "O", email: "one@example.com" },
+  ]
+  const listens = [
+    listen({ id: "1", userId: "one", albumId: "rated-zero", rating: 0 }),
+    listen({ id: "2", userId: "one", albumId: "rated-ten", rating: 10 }),
+    listen({ id: "3", userId: "one", albumId: "unrated", rating: null }),
+  ]
+
+  const [summary] = buildMemberSummaries(members, listens)
+
+  assert.equal(summary.ratedFreshListens.length, 2)
+  assert.equal(summary.averageFreshRating, 5)
+})

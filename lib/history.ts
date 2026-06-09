@@ -13,6 +13,7 @@ import {
   type StatsListen,
   type StatsMember,
 } from "@/lib/history-rules";
+import { mapStoredRating } from "@/lib/listen-rating";
 import { formatIsoWeekLabel } from "@/lib/week";
 
 export type HistoryMember = StatsMember;
@@ -109,14 +110,15 @@ export function formatAverage(value: number | null) {
 
 function mapListen(record: RecordLike): HistoryListen {
   const week = asString(record.week);
+  const status = record.status === "rated" ? "rated" : "listening";
 
   return {
     id: record.id,
     userId: asString(record.user),
     albumId: asString(record.album),
     kind: record.kind === "skip" ? "skip" : "fresh",
-    status: record.status === "rated" ? "rated" : "listening",
-    rating: typeof record.rating === "number" ? record.rating : null,
+    status,
+    rating: mapStoredRating(status, record.rating),
     take: asString(record.take),
     week,
     weekLabel: formatIsoWeekLabel(week),
