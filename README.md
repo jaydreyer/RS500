@@ -40,6 +40,8 @@ pocketbase serve --dir ./pb_data --migrationsDir /Users/jaydreyer/projects/RS500
 Seed albums from the owner-supplied CSV or JSON:
 
 ```bash
+npm run enrich:reviews -- --dry-run --limit 20
+npm run enrich:reviews
 npm run import:albums -- --file ./data/rs500.csv --validate-only
 npm run import:albums -- --file ./data/rs500.csv --dry-run
 npm run import:albums -- --file ./data/rs500.csv

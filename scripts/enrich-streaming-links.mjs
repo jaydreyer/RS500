@@ -469,7 +469,17 @@ async function main() {
   await fs.writeFile(DATA_JSON, `${JSON.stringify(data, null, 2)}\n`)
 
   const csvRows = [
-    ["rank", "title", "artist", "year", "cover_url", "spotify_url", "apple_music_url", "external_ids"],
+    [
+      "rank",
+      "title",
+      "artist",
+      "year",
+      "cover_url",
+      "spotify_url",
+      "apple_music_url",
+      "review_links",
+      "external_ids",
+    ],
     ...data.albums.map((row) => [
       row.rank,
       row.title,
@@ -478,6 +488,7 @@ async function main() {
       row.cover_url,
       row.spotify_url,
       row.apple_music_url,
+      JSON.stringify(row.review_links ?? []),
       JSON.stringify(row.external_ids),
     ]),
   ]

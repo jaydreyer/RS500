@@ -1,4 +1,4 @@
-import { ArrowLeft, ExternalLink, Music2 } from "lucide-react";
+import { ArrowLeft, ExternalLink, Music2, Newspaper } from "lucide-react";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
@@ -6,7 +6,7 @@ import { AlbumCover } from "@/components/album-cover";
 import { ClubAvatar, Eyebrow, ScoreBadge } from "@/components/primitives";
 import { buttonVariants } from "@/components/ui/button";
 import { getAuthenticatedPocketBase } from "@/lib/auth";
-import { getAlbumDetailState, type AlbumDetailListen } from "@/lib/catalog";
+import { getAlbumDetailState, type AlbumDetailListen, type AlbumReviewLink } from "@/lib/catalog";
 import { RATING_SCALE } from "@/lib/config";
 import { cn } from "@/lib/utils";
 
@@ -73,6 +73,7 @@ export default async function AlbumDetailPage({
             appleMusicUrl={detail.album.appleMusicUrl}
             className="mt-4"
           />
+          <ReviewLinks links={detail.album.reviewLinks} className="mt-3" />
         </div>
 
         <div className="min-w-0 py-1">
@@ -187,6 +188,40 @@ function ListenRow({ listen }: { listen: AlbumDetailListen }) {
         ) : (
           <ScoreBadge score={listen.rating} label={`/${RATING_SCALE.max}`} />
         )}
+      </div>
+    </div>
+  );
+}
+
+function ReviewLinks({ links, className }: { links: AlbumReviewLink[]; className?: string }) {
+  if (links.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className={cn("pressed-panel rounded-md p-3", className)}>
+      <div className="tag mb-2 flex items-center gap-2 text-[var(--ink-soft)]">
+        <Newspaper className="size-3.5" aria-hidden="true" />
+        reviews and references
+      </div>
+      <div className="grid gap-1.5">
+        {links.map((link) => (
+          <a
+            key={`${link.source}-${link.url}`}
+            href={link.url}
+            target="_blank"
+            rel="noreferrer"
+            className="group flex min-h-9 items-center justify-between gap-3 rounded-sm border border-[var(--line)] bg-[var(--card)] px-2.5 py-2 text-sm text-[var(--ink)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
+          >
+            <span className="min-w-0 truncate font-display font-extrabold">{link.source}</span>
+            <span className="inline-flex shrink-0 items-center gap-1">
+              <span className="tag hidden text-[var(--ink-faint)] group-hover:text-[var(--accent)] sm:inline">
+                {link.kind}
+              </span>
+              <ExternalLink className="size-3.5" aria-hidden="true" />
+            </span>
+          </a>
+        ))}
       </div>
     </div>
   );

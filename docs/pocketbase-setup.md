@@ -79,11 +79,21 @@ Optional fields:
 
 - `spotify_url`
 - `apple_music_url`
+- `review_links`
 - `external_ids`
 
 Header names are normalized for case, spaces, and hyphens, so `Cover URL`, `cover-url`, and `cover_url` all map to `cover_url`.
 
-The importer rejects rows that are missing required fields, including `cover_url`. URL fields must be `http` or `https` URLs when present. `external_ids` may be a JSON object in JSON input or a valid JSON string in CSV input.
+The importer rejects rows that are missing required fields, including `cover_url`. URL fields must be `http` or `https` URLs when present. `external_ids` may be a JSON object in JSON input or a valid JSON string in CSV input. `review_links` is a JSON array of `{ "source", "url", "kind" }` objects, where `kind` defaults to `review`.
+
+Review/reference links can be enriched from MusicBrainz release-group URL relationships when `external_ids.musicbrainz_release_group` is present:
+
+```bash
+npm run enrich:reviews -- --dry-run --limit 20
+npm run enrich:reviews
+```
+
+The enrichment script uses a meaningful `User-Agent` and waits at least one second between MusicBrainz requests.
 
 ## Import Usage
 
@@ -123,6 +133,6 @@ The script exits with a non-zero status if any row fails validation or PocketBas
 ## Example CSV
 
 ```csv
-rank,title,artist,year,cover_url,spotify_url,apple_music_url,external_ids
-1,Example Album,Example Artist,1971,https://example.com/cover.jpg,https://open.spotify.com/album/example,https://music.apple.com/us/album/example,"{""discogs"":""123""}"
+rank,title,artist,year,cover_url,spotify_url,apple_music_url,review_links,external_ids
+1,Example Album,Example Artist,1971,https://example.com/cover.jpg,https://open.spotify.com/album/example,https://music.apple.com/us/album/example,"[{""source"":""AllMusic"",""url"":""https://www.allmusic.com/album/example"",""kind"":""reference""}]","{""discogs"":""123""}"
 ```

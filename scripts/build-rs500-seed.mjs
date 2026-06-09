@@ -120,6 +120,7 @@ async function main() {
           `https://coverartarchive.org/release-group/${musicbrainzReleaseGroupId}/front-500`,
         spotify_url: "",
         apple_music_url: "",
+        review_links: [],
         external_ids: {
           musicbrainz_release_group: musicbrainzReleaseGroupId,
           musicbrainz_series: SERIES_ID,
@@ -180,7 +181,17 @@ async function main() {
   await fs.writeFile(OUTPUT_JSON, `${JSON.stringify(output, null, 2)}\n`)
 
   const csvRows = [
-    ["rank", "title", "artist", "year", "cover_url", "spotify_url", "apple_music_url", "external_ids"],
+    [
+      "rank",
+      "title",
+      "artist",
+      "year",
+      "cover_url",
+      "spotify_url",
+      "apple_music_url",
+      "review_links",
+      "external_ids",
+    ],
     ...rows.map((row) => [
       row.rank,
       row.title,
@@ -189,6 +200,7 @@ async function main() {
       row.cover_url,
       row.spotify_url,
       row.apple_music_url,
+      JSON.stringify(row.review_links),
       JSON.stringify(row.external_ids),
     ]),
   ]

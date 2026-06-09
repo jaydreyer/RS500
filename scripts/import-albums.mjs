@@ -13,6 +13,7 @@ const ALL_FIELDS = [
   ...REQUIRED_FIELDS,
   ...OPTIONAL_URL_FIELDS,
   "external_ids",
+  "review_links",
 ]
 
 function loadDotenvFile(filePath) {
@@ -183,6 +184,41 @@ function parseExternalIds(value) {
   }
 }
 
+export function parseReviewLinks(value) {
+  if (value === undefined || value === null || asTrimmedString(value) === "") {
+    return []
+  }
+
+  let parsed = value
+  if (typeof value !== "object") {
+    try {
+      parsed = JSON.parse(String(value))
+    } catch {
+      throw new Error("review_links must be valid JSON when provided")
+    }
+  }
+
+  if (!Array.isArray(parsed)) {
+    throw new Error("review_links must be a JSON array")
+  }
+
+  return parsed.map((link, index) => {
+    if (!link || typeof link !== "object" || Array.isArray(link)) {
+      throw new Error(`review_links[${index}] must be an object`)
+    }
+
+    const source = asTrimmedString(link.source)
+    const url = requireHttpUrl(link.url, `review_links[${index}].url`)
+    const kind = asTrimmedString(link.kind) || "review"
+
+    if (!source) {
+      throw new Error(`review_links[${index}].source is required`)
+    }
+
+    return { source, url, kind }
+  })
+}
+
 export function normalizeAlbum(row) {
   const missing = REQUIRED_FIELDS.filter((field) => asTrimmedString(row[field]) === "")
   if (missing.length > 0) {
@@ -208,6 +244,7 @@ export function normalizeAlbum(row) {
     spotify_url: requireHttpUrl(row.spotify_url, "spotify_url"),
     apple_music_url: requireHttpUrl(row.apple_music_url, "apple_music_url"),
     external_ids: parseExternalIds(row.external_ids),
+    review_links: parseReviewLinks(row.review_links),
   }
 
   if (!album.cover_url) {
@@ -230,7 +267,7 @@ function equalJson(left, right) {
 
 export function hasAlbumChanges(existing, nextAlbum) {
   return ALL_FIELDS.some((field) => {
-    if (field === "external_ids") {
+    if (field === "external_ids" || field === "review_links") {
       return !equalJson(existing[field], nextAlbum[field])
     }
 

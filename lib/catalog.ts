@@ -11,6 +11,13 @@ export type CatalogAlbum = {
   coverUrl: string;
   spotifyUrl: string;
   appleMusicUrl: string;
+  reviewLinks: AlbumReviewLink[];
+};
+
+export type AlbumReviewLink = {
+  source: string;
+  url: string;
+  kind: string;
 };
 
 export type CatalogListen = {
@@ -153,6 +160,7 @@ function mapAlbum(record: RecordLike): CatalogAlbum {
     coverUrl: asString(record.cover_url),
     spotifyUrl: asString(record.spotify_url),
     appleMusicUrl: asString(record.apple_music_url),
+    reviewLinks: asReviewLinks(record.review_links),
   };
 }
 
@@ -238,4 +246,25 @@ function asNullableString(value: unknown) {
 
 function asNumber(value: unknown) {
   return typeof value === "number" && Number.isFinite(value) ? value : 0;
+}
+
+function asReviewLinks(value: unknown): AlbumReviewLink[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value
+    .map((item) => {
+      if (!item || typeof item !== "object") {
+        return null;
+      }
+
+      const record = item as Record<string, unknown>;
+      const source = asString(record.source);
+      const url = asString(record.url);
+      const kind = asString(record.kind) || "review";
+
+      return source && url ? { source, url, kind } : null;
+    })
+    .filter((item): item is AlbumReviewLink => Boolean(item));
 }

@@ -8,6 +8,7 @@
     "build": "next build",
     "build:seed": "node scripts/build-rs500-seed.mjs",
     "enrich:links": "node scripts/enrich-streaming-links.mjs",
+    "enrich:reviews": "node scripts/enrich-review-links.mjs",
     "import:albums": "node scripts/import-albums.mjs",
     "start": "next start",
     "lint": "eslint .",
