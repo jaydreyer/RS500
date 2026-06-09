@@ -295,9 +295,10 @@ function ReactionEditor({
   existing?: BoardReaction;
 }) {
   const [emoji, setEmoji] = useState(existing?.emoji ?? "");
-  const [comment, setComment] = useState(existing?.comment ?? "");
+  const [comment, setComment] = useState("");
   const [message, setMessage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+  const savedComment = existing?.comment ?? "";
   const selectedReactionKey = getReactionKey(emoji);
 
   function saveReaction(
@@ -333,8 +334,9 @@ function ReactionEditor({
             aria-label={`React ${reaction.emoji} ${reaction.label}`}
             onClick={() => {
               const nextEmoji = selectedReactionKey === reaction.key ? "" : reaction.key;
+              const nextComment = comment.trim() ? comment : savedComment;
               setEmoji(nextEmoji);
-              saveReaction(nextEmoji, comment);
+              saveReaction(nextEmoji, nextComment);
             }}
             className={cn(
               "rounded-full border px-2.5 py-1 text-sm leading-none transition-colors",
