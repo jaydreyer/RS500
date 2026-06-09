@@ -32,7 +32,6 @@ export function AlbumCover({
       ) : (
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_35%_30%,#f4f2ec_0_10%,transparent_10.5%),linear-gradient(135deg,#e2452b_0_34%,#1f222a_34%_68%,#3aa99b_68%)]" />
       )}
-      <div className="absolute inset-3 border border-white/20" aria-hidden="true" />
     </div>
   );
 }
