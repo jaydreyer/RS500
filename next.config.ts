@@ -3,6 +3,14 @@ import type { NextConfig } from "next";
 const isDev = process.env.NODE_ENV === "development";
 const pocketBaseOrigin = getOrigin(process.env.NEXT_PUBLIC_PB_URL);
 const serverActionAllowedOrigins = parseCsv(process.env.SERVER_ACTION_ALLOWED_ORIGINS);
+const serverActions: NonNullable<NonNullable<NextConfig["experimental"]>["serverActions"]> = {
+  bodySizeLimit: "6mb",
+  ...(serverActionAllowedOrigins.length > 0
+    ? {
+        allowedOrigins: serverActionAllowedOrigins,
+      }
+    : {}),
+};
 
 const connectSources = [
   "'self'",
@@ -35,13 +43,7 @@ const cspHeader = [
 
 const nextConfig: NextConfig = {
   experimental: {
-    ...(serverActionAllowedOrigins.length > 0
-      ? {
-          serverActions: {
-            allowedOrigins: serverActionAllowedOrigins,
-          },
-        }
-      : {}),
+    serverActions,
   },
   async headers() {
     return [
