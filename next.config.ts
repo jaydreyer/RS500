@@ -4,7 +4,7 @@ const isDev = process.env.NODE_ENV === "development";
 const pocketBaseOrigin = getOrigin(process.env.NEXT_PUBLIC_PB_URL);
 const serverActionAllowedOrigins = parseCsv(process.env.SERVER_ACTION_ALLOWED_ORIGINS);
 const serverActions: NonNullable<NonNullable<NextConfig["experimental"]>["serverActions"]> = {
-  bodySizeLimit: "6mb",
+  bodySizeLimit: "10mb",
   ...(serverActionAllowedOrigins.length > 0
     ? {
         allowedOrigins: serverActionAllowedOrigins,

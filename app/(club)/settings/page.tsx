@@ -1,7 +1,8 @@
-import { ImageUp, Save, ShieldCheck } from "lucide-react";
+import { Save, ShieldCheck } from "lucide-react";
 import { redirect } from "next/navigation";
 
 import { updateProfileAction } from "@/app/(club)/settings/actions";
+import { AvatarUploadField } from "@/app/(club)/settings/avatar-upload-field";
 import { ClubAvatar } from "@/components/primitives";
 import { RouteShell } from "@/components/route-shell";
 import { Button } from "@/components/ui/button";
@@ -73,18 +74,7 @@ export default async function SettingsPage({ searchParams }: SettingsPageProps) 
               />
             </label>
 
-            <label className="grid gap-1.5">
-              <span className="tag">avatar</span>
-              <span className="flex min-h-12 items-center gap-3 rounded-md border border-[var(--line-strong)] bg-[var(--paper-2)] px-3 text-sm text-[var(--ink-soft)]">
-                <ImageUp className="size-4 shrink-0 text-[var(--ink)]" />
-                <input
-                  accept="image/jpeg,image/png,image/webp,image/gif"
-                  className="min-w-0 flex-1 text-sm file:mr-3 file:rounded-md file:border-0 file:bg-[var(--ink)] file:px-3 file:py-1.5 file:text-sm file:font-bold file:text-[var(--paper)]"
-                  name="avatar"
-                  type="file"
-                />
-              </span>
-            </label>
+            <AvatarUploadField />
 
             {user.avatarUrl && (
               <label className="flex items-center gap-3 rounded-md border border-[var(--line-strong)] bg-[var(--paper-2)] px-3 py-3 text-sm text-[var(--ink-soft)]">
