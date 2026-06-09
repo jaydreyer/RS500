@@ -26,8 +26,8 @@ export function AuthForm() {
   const activeState = mode === "signup" ? signupState : loginState;
 
   return (
-    <div className="surface-panel w-full max-w-sm rounded-lg p-5 sm:p-6">
-      <div className="mb-7 grid grid-cols-2 gap-1 rounded-md border border-[var(--line-strong)] bg-[var(--paper)] p-1">
+    <div className="w-full max-w-sm">
+      <div className="mb-7 grid grid-cols-2 gap-1 rounded-md border border-[var(--ink)] p-1">
         <ModeButton active={mode === "signup"} onClick={() => setMode("signup")}>
           Join with code
         </ModeButton>
@@ -36,9 +36,7 @@ export function AuthForm() {
         </ModeButton>
       </div>
 
-      <h1 className="title-wrap text-4xl">
-        {mode === "signup" ? "Got an invite?" : "Welcome back."}
-      </h1>
+      <h1 className="text-4xl">{mode === "signup" ? "Got an invite?" : "Welcome back."}</h1>
       <p className="mt-3 font-quote text-lg text-[var(--ink-soft)]">
         {mode === "signup"
           ? "The crew shares one code. Enter it to claim a spot."
@@ -102,7 +100,7 @@ export function AuthForm() {
         <SubmitButton mode={mode} />
       </form>
 
-      <p className="tag mt-5 rounded-md border border-dashed border-[var(--line-strong)] bg-[var(--paper-2)] px-3 py-2 text-center">
+      <p className="tag mt-5 text-center">
         private by default / server-validated code
       </p>
     </div>
@@ -124,7 +122,7 @@ function ModeButton({
       className={cn(
         "rounded-sm px-4 py-3 font-display font-extrabold transition-colors",
         active
-          ? "bg-[var(--ink)] text-[var(--paper)] shadow-[0_8px_18px_-12px_#000]"
+          ? "bg-[var(--ink)] text-[var(--paper)]"
           : "text-[var(--ink-soft)] hover:text-[var(--ink)]",
       )}
       onClick={onClick}
@@ -170,8 +168,8 @@ function SubmitButton({ mode }: { mode: AuthMode }) {
       {pending
         ? "Checking..."
         : mode === "signup"
-          ? "Claim my spot"
-          : "Enter the club"}
+          ? "Claim my spot ->"
+          : "Enter the club ->"}
     </Button>
   );
 }
