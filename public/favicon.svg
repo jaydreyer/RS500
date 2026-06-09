@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Spin 500">
+  <rect width="64" height="64" rx="12" fill="#0c0c0e"/>
+  <circle cx="32" cy="32" r="28" fill="#e2452b"/>
+  <circle cx="32" cy="32" r="23" fill="#151519"/>
+  <circle cx="32" cy="32" r="15.5" fill="none" stroke="#f4f2ec" stroke-opacity=".22" stroke-width="2"/>
+  <rect x="7" y="20" width="50" height="24" rx="5" fill="#f4f2ec"/>
+  <text x="32" y="39" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-size="23" font-weight="900" fill="#111114">500</text>
+</svg>

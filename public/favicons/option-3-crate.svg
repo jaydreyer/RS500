@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Spin 500 favicon option 3">
+  <rect width="64" height="64" rx="10" fill="#0c0c0e"/>
+  <path d="M9 16h46v33H9z" fill="#f4f2ec"/>
+  <path d="M13 20h38v25H13z" fill="#151519"/>
+  <path d="M16 23h6v19h-6z" fill="#e2452b"/>
+  <path d="M25 23h6v19h-6z" fill="#3aa99b"/>
+  <path d="M34 23h6v19h-6z" fill="#f4f2ec"/>
+  <path d="M43 23h5v19h-5z" fill="#e2452b"/>
+  <path d="M9 49h46v5H9z" fill="#e2452b"/>
+</svg>

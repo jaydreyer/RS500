@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Spin 500 Favicon Options</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --paper: #0c0c0e;
+        --card: #18181c;
+        --ink: #f4f2ec;
+        --ink-soft: #a7a398;
+        --line: #f4f2ec2b;
+        --accent: #e2452b;
+      }
+
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      }
+
+      main {
+        width: min(1160px, calc(100% - 40px));
+        margin: 48px auto;
+      }
+
+      h1 {
+        margin: 0 0 8px;
+        font-size: clamp(32px, 6vw, 64px);
+        line-height: 1;
+      }
+
+      p {
+        margin: 0 0 28px;
+        color: var(--ink-soft);
+        font-size: 16px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 16px;
+      }
+
+      .card {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--card);
+        padding: 18px;
+      }
+
+      .stage {
+        display: grid;
+        grid-template-columns: 64px 32px 16px;
+        align-items: center;
+        gap: 18px;
+        min-height: 74px;
+      }
+
+      img {
+        display: block;
+        image-rendering: auto;
+      }
+
+      .label {
+        margin-top: 16px;
+        color: var(--ink);
+        font-weight: 800;
+      }
+
+      code {
+        display: block;
+        margin-top: 6px;
+        color: var(--ink-soft);
+        font-size: 12px;
+        overflow-wrap: anywhere;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Spin 500 Favicons</h1>
+      <p>Each card shows 64px, 32px, and 16px sizes.</p>
+      <section class="grid">
+        <article class="card">
+          <div class="stage">
+            <img src="./option-1-spindle.svg" width="64" height="64" alt="Option 1 at 64px" />
+            <img src="./option-1-spindle.svg" width="32" height="32" alt="Option 1 at 32px" />
+            <img src="./option-1-spindle.svg" width="16" height="16" alt="Option 1 at 16px" />
+          </div>
+          <div class="label">1. Spindle</div>
+          <code>/favicons/option-1-spindle.svg</code>
+        </article>
+        <article class="card">
+          <div class="stage">
+            <img src="./option-2-record-500.svg" width="64" height="64" alt="Option 2 at 64px" />
+            <img src="./option-2-record-500.svg" width="32" height="32" alt="Option 2 at 32px" />
+            <img src="./option-2-record-500.svg" width="16" height="16" alt="Option 2 at 16px" />
+          </div>
+          <div class="label">2. Record 500</div>
+          <code>/favicons/option-2-record-500.svg</code>
+        </article>
+        <article class="card">
+          <div class="stage">
+            <img src="./option-3-crate.svg" width="64" height="64" alt="Option 3 at 64px" />
+            <img src="./option-3-crate.svg" width="32" height="32" alt="Option 3 at 32px" />
+            <img src="./option-3-crate.svg" width="16" height="16" alt="Option 3 at 16px" />
+          </div>
+          <div class="label">3. Crate</div>
+          <code>/favicons/option-3-crate.svg</code>
+        </article>
+        <article class="card">
+          <div class="stage">
+            <img src="./option-4-rank-tab.svg" width="64" height="64" alt="Option 4 at 64px" />
+            <img src="./option-4-rank-tab.svg" width="32" height="32" alt="Option 4 at 32px" />
+            <img src="./option-4-rank-tab.svg" width="16" height="16" alt="Option 4 at 16px" />
+          </div>
+          <div class="label">4. Rank Tab</div>
+          <code>/favicons/option-4-rank-tab.svg</code>
+        </article>
+        <article class="card">
+          <div class="stage">
+            <img src="./option-5-waveform.svg" width="64" height="64" alt="Option 5 at 64px" />
+            <img src="./option-5-waveform.svg" width="32" height="32" alt="Option 5 at 32px" />
+            <img src="./option-5-waveform.svg" width="16" height="16" alt="Option 5 at 16px" />
+          </div>
+          <div class="label">5. Needle Pulse</div>
+          <code>/favicons/option-5-waveform.svg</code>
+        </article>
+        <article class="card">
+          <div class="stage">
+            <img src="./option-6-big-500.svg" width="64" height="64" alt="Option 6 at 64px" />
+            <img src="./option-6-big-500.svg" width="32" height="32" alt="Option 6 at 32px" />
+            <img src="./option-6-big-500.svg" width="16" height="16" alt="Option 6 at 16px" />
+          </div>
+          <div class="label">6. Big 500</div>
+          <code>/favicons/option-6-big-500.svg</code>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
