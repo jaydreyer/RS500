@@ -300,7 +300,11 @@ function ReactionEditor({
   const [isPending, startTransition] = useTransition();
   const selectedReactionKey = getReactionKey(emoji);
 
-  function saveReaction(nextEmoji = emoji, nextComment = comment) {
+  function saveReaction(
+    nextEmoji = emoji,
+    nextComment = comment,
+    options: { clearCommentOnSuccess?: boolean } = {},
+  ) {
     setMessage(null);
     startTransition(async () => {
       const result = await upsertReactionAction({
@@ -308,6 +312,10 @@ function ReactionEditor({
         emoji: nextEmoji,
         comment: nextComment,
       });
+
+      if (result.status === "success" && options.clearCommentOnSuccess) {
+        setComment("");
+      }
 
       setMessage(result.status === "error" ? result.message : null);
     });
@@ -343,7 +351,7 @@ function ReactionEditor({
         className="flex items-center gap-2"
         onSubmit={(event) => {
           event.preventDefault();
-          saveReaction();
+          saveReaction(emoji, comment, { clearCommentOnSuccess: true });
         }}
       >
         <label className="sr-only" htmlFor={`comment-${listenId}`}>
