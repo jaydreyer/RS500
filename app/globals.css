@@ -97,7 +97,10 @@ body {
 
 body {
   margin: 0;
-  background: var(--paper);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--paper-2) 62%, var(--paper)) 0, var(--paper) 34rem),
+    repeating-linear-gradient(90deg, transparent 0 23px, color-mix(in srgb, var(--ink) 4%, transparent) 23px 24px),
+    var(--paper);
   color: var(--ink);
   font-family: var(--font-body), system-ui, sans-serif;
   font-size: 16px;
@@ -175,15 +178,76 @@ a {
   background: var(--line-strong);
 }
 
+.page-surface {
+  position: relative;
+}
+
+.page-surface::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--accent) 18%, transparent), transparent 28%),
+    linear-gradient(180deg, transparent 0 72%, color-mix(in srgb, var(--accent-2) 9%, transparent));
+  opacity: 0.42;
+}
+
+.surface-panel {
+  border: 1px solid var(--line-strong);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--card) 92%, var(--ink) 8%), var(--card)),
+    var(--card);
+  box-shadow: var(--shadow);
+}
+
+.hard-panel {
+  border: 1.5px solid var(--ink);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--card) 88%, var(--ink) 12%), var(--card)),
+    var(--card);
+  box-shadow: var(--shadow);
+}
+
+.pressed-panel {
+  border: 1px solid var(--line-strong);
+  background:
+    repeating-linear-gradient(135deg, color-mix(in srgb, var(--ink) 4%, transparent) 0 1px, transparent 1px 7px),
+    var(--paper-2);
+}
+
+.cover-lift {
+  box-shadow:
+    0 20px 36px -22px #000,
+    0 0 0 1px color-mix(in srgb, var(--ink) 18%, transparent);
+}
+
+.record-ring {
+  background:
+    radial-gradient(circle at 50% 50%, var(--paper) 0 10%, transparent 10.5%),
+    repeating-radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--ink) 20%, transparent) 0 1px, transparent 1px 6px),
+    color-mix(in srgb, var(--ink) 10%, var(--paper-2));
+}
+
+.title-wrap {
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
 .input-control {
   width: 100%;
   border-radius: var(--r);
   border: 1.5px solid var(--line-strong);
-  background: var(--card);
+  background: color-mix(in srgb, var(--card) 82%, var(--paper));
   color: var(--ink);
   padding: 12px 14px;
   font-size: 16px;
   outline: none;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    background 150ms ease;
 }
 
 .input-control::placeholder {

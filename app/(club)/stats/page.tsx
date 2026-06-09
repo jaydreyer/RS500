@@ -66,7 +66,7 @@ export default async function StatsPage() {
         />
       </div>
 
-      <section className="mt-4 rounded-lg border border-[var(--ink)] bg-[var(--card)] p-5 shadow-[var(--shadow)]">
+      <section className="surface-panel mt-4 rounded-lg p-5">
         <div className="mb-4 flex flex-wrap items-baseline justify-between gap-3">
           <h2 className="text-2xl">Skip counts</h2>
           <p className="tag">public / already-heard logs</p>
@@ -98,7 +98,7 @@ export default async function StatsPage() {
         />
       </div>
 
-      <section className="mt-4 rounded-lg border border-[var(--ink)] bg-[var(--card)] p-5 shadow-[var(--shadow)]">
+      <section className="surface-panel mt-4 rounded-lg p-5">
         <div className="mb-4 flex flex-wrap items-baseline justify-between gap-3">
           <h2 className="text-2xl">Shared albums</h2>
           <p className="tag">two or more members / score comparison</p>
@@ -140,7 +140,7 @@ function MemberSuperlative({
   return (
     <article
       className={cn(
-        "min-h-40 rounded-lg border border-[var(--ink)] p-5 shadow-[var(--shadow)]",
+        "min-h-40 rounded-lg border p-5 shadow-[var(--shadow)]",
         accent ? "bg-[var(--accent)] text-[var(--accent-ink)]" : "bg-[var(--card)]",
       )}
     >
@@ -214,7 +214,7 @@ function AlbumLeaderboard({
   tone: "high" | "low";
 }) {
   return (
-    <section className="rounded-lg border border-[var(--ink)] bg-[var(--card)] p-5 shadow-[var(--shadow)]">
+    <section className="surface-panel rounded-lg p-5">
       <h2 className="text-2xl">{title}</h2>
       <div className="mt-4 grid gap-3">
         {albums.length === 0 && <p className="tag">No rated albums yet</p>}
@@ -228,7 +228,7 @@ function AlbumLeaderboard({
               rank={summary.album.rank}
               src={summary.album.coverUrl}
               title={summary.album.title}
-              className="rounded-sm"
+              className="cover-lift rounded-sm"
             />
             <div className="min-w-0">
               <p className={cn("tag", tone === "high" && "text-[var(--good)]")}>
@@ -263,7 +263,7 @@ function SharedAlbumRow({
           rank={summary.album.rank}
           src={summary.album.coverUrl}
           title={summary.album.title}
-          className="rounded-sm"
+          className="cover-lift rounded-sm"
         />
       </Link>
       <div className="min-w-0">

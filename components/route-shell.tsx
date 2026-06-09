@@ -16,7 +16,7 @@ export function RouteShell({
     <section className={cn("mx-auto w-full", className)}>
       <div className="mb-6">
         <Eyebrow>{eyebrow}</Eyebrow>
-        <h1 className="mt-3 text-5xl md:text-6xl">{title}</h1>
+        <h1 className="title-wrap mt-3 text-5xl md:text-7xl">{title}</h1>
       </div>
       {children}
     </section>

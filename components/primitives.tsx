@@ -33,7 +33,7 @@ export function ClubAvatar({
   return (
     <span
       className={cn(
-        "mono grid shrink-0 place-items-center rounded-full bg-[oklch(58%_0.18_18)] font-bold text-[var(--accent-ink)]",
+        "mono grid shrink-0 place-items-center rounded-full border border-white/15 bg-[linear-gradient(135deg,var(--accent),color-mix(in_srgb,var(--accent-2)_70%,var(--accent)))] font-bold text-[var(--accent-ink)] shadow-[0_10px_18px_-14px_#000]",
         ring && "ring-2 ring-[var(--ink)] ring-offset-2 ring-offset-[var(--paper)]",
         size === "sm" && "size-7 text-[10px]",
         size === "md" && "size-8 text-[11px]",
@@ -55,7 +55,7 @@ export function ScoreBadge({
 }) {
   if (score == null) {
     return (
-      <span className="inline-flex items-center gap-2 rounded-md border border-[var(--line-strong)] px-2.5 py-1 text-xs text-[var(--ink-soft)]">
+      <span className="inline-flex items-center gap-2 rounded-md border border-[var(--line-strong)] bg-[var(--paper-2)] px-2.5 py-1 text-xs text-[var(--ink-soft)]">
         <span className="size-2 rounded-full bg-[var(--accent)] animate-pulse-dot" />
         listening
       </span>
@@ -63,7 +63,7 @@ export function ScoreBadge({
   }
 
   return (
-    <span className="inline-flex items-baseline rounded-md bg-[var(--ink)] px-2.5 py-1 font-display font-extrabold text-[var(--paper)]">
+    <span className="inline-flex items-baseline rounded-md bg-[var(--ink)] px-2.5 py-1 font-display font-extrabold text-[var(--paper)] shadow-[0_10px_18px_-14px_#000]">
       <span className="text-lg leading-none">{score}</span>
       <span className="mono ml-0.5 text-[10px] opacity-70">{label}</span>
     </span>

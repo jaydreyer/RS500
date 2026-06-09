@@ -45,13 +45,14 @@ export default async function AlbumDetailPage({
         Back to The 500
       </Link>
 
-      <div className="grid gap-7 lg:grid-cols-[minmax(240px,320px)_1fr] lg:gap-10">
-        <div>
+      <div className="hard-panel grid gap-7 overflow-hidden rounded-lg p-4 lg:grid-cols-[minmax(240px,340px)_1fr] lg:gap-10 lg:p-6">
+        <div className="relative">
+          <div className="record-ring absolute -left-16 top-10 hidden size-48 rounded-full opacity-25 lg:block" />
           <AlbumCover
             rank={detail.album.rank}
             src={detail.album.coverUrl}
             title={detail.album.title}
-            className="w-full rounded-md"
+            className="cover-lift relative w-full rounded-md"
           />
           <ServiceLinks
             spotifyUrl={detail.album.spotifyUrl}
@@ -63,15 +64,15 @@ export default async function AlbumDetailPage({
           </p>
         </div>
 
-        <div className="min-w-0">
+        <div className="min-w-0 py-1">
           <Eyebrow>rolling stone 500 / #{detail.album.rank}</Eyebrow>
-          <h1 className="mt-3 text-5xl md:text-6xl">{detail.album.title}</h1>
+          <h1 className="title-wrap mt-3 text-5xl md:text-7xl">{detail.album.title}</h1>
           <p className="mt-3 font-quote text-2xl text-[var(--ink-soft)]">
             {detail.album.artist}
           </p>
 
-          <div className="my-7 flex flex-wrap items-end gap-8">
-            <div>
+          <div className="my-7 grid gap-3 sm:grid-cols-3">
+            <div className="pressed-panel rounded-md p-4">
               <div
                 className={cn(
                   "font-display text-6xl font-extrabold leading-none",
@@ -82,13 +83,13 @@ export default async function AlbumDetailPage({
               </div>
               <div className="tag mt-1">crew average</div>
             </div>
-            <div>
+            <div className="pressed-panel rounded-md p-4">
               <div className="font-display text-4xl font-extrabold leading-none">
                 {detail.ratedCount}
               </div>
               <div className="tag mt-1">rated count</div>
             </div>
-            <div>
+            <div className="pressed-panel rounded-md p-4">
               <div className="font-display text-4xl font-extrabold leading-none">
                 {detail.listens.length}
               </div>
@@ -100,9 +101,7 @@ export default async function AlbumDetailPage({
           <div className="mt-5">
             <Eyebrow>who drew it</Eyebrow>
             <div className="mt-3 grid gap-2">
-              {detail.listens.length === 0 && (
-                <p className="tag py-4">Nobody in the crew has logged this yet</p>
-              )}
+              {detail.listens.length === 0 && <p className="tag py-4">Nobody in the crew has logged this yet</p>}
               {detail.listens.map((listen) => (
                 <ListenRow key={listen.id} listen={listen} />
               ))}
@@ -111,7 +110,7 @@ export default async function AlbumDetailPage({
         </div>
       </div>
 
-      <section className="mt-8 rounded-lg border border-[var(--ink)] bg-[var(--card)] p-5 shadow-[var(--shadow)]">
+      <section className="surface-panel mt-8 rounded-lg p-5">
         <h2 className="text-2xl">Crew thread</h2>
         <div className="mt-4 grid gap-3">
           {detail.reactions.filter((reaction) => reaction.comment || reaction.emoji).length === 0 && (
@@ -163,7 +162,7 @@ function ListenRow({ listen }: { listen: AlbumDetailListen }) {
           <span className="tag">{listen.week}</span>
         </div>
         {listen.take && (
-          <p className="mt-1 truncate font-quote text-sm italic text-[var(--ink-soft)]">
+          <p className="mt-1 line-clamp-2 font-quote text-sm italic text-[var(--ink-soft)]">
             &quot;{listen.take}&quot;
           </p>
         )}

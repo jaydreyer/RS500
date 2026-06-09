@@ -106,9 +106,9 @@ export function BoardClient({
             </span>
             <span>/ {initialState.weekLabel}</span>
           </div>
-          <h1 className="mt-3 text-5xl md:text-6xl">The Board</h1>
+          <h1 className="mt-3 text-5xl md:text-7xl">The Board</h1>
         </div>
-        <div className="flex gap-5">
+        <div className="pressed-panel flex flex-wrap gap-4 rounded-lg px-4 py-3">
           <Stat label="rated" value={ratedCount} />
           <Stat label="listening" value={listeningCount} accent />
           <Stat label="crew" value={initialState.members.length} />
@@ -118,7 +118,7 @@ export function BoardClient({
       {(liveMessage || realtimeError) && (
         <div
           className={cn(
-            "mb-5 rounded-md border bg-[var(--card)] px-4 py-3 text-sm shadow-[var(--shadow)] animate-rise-in",
+            "surface-panel mb-5 rounded-md px-4 py-3 text-sm animate-rise-in",
             realtimeError
               ? "border-[var(--line-strong)] text-[var(--ink-soft)]"
               : "border-dashed border-[var(--accent)] text-[var(--ink-soft)]",
@@ -129,7 +129,7 @@ export function BoardClient({
         </div>
       )}
 
-      <div className="grid gap-4 md:grid-cols-[repeat(auto-fill,minmax(290px,1fr))]">
+      <div className="grid gap-4 md:grid-cols-[repeat(auto-fill,minmax(310px,1fr))]">
         {cards.map(({ member, pick }) => (
           <BoardCard
             key={member.id}
@@ -159,10 +159,10 @@ function BoardCard({
 
   if (!pick) {
     return (
-      <article className="grid min-h-[230px] place-items-center rounded-lg border border-dashed border-[var(--line-strong)] bg-[var(--card)] p-5 text-center">
+      <article className="pressed-panel grid min-h-[300px] place-items-center rounded-lg p-5 text-center">
         <div>
           <ClubAvatar initials={member.initials} size="lg" ring={isMe} />
-          <h2 className="mt-4 text-xl">{isMe ? "You" : member.displayName}</h2>
+          <h2 className="title-wrap mt-4 text-2xl">{isMe ? "You" : member.displayName}</h2>
           <p className="tag mt-2">{isMe ? "haven't drawn yet" : "no pick this week"}</p>
           {isMe && (
             <Link
@@ -182,8 +182,8 @@ function BoardCard({
   const commentReactions = reactions.filter((reaction) => reaction.comment);
 
   return (
-    <article className="flex overflow-hidden rounded-lg border border-[var(--ink)] bg-[var(--card)] shadow-[var(--shadow)] flex-col">
-      <div className="flex items-center gap-3 border-b border-[var(--line-strong)] px-4 py-3">
+    <article className="hard-panel flex overflow-hidden rounded-lg flex-col transition-transform duration-200 hover:-translate-y-0.5">
+      <div className="flex items-center gap-3 border-b border-[var(--line-strong)] bg-[var(--paper-2)] px-4 py-3">
         <ClubAvatar initials={member.initials} size="sm" ring={isMe} />
         <h2 className="min-w-0 truncate text-lg">{isMe ? "You" : member.displayName}</h2>
         <div className="ml-auto shrink-0">
@@ -191,13 +191,13 @@ function BoardCard({
         </div>
       </div>
 
-      <div className="flex gap-3 p-4">
-        <Link href={`/albums/${pick.album.id}`} className="w-[92px] shrink-0">
+      <div className="grid gap-4 p-4 sm:grid-cols-[124px_1fr]">
+        <Link href={`/albums/${pick.album.id}`} className="mx-auto w-[min(46vw,124px)] shrink-0 sm:mx-0">
           <AlbumCover
             rank={pick.album.rank}
             src={pick.album.coverUrl}
             title={pick.album.title}
-            className="rounded-sm"
+            className="cover-lift rounded-sm"
           />
         </Link>
         <div className="min-w-0 flex-1">
@@ -205,7 +205,7 @@ function BoardCard({
             #{pick.album.rank} / {pick.album.year}
           </p>
           <Link href={`/albums/${pick.album.id}`}>
-            <h3 className="mt-1 text-xl leading-tight">{pick.album.title}</h3>
+            <h3 className="title-wrap mt-1 text-2xl leading-tight">{pick.album.title}</h3>
           </Link>
           <p className="mt-1 font-quote text-lg leading-tight text-[var(--ink-soft)]">
             {pick.album.artist}
@@ -215,9 +215,13 @@ function BoardCard({
 
       <div className="px-4 pb-4">
         {pick.take ? (
-          <p className="font-quote text-lg italic leading-snug text-[var(--ink)]">&quot;{pick.take}&quot;</p>
+          <p className="rounded-md border-l-2 border-[var(--accent)] bg-[var(--paper-2)] px-3 py-2 font-quote text-lg italic leading-snug text-[var(--ink)]">
+            &quot;{pick.take}&quot;
+          </p>
         ) : (
-          <p className="tag">{listening ? "take drops when they rate it" : "no take logged"}</p>
+          <p className="tag rounded-md border border-dashed border-[var(--line-strong)] px-3 py-2">
+            {listening ? "take drops when they rate it" : "no take logged"}
+          </p>
         )}
       </div>
 
@@ -389,9 +393,9 @@ function ServiceLinks({ album }: { album: BoardListen["album"] }) {
             "h-8 px-2 text-[11px]",
           )}
         >
-            <Music2 className="size-3.5" />
-            {link.label}
-            <ExternalLink className="size-3" />
+          <Music2 className="size-3.5" />
+          {link.label}
+          <ExternalLink className="size-3" />
         </a>
       ))}
     </div>
@@ -417,7 +421,7 @@ function Stat({
   accent?: boolean;
 }) {
   return (
-    <div className="text-right">
+    <div className="min-w-16 text-right">
       <div
         className={cn(
           "font-display text-3xl font-extrabold leading-none",

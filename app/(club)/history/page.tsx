@@ -53,7 +53,7 @@ export default async function HistoryPage({
         Every fresh pick, crew by week. Member names open the full log, including skips.
       </p>
 
-      <div className="overflow-x-auto rounded-lg border border-[var(--ink)] bg-[var(--card)] shadow-[var(--shadow)]">
+      <div className="hard-panel overflow-x-auto rounded-lg">
         <table className="w-full min-w-[840px] border-collapse">
           <thead>
             <tr className="border-b border-[var(--line-strong)]">
@@ -75,7 +75,10 @@ export default async function HistoryPage({
               );
 
               return (
-                <tr key={member.id} className="border-b border-[var(--line)] last:border-b-0">
+                <tr
+                  key={member.id}
+                  className="border-b border-[var(--line)] transition-colors last:border-b-0 hover:bg-[var(--paper-2)]"
+                >
                   <td className="sticky left-0 z-10 bg-[var(--card)] p-4">
                     <Link
                       href={`/history?member=${member.id}`}
@@ -117,7 +120,7 @@ export default async function HistoryPage({
       </div>
 
       {historyState.weeks.length === 0 && (
-        <div className="mt-5 rounded-lg border border-dashed border-[var(--line-strong)] bg-[var(--card)] p-6 text-center">
+        <div className="pressed-panel mt-5 rounded-lg p-6 text-center">
           <p className="tag">No fresh picks have landed yet</p>
         </div>
       )}
@@ -196,10 +199,10 @@ function MemberHistoryDetail({
           />
           <div>
             <p className="tag">Member history</p>
-            <h1 className="mt-2 text-5xl md:text-6xl">{memberLabel}</h1>
+            <h1 className="title-wrap mt-2 text-5xl md:text-7xl">{memberLabel}</h1>
           </div>
         </div>
-        <div className="flex gap-6">
+        <div className="pressed-panel flex gap-6 rounded-lg px-4 py-3">
           <MemberStat label="fresh" value={summary.freshListens.length} />
           <MemberStat label="skips" value={summary.skipListens.length} />
           <MemberStat
@@ -210,7 +213,7 @@ function MemberHistoryDetail({
         </div>
       </div>
 
-      <div className="rounded-lg border border-[var(--ink)] bg-[var(--card)] shadow-[var(--shadow)]">
+      <div className="hard-panel overflow-hidden rounded-lg">
         {summary.listens.length === 0 ? (
           <div className="p-6 text-center">
             <p className="tag">No logs yet</p>
@@ -266,7 +269,7 @@ function MemberListenRow({
           rank={listen.album.rank}
           src={listen.album.coverUrl}
           title={listen.album.title}
-          className="rounded-sm"
+          className="cover-lift rounded-sm"
         />
       </div>
       <div className="min-w-0 flex-1">

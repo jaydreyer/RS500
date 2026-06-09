@@ -30,6 +30,7 @@ export function CatalogClient({ initialState }: { initialState: CatalogState }) 
   const myListenByAlbum = useMemo(() => {
     return new Map(initialState.myListens.map((listen) => [listen.albumId, listen]));
   }, [initialState.myListens]);
+  const featureAlbums = initialState.albums.slice(0, 6);
 
   const rows = useMemo(() => {
     const needle = query.trim().toLowerCase();
@@ -83,26 +84,34 @@ export function CatalogClient({ initialState }: { initialState: CatalogState }) 
 
   return (
     <section className="mx-auto w-full max-w-[980px]">
-      <div className="mb-5 flex flex-wrap items-end justify-between gap-5">
+      <div className="mb-6 grid gap-5 lg:grid-cols-[1fr_300px] lg:items-end">
         <div>
           <div className="tag flex items-center gap-3">
             <span className="h-0.5 w-4 bg-[var(--accent)]" />
             <span>the whole list / rolling stone 500</span>
           </div>
-          <h1 className="mt-3 text-5xl md:text-6xl">The 500</h1>
+          <h1 className="mt-3 text-5xl md:text-7xl">The 500</h1>
+          <p className="mt-5 max-w-xl font-quote text-lg text-[var(--ink-soft)]">
+            Browse the full catalog. You cannot draw from here - that is the whole point - but
+            you can see what is still out there.
+          </p>
         </div>
-        <div className="flex gap-5">
-          <Stat label="showing" value={rows.length} />
-          <Stat label="you've logged" value={loggedCount} accent />
+        <div className="hidden lg:block">
+          <div className="grid grid-cols-6 gap-1.5">
+            {featureAlbums.map((album, index) => (
+              <AlbumCover
+                key={album.id}
+                rank={album.rank}
+                src={album.coverUrl}
+                title={album.title}
+                className={cn("cover-lift rounded-sm", index % 2 === 0 && "translate-y-3")}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
-      <p className="mb-6 max-w-xl font-quote text-lg text-[var(--ink-soft)]">
-        Browse the full catalog. You cannot draw from here - that is the whole point - but
-        you can see what is still out there.
-      </p>
-
-      <div className="mb-4 flex flex-wrap items-center gap-3">
+      <div className="surface-panel mb-4 flex flex-wrap items-center gap-3 rounded-lg p-3">
         <label className="relative min-w-[220px] flex-1">
           <span className="sr-only">Search by title or artist</span>
           <Search
@@ -134,10 +143,14 @@ export function CatalogClient({ initialState }: { initialState: CatalogState }) 
             </button>
           ))}
         </div>
+        <div className="ml-auto flex gap-4 px-1">
+          <Stat label="showing" value={rows.length} />
+          <Stat label="logged" value={loggedCount} accent />
+        </div>
       </div>
 
-      <div className="overflow-hidden rounded-lg border border-[var(--ink)] bg-[var(--card)] shadow-[var(--shadow)]">
-        <div className="catalog-row border-b border-[var(--line-strong)] px-4 py-3 tag">
+      <div className="hard-panel overflow-hidden rounded-lg">
+        <div className="catalog-row sticky top-[61px] z-10 border-b border-[var(--line-strong)] bg-[var(--card)] px-4 py-3 tag">
           <SortHeader label="#" sortKey="rank" activeSort={sort} direction={direction} onSort={toggleSort} />
           <span />
           <SortHeader
@@ -203,15 +216,17 @@ function CatalogRow({
       href={`/albums/${album.id}`}
       className="catalog-row group border-b border-[var(--line)] px-4 py-3 transition-colors last:border-b-0 hover:bg-[var(--paper-2)]"
     >
-      <span className="mono text-sm font-bold text-[var(--ink-faint)]">#{album.rank}</span>
+      <span className="mono text-sm font-bold text-[var(--ink-faint)] transition-colors group-hover:text-[var(--accent)]">
+        #{album.rank}
+      </span>
       <AlbumCover
         rank={album.rank}
         src={album.coverUrl}
         title={album.title}
-        className="size-10 rounded-sm"
+        className="cover-lift size-10 rounded-sm"
       />
       <span className="min-w-0 text-left">
-        <span className="block truncate font-display text-lg font-extrabold text-[var(--ink)]">
+        <span className="block truncate font-display text-lg font-extrabold text-[var(--ink)] transition-colors group-hover:text-[var(--accent)]">
           {album.title}
         </span>
         <span className="catalog-artist-inline hidden truncate font-quote text-sm text-[var(--ink-soft)]">
@@ -295,7 +310,7 @@ function Stat({
   accent?: boolean;
 }) {
   return (
-    <div className="text-right">
+    <div className="min-w-16 text-right">
       <div
         className={cn(
           "font-display text-3xl font-extrabold leading-none",
