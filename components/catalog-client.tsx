@@ -112,16 +112,13 @@ export function CatalogClient({ initialState }: { initialState: CatalogState }) 
       </div>
 
       <div className="surface-panel mb-4 flex flex-wrap items-center gap-3 rounded-lg p-3">
-        <label className="relative min-w-[220px] flex-1">
+        <label className="flex min-h-12 min-w-[220px] flex-1 items-center gap-2 rounded-md border border-[var(--line-strong)] bg-[var(--card)] px-3 focus-within:border-[var(--accent)] focus-within:shadow-[0_0_0_2px_color-mix(in_srgb,var(--accent)_18%,transparent)]">
           <span className="sr-only">Search by title or artist</span>
-          <Search
-            className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[var(--ink-faint)]"
-            aria-hidden="true"
-          />
+          <Search className="size-4 shrink-0 text-[var(--ink-faint)]" aria-hidden="true" />
           <input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            className="input-control pl-10"
+            className="min-w-0 flex-1 border-0 bg-transparent p-0 text-[var(--ink)] outline-none placeholder:text-[var(--ink-soft)]"
             placeholder="Search title or artist"
           />
         </label>
