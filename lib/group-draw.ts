@@ -54,6 +54,24 @@ export async function getUserGroupDrawState(userId: string): Promise<UserGroupDr
   };
 }
 
+export async function getAllGroupDrawState(): Promise<UserGroupDrawState> {
+  const pb = await createSuperuserPocketBase();
+  const weekKey = getIsoWeekKey();
+  const activeGroups = await pb.collection("groups").getFullList({
+    filter: "active = true",
+    sort: "name",
+    requestKey: null,
+  });
+  const groups = await Promise.all(
+    activeGroups.map((group) => getGroupDrawSummary(pb, group, weekKey)),
+  );
+
+  return {
+    weekKey,
+    groups,
+  };
+}
+
 export async function drawForGroup({
   userId,
   groupId,

@@ -107,7 +107,7 @@ function BottomNav() {
 
   return (
     <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--line-strong)] bg-[color-mix(in_srgb,var(--paper)_88%,transparent)] pb-[env(safe-area-inset-bottom)] backdrop-blur-xl md:hidden">
-      <div className="grid grid-cols-5">
+      <div className="grid grid-cols-6">
         {clubNavItems.map(({ href, label, Icon }) => {
           const active = pathname === href || pathname.startsWith(`${href}/`);
 
@@ -116,13 +116,13 @@ function BottomNav() {
               key={href}
               href={href}
               className={cn(
-                "relative flex min-h-16 flex-col items-center justify-center gap-1 px-1 text-center transition-colors",
+                "relative flex min-h-16 flex-col items-center justify-center gap-1 px-0.5 text-center transition-colors",
                 active ? "text-[var(--ink)]" : "text-[var(--ink-soft)]",
               )}
             >
               {active && <span className="absolute top-0 h-0.5 w-8 bg-[var(--accent)]" />}
-              <Icon className="size-5" strokeWidth={2.2} />
-              <span className="mono text-[10px]">{label}</span>
+              <Icon className="size-4" strokeWidth={2.2} />
+              <span className="mono text-[9px]">{label}</span>
             </Link>
           );
         })}
