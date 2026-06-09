@@ -15,6 +15,7 @@ import { AlbumCover } from "@/components/album-cover";
 import { Eyebrow, RatingInput } from "@/components/primitives";
 import { Button } from "@/components/ui/button";
 import { RATING_SCALE } from "@/lib/config";
+import { TAKE_MAX_LENGTH } from "@/lib/draw-rules";
 import type { ListenSummary, WeekState } from "@/lib/draw";
 import { cn } from "@/lib/utils";
 import { formatIsoWeekLabel } from "@/lib/week";
@@ -418,14 +419,15 @@ function RatingForm({
       {hint && <p className="tag">{hint}</p>}
       <RatingInput value={rating} onChange={setRating} />
       <label className="sr-only" htmlFor={inputId}>
-        One-line take
+        Review
       </label>
-      <input
+      <textarea
         id={inputId}
         name="take"
-        maxLength={180}
-        placeholder="one-line take (optional)"
-        className="input-control max-w-md"
+        maxLength={TAKE_MAX_LENGTH}
+        placeholder="review (optional)"
+        rows={5}
+        className="input-control max-w-xl resize-y text-left leading-6"
       />
       {errorMessage && <p className="text-sm text-[var(--accent)]">{errorMessage}</p>}
       <Button type="submit" variant="accent" size="lg" disabled={!rating.trim() || pending}>

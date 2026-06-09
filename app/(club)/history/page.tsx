@@ -283,7 +283,7 @@ function MemberListenRow({
           {listen.album.artist} / #{listen.album.rank} / {listen.weekLabel}
         </p>
         {listen.take && (
-          <p className="mt-2 line-clamp-2 font-quote text-base italic leading-snug text-[var(--ink-soft)]">
+          <p className="mt-2 line-clamp-3 whitespace-pre-wrap font-quote text-base italic leading-relaxed text-[var(--ink-soft)]">
             &quot;{listen.take}&quot;
           </p>
         )}

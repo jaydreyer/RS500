@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import type { WeekActionState } from "@/app/(club)/week/action-state";
+import { consumeUserActionLimit } from "@/lib/action-rate-limit";
 import { getAuthenticatedPocketBase } from "@/lib/auth";
 import { formatRating, RATING_SCALE } from "@/lib/config";
 import {
@@ -16,6 +17,11 @@ import {
   rateDrawnSkip,
   rateFreshPick,
 } from "@/lib/draw";
+
+const REVIEW_WRITE_RATE_LIMIT = {
+  limit: 30,
+  windowMs: 10 * 60 * 1000,
+};
 
 export async function drawAction(
   previousState: WeekActionState,
@@ -68,6 +74,19 @@ export async function skipRatingAction(
     const rating = parseRating(formData.get("rating"));
     const take = parseTake(formData.get("take"));
     const { pb, user } = await getAuthenticatedPocketBase();
+    const rateLimitError = consumeUserActionLimit(
+      "review:write",
+      user.id,
+      REVIEW_WRITE_RATE_LIMIT,
+    );
+    if (rateLimitError) {
+      return {
+        status: "error",
+        message: rateLimitError,
+        listen: null,
+      };
+    }
+
     const listen = await rateDrawnSkip({
       pb,
       userId: user.id,
@@ -96,6 +115,19 @@ export async function freshRatingAction(
     const rating = parseRating(formData.get("rating"));
     const take = parseTake(formData.get("take"));
     const { pb, user } = await getAuthenticatedPocketBase();
+    const rateLimitError = consumeUserActionLimit(
+      "review:write",
+      user.id,
+      REVIEW_WRITE_RATE_LIMIT,
+    );
+    if (rateLimitError) {
+      return {
+        status: "error",
+        message: rateLimitError,
+        listen: null,
+      };
+    }
+
     const listen = await rateFreshPick({
       pb,
       userId: user.id,

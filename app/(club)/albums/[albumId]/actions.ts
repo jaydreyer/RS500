@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+import { consumeUserActionLimit } from "@/lib/action-rate-limit";
 import { getAuthenticatedPocketBase } from "@/lib/auth";
 import { formatRating, RATING_SCALE } from "@/lib/config";
 import {
@@ -12,6 +13,11 @@ import {
   parseTake,
   rateKnownAlbum,
 } from "@/lib/draw";
+
+const REVIEW_WRITE_RATE_LIMIT = {
+  limit: 30,
+  windowMs: 10 * 60 * 1000,
+};
 
 type AlbumRatingActionState = {
   status: "idle" | "success" | "error";
@@ -27,6 +33,18 @@ export async function knownAlbumRatingAction(
     const rating = parseRating(formData.get("rating"));
     const take = parseTake(formData.get("take"));
     const { pb, user } = await getAuthenticatedPocketBase();
+    const rateLimitError = consumeUserActionLimit(
+      "review:write",
+      user.id,
+      REVIEW_WRITE_RATE_LIMIT,
+    );
+    if (rateLimitError) {
+      return {
+        status: "error",
+        message: rateLimitError,
+      };
+    }
+
     const listen = await rateKnownAlbum({
       pb,
       userId: user.id,

@@ -16,12 +16,9 @@ export function validateSignupInput(input: SignupInput, expectedInviteCode: stri
     return "That invite code is not valid. Ask the crew.";
   }
 
-  if (input.displayName.length < 2) {
-    return "Enter the name the board should show.";
-  }
-
-  if (input.displayName.length > 80) {
-    return "Display name must be 80 characters or less.";
+  const displayNameError = validateDisplayName(input.displayName);
+  if (displayNameError) {
+    return displayNameError;
   }
 
   if (!input.email || !input.email.includes("@")) {
@@ -37,4 +34,16 @@ export function validateSignupInput(input: SignupInput, expectedInviteCode: stri
 
 export function normalizeInviteCode(value: string) {
   return value.trim().toUpperCase();
+}
+
+export function validateDisplayName(displayName: string) {
+  if (displayName.length < 2) {
+    return "Enter the name the board should show.";
+  }
+
+  if (displayName.length > 80) {
+    return "Display name must be 80 characters or less.";
+  }
+
+  return null;
 }

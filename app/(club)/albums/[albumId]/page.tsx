@@ -181,7 +181,7 @@ function ListenRow({ listen }: { listen: AlbumDetailListen }) {
           <span className="tag">{listen.week}</span>
         </div>
         {listen.take && (
-          <p className="mt-1 line-clamp-2 font-quote text-sm italic text-[var(--ink-soft)]">
+          <p className="mt-1 line-clamp-4 whitespace-pre-wrap font-quote text-sm italic leading-relaxed text-[var(--ink-soft)]">
             &quot;{listen.take}&quot;
           </p>
         )}

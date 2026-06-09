@@ -229,12 +229,12 @@ function BoardCard({
 
       <div className="px-4 pb-4">
         {pick.take ? (
-          <p className="rounded-md border-l-2 border-[var(--accent)] bg-[var(--paper-2)] px-3 py-2 font-quote text-lg italic leading-snug text-[var(--ink)]">
+          <p className="max-h-64 overflow-auto whitespace-pre-wrap rounded-md border-l-2 border-[var(--accent)] bg-[var(--paper-2)] px-3 py-2 font-quote text-lg italic leading-relaxed text-[var(--ink)]">
             &quot;{pick.take}&quot;
           </p>
         ) : (
           <p className="tag rounded-md border border-dashed border-[var(--line-strong)] px-3 py-2">
-            {listening ? "take drops when they rate it" : "no take logged"}
+            {listening ? "review drops when they rate it" : "no review logged"}
           </p>
         )}
       </div>

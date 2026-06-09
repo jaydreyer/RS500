@@ -8,6 +8,7 @@ import { knownAlbumRatingAction } from "@/app/(club)/albums/[albumId]/actions";
 import { ScoreBadge } from "@/components/primitives";
 import { Button } from "@/components/ui/button";
 import { RATING_SCALE } from "@/lib/config";
+import { TAKE_MAX_LENGTH } from "@/lib/draw-rules";
 import type { AlbumDetailListen } from "@/lib/catalog";
 
 type AlbumRatingActionState = {
@@ -78,7 +79,7 @@ export function AlbumRatingPanel({
       </div>
 
       {initialListen?.take && !isEditing && (
-        <p className="mt-3 font-quote text-lg italic text-[var(--ink-soft)]">
+        <p className="mt-3 whitespace-pre-wrap font-quote text-lg italic leading-relaxed text-[var(--ink-soft)]">
           &quot;{initialListen.take}&quot;
         </p>
       )}
@@ -100,16 +101,17 @@ export function AlbumRatingPanel({
             />
           </label>
           <label className="sr-only" htmlFor={takeId}>
-            One-line take
+            Review
           </label>
-          <input
+          <textarea
             id={takeId}
             name="take"
             value={take}
             onChange={(event) => setTake(event.target.value)}
-            maxLength={180}
-            placeholder="one-line take (optional)"
-            className="input-control"
+            maxLength={TAKE_MAX_LENGTH}
+            placeholder="review (optional)"
+            rows={5}
+            className="input-control resize-y leading-6"
           />
           {state.message && (
             <p

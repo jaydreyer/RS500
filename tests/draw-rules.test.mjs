@@ -4,6 +4,7 @@ import test from "node:test"
 import {
   assertActiveFreshListen,
   DrawRuleError,
+  TAKE_MAX_LENGTH,
   getDrawablePool,
   normalizeTake,
   parseRatingValue,
@@ -53,5 +54,5 @@ test("rating parser allows one decimal place within scale bounds", () => {
 
 test("takes are trimmed and capped", () => {
   assert.equal(normalizeTake("  A tight little note  "), "A tight little note")
-  assert.equal(normalizeTake("x".repeat(220)).length, 180)
+  assert.equal(normalizeTake("x".repeat(TAKE_MAX_LENGTH + 50)).length, TAKE_MAX_LENGTH)
 })

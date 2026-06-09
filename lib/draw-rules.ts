@@ -12,6 +12,8 @@ export type DrawRuleListen = {
 
 export class DrawRuleError extends Error {}
 
+export const TAKE_MAX_LENGTH = 2000;
+
 export function assertActiveFreshListen(listen: DrawRuleListen) {
   if (listen.kind !== "fresh" || listen.status !== "listening") {
     throw new DrawRuleError("That pick is not waiting for a rating.");
@@ -51,7 +53,7 @@ export function parseRatingValue(value: FormDataEntryValue | null, ratingScale: 
 }
 
 export function normalizeTake(value: string) {
-  return value.trim().slice(0, 180);
+  return value.trim().slice(0, TAKE_MAX_LENGTH);
 }
 
 function getPrecisionFromStep(step: number) {

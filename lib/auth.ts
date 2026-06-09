@@ -10,6 +10,7 @@ export type ClubUser = {
   email: string;
   displayName: string;
   initials: string;
+  avatarUrl: string | null;
 };
 
 export function getPocketBaseUrl() {
@@ -140,6 +141,7 @@ export function mapClubUser(record: NonNullable<AuthRecord>): ClubUser {
     email,
     displayName,
     initials: getInitials(displayName || email),
+    avatarUrl: getAvatarUrl(record),
   };
 }
 
@@ -172,4 +174,18 @@ function getInitials(value: string) {
 
 function asString(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
+}
+
+function getAvatarUrl(record: NonNullable<AuthRecord>) {
+  const data = record as Record<string, unknown>;
+  const filename = asString(data.avatar);
+
+  if (!filename) {
+    return null;
+  }
+
+  const collection = asString(data.collectionName) || asString(data.collectionId) || "users";
+  const baseUrl = getPocketBaseUrl().replace(/\/$/, "");
+
+  return `${baseUrl}/api/files/${encodeURIComponent(collection)}/${encodeURIComponent(record.id)}/${encodeURIComponent(filename)}?thumb=96x96`;
 }

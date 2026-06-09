@@ -1,6 +1,7 @@
 "use client";
 
 import { Plus } from "lucide-react";
+import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import { formatRating, RATING_SCALE } from "@/lib/config";
@@ -22,26 +23,41 @@ export function Eyebrow({
 }
 
 export function ClubAvatar({
+  imageUrl,
   initials,
+  label,
   ring = false,
   size = "md",
 }: {
+  imageUrl?: string | null;
   initials: string;
+  label?: string;
   ring?: boolean;
   size?: "sm" | "md" | "lg";
 }) {
   return (
     <span
       className={cn(
-        "mono grid shrink-0 place-items-center rounded-full border border-white/15 bg-[linear-gradient(135deg,var(--accent),color-mix(in_srgb,var(--accent-2)_70%,var(--accent)))] font-bold text-[var(--accent-ink)] shadow-[0_10px_18px_-14px_#000]",
+        "mono relative grid shrink-0 place-items-center overflow-hidden rounded-full border border-white/15 bg-[linear-gradient(135deg,var(--accent),color-mix(in_srgb,var(--accent-2)_70%,var(--accent)))] font-bold text-[var(--accent-ink)] shadow-[0_10px_18px_-14px_#000]",
         ring && "ring-2 ring-[var(--ink)] ring-offset-2 ring-offset-[var(--paper)]",
         size === "sm" && "size-7 text-[10px]",
         size === "md" && "size-8 text-[11px]",
         size === "lg" && "size-12 text-sm",
       )}
-      aria-label={initials}
+      aria-label={label ?? initials}
     >
-      {initials}
+      {imageUrl ? (
+        <Image
+          alt=""
+          className="absolute inset-0 size-full object-cover"
+          fill
+          sizes={size === "lg" ? "48px" : size === "md" ? "32px" : "28px"}
+          src={imageUrl}
+          unoptimized
+        />
+      ) : (
+        initials
+      )}
     </span>
   );
 }

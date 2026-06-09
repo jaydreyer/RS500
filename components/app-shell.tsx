@@ -65,10 +65,25 @@ function TopNav({ user }: { user: ClubUser }) {
           <span className="mono hidden rounded-full border border-[var(--line-strong)] px-2.5 py-1 text-[11px] text-[var(--ink-soft)] sm:block">
             {CURRENT_WEEK_LABEL}
           </span>
-          <span className="hidden max-w-36 truncate font-display text-sm font-extrabold text-[var(--ink-soft)] lg:block">
-            {user.displayName}
-          </span>
-          <ClubAvatar initials={user.initials} ring />
+          <Link
+            aria-label="Profile settings"
+            className={cn(
+              "flex min-w-0 items-center gap-3 rounded-md px-1.5 py-1 transition-colors hover:bg-[color-mix(in_srgb,var(--ink)_7%,transparent)]",
+              pathname === "/settings" && "bg-[color-mix(in_srgb,var(--ink)_12%,transparent)]",
+            )}
+            href="/settings"
+            title="Profile settings"
+          >
+            <span className="hidden max-w-36 truncate font-display text-sm font-extrabold text-[var(--ink-soft)] lg:block">
+              {user.displayName}
+            </span>
+            <ClubAvatar
+              imageUrl={user.avatarUrl}
+              initials={user.initials}
+              label={user.displayName}
+              ring
+            />
+          </Link>
           <form action={logoutAction}>
             <Button
               aria-label="Log out"
