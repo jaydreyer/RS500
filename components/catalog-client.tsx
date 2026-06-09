@@ -150,7 +150,7 @@ export function CatalogClient({ initialState }: { initialState: CatalogState }) 
       </div>
 
       <div className="hard-panel overflow-hidden rounded-lg">
-        <div className="catalog-row sticky top-[61px] z-10 border-b border-[var(--line-strong)] bg-[var(--card)] px-4 py-3 tag">
+        <div className="catalog-row border-b border-[var(--line-strong)] bg-[var(--card)] px-4 py-3 tag">
           <SortHeader label="#" sortKey="rank" activeSort={sort} direction={direction} onSort={toggleSort} />
           <span />
           <SortHeader
