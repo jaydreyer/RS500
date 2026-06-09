@@ -191,7 +191,7 @@ function ServiceLinks({
   className?: string;
 }) {
   const links = [
-    spotifyUrl ? { href: spotifyUrl, label: "Play on Spotify" } : null,
+    spotifyUrl ? { href: spotifyUrl, label: getSpotifyLinkLabel(spotifyUrl) } : null,
     appleMusicUrl ? { href: appleMusicUrl, label: "Play on Apple Music" } : null,
   ].filter(Boolean) as Array<{ href: string; label: string }>;
 
@@ -219,6 +219,10 @@ function ServiceLinks({
       ))}
     </div>
   );
+}
+
+function getSpotifyLinkLabel(spotifyUrl: string) {
+  return spotifyUrl.includes("open.spotify.com/search/") ? "Find on Spotify" : "Play on Spotify";
 }
 
 function isNotFoundError(error: unknown) {

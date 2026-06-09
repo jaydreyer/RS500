@@ -47,6 +47,7 @@ function parseArgs(argv) {
     startRank: 1,
     endRank: 500,
     useOdesli: false,
+    spotifySearchFallback: false,
     force: false,
   }
 
@@ -58,6 +59,8 @@ function parseArgs(argv) {
       options.force = true
     } else if (arg === "--odesli") {
       options.useOdesli = true
+    } else if (arg === "--spotify-search-fallback") {
+      options.spotifySearchFallback = true
     } else if (arg === "--limit") {
       options.limit = Number(argv[index + 1])
       index += 1
@@ -93,6 +96,8 @@ Options:
   --dry-run       Do not write data files
   --force         Re-check albums that already have links
   --odesli        Try Songlink/Odesli cross-link lookup from Apple Music URLs
+  --spotify-search-fallback
+                  Fill missing Spotify URLs with Spotify album search links
   --limit N       Process at most N matching albums
   --start-rank N  First rank to process
   --end-rank N    Last rank to process`)
@@ -358,6 +363,11 @@ async function findOdesliSpotifyUrl(appleUrl) {
   return json.linksByPlatform?.spotify?.url ?? ""
 }
 
+function buildSpotifyAlbumSearchUrl(album) {
+  const query = encodeURIComponent(`${album.artist} ${album.title} album`)
+  return `https://open.spotify.com/search/${query}/albums`
+}
+
 async function main() {
   loadDotenvFile(path.resolve(".env.local"))
   const options = parseArgs(process.argv.slice(2))
@@ -403,6 +413,11 @@ async function main() {
       }
     }
 
+    if (needsSpotify && !album.spotify_url && options.spotifySearchFallback) {
+      album.spotify_url = buildSpotifyAlbumSearchUrl(album)
+      spotify = { url: album.spotify_url, score: 0, candidates: [] }
+    }
+
     report.push({
       rank: album.rank,
       title: album.title,
@@ -416,7 +431,11 @@ async function main() {
     console.log(
       `#${String(album.rank).padStart(3, "0")} ${album.artist} - ${album.title}: Apple ${
         album.apple_music_url ? "ok" : "missing"
-      }${spotifyToken || options.useOdesli ? ` / Spotify ${album.spotify_url ? "ok" : "missing"}` : ""}`,
+      }${
+        spotifyToken || options.useOdesli || options.spotifySearchFallback
+          ? ` / Spotify ${album.spotify_url ? "ok" : "missing"}`
+          : ""
+      }`,
     )
   }
 
@@ -430,11 +449,13 @@ async function main() {
   if (missingApple.length > 0) {
     console.log(`Missing Apple Music ranks: ${missingApple.map((row) => row.rank).join(", ")}`)
   }
-  if ((spotifyToken || options.useOdesli) && missingSpotify.length > 0) {
+  if ((spotifyToken || options.useOdesli || options.spotifySearchFallback) && missingSpotify.length > 0) {
     console.log(`Missing Spotify ranks: ${missingSpotify.map((row) => row.rank).join(", ")}`)
   }
-  if (!spotifyToken && !options.useOdesli) {
-    console.log("Spotify skipped: set SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET, or pass --odesli.")
+  if (!spotifyToken && !options.useOdesli && !options.spotifySearchFallback) {
+    console.log(
+      "Spotify skipped: set SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET, pass --odesli, or pass --spotify-search-fallback.",
+    )
   }
 
   if (options.dryRun) {
@@ -444,7 +465,7 @@ async function main() {
 
   data.source.generatedAt = new Date().toISOString()
   data.source.streamingLinks =
-    "Apple Search API; Spotify Web API when SPOTIFY_CLIENT_ID/SPOTIFY_CLIENT_SECRET are configured"
+    "Apple Search API; Spotify Web API when SPOTIFY_CLIENT_ID/SPOTIFY_CLIENT_SECRET are configured; Spotify album search fallback when --spotify-search-fallback is used"
   await fs.writeFile(DATA_JSON, `${JSON.stringify(data, null, 2)}\n`)
 
   const csvRows = [
