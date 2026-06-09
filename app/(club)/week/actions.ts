@@ -3,7 +3,10 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-import type { WeekActionState } from "@/app/(club)/week/action-state";
+import type {
+  GroupDrawActionState,
+  WeekActionState,
+} from "@/app/(club)/week/action-state";
 import { consumeUserActionLimit } from "@/lib/action-rate-limit";
 import { getAuthenticatedPocketBase } from "@/lib/auth";
 import { formatRating, RATING_SCALE } from "@/lib/config";
@@ -18,6 +21,7 @@ import {
   rateFreshPick,
   replaceUnavailablePick,
 } from "@/lib/draw";
+import { drawForGroup, GroupDrawRuleError, parseGroupId } from "@/lib/group-draw";
 
 const REVIEW_WRITE_RATE_LIMIT = {
   limit: 30,
@@ -171,6 +175,41 @@ export async function freshRatingAction(
     };
   } catch (error) {
     return handleActionError(error);
+  }
+}
+
+export async function groupDrawAction(
+  _previousState: GroupDrawActionState,
+  formData: FormData,
+): Promise<GroupDrawActionState> {
+  try {
+    const groupId = parseGroupId(formData.get("groupId"));
+    const { user } = await getAuthenticatedPocketBase();
+    const result = await drawForGroup({
+      userId: user.id,
+      groupId,
+    });
+
+    revalidatePath("/week");
+    revalidatePath("/board");
+    revalidatePath("/history");
+
+    return {
+      status: "success",
+      message: `${result.group.name} drew ${result.draw.album.title} for ${result.members.length} members.`,
+    };
+  } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized.") {
+      redirect("/auth");
+    }
+
+    return {
+      status: "error",
+      message:
+        error instanceof GroupDrawRuleError
+          ? error.message
+          : "Something went sideways while spinning for the group.",
+    };
   }
 }
 

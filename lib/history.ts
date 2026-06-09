@@ -31,6 +31,7 @@ export type HistoryListen = StatsListen & {
   id: string;
   userId: string;
   albumId: string;
+  groupDrawId: string | null;
   kind: "fresh" | "skip";
   status: "listening" | "rated";
   rating: number | null;
@@ -116,6 +117,7 @@ function mapListen(record: RecordLike): HistoryListen {
     id: record.id,
     userId: asString(record.user),
     albumId: asString(record.album),
+    groupDrawId: asNullableString(record.group_draw),
     kind: record.kind === "skip" ? "skip" : "fresh",
     status,
     rating: mapStoredRating(status, record.rating),

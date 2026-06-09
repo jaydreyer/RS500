@@ -70,6 +70,12 @@ npm run build
 
 The tests cover invite-code validation, draw/rating rule helpers, stats thresholds, and seed importer validation/idempotency. Full realtime and authenticated browser QA still requires a seeded PocketBase instance and at least two user accounts.
 
+## Group Draws
+
+Groups are admin-managed in PocketBase. Create an active `groups` record, then add active `group_members` records for each user. Any active member of an active group will see the group draw panel on `/week`.
+
+A group draw is manual. When a member spins for the group, the server picks one album no active group member has logged, creates one `group_draws` record for the current ISO week, and creates one individual fresh `listens` row per member. If any active group member has an unrated fresh pick, or the group already spun that week, the draw is blocked.
+
 ## Deployment
 
 Deploy the Next.js app to Vercel with the same environment variables set in Vercel project settings. `NEXT_PUBLIC_PB_URL` should point at the owner's reachable PocketBase URL. Keep `PB_ADMIN_EMAIL` and `PB_ADMIN_PASSWORD` server-only.

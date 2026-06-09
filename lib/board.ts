@@ -28,6 +28,7 @@ export type BoardListen = {
   id: string;
   userId: string;
   albumId: string;
+  groupDrawId: string | null;
   status: "listening" | "rated";
   rating: number | null;
   take: string;
@@ -124,6 +125,7 @@ function mapListen(record: RecordLike): BoardListen {
     id: record.id,
     userId: asString(record.user),
     albumId: asString(record.album),
+    groupDrawId: asNullableString(record.group_draw),
     status,
     rating: mapStoredRating(status, record.rating),
     take: asString(record.take),

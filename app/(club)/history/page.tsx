@@ -1,4 +1,4 @@
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Users } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -147,6 +147,11 @@ function HistoryCell({ listen }: { listen: HistoryListen }) {
           title={listen.album.title}
           className="rounded-sm"
         />
+        {listen.groupDrawId && (
+          <span className="absolute -left-2 -top-2 grid size-5 place-items-center rounded-full border border-white/70 bg-[var(--paper)] text-[var(--accent)] shadow-[var(--shadow)]">
+            <Users className="size-3" aria-hidden="true" />
+          </span>
+        )}
         <span className="absolute -bottom-2 -right-2">
           {listening ? (
             <span className="grid size-5 place-items-center rounded-full border border-white/70 bg-[var(--accent)]">
@@ -283,6 +288,12 @@ function MemberListenRow({
           <span className="tag rounded-sm border border-[var(--line-strong)] px-1.5 py-0.5">
             {listen.kind}
           </span>
+          {listen.groupDrawId && (
+            <span className="tag inline-flex items-center gap-1 rounded-sm border border-[var(--line-strong)] px-1.5 py-0.5">
+              <Users className="size-3" aria-hidden="true" />
+              group draw
+            </span>
+          )}
         </div>
         <p className="mt-1 font-quote text-lg leading-tight text-[var(--ink-soft)]">
           {listen.album.artist} / #{listen.album.rank} / {listen.weekLabel}

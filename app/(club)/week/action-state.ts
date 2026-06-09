@@ -11,3 +11,13 @@ export const initialWeekActionState: WeekActionState = {
   message: null,
   listen: null,
 };
+
+export type GroupDrawActionState = {
+  status: "idle" | "success" | "error";
+  message: string | null;
+};
+
+export const initialGroupDrawActionState: GroupDrawActionState = {
+  status: "idle",
+  message: null,
+};

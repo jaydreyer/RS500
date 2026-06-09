@@ -1,24 +1,29 @@
 "use client";
 
 import { useActionState, useEffect, useMemo, useState } from "react";
-import { Disc3 } from "lucide-react";
+import { Disc3, Users } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import { initialWeekActionState } from "@/app/(club)/week/action-state";
+import {
+  initialGroupDrawActionState,
+  initialWeekActionState,
+} from "@/app/(club)/week/action-state";
 import {
   drawAction,
   freshRatingAction,
+  groupDrawAction,
   keepFreshPickAction,
   replaceUnavailablePickAction,
   skipRatingAction,
 } from "@/app/(club)/week/actions";
 import { AlbumCover } from "@/components/album-cover";
-import { Eyebrow, RatingInput } from "@/components/primitives";
+import { ClubAvatar, Eyebrow, RatingInput } from "@/components/primitives";
 import { ReviewTextarea } from "@/components/review-textarea";
 import { Button } from "@/components/ui/button";
 import { RATING_SCALE } from "@/lib/config";
 import { TAKE_MAX_LENGTH } from "@/lib/draw-rules";
 import type { ListenSummary, WeekState } from "@/lib/draw";
+import type { UserGroupDraw, UserGroupDrawState } from "@/lib/group-draw-types";
 import { cn } from "@/lib/utils";
 import { formatIsoWeekLabel } from "@/lib/week";
 
@@ -27,7 +32,13 @@ type Phase = "idle" | "spinning" | "presented" | "rate-skip" | "kept";
 const DRAW_LOCK_DELAY_MS = 1450;
 const DRAW_REVEAL_DELAY_MS = 1950;
 
-export function WeekDrawMachine({ weekState }: { weekState: WeekState }) {
+export function WeekDrawMachine({
+  weekState,
+  groupDrawState,
+}: {
+  weekState: WeekState;
+  groupDrawState: UserGroupDrawState;
+}) {
   const router = useRouter();
   const [phase, setPhase] = useState<Phase>("idle");
   const [drawnListen, setDrawnListen] = useState<ListenSummary | null>(null);
@@ -49,6 +60,10 @@ export function WeekDrawMachine({ weekState }: { weekState: WeekState }) {
   const [replaceState, replaceFormAction, isReplacePending] = useActionState(
     replaceUnavailablePickAction,
     initialWeekActionState,
+  );
+  const [groupState, groupFormAction, isGroupPending] = useActionState(
+    groupDrawAction,
+    initialGroupDrawActionState,
   );
 
   useEffect(() => {
@@ -145,6 +160,22 @@ export function WeekDrawMachine({ weekState }: { weekState: WeekState }) {
   }, [replaceState, router]);
 
   useEffect(() => {
+    if (groupState.status === "success") {
+      const timer = window.setTimeout(() => {
+        setToast(groupState.message);
+        router.refresh();
+      }, 0);
+
+      return () => window.clearTimeout(timer);
+    }
+
+    if (groupState.status === "error") {
+      const timer = window.setTimeout(() => setToast(groupState.message), 0);
+      return () => window.clearTimeout(timer);
+    }
+  }, [groupState, router]);
+
+  useEffect(() => {
     if (!toast) {
       return;
     }
@@ -215,6 +246,14 @@ export function WeekDrawMachine({ weekState }: { weekState: WeekState }) {
           )}
         </div>
       </div>
+
+      {groupDrawState.groups.length > 0 && (
+        <GroupDrawPanel
+          groupDrawState={groupDrawState}
+          action={groupFormAction}
+          pending={isGroupPending}
+        />
+      )}
 
       {activeFresh && phase === "idle" && (
         <NowListening
@@ -373,6 +412,107 @@ function PresentedFace({
         </div>
       )}
     </div>
+  );
+}
+
+function GroupDrawPanel({
+  groupDrawState,
+  action,
+  pending,
+}: {
+  groupDrawState: UserGroupDrawState;
+  action: (payload: FormData) => void;
+  pending: boolean;
+}) {
+  return (
+    <section className="surface-panel mt-7 overflow-hidden rounded-lg">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--line-strong)] px-5 py-3">
+        <div className="flex items-center gap-2">
+          <Users className="size-4 text-[var(--accent)]" aria-hidden="true" />
+          <span className="tag">group draw / {formatIsoWeekLabel(groupDrawState.weekKey)}</span>
+        </div>
+        <span className="mono text-[11px] text-[var(--ink-faint)]">
+          {groupDrawState.groups.length} active {groupDrawState.groups.length === 1 ? "group" : "groups"}
+        </span>
+      </div>
+      <div className="grid gap-4 p-5 lg:grid-cols-2">
+        {groupDrawState.groups.map((group) => (
+          <GroupDrawCard key={group.id} group={group} action={action} pending={pending} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function GroupDrawCard({
+  group,
+  action,
+  pending,
+}: {
+  group: UserGroupDraw;
+  action: (payload: FormData) => void;
+  pending: boolean;
+}) {
+  const blocked = group.blockedMembers.length > 0;
+  const alreadyDrew = Boolean(group.currentDraw);
+  const emptyPool = group.poolLeft === 0;
+  const disabled = pending || blocked || alreadyDrew || emptyPool;
+
+  return (
+    <article className="pressed-panel rounded-lg p-4">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="min-w-0">
+          <h2 className="title-wrap text-2xl">{group.name}</h2>
+          <p className="tag mt-1">
+            {group.members.length} {group.members.length === 1 ? "member" : "members"} /{" "}
+            {group.poolLeft} shared left
+          </p>
+        </div>
+        <div className="flex -space-x-2">
+          {group.members.map((member) => (
+            <ClubAvatar
+              key={member.id}
+              imageUrl={member.avatarUrl}
+              initials={member.initials}
+              label={member.displayName}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-4 min-h-14 rounded-md border border-dashed border-[var(--line-strong)] bg-[var(--paper-2)] px-3 py-2">
+        {group.currentDraw ? (
+          <div>
+            <p className="tag text-[var(--accent)]">this week</p>
+            <p className="title-wrap mt-1 font-display text-lg font-extrabold">
+              {group.currentDraw.album.title}
+            </p>
+            <p className="font-quote text-base text-[var(--ink-soft)]">
+              {group.currentDraw.album.artist} / #{group.currentDraw.album.rank}
+            </p>
+          </div>
+        ) : blocked ? (
+          <div>
+            <p className="tag text-[var(--accent)]">waiting on</p>
+            <p className="mt-1 font-display text-lg font-extrabold">
+              {group.blockedMembers.map((member) => member.displayName).join(", ")}
+            </p>
+          </div>
+        ) : emptyPool ? (
+          <p className="tag">no shared albums left</p>
+        ) : (
+          <p className="tag">ready to spin together</p>
+        )}
+      </div>
+
+      <form action={action} className="mt-4">
+        <input type="hidden" name="groupId" value={group.id} />
+        <Button type="submit" variant="accent" className="w-full" disabled={disabled}>
+          <Users className="size-4" aria-hidden="true" />
+          {pending ? "SPINNING..." : `Spin for ${group.name}`}
+        </Button>
+      </form>
+    </article>
   );
 }
 

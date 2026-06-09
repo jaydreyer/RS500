@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState, useTransition } from "react";
-import { Disc3, ExternalLink, MessageCircle, Music2, Send, SmilePlus } from "lucide-react";
+import { Disc3, ExternalLink, MessageCircle, Music2, Send, SmilePlus, Users } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import PocketBase, { BaseAuthStore, type UnsubscribeFunc } from "pocketbase";
@@ -238,6 +238,12 @@ function BoardCard({
           <p className="mt-1 font-quote text-lg leading-tight text-[var(--ink-soft)]">
             {pick.album.artist}
           </p>
+          {pick.groupDrawId && (
+            <span className="tag mt-3 inline-flex items-center gap-1.5 rounded-sm border border-[var(--line-strong)] bg-[var(--paper-2)] px-2 py-1">
+              <Users className="size-3" aria-hidden="true" />
+              group draw
+            </span>
+          )}
         </div>
       </div>
 
