@@ -85,7 +85,9 @@ export default async function HistoryPage({
                       className="flex w-max items-center gap-3 text-[var(--ink)] transition-colors hover:text-[var(--accent)]"
                     >
                       <ClubAvatar
+                        imageUrl={member.avatarUrl}
                         initials={member.initials}
+                        label={member.displayName}
                         ring={member.id === historyState.currentUser.id}
                       />
                       <span className="font-display text-lg font-extrabold">
@@ -193,7 +195,9 @@ function MemberHistoryDetail({
       <div className="mb-7 flex flex-wrap items-end justify-between gap-5">
         <div className="flex items-center gap-4">
           <ClubAvatar
+            imageUrl={summary.member.avatarUrl}
             initials={summary.member.initials}
+            label={summary.member.displayName}
             ring={summary.member.id === historyState.currentUser.id}
             size="lg"
           />

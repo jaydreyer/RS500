@@ -148,7 +148,11 @@ function MemberSuperlative({
       {summary ? (
         <>
           <div className="mt-4 flex items-center gap-3">
-            <ClubAvatar initials={summary.member.initials} />
+            <ClubAvatar
+              imageUrl={summary.member.avatarUrl}
+              initials={summary.member.initials}
+              label={summary.member.displayName}
+            />
             <Link
               href={`/history?member=${summary.member.id}`}
               className="font-display text-2xl font-extrabold"
@@ -191,7 +195,12 @@ function SkipMeter({
         href={`/history?member=${summary.member.id}`}
         className="flex min-w-0 items-center gap-2 text-[var(--ink)]"
       >
-        <ClubAvatar initials={summary.member.initials} size="sm" />
+        <ClubAvatar
+          imageUrl={summary.member.avatarUrl}
+          initials={summary.member.initials}
+          label={summary.member.displayName}
+          size="sm"
+        />
         <span className="truncate font-display font-extrabold">
           {getMemberLabel(summary.member, currentUserId)}
         </span>
@@ -308,7 +317,12 @@ function ScoreChip({
       href={member ? `/history?member=${member.id}` : `/albums/${listen.album.id}`}
       className="flex items-center gap-2 rounded-md border border-[var(--line-strong)] bg-[var(--paper-2)] px-2 py-1"
     >
-      <ClubAvatar initials={member?.initials ?? "??"} size="sm" />
+      <ClubAvatar
+        imageUrl={member?.avatarUrl}
+        initials={member?.initials ?? "??"}
+        label={member?.displayName}
+        size="sm"
+      />
       <span className="max-w-[96px] truncate text-sm font-bold">{label}</span>
       <span className="font-display text-xl font-extrabold">
         {listen.rating == null ? "-" : formatRating(listen.rating)}

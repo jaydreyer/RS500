@@ -18,6 +18,7 @@ export type StatsMember = {
   id: string;
   displayName: string;
   initials: string;
+  avatarUrl: string | null;
   email: string;
 };
 

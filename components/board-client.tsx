@@ -175,7 +175,13 @@ function BoardCard({
     return (
       <article className="pressed-panel grid min-h-[300px] place-items-center rounded-lg p-5 text-center">
         <div>
-          <ClubAvatar initials={member.initials} size="lg" ring={isMe} />
+          <ClubAvatar
+            imageUrl={member.avatarUrl}
+            initials={member.initials}
+            label={member.displayName}
+            size="lg"
+            ring={isMe}
+          />
           <h2 className="title-wrap mt-4 text-2xl">{isMe ? "You" : member.displayName}</h2>
           <p className="tag mt-2">{isMe ? "haven't drawn yet" : "no pick this week"}</p>
           {isMe && (
@@ -198,7 +204,13 @@ function BoardCard({
   return (
     <article className="hard-panel flex overflow-hidden rounded-lg flex-col transition-transform duration-200 hover:-translate-y-0.5">
       <div className="flex items-center gap-3 border-b border-[var(--line-strong)] bg-[var(--paper-2)] px-4 py-3">
-        <ClubAvatar initials={member.initials} size="sm" ring={isMe} />
+        <ClubAvatar
+          imageUrl={member.avatarUrl}
+          initials={member.initials}
+          label={member.displayName}
+          size="sm"
+          ring={isMe}
+        />
         <h2 className="min-w-0 truncate text-lg">{isMe ? "You" : member.displayName}</h2>
         <div className="ml-auto shrink-0">
           {listening ? <ListeningBadge /> : <ScoreBadge score={pick.rating} label={`/${RATING_SCALE.max}`} />}
@@ -251,7 +263,12 @@ function BoardCard({
                 key={reaction.id}
                 className="flex gap-2 rounded-md border border-dashed border-[var(--line-strong)] bg-[var(--paper-2)] p-2"
               >
-                <ClubAvatar initials={reaction.user.initials} size="sm" />
+                <ClubAvatar
+                  imageUrl={reaction.user.avatarUrl}
+                  initials={reaction.user.initials}
+                  label={reaction.user.displayName}
+                  size="sm"
+                />
                 <p className="min-w-0 text-sm leading-snug text-[var(--ink-soft)]">
                   <strong className="text-[var(--ink)]">{reaction.user.displayName}</strong>{" "}
                   {reaction.comment}

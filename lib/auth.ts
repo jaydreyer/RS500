@@ -141,8 +141,21 @@ export function mapClubUser(record: NonNullable<AuthRecord>): ClubUser {
     email,
     displayName,
     initials: getInitials(displayName || email),
-    avatarUrl: getAvatarUrl(record),
+    avatarUrl: getClubUserAvatarUrl(record),
   };
+}
+
+export function getClubUserAvatarUrl(record: { id: string; [key: string]: unknown }) {
+  const filename = asString(record.avatar);
+
+  if (!filename) {
+    return null;
+  }
+
+  const collection = asString(record.collectionName) || asString(record.collectionId) || "users";
+  const baseUrl = getPocketBaseUrl().replace(/\/$/, "");
+
+  return `${baseUrl}/api/files/${encodeURIComponent(collection)}/${encodeURIComponent(record.id)}/${encodeURIComponent(filename)}?thumb=96x96`;
 }
 
 function getTokenExpires(token: string) {
@@ -174,18 +187,4 @@ function getInitials(value: string) {
 
 function asString(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
-}
-
-function getAvatarUrl(record: NonNullable<AuthRecord>) {
-  const data = record as Record<string, unknown>;
-  const filename = asString(data.avatar);
-
-  if (!filename) {
-    return null;
-  }
-
-  const collection = asString(data.collectionName) || asString(data.collectionId) || "users";
-  const baseUrl = getPocketBaseUrl().replace(/\/$/, "");
-
-  return `${baseUrl}/api/files/${encodeURIComponent(collection)}/${encodeURIComponent(record.id)}/${encodeURIComponent(filename)}?thumb=96x96`;
 }

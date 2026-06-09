@@ -2,13 +2,14 @@ import "server-only";
 
 import type PocketBase from "pocketbase";
 
-import type { ClubUser } from "@/lib/auth";
+import { getClubUserAvatarUrl, type ClubUser } from "@/lib/auth";
 import { formatIsoWeekLabel, getIsoWeekKey } from "@/lib/week";
 
 export type BoardMember = {
   id: string;
   displayName: string;
   initials: string;
+  avatarUrl: string | null;
 };
 
 export type BoardAlbum = {
@@ -164,6 +165,7 @@ function mapMember(record: RecordLike): BoardMember {
     id: record.id,
     displayName,
     initials: getInitials(displayName || asString(record.email)),
+    avatarUrl: getClubUserAvatarUrl(record),
   };
 }
 

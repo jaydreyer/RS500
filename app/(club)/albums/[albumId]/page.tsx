@@ -142,7 +142,12 @@ export default async function AlbumDetailPage({
                 key={reaction.id}
                 className="flex gap-3 rounded-md border border-dashed border-[var(--line-strong)] bg-[var(--paper-2)] p-3"
               >
-                <ClubAvatar initials={reaction.user.initials} size="sm" />
+                <ClubAvatar
+                  imageUrl={reaction.user.avatarUrl}
+                  initials={reaction.user.initials}
+                  label={reaction.user.displayName}
+                  size="sm"
+                />
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
                     <strong className="font-display text-[var(--ink)]">
@@ -171,7 +176,12 @@ export default async function AlbumDetailPage({
 function ListenRow({ listen }: { listen: AlbumDetailListen }) {
   return (
     <div className="flex items-center gap-3 border-b border-[var(--line)] py-3 last:border-b-0">
-      <ClubAvatar initials={listen.user.initials} size="sm" />
+      <ClubAvatar
+        imageUrl={listen.user.avatarUrl}
+        initials={listen.user.initials}
+        label={listen.user.displayName}
+        size="sm"
+      />
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-2">
           <span className="font-display font-extrabold">{listen.user.displayName}</span>

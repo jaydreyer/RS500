@@ -2,7 +2,7 @@ import "server-only";
 
 import type PocketBase from "pocketbase";
 
-import type { ClubUser } from "@/lib/auth";
+import { getClubUserAvatarUrl, type ClubUser } from "@/lib/auth";
 import { STATS_SAMPLE_THRESHOLD } from "@/lib/config";
 import {
   buildMemberSummaries,
@@ -146,6 +146,7 @@ function mapMember(record: RecordLike): HistoryMember {
     id: record.id,
     displayName,
     initials: getInitials(displayName || email),
+    avatarUrl: getClubUserAvatarUrl(record),
     email,
   };
 }

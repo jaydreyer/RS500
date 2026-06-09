@@ -1,6 +1,7 @@
 import "server-only";
 
 import type PocketBase from "pocketbase";
+import { getClubUserAvatarUrl } from "@/lib/auth";
 
 export type CatalogAlbum = {
   id: string;
@@ -42,6 +43,7 @@ export type AlbumDetailMember = {
   id: string;
   displayName: string;
   initials: string;
+  avatarUrl: string | null;
 };
 
 export type AlbumDetailListen = CatalogListen & {
@@ -210,6 +212,7 @@ function mapMember(record: RecordLike): AlbumDetailMember {
     id: record.id,
     displayName,
     initials: getInitials(displayName || asString(record.email)),
+    avatarUrl: getClubUserAvatarUrl(record),
   };
 }
 
