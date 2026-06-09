@@ -349,18 +349,15 @@ function ReactionEditor({
         <label className="sr-only" htmlFor={`comment-${listenId}`}>
           Comment
         </label>
-        <div className="relative min-w-0 flex-1">
-          <MessageCircle
-            className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[var(--ink-faint)]"
-            aria-hidden="true"
-          />
+        <div className="flex h-10 min-w-0 flex-1 items-center gap-2 rounded-md border border-[var(--line-strong)] bg-[var(--card)] px-3 focus-within:border-[var(--accent)] focus-within:shadow-[0_0_0_2px_color-mix(in_srgb,var(--accent)_18%,transparent)]">
+          <MessageCircle className="size-4 shrink-0 text-[var(--ink-faint)]" aria-hidden="true" />
           <input
             id={`comment-${listenId}`}
             value={comment}
             maxLength={180}
             onChange={(event) => setComment(event.target.value)}
             placeholder="short comment"
-            className="input-control h-10 pl-9 text-sm"
+            className="min-w-0 flex-1 border-0 bg-transparent p-0 text-sm text-[var(--ink)] outline-none placeholder:text-[var(--ink-soft)]"
           />
         </div>
         <Button
