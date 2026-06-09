@@ -9,6 +9,8 @@ import {
   setAuthCookie,
 } from "@/lib/auth";
 import { validateSignupInput } from "@/lib/auth-rules";
+import { getSignupAlbumAssignment } from "@/lib/signup-album-assignment";
+import { getIsoWeekKey } from "@/lib/week";
 
 export type AuthFormState = {
   message: string | null;
@@ -39,7 +41,15 @@ export async function signupAction(
 
   try {
     const adminPb = await createSuperuserPocketBase();
-    await adminPb.collection("users").create(
+    const albumAssignment = getSignupAlbumAssignment(email);
+    const assignedAlbum = albumAssignment
+      ? await adminPb.collection("albums").getFirstListItem(
+          adminPb.filter("artist = {:artist} && title = {:title}", albumAssignment),
+          { requestKey: null },
+        )
+      : null;
+
+    const user = await adminPb.collection("users").create(
       {
         email,
         password,
@@ -48,6 +58,22 @@ export async function signupAction(
       },
       { requestKey: null },
     );
+
+    if (assignedAlbum) {
+      await adminPb.collection("listens").create(
+        {
+          user: user.id,
+          album: assignedAlbum.id,
+          kind: "fresh",
+          status: "listening",
+          rating: null,
+          take: "",
+          week: getIsoWeekKey(),
+          rated_at: null,
+        },
+        { requestKey: null },
+      );
+    }
 
     const userPb = createPocketBase();
     await userPb.collection("users").authWithPassword(email, password, {
