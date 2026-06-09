@@ -16,10 +16,6 @@ export type AuthFormState = {
   message: string | null;
 };
 
-export const initialAuthFormState: AuthFormState = {
-  message: null,
-};
-
 export async function signupAction(
   _previousState: AuthFormState,
   formData: FormData,

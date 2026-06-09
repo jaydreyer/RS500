@@ -4,7 +4,7 @@ import { useActionState, useState } from "react";
 import { useFormStatus } from "react-dom";
 
 import {
-  initialAuthFormState,
+  type AuthFormState,
   loginAction,
   signupAction,
 } from "@/app/auth/actions";
@@ -12,6 +12,10 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 type AuthMode = "signup" | "login";
+
+const initialAuthFormState: AuthFormState = {
+  message: null,
+};
 
 export function AuthForm() {
   const [mode, setMode] = useState<AuthMode>("signup");
