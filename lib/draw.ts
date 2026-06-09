@@ -198,8 +198,78 @@ export async function rateFreshPick({
   return mapListen(updated);
 }
 
+export async function rateKnownAlbum({
+  pb,
+  userId,
+  albumId,
+  rating,
+  take,
+}: {
+  pb: PocketBase;
+  userId: string;
+  albumId: string;
+  rating: number;
+  take: string;
+}) {
+  const existing = await getOwnedAlbumListen(pb, userId, albumId);
+  const ratedAt = new Date().toISOString();
+
+  if (existing) {
+    const updated = await pb.collection("listens").update(
+      existing.id,
+      {
+        status: "rated",
+        rating,
+        take: normalizeTake(take),
+        rated_at: ratedAt,
+      },
+      {
+        expand: "album",
+        requestKey: null,
+      },
+    );
+
+    return mapListen(updated);
+  }
+
+  try {
+    await pb.collection("albums").getOne(albumId, { requestKey: null });
+  } catch {
+    throw new DrawRuleError("That album was not found.");
+  }
+
+  const created = await pb.collection("listens").create(
+    {
+      user: userId,
+      album: albumId,
+      kind: "skip",
+      status: "rated",
+      rating,
+      take: normalizeTake(take),
+      week: getIsoWeekKey(),
+      rated_at: ratedAt,
+    },
+    { requestKey: null },
+  );
+
+  const listen = await pb.collection("listens").getOne(created.id, {
+    expand: "album",
+    requestKey: null,
+  });
+
+  return mapListen(listen);
+}
+
 export function parseRating(value: FormDataEntryValue | null) {
   return parseRatingValue(value, RATING_SCALE);
+}
+
+export function parseAlbumId(value: FormDataEntryValue | null) {
+  if (typeof value !== "string" || value.trim().length === 0) {
+    throw new DrawRuleError("Missing album information. Refresh and try again.");
+  }
+
+  return value.trim();
 }
 
 export function parseListenId(value: FormDataEntryValue | null) {
@@ -253,6 +323,23 @@ async function getOwnedListen(pb: PocketBase, userId: string, listenId: string) 
     );
   } catch {
     throw new DrawRuleError("That pick was not found for your account.");
+  }
+}
+
+async function getOwnedAlbumListen(pb: PocketBase, userId: string, albumId: string) {
+  try {
+    return await pb.collection("listens").getFirstListItem(
+      pb.filter("album = {:album} && user = {:user}", {
+        album: albumId,
+        user: userId,
+      }),
+      {
+        expand: "album",
+        requestKey: null,
+      },
+    );
+  } catch {
+    return null;
   }
 }
 

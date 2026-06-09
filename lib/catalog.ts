@@ -62,6 +62,7 @@ export type AlbumDetailReaction = {
 export type AlbumDetailState = {
   album: CatalogAlbum;
   listens: AlbumDetailListen[];
+  myListen: AlbumDetailListen | null;
   reactions: AlbumDetailReaction[];
   crewAverage: number | null;
   ratedCount: number;
@@ -100,6 +101,7 @@ export async function getCatalogState(
 export async function getAlbumDetailState(
   pb: PocketBase,
   albumId: string,
+  currentUserId: string,
 ): Promise<AlbumDetailState> {
   const [album, listens] = await Promise.all([
     pb.collection("albums").getOne(albumId, {
@@ -123,6 +125,7 @@ export async function getAlbumDetailState(
   return {
     album: mapAlbum(album),
     listens: mappedListens,
+    myListen: mappedListens.find((listen) => listen.userId === currentUserId) ?? null,
     reactions,
     crewAverage:
       rated.length > 0

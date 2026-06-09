@@ -2,6 +2,7 @@ import { ArrowLeft, ExternalLink, Music2, Newspaper } from "lucide-react";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
+import { AlbumRatingPanel } from "@/components/album-rating-panel";
 import { AlbumCover } from "@/components/album-cover";
 import { ClubAvatar, Eyebrow, ScoreBadge } from "@/components/primitives";
 import { buttonVariants } from "@/components/ui/button";
@@ -21,8 +22,8 @@ export default async function AlbumDetailPage({
   let detail;
 
   try {
-    const { pb } = await getAuthenticatedPocketBase();
-    detail = await getAlbumDetailState(pb, albumId);
+    const { pb, user } = await getAuthenticatedPocketBase();
+    detail = await getAlbumDetailState(pb, albumId, user.id);
   } catch (error) {
     if (error instanceof Error && error.message === "Unauthorized.") {
       redirect("/auth");
@@ -82,6 +83,12 @@ export default async function AlbumDetailPage({
           <p className="mt-3 font-quote text-2xl text-[var(--ink-soft)]">
             {detail.album.artist}
           </p>
+
+          <AlbumRatingPanel
+            key={`${detail.myListen?.id ?? detail.album.id}-${detail.myListen?.ratedAt ?? "new"}`}
+            albumId={detail.album.id}
+            initialListen={detail.myListen}
+          />
 
           <div className="my-7 grid gap-3 sm:grid-cols-3">
             <div className="pressed-panel rounded-md p-4">

@@ -1,0 +1,149 @@
+"use client";
+
+import { Save, SquarePen, X } from "lucide-react";
+import { useActionState, useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+
+import { knownAlbumRatingAction } from "@/app/(club)/albums/[albumId]/actions";
+import { ScoreBadge } from "@/components/primitives";
+import { Button } from "@/components/ui/button";
+import { RATING_SCALE } from "@/lib/config";
+import type { AlbumDetailListen } from "@/lib/catalog";
+
+type AlbumRatingActionState = {
+  status: "idle" | "success" | "error";
+  message: string | null;
+};
+
+const initialAlbumRatingActionState: AlbumRatingActionState = {
+  status: "idle",
+  message: null,
+};
+
+export function AlbumRatingPanel({
+  albumId,
+  initialListen,
+}: {
+  albumId: string;
+  initialListen: AlbumDetailListen | null;
+}) {
+  const router = useRouter();
+  const [state, formAction, isPending] = useActionState(
+    knownAlbumRatingAction,
+    initialAlbumRatingActionState,
+  );
+  const [isEditing, setIsEditing] = useState(initialListen?.rating == null);
+  const [rating, setRating] = useState(initialListen?.rating == null ? "" : String(initialListen.rating));
+  const [take, setTake] = useState(initialListen?.take ?? "");
+  const takeId = useMemo(() => `known-album-take-${albumId}`, [albumId]);
+  const hasRating = initialListen?.rating != null;
+  const actionLabel = hasRating ? "Update rating" : "Save rating";
+
+  useEffect(() => {
+    if (state.status !== "success") {
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      setIsEditing(false);
+      router.refresh();
+    }, 0);
+
+    return () => window.clearTimeout(timer);
+  }, [router, state.status]);
+
+  return (
+    <div className="surface-panel mt-6 rounded-lg p-4">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <div className="tag">your rating</div>
+          {hasRating && (
+            <div className="mt-2 flex flex-wrap items-center gap-2">
+              <>
+                <ScoreBadge score={initialListen.rating} label={`/${RATING_SCALE.max}`} />
+                <span className="tag">
+                  {initialListen.kind === "skip" ? "already heard" : "fresh pick"}
+                </span>
+              </>
+            </div>
+          )}
+        </div>
+
+        {!isEditing && (
+          <Button type="button" variant="ghost" onClick={() => setIsEditing(true)}>
+            <SquarePen className="size-4" />
+            Edit
+          </Button>
+        )}
+      </div>
+
+      {initialListen?.take && !isEditing && (
+        <p className="mt-3 font-quote text-lg italic text-[var(--ink-soft)]">
+          &quot;{initialListen.take}&quot;
+        </p>
+      )}
+
+      {isEditing && (
+        <form action={formAction} className="mt-4 grid gap-4">
+          <input type="hidden" name="albumId" value={albumId} />
+          <label className="grid gap-1.5 text-left">
+            <span className="tag">rating</span>
+            <input
+              className="mono input-control text-center text-3xl font-bold"
+              inputMode="decimal"
+              name="rating"
+              onChange={(event) => setRating(event.target.value)}
+              pattern="(?:\d+(?:\.\d)?|\.\d)"
+              placeholder={`${RATING_SCALE.max.toFixed(1)}`}
+              type="text"
+              value={rating}
+            />
+          </label>
+          <label className="sr-only" htmlFor={takeId}>
+            One-line take
+          </label>
+          <input
+            id={takeId}
+            name="take"
+            value={take}
+            onChange={(event) => setTake(event.target.value)}
+            maxLength={180}
+            placeholder="one-line take (optional)"
+            className="input-control"
+          />
+          {state.message && (
+            <p
+              className={
+                state.status === "error"
+                  ? "text-sm text-[var(--accent)]"
+                  : "text-sm text-[var(--good)]"
+              }
+            >
+              {state.message}
+            </p>
+          )}
+          <div className="flex flex-wrap gap-3">
+            <Button type="submit" variant="accent" disabled={!rating.trim() || isPending}>
+              <Save className="size-4" />
+              {isPending ? "Saving..." : actionLabel}
+            </Button>
+            {hasRating && (
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={() => {
+                  setRating(String(initialListen.rating));
+                  setTake(initialListen.take);
+                  setIsEditing(false);
+                }}
+              >
+                <X className="size-4" />
+                Cancel
+              </Button>
+            )}
+          </div>
+        </form>
+      )}
+    </div>
+  );
+}
