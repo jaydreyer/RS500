@@ -101,41 +101,31 @@ export function RatingInput({
   max?: number;
   step?: number;
 }) {
+  const precision = String(step).split(".")[1]?.length ?? 0;
+  const ratingPattern =
+    precision > 0
+      ? `(?:\\d+(?:\\.\\d{1,${precision}})?|\\.\\d{1,${precision}})`
+      : "\\d+";
+
   return (
     <div className="grid w-full max-w-md gap-3">
       <label className="grid gap-1.5 text-left">
         <span className="tag">rating</span>
         <input
           className="mono input-control text-center text-3xl font-bold"
+          autoComplete="off"
           inputMode="decimal"
-          max={max}
-          min={min}
           name="rating"
           onChange={(event) => {
             onChange?.(event.target.value);
           }}
+          pattern={ratingPattern}
           placeholder={`${max.toFixed(1)}`}
-          step={step}
-          type="number"
+          title={`Choose a rating from ${min} to ${max}.`}
+          type="text"
           value={value ?? ""}
         />
       </label>
-      <div className="grid grid-cols-5 gap-2 sm:grid-cols-10">
-        {Array.from({ length: max - min + 1 }, (_, index) => index + min).map((rating) => (
-          <button
-            key={rating}
-            type="button"
-            onClick={() => onChange?.(String(rating))}
-            className={cn(
-              "mono aspect-square rounded-md border border-[var(--line-strong)] bg-[var(--paper)] text-sm font-bold text-[var(--ink-soft)] transition-colors hover:border-[var(--ink)] hover:text-[var(--ink)]",
-              value === String(rating) &&
-                "border-[var(--accent)] bg-[var(--accent)] text-[var(--accent-ink)]",
-            )}
-          >
-            {rating}
-          </button>
-        ))}
-      </div>
     </div>
   );
 }
