@@ -61,7 +61,7 @@ export default async function StatsPage() {
           title="Deepest crate"
           summary={historyState.stats.mostAlbumsLogged}
           currentUserId={historyState.currentUser.id}
-          value={historyState.stats.mostAlbumsLogged?.listens.length ?? "-"}
+          value={historyState.stats.mostAlbumsLogged?.loggedListens.length ?? "-"}
           helper="albums logged"
         />
       </div>

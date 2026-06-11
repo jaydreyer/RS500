@@ -25,6 +25,7 @@ export type StatsMember = {
 export type MemberSummary<TMember extends StatsMember = StatsMember, TListen extends StatsListen = StatsListen> = {
   member: TMember;
   listens: TListen[];
+  loggedListens: TListen[];
   freshListens: TListen[];
   skipListens: TListen[];
   ratedFreshListens: TListen[];
@@ -55,9 +56,10 @@ export function buildMemberSummaries<
 >(members: TMember[], listens: TListen[]): MemberSummary<TMember, TListen>[] {
   return members.map((member) => {
     const mine = listens.filter((listen) => listen.userId === member.id);
+    const loggedListens = mine.filter(isLoggedListen);
     const freshListens = mine.filter((listen) => listen.kind === "fresh");
-    const skipListens = mine.filter((listen) => listen.kind === "skip");
-    const ratedFreshListens = freshListens.filter((listen) => listen.rating != null);
+    const skipListens = mine.filter((listen) => listen.kind === "skip" && isLoggedListen(listen));
+    const ratedFreshListens = freshListens.filter(isLoggedListen);
     const averageFreshRating =
       ratedFreshListens.length > 0
         ? ratedFreshListens.reduce((total, listen) => total + (listen.rating ?? 0), 0) /
@@ -67,6 +69,7 @@ export function buildMemberSummaries<
     return {
       member,
       listens: mine,
+      loggedListens,
       freshListens,
       skipListens,
       ratedFreshListens,
@@ -86,7 +89,7 @@ export function buildStats<
   const sampleReady = memberSummaries.filter(
     (summary) => summary.ratedFreshListens.length >= sampleThreshold,
   );
-  const loggedMembers = memberSummaries.filter((summary) => summary.listens.length > 0);
+  const loggedMembers = memberSummaries.filter((summary) => summary.loggedListens.length > 0);
   const albumSummaries = buildAlbumSummaries(listens);
 
   return {
@@ -100,7 +103,8 @@ export function buildStats<
         (a, b) => (b.averageFreshRating ?? 0) - (a.averageFreshRating ?? 0),
       )[0] ?? null,
     mostAlbumsLogged:
-      loggedMembers.toSorted((a, b) => b.listens.length - a.listens.length)[0] ?? null,
+      loggedMembers.toSorted((a, b) => b.loggedListens.length - a.loggedListens.length)[0] ??
+      null,
     highestRatedAlbums: albumSummaries
       .toSorted((a, b) => b.averageRating - a.averageRating || b.ratingCount - a.ratingCount)
       .slice(0, 5),
@@ -117,7 +121,7 @@ export function buildStats<
 export function buildAlbumSummaries<TListen extends StatsListen>(
   listens: TListen[],
 ): AlbumRatingSummary<TListen>[] {
-  const rated = listens.filter((listen) => listen.rating != null);
+  const rated = listens.filter(isLoggedListen);
   const byAlbum = new Map<string, TListen[]>();
 
   for (const listen of rated) {
@@ -137,4 +141,8 @@ export function buildAlbumSummaries<TListen extends StatsListen>(
       spread: Math.max(...ratings) - Math.min(...ratings),
     };
   });
+}
+
+function isLoggedListen(listen: StatsListen) {
+  return listen.rating != null;
 }

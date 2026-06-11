@@ -74,6 +74,25 @@ test("member averages ignore unrated listens but include rated zeroes", () => {
 
   const [summary] = buildMemberSummaries(members, listens)
 
+  assert.equal(summary.loggedListens.length, 2)
   assert.equal(summary.ratedFreshListens.length, 2)
   assert.equal(summary.averageFreshRating, 5)
+})
+
+test("logged counts exclude active unrated listens", () => {
+  const members = [
+    { id: "one", displayName: "One", initials: "O", email: "one@example.com" },
+  ]
+  const listens = [
+    listen({ id: "1", userId: "one", albumId: "rated-a", rating: 8 }),
+    listen({ id: "2", userId: "one", albumId: "rated-b", rating: 7 }),
+    listen({ id: "3", userId: "one", albumId: "active", rating: null }),
+  ]
+
+  const [summary] = buildMemberSummaries(members, listens)
+  const stats = buildStats([summary], listens)
+
+  assert.equal(summary.listens.length, 3)
+  assert.equal(summary.loggedListens.length, 2)
+  assert.equal(stats.mostAlbumsLogged?.loggedListens.length, 2)
 })
