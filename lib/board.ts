@@ -4,7 +4,6 @@ import type PocketBase from "pocketbase";
 
 import { getClubUserAvatarUrl, type ClubUser } from "@/lib/auth";
 import { mapStoredRating } from "@/lib/listen-rating";
-import { formatIsoWeekLabel, getIsoWeekKey } from "@/lib/week";
 
 export type BoardMember = {
   id: string;
@@ -51,8 +50,7 @@ export type BoardReaction = {
 
 export type BoardState = {
   currentUser: ClubUser;
-  weekKey: string;
-  weekLabel: string;
+  boardLabel: string;
   members: BoardMember[];
   listens: BoardListen[];
   reactions: BoardReaction[];
@@ -70,21 +68,20 @@ export async function getBoardState(
   pb: PocketBase,
   currentUser: ClubUser,
 ): Promise<BoardState> {
-  const weekKey = getIsoWeekKey();
   const [members, listens] = await Promise.all([
     pb.collection("users").getFullList({
       sort: "display_name,email",
       requestKey: null,
     }),
     pb.collection("listens").getFullList({
-      filter: pb.filter('week = {:week} && kind = "fresh"', { week: weekKey }),
+      filter: 'kind = "fresh"',
       expand: "album,user",
       sort: "-created",
       requestKey: null,
     }),
   ]);
 
-  const mappedListens = listens.map((listen) => mapListen(listen));
+  const mappedListens = getLatestListenByMember(listens.map((listen) => mapListen(listen)));
   const reactions = await getReactionsForListens(
     pb,
     mappedListens.map((listen) => listen.id),
@@ -92,12 +89,23 @@ export async function getBoardState(
 
   return {
     currentUser,
-    weekKey,
-    weekLabel: formatIsoWeekLabel(weekKey),
+    boardLabel: "active + recent",
     members: members.map((member) => mapMember(member)),
     listens: mappedListens,
     reactions,
   };
+}
+
+function getLatestListenByMember(listens: BoardListen[]) {
+  const latest = new Map<string, BoardListen>();
+
+  for (const listen of listens) {
+    if (!latest.has(listen.userId)) {
+      latest.set(listen.userId, listen);
+    }
+  }
+
+  return Array.from(latest.values());
 }
 
 async function getReactionsForListens(pb: PocketBase, listenIds: string[]) {

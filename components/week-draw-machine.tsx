@@ -25,7 +25,6 @@ import { TAKE_MAX_LENGTH } from "@/lib/draw-rules";
 import type { ListenSummary, WeekState } from "@/lib/draw";
 import type { UserGroupDraw, UserGroupDrawState } from "@/lib/group-draw-types";
 import { cn } from "@/lib/utils";
-import { formatIsoWeekLabel } from "@/lib/week";
 
 type Phase = "idle" | "spinning" | "presented" | "rate-skip" | "kept";
 
@@ -203,8 +202,8 @@ export function WeekDrawMachine({
     <section className="mx-auto max-w-[920px]">
       <div className="mb-6 flex flex-wrap items-end justify-between gap-5">
         <div>
-          <Eyebrow>THIS IS YOUR DRAW / {formatIsoWeekLabel(weekState.weekKey)}</Eyebrow>
-          <h1 className="mt-3 text-5xl md:text-7xl">My Week</h1>
+          <Eyebrow>NEXT DRAW</Eyebrow>
+          <h1 className="mt-3 text-5xl md:text-7xl">My Pick</h1>
         </div>
         <div className="pressed-panel flex flex-wrap gap-4 rounded-lg px-4 py-3">
           <Stat label="picks kept" value={weekState.freshCount} />
@@ -301,7 +300,7 @@ function IdleFace({
       <form action={action} onSubmit={onSubmit}>
         <Button type="submit" variant="accent" size="lg" className="mt-7" disabled={disabled}>
           <Disc3 className="size-5" />
-          {isPending ? "DRAWING..." : "DRAW THIS WEEK"}
+          {isPending ? "DRAWING..." : "DRAW NEXT ALBUM"}
         </Button>
       </form>
       <p className="tag mt-5">
@@ -402,12 +401,12 @@ function PresentedFace({
 
       {phase === "kept" && (
         <div className="animate-rise-in text-center">
-          <h3 className="text-2xl">It is yours for the week.</h3>
+          <h3 className="text-2xl">It is yours.</h3>
           <p className="mx-auto mt-3 max-w-sm font-quote text-lg text-[var(--ink-soft)]">
             Go listen. Rating it when you are done unlocks your next draw.
           </p>
           <Button type="button" variant="solid" className="mt-6" onClick={onReset}>
-            Back to my week
+            Back to my pick
           </Button>
         </div>
       )}
@@ -429,7 +428,7 @@ function GroupDrawPanel({
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--line-strong)] px-5 py-3">
         <div className="flex items-center gap-2">
           <Users className="size-4 text-[var(--accent)]" aria-hidden="true" />
-          <span className="tag">group draw / {formatIsoWeekLabel(groupDrawState.weekKey)}</span>
+          <span className="tag">group draw</span>
         </div>
         <span className="mono text-[11px] text-[var(--ink-faint)]">
           {groupDrawState.groups.length} active {groupDrawState.groups.length === 1 ? "group" : "groups"}
@@ -454,9 +453,8 @@ function GroupDrawCard({
   pending: boolean;
 }) {
   const blocked = group.blockedMembers.length > 0;
-  const alreadyDrew = Boolean(group.currentDraw);
   const emptyPool = group.poolLeft === 0;
-  const disabled = pending || blocked || alreadyDrew || emptyPool;
+  const disabled = pending || blocked || emptyPool;
 
   return (
     <article className="pressed-panel rounded-lg p-4">
@@ -483,7 +481,7 @@ function GroupDrawCard({
       <div className="mt-4 min-h-14 rounded-md border border-dashed border-[var(--line-strong)] bg-[var(--paper-2)] px-3 py-2">
         {group.currentDraw ? (
           <div>
-            <p className="tag text-[var(--accent)]">this week</p>
+            <p className="tag text-[var(--accent)]">active group pick</p>
             <p className="title-wrap mt-1 font-display text-lg font-extrabold">
               {group.currentDraw.album.title}
             </p>
@@ -493,7 +491,7 @@ function GroupDrawCard({
           </div>
         ) : blocked ? (
           <div>
-            <p className="tag text-[var(--accent)]">waiting on</p>
+            <p className="tag text-[var(--accent)]">reviews due from</p>
             <p className="mt-1 font-display text-lg font-extrabold">
               {group.blockedMembers.map((member) => member.displayName).join(", ")}
             </p>

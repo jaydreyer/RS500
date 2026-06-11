@@ -35,7 +35,7 @@ const quote = Newsreader({
 
 export const metadata: Metadata = {
   title: "Spin 500",
-  description: "A private weekly album-listening challenge.",
+  description: "A private album-listening challenge.",
   icons: {
     icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
   },

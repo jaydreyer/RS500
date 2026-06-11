@@ -7,7 +7,7 @@ import type PocketBase from "pocketbase";
 import { createSuperuserPocketBase, getClubUserAvatarUrl } from "@/lib/auth";
 import {
   assertGroupCanDraw,
-  getActiveFreshMembers,
+  getActiveGroupDrawMembers,
   getGroupDrawablePool,
   GroupDrawRuleError,
   type GroupDrawRuleListen,
@@ -45,7 +45,7 @@ export async function getUserGroupDrawState(userId: string): Promise<UserGroupDr
     .filter((group) => group.active === true);
 
   const groups = await Promise.all(
-    activeGroups.map((group) => getGroupDrawSummary(pb, group, weekKey)),
+    activeGroups.map((group) => getGroupDrawSummary(pb, group)),
   );
 
   return {
@@ -63,7 +63,7 @@ export async function getAllGroupDrawState(): Promise<UserGroupDrawState> {
     requestKey: null,
   });
   const groups = await Promise.all(
-    activeGroups.map((group) => getGroupDrawSummary(pb, group, weekKey)),
+    activeGroups.map((group) => getGroupDrawSummary(pb, group)),
   );
 
   return {
@@ -82,12 +82,11 @@ export async function drawForGroup({
   const pb = await createSuperuserPocketBase();
   const weekKey = getIsoWeekKey();
   const group = await getGroupForMember(pb, groupId, userId);
-  const summary = await getGroupDrawSummary(pb, group, weekKey);
+  const summary = await getGroupDrawSummary(pb, group);
 
   assertGroupCanDraw({
     activeMembers: summary.members,
     blockedMembers: summary.blockedMembers,
-    currentWeekDrawExists: Boolean(summary.currentDraw),
     poolSize: summary.poolLeft,
   });
 
@@ -188,15 +187,14 @@ async function getGroupForMember(pb: PocketBase, groupId: string, userId: string
 async function getGroupDrawSummary(
   pb: PocketBase,
   group: RecordLike,
-  weekKey: string,
 ): Promise<UserGroupDraw> {
   const members = await getActiveGroupMembers(pb, group.id);
   const [poolData, currentDraw] = await Promise.all([
     getGroupPoolData(pb, members),
-    getCurrentGroupDraw(pb, group.id, weekKey),
+    getCurrentActiveGroupDraw(pb, group.id),
   ]);
   const { listens, pool } = poolData;
-  const blockedMembers = getActiveFreshMembers(members, listens);
+  const blockedMembers = getActiveGroupDrawMembers(members, listens, currentDraw?.id ?? null);
 
   return {
     id: group.id,
@@ -257,32 +255,41 @@ async function getListensForMembers(
   return listens.map((listen) => ({
     userId: asString(listen.user),
     albumId: asString(listen.album),
+    groupDrawId: asNullableString(listen.group_draw),
     kind: listen.kind === "skip" ? "skip" : "fresh",
     status: listen.status === "rated" ? "rated" : "listening",
   }));
 }
 
-async function getCurrentGroupDraw(
+async function getCurrentActiveGroupDraw(
   pb: PocketBase,
   groupId: string,
-  weekKey: string,
 ): Promise<CurrentGroupDraw | null> {
-  try {
-    const draw = await pb.collection("group_draws").getFirstListItem(
-      pb.filter("group = {:group} && week = {:week}", {
-        group: groupId,
-        week: weekKey,
-      }),
-      {
-        expand: "album",
-        requestKey: null,
-      },
-    );
+  const draws = await pb.collection("group_draws").getFullList({
+    filter: pb.filter("group = {:group}", { group: groupId }),
+    expand: "album",
+    sort: "-created",
+    requestKey: null,
+  });
 
-    return mapCurrentDraw(draw);
-  } catch {
-    return null;
+  for (const draw of draws) {
+    try {
+      await pb.collection("listens").getFirstListItem(
+        pb.filter('group_draw = {:groupDraw} && status = "listening"', {
+          groupDraw: draw.id,
+        }),
+        {
+          requestKey: null,
+        },
+      );
+
+      return mapCurrentDraw(draw);
+    } catch {
+      continue;
+    }
   }
+
+  return null;
 }
 
 async function rollbackGroupDraw(
@@ -371,4 +378,9 @@ function asString(value: unknown) {
 
 function asNumber(value: unknown) {
   return typeof value === "number" && Number.isFinite(value) ? value : 0;
+}
+
+function asNullableString(value: unknown) {
+  const stringValue = asString(value);
+  return stringValue || null;
 }

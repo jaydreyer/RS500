@@ -62,7 +62,7 @@ export async function keepFreshPickAction(
 
     return {
       status: "success",
-      message: `${listen.album.title} is yours for the week.`,
+      message: `${listen.album.title} is yours.`,
       listen,
     };
   } catch (error) {

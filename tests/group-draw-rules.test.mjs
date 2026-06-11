@@ -4,6 +4,7 @@ import test from "node:test"
 import {
   GroupDrawRuleError,
   assertGroupCanDraw,
+  getActiveGroupDrawMembers,
   formatMemberList,
   getActiveFreshMembers,
   getGroupDrawablePool,
@@ -41,12 +42,43 @@ test("active fresh members are blocked from a group draw", () => {
   assert.deepEqual(blocked, [{ id: "amy", displayName: "Amy" }])
 })
 
-test("group draw guard blocks empty groups, duplicate week draws, active picks, and empty pools", () => {
+test("group readiness only waits on the active group draw", () => {
+  const blocked = getActiveGroupDrawMembers(
+    members,
+    [
+      {
+        userId: "amy",
+        albumId: "solo-active",
+        groupDrawId: null,
+        kind: "fresh",
+        status: "listening",
+      },
+      {
+        userId: "bo",
+        albumId: "group-active",
+        groupDrawId: "draw-1",
+        kind: "fresh",
+        status: "listening",
+      },
+      {
+        userId: "cy",
+        albumId: "group-active",
+        groupDrawId: "draw-1",
+        kind: "fresh",
+        status: "rated",
+      },
+    ],
+    "draw-1",
+  )
+
+  assert.deepEqual(blocked, [{ id: "bo", displayName: "Bo" }])
+})
+
+test("group draw guard blocks empty groups, active picks, and empty pools", () => {
   assert.doesNotThrow(() =>
     assertGroupCanDraw({
       activeMembers: members,
       blockedMembers: [],
-      currentWeekDrawExists: false,
       poolSize: 1,
     }),
   )
@@ -56,7 +88,6 @@ test("group draw guard blocks empty groups, duplicate week draws, active picks, 
       assertGroupCanDraw({
         activeMembers: [],
         blockedMembers: [],
-        currentWeekDrawExists: false,
         poolSize: 1,
       }),
     GroupDrawRuleError,
@@ -65,28 +96,16 @@ test("group draw guard blocks empty groups, duplicate week draws, active picks, 
     () =>
       assertGroupCanDraw({
         activeMembers: members,
-        blockedMembers: [],
-        currentWeekDrawExists: true,
-        poolSize: 1,
-      }),
-    /already spun/,
-  )
-  assert.throws(
-    () =>
-      assertGroupCanDraw({
-        activeMembers: members,
         blockedMembers: [members[0], members[1]],
-        currentWeekDrawExists: false,
         poolSize: 1,
       }),
-    /Amy and Bo rate/,
+    /Amy and Bo review/,
   )
   assert.throws(
     () =>
       assertGroupCanDraw({
         activeMembers: members,
         blockedMembers: [],
-        currentWeekDrawExists: false,
         poolSize: 0,
       }),
     /no shared albums/,

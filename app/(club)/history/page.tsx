@@ -7,7 +7,7 @@ import { ClubAvatar, ScoreBadge } from "@/components/primitives";
 import { ReviewMarkdown } from "@/components/review-markdown";
 import { RouteShell } from "@/components/route-shell";
 import { getAuthenticatedPocketBase } from "@/lib/auth";
-import { formatRating, RATING_SCALE } from "@/lib/config";
+import { RATING_SCALE } from "@/lib/config";
 import {
   formatAverage,
   getHistoryState,
@@ -49,80 +49,53 @@ export default async function HistoryPage({
   }
 
   return (
-    <RouteShell eyebrow="THE SCORECARD" title="History">
+    <RouteShell eyebrow="THE LOG" title="History">
       <p className="-mt-2 mb-6 max-w-xl font-quote text-xl leading-snug text-[var(--ink-soft)]">
-        Every fresh pick, crew by week. Member names open the full log, including skips.
+        Every fresh pick in reverse chronology. Member names open the full log, including skips.
       </p>
 
-      <div className="hard-panel overflow-x-auto rounded-lg">
-        <table className="w-full min-w-[840px] border-collapse">
-          <thead>
-            <tr className="border-b border-[var(--line-strong)]">
-              <th className="tag sticky left-0 z-10 bg-[var(--card)] p-4 text-left font-normal">
-                Crew
-              </th>
-              {historyState.weeks.map((week) => (
-                <th key={week} className="tag p-4 text-center font-normal">
-                  {formatWeekHeader(week)}
-                </th>
-              ))}
-              <th className="tag p-4 text-center font-normal">Avg</th>
-            </tr>
-          </thead>
-          <tbody>
-            {historyState.members.map((member) => {
-              const summary = historyState.memberSummaries.find(
-                (entry) => entry.member.id === member.id,
-              );
+      <section className="mb-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {historyState.memberSummaries.map((summary) => (
+          <Link
+            key={summary.member.id}
+            href={`/history?member=${summary.member.id}`}
+            className="pressed-panel flex items-center gap-3 rounded-lg p-4 transition-colors hover:border-[var(--accent)]"
+          >
+            <ClubAvatar
+              imageUrl={summary.member.avatarUrl}
+              initials={summary.member.initials}
+              label={summary.member.displayName}
+              ring={summary.member.id === historyState.currentUser.id}
+            />
+            <div className="min-w-0 flex-1">
+              <h2 className="truncate text-lg">
+                {getMemberLabel(summary.member, historyState.currentUser.id)}
+              </h2>
+              <p className="tag mt-1">
+                {summary.freshListens.length} fresh / {summary.skipListens.length} skips / avg{" "}
+                {formatAverage(summary.averageFreshRating)}
+              </p>
+            </div>
+          </Link>
+        ))}
+      </section>
 
-              return (
-                <tr
-                  key={member.id}
-                  className="border-b border-[var(--line)] transition-colors last:border-b-0 hover:bg-[var(--paper-2)]"
-                >
-                  <td className="sticky left-0 z-10 bg-[var(--card)] p-4">
-                    <Link
-                      href={`/history?member=${member.id}`}
-                      className="flex w-max items-center gap-3 text-[var(--ink)] transition-colors hover:text-[var(--accent)]"
-                    >
-                      <ClubAvatar
-                        imageUrl={member.avatarUrl}
-                        initials={member.initials}
-                        label={member.displayName}
-                        ring={member.id === historyState.currentUser.id}
-                      />
-                      <span className="font-display text-lg font-extrabold">
-                        {getMemberLabel(member, historyState.currentUser.id)}
-                      </span>
-                    </Link>
-                  </td>
-                  {historyState.weeks.map((week) => {
-                    const listen = historyState.freshGridListens.find(
-                      (entry) => entry.userId === member.id && entry.week === week,
-                    );
+      <div className="hard-panel overflow-hidden rounded-lg">
+        {historyState.freshGridListens.map((listen) => {
+          const member = historyState.members.find((entry) => entry.id === listen.userId);
 
-                    return (
-                      <td key={`${member.id}-${week}`} className="p-3 text-center align-middle">
-                        {listen ? <HistoryCell listen={listen} /> : <EmptyCell />}
-                      </td>
-                    );
-                  })}
-                  <td
-                    className={cn(
-                      "p-4 text-center font-display text-2xl font-extrabold",
-                      (summary?.averageFreshRating ?? 0) >= 8 && "text-[var(--good)]",
-                    )}
-                  >
-                    {formatAverage(summary?.averageFreshRating ?? null)}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+          return member ? (
+            <RecentListenRow
+              key={listen.id}
+              listen={listen}
+              member={member}
+              currentUserId={historyState.currentUser.id}
+            />
+          ) : null;
+        })}
       </div>
 
-      {historyState.weeks.length === 0 && (
+      {historyState.freshGridListens.length === 0 && (
         <div className="pressed-panel mt-5 rounded-lg p-6 text-center">
           <p className="tag">No fresh picks have landed yet</p>
         </div>
@@ -131,51 +104,70 @@ export default async function HistoryPage({
   );
 }
 
-function HistoryCell({ listen }: { listen: HistoryListen }) {
+function RecentListenRow({
+  listen,
+  member,
+  currentUserId,
+}: {
+  listen: HistoryListen;
+  member: HistoryMember;
+  currentUserId: string;
+}) {
   const listening = listen.status === "listening";
 
   return (
     <Link
       href={`/albums/${listen.album.id}`}
-      className="group mx-auto grid w-[112px] justify-items-center gap-2 text-center"
-      title={`${listen.album.title} - ${listen.album.artist}`}
+      className="grid gap-3 border-b border-[var(--line)] p-4 transition-colors last:border-b-0 hover:bg-[var(--paper-2)] sm:grid-cols-[48px_64px_1fr_auto] sm:items-center"
     >
-      <span className="relative block size-16">
+      <ClubAvatar
+        imageUrl={member.avatarUrl}
+        initials={member.initials}
+        label={member.displayName}
+        ring={member.id === currentUserId}
+      />
+      <div className="w-16">
         <AlbumCover
           rank={listen.album.rank}
           src={listen.album.coverUrl}
           title={listen.album.title}
-          className="rounded-sm"
+          className="cover-lift rounded-sm"
         />
-        {listen.groupDrawId && (
-          <span className="absolute -left-2 -top-2 grid size-5 place-items-center rounded-full border border-white/70 bg-[var(--paper)] text-[var(--accent)] shadow-[var(--shadow)]">
-            <Users className="size-3" aria-hidden="true" />
+      </div>
+      <div className="min-w-0">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="font-display font-extrabold">
+            {getMemberLabel(member, currentUserId)}
           </span>
-        )}
-        <span className="absolute -bottom-2 -right-2">
-          {listening ? (
-            <span className="grid size-5 place-items-center rounded-full border border-white/70 bg-[var(--accent)]">
-              <span className="size-2 rounded-full bg-white animate-pulse-dot" />
-            </span>
-          ) : (
-            <span className="inline-flex min-w-7 justify-center rounded-sm bg-[var(--ink)] px-1.5 py-0.5 font-display text-sm font-extrabold text-[var(--paper)] shadow-[var(--shadow)]">
-              {listen.rating == null ? "" : formatRating(listen.rating)}
+          {listen.groupDrawId && (
+            <span className="tag inline-flex items-center gap-1 rounded-sm border border-[var(--line-strong)] px-1.5 py-0.5">
+              <Users className="size-3" aria-hidden="true" />
+              group draw
             </span>
           )}
-        </span>
-      </span>
-      <span className="line-clamp-2 max-w-full text-xs font-bold leading-tight text-[var(--ink-soft)] group-hover:text-[var(--ink)]">
-        {listen.album.title}
-      </span>
+          <span className="tag">{listen.weekLabel}</span>
+        </div>
+        <h2 className="mt-1 truncate text-xl">{listen.album.title}</h2>
+        <p className="mt-1 truncate font-quote text-lg leading-tight text-[var(--ink-soft)]">
+          {listen.album.artist} / #{listen.album.rank}
+        </p>
+        {listen.take && (
+          <ReviewMarkdown className="mt-2 line-clamp-2 font-quote text-base leading-relaxed text-[var(--ink-soft)]">
+            {listen.take}
+          </ReviewMarkdown>
+        )}
+      </div>
+      <div className="shrink-0 self-center">
+        {listening ? (
+          <span className="tag inline-flex items-center gap-1.5 text-[var(--accent)]">
+            <span className="size-1.5 rounded-full bg-[var(--accent)] animate-pulse-dot" />
+            listening
+          </span>
+        ) : (
+          <ScoreBadge score={listen.rating} label={`/${RATING_SCALE.max}`} emptyLabel="no score" />
+        )}
+      </div>
     </Link>
-  );
-}
-
-function EmptyCell() {
-  return (
-    <div className="mx-auto grid size-16 place-items-center rounded-md border border-dashed border-[var(--line-strong)]">
-      <span className="text-xl text-[var(--ink-faint)]">.</span>
-    </div>
   );
 }
 
@@ -314,8 +306,4 @@ function MemberListenRow({
       </div>
     </Link>
   );
-}
-
-function formatWeekHeader(week: string) {
-  return week.includes("-W") ? `W${week.split("-W")[1]}` : week;
 }

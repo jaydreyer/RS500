@@ -12,6 +12,7 @@ export type GroupDrawRuleMember = {
 export type GroupDrawRuleListen = {
   userId: string;
   albumId: string;
+  groupDrawId?: string | null;
   kind: "fresh" | "skip";
   status: "listening" | "rated";
 };
@@ -29,6 +30,21 @@ export function getActiveFreshMembers<TMember extends GroupDrawRuleMember>(
   return members.filter((member) => activeUserIds.has(member.id));
 }
 
+export function getActiveGroupDrawMembers<TMember extends GroupDrawRuleMember>(
+  members: TMember[],
+  listens: GroupDrawRuleListen[],
+  groupDrawId: string | null,
+) {
+  if (!groupDrawId) {
+    return [];
+  }
+
+  return getActiveFreshMembers(
+    members,
+    listens.filter((listen) => listen.groupDrawId === groupDrawId),
+  );
+}
+
 export function getGroupDrawablePool<TAlbum extends GroupDrawRuleAlbum>(
   albums: TAlbum[],
   listens: GroupDrawRuleListen[],
@@ -40,25 +56,19 @@ export function getGroupDrawablePool<TAlbum extends GroupDrawRuleAlbum>(
 export function assertGroupCanDraw<TMember extends GroupDrawRuleMember>({
   activeMembers,
   blockedMembers,
-  currentWeekDrawExists,
   poolSize,
 }: {
   activeMembers: TMember[];
   blockedMembers: TMember[];
-  currentWeekDrawExists: boolean;
   poolSize: number;
 }) {
   if (activeMembers.length === 0) {
     throw new GroupDrawRuleError("This group does not have any active members.");
   }
 
-  if (currentWeekDrawExists) {
-    throw new GroupDrawRuleError("This group already spun for the week.");
-  }
-
   if (blockedMembers.length > 0) {
     throw new GroupDrawRuleError(
-      `Group draw is blocked until ${formatMemberList(blockedMembers)} ${blockedMembers.length === 1 ? "rates" : "rate"} their active pick.`,
+      `Group draw is blocked until ${formatMemberList(blockedMembers)} ${blockedMembers.length === 1 ? "reviews" : "review"} the active group pick.`,
     );
   }
 

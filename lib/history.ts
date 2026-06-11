@@ -49,6 +49,7 @@ export type HistoryStats = BaseHistoryStats<HistoryMember, HistoryListen>;
 
 export type HistoryState = {
   currentUser: ClubUser;
+  totalAlbums: number;
   members: HistoryMember[];
   weeks: string[];
   listens: HistoryListen[];
@@ -69,14 +70,17 @@ export async function getHistoryState(
   pb: PocketBase,
   currentUser: ClubUser,
 ): Promise<HistoryState> {
-  const [members, listens] = await Promise.all([
+  const [members, listens, albumPage] = await Promise.all([
     pb.collection("users").getFullList({
       sort: "display_name,email",
       requestKey: null,
     }),
     pb.collection("listens").getFullList({
       expand: "album",
-      sort: "-week,-created",
+      sort: "-created",
+      requestKey: null,
+    }),
+    pb.collection("albums").getList(1, 1, {
       requestKey: null,
     }),
   ]);
@@ -92,6 +96,7 @@ export async function getHistoryState(
 
   return {
     currentUser,
+    totalAlbums: albumPage.totalItems,
     members: mappedMembers,
     weeks,
     listens: mappedListens,

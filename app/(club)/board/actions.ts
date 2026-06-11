@@ -3,7 +3,6 @@
 import { revalidatePath } from "next/cache";
 
 import { getAuthenticatedPocketBase } from "@/lib/auth";
-import { getIsoWeekKey } from "@/lib/week";
 
 export type ReactionActionResult = {
   status: "success" | "error";
@@ -33,7 +32,7 @@ export async function upsertReactionAction({
       requestKey: null,
     });
 
-    if (listen.kind !== "fresh" || listen.week !== getIsoWeekKey()) {
+    if (listen.kind !== "fresh") {
       throw new Error("That board item is no longer active.");
     }
 

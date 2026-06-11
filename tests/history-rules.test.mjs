@@ -1,7 +1,11 @@
 import assert from "node:assert/strict"
 import test from "node:test"
 
-import { buildMemberSummaries, buildStats } from "../lib/history-rules.ts"
+import {
+  buildGroupCompletionSummaries,
+  buildMemberSummaries,
+  buildStats,
+} from "../lib/history-rules.ts"
 
 const album = (id, title = id) => ({
   id,
@@ -12,12 +16,26 @@ const album = (id, title = id) => ({
   coverUrl: "https://example.com/cover.jpg",
 })
 
-const listen = ({ id, userId, albumId, kind = "fresh", rating }) => ({
+const listen = ({
   id,
   userId,
   albumId,
-  kind,
+  kind = "fresh",
+  status = "rated",
   rating,
+  groupDrawId = null,
+  created = "2026-01-01T00:00:00.000Z",
+  ratedAt = rating == null ? null : "2026-01-02T00:00:00.000Z",
+}) => ({
+  id,
+  userId,
+  albumId,
+  groupDrawId,
+  kind,
+  status,
+  rating,
+  ratedAt,
+  created,
   album: album(albumId),
 })
 
@@ -79,20 +97,79 @@ test("member averages ignore unrated listens but include rated zeroes", () => {
   assert.equal(summary.averageFreshRating, 5)
 })
 
-test("logged counts exclude active unrated listens", () => {
+test("member summaries split active and completed fresh listens without counting active as logged", () => {
   const members = [
     { id: "one", displayName: "One", initials: "O", email: "one@example.com" },
   ]
   const listens = [
-    listen({ id: "1", userId: "one", albumId: "rated-a", rating: 8 }),
-    listen({ id: "2", userId: "one", albumId: "rated-b", rating: 7 }),
-    listen({ id: "3", userId: "one", albumId: "active", rating: null }),
+    listen({ id: "1", userId: "one", albumId: "active", status: "listening", rating: null }),
+    listen({ id: "2", userId: "one", albumId: "done", status: "rated", rating: 8 }),
+    listen({ id: "3", userId: "one", albumId: "heard", kind: "skip", status: "rated", rating: 9 }),
   ]
 
   const [summary] = buildMemberSummaries(members, listens)
-  const stats = buildStats([summary], listens)
 
   assert.equal(summary.listens.length, 3)
   assert.equal(summary.loggedListens.length, 2)
+  assert.equal(summary.activeFreshListens.length, 1)
+  assert.equal(summary.completedFreshListens.length, 1)
+  assert.equal(summary.skipListens.length, 1)
+})
+
+test("most albums logged excludes active unrated picks", () => {
+  const members = [
+    { id: "one", displayName: "One", initials: "O", email: "one@example.com" },
+    { id: "two", displayName: "Two", initials: "T", email: "two@example.com" },
+  ]
+  const listens = [
+    listen({ id: "1", userId: "one", albumId: "rated-a", rating: 8 }),
+    listen({ id: "2", userId: "one", albumId: "rated-b", rating: 7 }),
+    listen({ id: "3", userId: "one", albumId: "active", status: "listening", rating: null }),
+    listen({ id: "4", userId: "two", albumId: "rated-c", rating: 6 }),
+  ]
+
+  const summaries = buildMemberSummaries(members, listens)
+  const stats = buildStats(summaries, listens)
+  const one = summaries.find((summary) => summary.member.id === "one")
+
+  assert.equal(one?.loggedListens.length, 2)
+  assert.equal(stats.mostAlbumsLogged?.member.id, "one")
   assert.equal(stats.mostAlbumsLogged?.loggedListens.length, 2)
+})
+
+test("group completion summaries require every group listen to be rated", () => {
+  const complete = [
+    listen({
+      id: "1",
+      userId: "one",
+      albumId: "group",
+      groupDrawId: "draw-1",
+      created: "2026-01-01T00:00:00.000Z",
+      ratedAt: "2026-01-03T00:00:00.000Z",
+      rating: 8,
+    }),
+    listen({
+      id: "2",
+      userId: "two",
+      albumId: "group",
+      groupDrawId: "draw-1",
+      created: "2026-01-01T00:00:00.000Z",
+      ratedAt: "2026-01-02T00:00:00.000Z",
+      rating: 7,
+    }),
+    listen({
+      id: "3",
+      userId: "one",
+      albumId: "waiting",
+      groupDrawId: "draw-2",
+      status: "listening",
+      rating: null,
+    }),
+  ]
+
+  const summaries = buildGroupCompletionSummaries(complete)
+
+  assert.equal(summaries.length, 1)
+  assert.equal(summaries[0].groupDrawId, "draw-1")
+  assert.equal(summaries[0].completionMs, 2 * 24 * 60 * 60 * 1000)
 })

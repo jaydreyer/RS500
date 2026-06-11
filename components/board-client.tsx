@@ -74,9 +74,7 @@ export function BoardClient({
               router.refresh();
             },
             {
-              filter: pb.filter('week = {:week} && kind = "fresh"', {
-                week: initialState.weekKey,
-              }),
+              filter: 'kind = "fresh"',
               expand: "album,user",
             },
           ),
@@ -120,7 +118,7 @@ export function BoardClient({
               <span className="size-1.5 rounded-full bg-[var(--accent)] animate-live-blink" />
               LIVE
             </span>
-            <span>/ {initialState.weekLabel}</span>
+            <span>/ {initialState.boardLabel}</span>
           </div>
           <h1 className="mt-3 text-5xl md:text-7xl">The Board</h1>
         </div>
@@ -185,7 +183,7 @@ function BoardCard({
             ring={isMe}
           />
           <h2 className="title-wrap mt-4 text-2xl">{isMe ? "You" : member.displayName}</h2>
-          <p className="tag mt-2">{isMe ? "haven't drawn yet" : "no pick this week"}</p>
+          <p className="tag mt-2">{isMe ? "haven't drawn yet" : "no pick yet"}</p>
           {isMe && (
             <Link
               href="/week"
