@@ -51,7 +51,8 @@ export default async function HistoryPage({
   return (
     <RouteShell eyebrow="THE LOG" title="History">
       <p className="-mt-2 mb-6 max-w-xl font-quote text-xl leading-snug text-[var(--ink-soft)]">
-        Every fresh pick in reverse chronology. Member names open the full log, including skips.
+        Every reviewed fresh pick in reverse chronology. Member names open reviewed logs, including
+        skips.
       </p>
 
       <section className="mb-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -72,8 +73,8 @@ export default async function HistoryPage({
                 {getMemberLabel(summary.member, historyState.currentUser.id)}
               </h2>
               <p className="tag mt-1">
-                {summary.freshListens.length} fresh / {summary.skipListens.length} skips / avg{" "}
-                {formatAverage(summary.averageFreshRating)}
+                {summary.completedFreshListens.length} fresh / {summary.skipListens.length} skips
+                / avg {formatAverage(summary.averageFreshRating)}
               </p>
             </div>
           </Link>
@@ -97,7 +98,7 @@ export default async function HistoryPage({
 
       {historyState.freshGridListens.length === 0 && (
         <div className="pressed-panel mt-5 rounded-lg p-6 text-center">
-          <p className="tag">No fresh picks have landed yet</p>
+          <p className="tag">No reviewed fresh picks yet</p>
         </div>
       )}
     </RouteShell>
@@ -113,8 +114,6 @@ function RecentListenRow({
   member: HistoryMember;
   currentUserId: string;
 }) {
-  const listening = listen.status === "listening";
-
   return (
     <Link
       href={`/albums/${listen.album.id}`}
@@ -158,14 +157,7 @@ function RecentListenRow({
         )}
       </div>
       <div className="shrink-0 self-center">
-        {listening ? (
-          <span className="tag inline-flex items-center gap-1.5 text-[var(--accent)]">
-            <span className="size-1.5 rounded-full bg-[var(--accent)] animate-pulse-dot" />
-            listening
-          </span>
-        ) : (
-          <ScoreBadge score={listen.rating} label={`/${RATING_SCALE.max}`} emptyLabel="no score" />
-        )}
+        <ScoreBadge score={listen.rating} label={`/${RATING_SCALE.max}`} emptyLabel="no score" />
       </div>
     </Link>
   );
@@ -179,6 +171,7 @@ function MemberHistoryDetail({
   summary: MemberSummary;
 }) {
   const memberLabel = getMemberLabel(summary.member, historyState.currentUser.id);
+  const reviewedListens = summary.loggedListens;
 
   return (
     <section className="mx-auto w-full max-w-[820px]">
@@ -205,7 +198,7 @@ function MemberHistoryDetail({
           </div>
         </div>
         <div className="pressed-panel flex gap-6 rounded-lg px-4 py-3">
-          <MemberStat label="fresh" value={summary.freshListens.length} />
+          <MemberStat label="fresh" value={summary.completedFreshListens.length} />
           <MemberStat label="skips" value={summary.skipListens.length} />
           <MemberStat
             label="fresh avg"
@@ -216,12 +209,12 @@ function MemberHistoryDetail({
       </div>
 
       <div className="hard-panel overflow-hidden rounded-lg">
-        {summary.listens.length === 0 ? (
+        {reviewedListens.length === 0 ? (
           <div className="p-6 text-center">
-            <p className="tag">No logs yet</p>
+            <p className="tag">No reviewed albums yet</p>
           </div>
         ) : (
-          summary.listens.map((listen) => (
+          reviewedListens.map((listen) => (
             <MemberListenRow key={listen.id} listen={listen} member={summary.member} />
           ))
         )}
@@ -297,11 +290,7 @@ function MemberListenRow({
         )}
       </div>
       <div className="shrink-0 self-center">
-        {listen.status === "listening" ? (
-          <ScoreBadge score={null} />
-        ) : (
-          <ScoreBadge score={listen.rating} label={`/${RATING_SCALE.max}`} emptyLabel="no score" />
-        )}
+        <ScoreBadge score={listen.rating} label={`/${RATING_SCALE.max}`} emptyLabel="no score" />
         <span className="sr-only">{member.displayName}</span>
       </div>
     </Link>

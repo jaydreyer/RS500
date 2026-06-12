@@ -87,7 +87,9 @@ export async function getHistoryState(
 
   const mappedMembers = members.map((member) => mapMember(member));
   const mappedListens = listens.map((listen) => mapListen(listen));
-  const freshGridListens = mappedListens.filter((listen) => listen.kind === "fresh");
+  const freshGridListens = mappedListens.filter(
+    (listen) => listen.kind === "fresh" && listen.status === "rated" && listen.rating != null,
+  );
   const weeks = Array.from(new Set(freshGridListens.map((listen) => listen.week))).sort((a, b) =>
     b.localeCompare(a),
   );

@@ -176,7 +176,7 @@ migrate((app) => {
         },
       ],
       indexes: [
-        "CREATE UNIQUE INDEX idx_group_draws_group_week ON group_draws (`group`, week)",
+        "CREATE INDEX idx_group_draws_group_week ON group_draws (`group`, week)",
         "CREATE INDEX idx_group_draws_week ON group_draws (week)",
         "CREATE INDEX idx_group_draws_album ON group_draws (album)",
       ],

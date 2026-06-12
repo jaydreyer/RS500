@@ -1,4 +1,5 @@
-import { ArrowLeft, ExternalLink, Music2, Newspaper } from "lucide-react";
+import { ArrowLeft, ExternalLink, MessageSquareText, Music2, Newspaper } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
@@ -10,6 +11,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { getAuthenticatedPocketBase } from "@/lib/auth";
 import { getAlbumDetailState, type AlbumDetailListen, type AlbumReviewLink } from "@/lib/catalog";
 import { RATING_SCALE } from "@/lib/config";
+import { getAlbumFeedPosts, type FeedPost } from "@/lib/feed";
 import { cn } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
@@ -21,10 +23,14 @@ export default async function AlbumDetailPage({
 }) {
   const { albumId } = await params;
   let detail;
+  let feedPosts: FeedPost[] = [];
 
   try {
     const { pb, user } = await getAuthenticatedPocketBase();
-    detail = await getAlbumDetailState(pb, albumId, user.id);
+    [detail, feedPosts] = await Promise.all([
+      getAlbumDetailState(pb, albumId, user.id),
+      getAlbumFeedPosts({ pb, albumId }),
+    ]);
   } catch (error) {
     if (error instanceof Error && error.message === "Unauthorized.") {
       redirect("/auth");
@@ -170,7 +176,75 @@ export default async function AlbumDetailPage({
             ))}
         </div>
       </section>
+
+      <section className="surface-panel mt-8 rounded-lg p-5">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h2 className="flex items-center gap-2 text-2xl">
+              <MessageSquareText className="size-5 text-[var(--accent)]" aria-hidden="true" />
+              From The Feed
+            </h2>
+            <p className="tag mt-1">recent posts attached to this album</p>
+          </div>
+          <Link
+            href="/feed"
+            className="mono text-xs text-[var(--ink-soft)] transition-colors hover:text-[var(--accent)]"
+          >
+            Open The Feed
+          </Link>
+        </div>
+        <div className="mt-4 grid gap-3">
+          {feedPosts.length === 0 && <p className="tag">No feed posts for this album yet</p>}
+          {feedPosts.map((post) => (
+            <AlbumFeedPost key={post.id} post={post} />
+          ))}
+        </div>
+      </section>
     </section>
+  );
+}
+
+function AlbumFeedPost({ post }: { post: FeedPost }) {
+  return (
+    <article className="rounded-md border border-dashed border-[var(--line-strong)] bg-[var(--paper-2)] p-3">
+      <div className="flex items-start gap-3">
+        <ClubAvatar
+          imageUrl={post.user.avatarUrl}
+          initials={post.user.initials}
+          label={post.user.displayName}
+          size="sm"
+        />
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-2">
+            <strong className="font-display text-[var(--ink)]">{post.user.displayName}</strong>
+            <span className="mono text-[11px] text-[var(--ink-faint)]">
+              {formatFeedDate(post.created)}
+            </span>
+          </div>
+          {post.body && (
+            <p className="mt-1 whitespace-pre-wrap font-quote text-lg leading-snug text-[var(--ink-soft)]">
+              {post.body}
+            </p>
+          )}
+          <div className="tag mt-2 flex flex-wrap items-center gap-3">
+            <span>{post.reactions.length} reactions</span>
+            <span>{post.replies.length} replies</span>
+          </div>
+        </div>
+        {post.imageUrl && (
+          <div className="relative size-20 shrink-0 overflow-hidden rounded-md border border-[var(--line-strong)] bg-[var(--card)]">
+            <Image
+              alt=""
+              className="object-cover"
+              fill
+              sizes="80px"
+              src={post.imageUrl}
+              unoptimized
+            />
+          </div>
+        )}
+      </div>
+    </article>
   );
 }
 
@@ -287,6 +361,19 @@ function ServiceLinks({
 
 function getSpotifyLinkLabel(spotifyUrl: string) {
   return spotifyUrl.includes("open.spotify.com/search/") ? "Find on Spotify" : "Play on Spotify";
+}
+
+function formatFeedDate(value: string) {
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
+
+  return new Intl.DateTimeFormat(undefined, {
+    month: "short",
+    day: "numeric",
+  }).format(date);
 }
 
 function isNotFoundError(error: unknown) {

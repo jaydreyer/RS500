@@ -1,5 +1,6 @@
 import { AppShell } from "@/components/app-shell";
-import { getCurrentUser } from "@/lib/auth";
+import { getAuthenticatedPocketBase } from "@/lib/auth";
+import { getFeedUnreadCount } from "@/lib/feed";
 import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
@@ -9,11 +10,19 @@ export default async function ClubLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const user = await getCurrentUser();
+  let auth;
 
-  if (!user) {
+  try {
+    auth = await getAuthenticatedPocketBase();
+  } catch {
     redirect("/auth");
   }
 
-  return <AppShell user={user}>{children}</AppShell>;
+  const feedUnreadCount = await getFeedUnreadCount(auth.pb, auth.user.id);
+
+  return (
+    <AppShell user={auth.user} feedUnreadCount={feedUnreadCount}>
+      {children}
+    </AppShell>
+  );
 }

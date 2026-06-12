@@ -74,7 +74,7 @@ The tests cover invite-code validation, draw/rating rule helpers, stats threshol
 
 Groups are admin-managed in PocketBase. Create an active `groups` record, then add active `group_members` records for each user. Any active member of an active group will see the group draw panel on `/week`.
 
-A group draw is manual. When a member spins for the group, the server picks one album no active group member has logged, creates one `group_draws` record for the current ISO week, and creates one individual fresh `listens` row per member. If any active group member has an unrated fresh pick, or the group already spun that week, the draw is blocked.
+A group draw is manual. When a member spins for the group, the server picks one album no active group member has logged, creates one `group_draws` record, and creates one individual fresh `listens` row per member. The next group draw unlocks as soon as every active group member rates the active group pick.
 
 ## Deployment
 
