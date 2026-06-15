@@ -1,10 +1,15 @@
 "use server";
 
+import { randomBytes } from "crypto";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { consumeUserActionLimit } from "@/lib/action-rate-limit";
-import { getAuthenticatedPocketBase } from "@/lib/auth";
+import {
+  clearAuthCookie,
+  createSuperuserPocketBase,
+  getAuthenticatedPocketBase,
+} from "@/lib/auth";
 import { validateDisplayName } from "@/lib/auth-rules";
 
 const AVATAR_MAX_SIZE = 5 * 1024 * 1024;
@@ -17,6 +22,7 @@ const AVATAR_UPLOAD_RATE_LIMIT = {
   limit: 4,
   windowMs: 60 * 60 * 1000,
 };
+const ACCOUNT_DEACTIVATION_CONFIRMATION = "DELETE";
 
 export async function updateProfileAction(formData: FormData) {
   const displayName = getFormValue(formData, "displayName");
@@ -82,6 +88,58 @@ export async function updateProfileAction(formData: FormData) {
 
   revalidatePath("/settings");
   redirect("/settings?saved=1");
+}
+
+export async function deactivateAccountAction(formData: FormData) {
+  const confirmation = getFormValue(formData, "confirmation");
+  if (confirmation !== ACCOUNT_DEACTIVATION_CONFIRMATION) {
+    redirectWithError(`Type ${ACCOUNT_DEACTIVATION_CONFIRMATION} to deactivate your account.`);
+  }
+
+  let auth: Awaited<ReturnType<typeof getAuthenticatedPocketBase>>;
+
+  try {
+    auth = await getAuthenticatedPocketBase();
+  } catch (error) {
+    redirectWithError(formatProfileError(error));
+  }
+
+  const rateLimitError = consumeUserActionLimit("account:deactivate", auth.user.id, {
+    limit: 3,
+    windowMs: 60 * 60 * 1000,
+  });
+  if (rateLimitError) {
+    redirectWithError(rateLimitError);
+  }
+
+  try {
+    const adminPb = await createSuperuserPocketBase();
+    const password = randomBytes(32).toString("base64url");
+
+    await adminPb.collection("users").update(
+      auth.user.id,
+      {
+        email: `deleted-${auth.user.id}@spin500.invalid`,
+        emailVisibility: false,
+        verified: false,
+        password,
+        passwordConfirm: password,
+        display_name: "Deleted member",
+        avatar: null,
+        deactivated_at: new Date().toISOString(),
+      },
+      { requestKey: null },
+    );
+  } catch (error) {
+    redirectWithError(formatProfileError(error));
+  }
+
+  await clearAuthCookie();
+  revalidatePath("/board");
+  revalidatePath("/feed");
+  revalidatePath("/history");
+  revalidatePath("/stats");
+  redirect("/auth");
 }
 
 function getFormValue(formData: FormData, key: string) {

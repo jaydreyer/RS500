@@ -68,7 +68,7 @@ export function assertGroupCanDraw<TMember extends GroupDrawRuleMember>({
 
   if (blockedMembers.length > 0) {
     throw new GroupDrawRuleError(
-      `Group draw is blocked until ${formatMemberList(blockedMembers)} ${blockedMembers.length === 1 ? "reviews" : "review"} the active group pick.`,
+      `Group draw is blocked until ${formatMemberList(blockedMembers)} ${blockedMembers.length === 1 ? "reviews" : "review"} the active pick.`,
     );
   }
 

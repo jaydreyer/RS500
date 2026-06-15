@@ -33,6 +33,8 @@ Added Phase 1 migrations:
 - `1781006402_create_listens_collection.js`: creates `listens` with authenticated read access, owner create/update rules, locked deletes, and a unique `(user, album)` index.
 - `1781006403_create_reactions_collection.js`: creates `reactions` with authenticated read access, owner create/update/delete rules, and a unique `(listen, user)` index.
 - `1781006408_allow_zero_ratings.js`: lowers the `listens.rating` minimum to `0` so decimal ratings like `0.9` and `0.0` are valid.
+- `1781006414_harden_user_and_listen_rules.js`: locks direct `listens` writes to superusers, locks physical user deletion, and enforces one active fresh pick per user.
+- `1781006415_add_user_deactivated_at.js` / `1781006416_add_user_deactivated_marker.js`: add the `users.deactivated_at` account-deactivation marker. On the live `ai-lab:8091` instance, the auth collection did not materialize this field through migrations, so it was added once through the PocketBase superuser collections API and verified live.
 
 Added Phase 2 migration:
 
@@ -46,7 +48,9 @@ pocketbase serve --dir ./pb_data --migrationsDir /Users/jaydreyer/projects/RS500
 
 For the owner's Ubuntu service, point the PocketBase binary or service working directory at a directory containing these migrations, or copy/sync `pb_migrations/` beside the PocketBase executable according to the owner's deployment layout.
 
-PocketBase API rule note: `null` rules are locked to superusers. Empty-string rules are public. Album create/update/delete, listen deletes, and direct user creates are intentionally locked with `null`.
+PocketBase API rule note: `null` rules are locked to superusers. Empty-string rules are public. Album create/update/delete, listen create/update/delete, and direct user create/delete are intentionally locked with `null`.
+
+Before applying hardening migrations to an existing database, rehearse them against a development or staging instance. See [docs/dev-pocketbase.md](dev-pocketbase.md).
 
 ## App Auth
 
@@ -61,6 +65,10 @@ Phase 2 uses email/password auth against the PocketBase `users` collection:
 - `/auth` redirects authenticated members to `/week`.
 
 Because `NEXT_PUBLIC_PB_URL` is intentionally visible to the browser, keeping `users.createRule = null` is important. Without that rule, a stranger could bypass the app form and call PocketBase signup directly.
+
+The same principle applies to `listens`: draw and rating rules are app-owned, so `listens.createRule` and `listens.updateRule` are locked. Server actions authenticate the current member, then use the trusted superuser client to create or update listen records.
+
+Account deactivation is implemented as identity tombstoning rather than physical user deletion. `users.deleteRule` is locked, historical content keeps its user relation, and deactivated members render as `Deleted member`.
 
 ## Album Seed Dataset
 

@@ -8,7 +8,7 @@ import type {
   WeekActionState,
 } from "@/app/(club)/week/action-state";
 import { consumeUserActionLimit } from "@/lib/action-rate-limit";
-import { getAuthenticatedPocketBase } from "@/lib/auth";
+import { createSuperuserPocketBase, getAuthenticatedPocketBase } from "@/lib/auth";
 import { formatRating, RATING_SCALE } from "@/lib/config";
 import {
   DrawRuleError,
@@ -36,8 +36,9 @@ export async function drawAction(
   void formData;
 
   try {
-    const { pb, user } = await getAuthenticatedPocketBase();
-    const listen = await drawAlbum(pb, user.id);
+    const { user } = await getAuthenticatedPocketBase();
+    const adminPb = await createSuperuserPocketBase();
+    const listen = await drawAlbum(adminPb, user.id);
     revalidatePath("/week");
 
     return {
@@ -56,8 +57,9 @@ export async function keepFreshPickAction(
 ): Promise<WeekActionState> {
   try {
     const listenId = parseListenId(formData.get("listenId"));
-    const { pb, user } = await getAuthenticatedPocketBase();
-    const listen = await keepFreshPick(pb, user.id, listenId);
+    const { user } = await getAuthenticatedPocketBase();
+    const adminPb = await createSuperuserPocketBase();
+    const listen = await keepFreshPick(adminPb, user.id, listenId);
     revalidatePath("/week");
 
     return {
@@ -78,7 +80,7 @@ export async function skipRatingAction(
     const listenId = parseListenId(formData.get("listenId"));
     const rating = parseRating(formData.get("rating"));
     const take = parseTake(formData.get("take"));
-    const { pb, user } = await getAuthenticatedPocketBase();
+    const { user } = await getAuthenticatedPocketBase();
     const rateLimitError = consumeUserActionLimit(
       "review:write",
       user.id,
@@ -93,7 +95,7 @@ export async function skipRatingAction(
     }
 
     const listen = await rateDrawnSkip({
-      pb,
+      pb: await createSuperuserPocketBase(),
       userId: user.id,
       listenId,
       rating,
@@ -117,9 +119,10 @@ export async function replaceUnavailablePickAction(
 ): Promise<WeekActionState> {
   try {
     const listenId = parseListenId(formData.get("listenId"));
-    const { pb, user } = await getAuthenticatedPocketBase();
+    const { user } = await getAuthenticatedPocketBase();
+    const adminPb = await createSuperuserPocketBase();
     const listen = await replaceUnavailablePick({
-      pb,
+      pb: adminPb,
       userId: user.id,
       listenId,
     });
@@ -145,7 +148,7 @@ export async function freshRatingAction(
     const listenId = parseListenId(formData.get("listenId"));
     const rating = parseRating(formData.get("rating"));
     const take = parseTake(formData.get("take"));
-    const { pb, user } = await getAuthenticatedPocketBase();
+    const { user } = await getAuthenticatedPocketBase();
     const rateLimitError = consumeUserActionLimit(
       "review:write",
       user.id,
@@ -160,7 +163,7 @@ export async function freshRatingAction(
     }
 
     const listen = await rateFreshPick({
-      pb,
+      pb: await createSuperuserPocketBase(),
       userId: user.id,
       listenId,
       rating,

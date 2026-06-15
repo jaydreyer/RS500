@@ -2,7 +2,13 @@ import "server-only";
 
 import type PocketBase from "pocketbase";
 
-import { getClubUserAvatarUrl, getPocketBaseUrl, type ClubUser } from "@/lib/auth";
+import {
+  getClubUserAvatarUrl,
+  getClubUserDisplayName,
+  getClubUserInitials,
+  getPocketBaseUrl,
+  type ClubUser,
+} from "@/lib/auth";
 
 export type FeedMember = {
   id: string;
@@ -323,13 +329,12 @@ function mapAlbum(record: RecordLike): FeedAlbum {
 }
 
 function mapMember(record: RecordLike): FeedMember {
-  const displayName =
-    asString(record.display_name) || asString(record.name) || asString(record.email) || "Crew";
+  const displayName = getClubUserDisplayName(record);
 
   return {
     id: record.id,
     displayName,
-    initials: getInitials(displayName || asString(record.email)),
+    initials: getClubUserInitials(record),
     avatarUrl: getClubUserAvatarUrl(record),
   };
 }
@@ -365,20 +370,6 @@ function getExpandedRecord(
   }
 
   return value as RecordLike;
-}
-
-function getInitials(value: string) {
-  const parts = value
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2);
-
-  if (parts.length === 0) {
-    return "??";
-  }
-
-  return parts.map((part) => part[0]?.toUpperCase()).join("");
 }
 
 function asString(value: unknown) {

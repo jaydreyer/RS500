@@ -1,7 +1,7 @@
-import { Save, ShieldCheck } from "lucide-react";
+import { Save, ShieldCheck, UserX } from "lucide-react";
 import { redirect } from "next/navigation";
 
-import { updateProfileAction } from "@/app/(club)/settings/actions";
+import { deactivateAccountAction, updateProfileAction } from "@/app/(club)/settings/actions";
 import { AvatarUploadField } from "@/app/(club)/settings/avatar-upload-field";
 import { ClubAvatar } from "@/components/primitives";
 import { RouteShell } from "@/components/route-shell";
@@ -115,6 +115,34 @@ export default async function SettingsPage({ searchParams }: SettingsPageProps) 
             Password and email changes stay manual for now so the invite-only account list remains
             easy to supervise.
           </p>
+
+          <form
+            action={deactivateAccountAction}
+            className="mt-5 border-t border-[var(--line-strong)] pt-4"
+          >
+            <div className="flex items-center gap-2">
+              <UserX className="size-4 text-[var(--accent)]" />
+              <h3 className="font-display text-lg font-extrabold">Deactivate account</h3>
+            </div>
+            <p className="mt-2 text-sm leading-6 text-[var(--ink-soft)]">
+              Your login identity will be removed, but ratings, reviews, feed posts, and reactions
+              stay in the club history as Deleted member.
+            </p>
+            <label className="mt-3 grid gap-1.5">
+              <span className="tag">type DELETE to confirm</span>
+              <input
+                autoComplete="off"
+                className="input-control"
+                name="confirmation"
+                pattern="DELETE"
+                required
+              />
+            </label>
+            <Button className="mt-3" type="submit" variant="ghost">
+              <UserX className="size-4" />
+              Deactivate account
+            </Button>
+          </form>
         </aside>
       </div>
     </RouteShell>

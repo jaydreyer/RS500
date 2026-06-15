@@ -2,7 +2,13 @@ import "server-only";
 
 import type PocketBase from "pocketbase";
 
-import { getClubUserAvatarUrl, type ClubUser } from "@/lib/auth";
+import {
+  getClubUserAvatarUrl,
+  getClubUserDisplayName,
+  getClubUserInitials,
+  isDeactivatedUserRecord,
+  type ClubUser,
+} from "@/lib/auth";
 import { STATS_SAMPLE_THRESHOLD } from "@/lib/config";
 import {
   buildMemberSummaries,
@@ -149,14 +155,13 @@ function mapAlbum(record: RecordLike): HistoryAlbum {
 }
 
 function mapMember(record: RecordLike): HistoryMember {
-  const displayName =
-    asString(record.display_name) || asString(record.name) || asString(record.email) || "Crew";
-  const email = asString(record.email);
+  const displayName = getClubUserDisplayName(record);
+  const email = isDeactivatedUserRecord(record) ? "" : asString(record.email);
 
   return {
     id: record.id,
     displayName,
-    initials: getInitials(displayName || email),
+    initials: getClubUserInitials(record),
     avatarUrl: getClubUserAvatarUrl(record),
     email,
   };
@@ -171,20 +176,6 @@ function getExpandedRecord(record: RecordLike, key: string): RecordLike {
   }
 
   return value as RecordLike;
-}
-
-function getInitials(value: string) {
-  const parts = value
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2);
-
-  if (parts.length === 0) {
-    return "??";
-  }
-
-  return parts.map((part) => part[0]?.toUpperCase()).join("");
 }
 
 function asString(value: unknown) {

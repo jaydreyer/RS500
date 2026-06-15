@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { consumeUserActionLimit } from "@/lib/action-rate-limit";
-import { getAuthenticatedPocketBase } from "@/lib/auth";
+import { createSuperuserPocketBase, getAuthenticatedPocketBase } from "@/lib/auth";
 import { formatRating, RATING_SCALE } from "@/lib/config";
 import {
   DrawRuleError,
@@ -40,7 +40,7 @@ export async function knownAlbumRatingAction(
     const albumId = parseAlbumId(formData.get("albumId"));
     const rating = parseRating(formData.get("rating"));
     const take = parseTake(formData.get("take"));
-    const { pb, user } = await getAuthenticatedPocketBase();
+    const { user } = await getAuthenticatedPocketBase();
     const rateLimitError = consumeUserActionLimit(
       "review:write",
       user.id,
@@ -54,7 +54,7 @@ export async function knownAlbumRatingAction(
     }
 
     const listen = await rateKnownAlbum({
-      pb,
+      pb: await createSuperuserPocketBase(),
       userId: user.id,
       albumId,
       rating,
@@ -93,9 +93,10 @@ export async function replaceUnavailableAlbumAction(
   try {
     const listenId = parseListenId(formData.get("listenId"));
     const albumId = parseAlbumId(formData.get("albumId"));
-    const { pb, user } = await getAuthenticatedPocketBase();
+    const { user } = await getAuthenticatedPocketBase();
+    const adminPb = await createSuperuserPocketBase();
     const replacement = await replaceUnavailablePick({
-      pb,
+      pb: adminPb,
       userId: user.id,
       listenId,
     });

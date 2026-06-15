@@ -42,7 +42,7 @@ test("active fresh members are blocked from a group draw", () => {
   assert.deepEqual(blocked, [{ id: "amy", displayName: "Amy" }])
 })
 
-test("group readiness only waits on the active group draw", () => {
+test("group readiness can inspect only a specific active group draw", () => {
   const blocked = getActiveGroupDrawMembers(
     members,
     [
@@ -96,10 +96,10 @@ test("group draw guard blocks empty groups, active picks, and empty pools", () =
     () =>
       assertGroupCanDraw({
         activeMembers: members,
-        blockedMembers: [members[0], members[1]],
-        poolSize: 1,
-      }),
-    /Amy and Bo review/,
+      blockedMembers: [members[0], members[1]],
+      poolSize: 1,
+    }),
+    /Amy and Bo review the active pick/,
   )
   assert.throws(
     () =>

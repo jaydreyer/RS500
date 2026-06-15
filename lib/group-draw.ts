@@ -4,10 +4,15 @@ import { randomInt } from "crypto";
 
 import type PocketBase from "pocketbase";
 
-import { createSuperuserPocketBase, getClubUserAvatarUrl } from "@/lib/auth";
+import {
+  createSuperuserPocketBase,
+  getClubUserAvatarUrl,
+  getClubUserDisplayName,
+  getClubUserInitials,
+} from "@/lib/auth";
 import {
   assertGroupCanDraw,
-  getActiveGroupDrawMembers,
+  getActiveFreshMembers,
   getGroupDrawablePool,
   GroupDrawRuleError,
   type GroupDrawRuleListen,
@@ -194,7 +199,7 @@ async function getGroupDrawSummary(
     getCurrentActiveGroupDraw(pb, group.id),
   ]);
   const { listens, pool } = poolData;
-  const blockedMembers = getActiveGroupDrawMembers(members, listens, currentDraw?.id ?? null);
+  const blockedMembers = getActiveFreshMembers(members, listens);
 
   return {
     id: group.id,
@@ -336,13 +341,12 @@ function mapAlbum(record: RecordLike): GroupDrawAlbum {
 }
 
 function mapMember(record: RecordLike): GroupDrawMember {
-  const displayName =
-    asString(record.display_name) || asString(record.name) || asString(record.email) || "Crew";
+  const displayName = getClubUserDisplayName(record);
 
   return {
     id: record.id,
     displayName,
-    initials: getInitials(displayName || asString(record.email)),
+    initials: getClubUserInitials(record),
     avatarUrl: getClubUserAvatarUrl(record),
   };
 }
@@ -356,20 +360,6 @@ function getExpandedRecord(record: RecordLike, key: string): RecordLike {
   }
 
   return value as RecordLike;
-}
-
-function getInitials(value: string) {
-  const parts = value
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2);
-
-  if (parts.length === 0) {
-    return "??";
-  }
-
-  return parts.map((part) => part[0]?.toUpperCase()).join("");
 }
 
 function asString(value: unknown) {

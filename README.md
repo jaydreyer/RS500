@@ -39,6 +39,8 @@ Run PocketBase with this repo's migrations directory:
 pocketbase serve --dir ./pb_data --migrationsDir /Users/jaydreyer/projects/RS500/pb_migrations
 ```
 
+Use a separate development or staging PocketBase instance before applying new migrations to the live club backend. See [docs/dev-pocketbase.md](docs/dev-pocketbase.md).
+
 Seed albums from the owner-supplied CSV or JSON:
 
 ```bash
@@ -74,7 +76,7 @@ The tests cover invite-code validation, draw/rating rule helpers, stats threshol
 
 Groups are admin-managed in PocketBase. Create an active `groups` record, then add active `group_members` records for each user. Any active member of an active group will see the group draw panel on `/week`.
 
-A group draw is manual. When a member spins for the group, the server picks one album no active group member has logged, creates one `group_draws` record, and creates one individual fresh `listens` row per member. The next group draw unlocks as soon as every active group member rates the active group pick.
+A group draw is manual. When a member spins for the group, the server picks one album no active group member has logged, creates one `group_draws` record, and creates one individual fresh `listens` row per member. A group draw is blocked while any active member has an unrated fresh pick; the next group draw unlocks once those active picks are rated.
 
 ## Deployment
 
@@ -85,5 +87,6 @@ Before production use:
 - Apply all migrations in `pb_migrations/` to the owner's PocketBase instance.
 - Import the complete RS500 album dataset with required `cover_url` values.
 - Create or invite test members and verify signup, draw, board realtime, catalog, history, stats, and album detail against live data.
+- Rehearse schema/rule changes against a non-production PocketBase instance.
 
 See [docs/pocketbase-setup.md](docs/pocketbase-setup.md) for backend details and [docs/mvp-verification-checklist.md](docs/mvp-verification-checklist.md) for the acceptance checklist.

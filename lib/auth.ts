@@ -13,6 +13,8 @@ export type ClubUser = {
   avatarUrl: string | null;
 };
 
+export const DELETED_MEMBER_DISPLAY_NAME = "Deleted member";
+
 export function getPocketBaseUrl() {
   const url = process.env.NEXT_PUBLIC_PB_URL;
   if (!url) {
@@ -57,7 +59,8 @@ export async function getCurrentUser(): Promise<ClubUser | null> {
     const auth = await pb.collection("users").authRefresh<AuthRecord>({
       requestKey: null,
     });
-    if (!auth.record) {
+    if (!auth.record || isDeactivatedUserRecord(auth.record)) {
+      pb.authStore.clear();
       return null;
     }
 
@@ -79,6 +82,10 @@ export async function getAuthenticatedPocketBase() {
     requestKey: null,
   });
   if (!auth.record) {
+    throw new Error("Unauthorized.");
+  }
+  if (isDeactivatedUserRecord(auth.record)) {
+    pb.authStore.clear();
     throw new Error("Unauthorized.");
   }
 
@@ -132,20 +139,23 @@ export async function createSuperuserPocketBase() {
 }
 
 export function mapClubUser(record: NonNullable<AuthRecord>): ClubUser {
-  const displayName =
-    asString(record.display_name) || asString(record.name) || asString(record.email) || "Crew";
+  const displayName = getClubUserDisplayName(record);
   const email = asString(record.email);
 
   return {
     id: record.id,
     email,
     displayName,
-    initials: getInitials(displayName || email),
+    initials: getClubUserInitials(record),
     avatarUrl: getClubUserAvatarUrl(record),
   };
 }
 
 export function getClubUserAvatarUrl(record: { id: string; [key: string]: unknown }) {
+  if (isDeactivatedUserRecord(record)) {
+    return null;
+  }
+
   const filename = asString(record.avatar);
 
   if (!filename) {
@@ -156,6 +166,26 @@ export function getClubUserAvatarUrl(record: { id: string; [key: string]: unknow
   const baseUrl = getPocketBaseUrl().replace(/\/$/, "");
 
   return `${baseUrl}/api/files/${encodeURIComponent(collection)}/${encodeURIComponent(record.id)}/${encodeURIComponent(filename)}?thumb=96x96`;
+}
+
+export function getClubUserDisplayName(record: { [key: string]: unknown }) {
+  if (isDeactivatedUserRecord(record)) {
+    return DELETED_MEMBER_DISPLAY_NAME;
+  }
+
+  return asString(record.display_name) || asString(record.name) || asString(record.email) || "Crew";
+}
+
+export function getClubUserInitials(record: { [key: string]: unknown }) {
+  if (isDeactivatedUserRecord(record)) {
+    return "DM";
+  }
+
+  return getInitials(getClubUserDisplayName(record) || asString(record.email));
+}
+
+export function isDeactivatedUserRecord(record: { [key: string]: unknown }) {
+  return Boolean(asString(record.deactivated_at));
 }
 
 function getTokenExpires(token: string) {
