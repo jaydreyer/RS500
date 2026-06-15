@@ -116,12 +116,16 @@ export default async function StatsPage() {
       <div className="mt-4 grid gap-4 xl:grid-cols-2">
         <AlbumLeaderboard
           title="Highest-rated albums"
-          albums={historyState.stats.highestRatedAlbums}
+          listens={historyState.stats.highestRatedAlbums}
+          members={historyState.members}
+          currentUserId={historyState.currentUser.id}
           tone="high"
         />
         <AlbumLeaderboard
           title="Lowest-rated albums"
-          albums={historyState.stats.lowestRatedAlbums}
+          listens={historyState.stats.lowestRatedAlbums}
+          members={historyState.members}
+          currentUserId={historyState.currentUser.id}
           tone="low"
         />
       </div>
@@ -616,43 +620,64 @@ function GroupCompletionSection({ historyState }: { historyState: HistoryState }
 
 function AlbumLeaderboard({
   title,
-  albums,
+  listens,
+  members,
+  currentUserId,
   tone,
 }: {
   title: string;
-  albums: AlbumRatingSummary[];
+  listens: HistoryListen[];
+  members: HistoryMember[];
+  currentUserId: string;
   tone: "high" | "low";
 }) {
   return (
     <section className="surface-panel rounded-lg p-5">
       <h2 className="text-2xl">{title}</h2>
       <div className="mt-4 grid gap-3">
-        {albums.length === 0 && <p className="tag">No rated albums yet</p>}
-        {albums.map((summary) => (
-          <Link
-            key={summary.album.id}
-            href={`/albums/${summary.album.id}`}
-            className="grid grid-cols-[64px_1fr_auto] items-center gap-3 rounded-md border border-[var(--line-strong)] p-3 transition-colors hover:bg-[var(--paper-2)]"
-          >
-            <AlbumCover
-              rank={summary.album.rank}
-              src={summary.album.coverUrl}
-              title={summary.album.title}
-              sizes="64px"
-              className="cover-lift rounded-sm"
-            />
-            <div className="min-w-0">
-              <p className={cn("tag", tone === "high" && "text-[var(--good)]")}>
-                {summary.ratingCount} rating{summary.ratingCount === 1 ? "" : "s"}
-              </p>
-              <h3 className="mt-1 truncate text-xl">{summary.album.title}</h3>
-              <p className="truncate font-quote text-base text-[var(--ink-soft)]">
-                {summary.album.artist}
-              </p>
-            </div>
-            <ScoreBadge score={Number(summary.averageRating.toFixed(1))} label="" />
-          </Link>
-        ))}
+        {listens.length === 0 && <p className="tag">No rated albums yet</p>}
+        {listens.map((listen) => {
+          const member = members.find((entry) => entry.id === listen.userId);
+
+          return (
+            <Link
+              key={listen.id}
+              href={`/albums/${listen.album.id}`}
+              className="grid grid-cols-[64px_1fr_auto] items-center gap-3 rounded-md border border-[var(--line-strong)] p-3 transition-colors hover:bg-[var(--paper-2)]"
+            >
+              <AlbumCover
+                rank={listen.album.rank}
+                src={listen.album.coverUrl}
+                title={listen.album.title}
+                sizes="64px"
+                className="cover-lift rounded-sm"
+              />
+              <div className="min-w-0">
+                <p
+                  className={cn(
+                    "tag flex min-w-0 items-center gap-1.5",
+                    tone === "high" && "text-[var(--good)]",
+                  )}
+                >
+                  <ClubAvatar
+                    imageUrl={member?.avatarUrl}
+                    initials={member?.initials ?? "??"}
+                    label={member?.displayName}
+                    size="sm"
+                  />
+                  <span className="truncate">
+                    {member ? getMemberLabel(member, currentUserId) : "Crew"}
+                  </span>
+                </p>
+                <h3 className="mt-1 truncate text-xl">{listen.album.title}</h3>
+                <p className="truncate font-quote text-base text-[var(--ink-soft)]">
+                  {listen.album.artist}
+                </p>
+              </div>
+              <ScoreBadge score={listen.rating} label="" />
+            </Link>
+          );
+        })}
       </div>
     </section>
   );
@@ -686,7 +711,7 @@ function SharedAlbumRow({
           {summary.album.artist}
         </p>
         <p className="tag mt-1">
-          avg {summary.averageRating.toFixed(1)} / spread{" "}
+          {summary.ratingCount} member ratings / spread{" "}
           {formatRating(Number(summary.spread.toFixed(RATING_SCALE.precision)))}
         </p>
       </div>

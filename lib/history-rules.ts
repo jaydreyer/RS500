@@ -18,6 +18,8 @@ export type StatsListen = {
   };
 };
 
+const RATED_ALBUM_LEADERBOARD_LIMIT = 10;
+
 export type StatsMember = {
   id: string;
   displayName: string;
@@ -61,8 +63,8 @@ export type HistoryStats<TMember extends StatsMember = StatsMember, TListen exte
   mostGenerousRater: MemberSummary<TMember, TListen> | null;
   mostAlbumsLogged: MemberSummary<TMember, TListen> | null;
   mostAssignedCompleted: MemberSummary<TMember, TListen> | null;
-  highestRatedAlbums: AlbumRatingSummary<TListen>[];
-  lowestRatedAlbums: AlbumRatingSummary<TListen>[];
+  highestRatedAlbums: TListen[];
+  lowestRatedAlbums: TListen[];
   sharedAlbums: AlbumRatingSummary<TListen>[];
   fastestGroupCompletions: GroupCompletionSummary<TListen>[];
 };
@@ -133,18 +135,39 @@ export function buildStats<
       assignedMembers.toSorted(
         (a, b) => b.completedFreshListens.length - a.completedFreshListens.length,
       )[0] ?? null,
-    highestRatedAlbums: albumSummaries
-      .toSorted((a, b) => b.averageRating - a.averageRating || b.ratingCount - a.ratingCount)
-      .slice(0, 5),
-    lowestRatedAlbums: albumSummaries
-      .toSorted((a, b) => a.averageRating - b.averageRating || b.ratingCount - a.ratingCount)
-      .slice(0, 5),
+    highestRatedAlbums: buildRankedRatedListens(listens, "high").slice(
+      0,
+      RATED_ALBUM_LEADERBOARD_LIMIT,
+    ),
+    lowestRatedAlbums: buildRankedRatedListens(listens, "low").slice(
+      0,
+      RATED_ALBUM_LEADERBOARD_LIMIT,
+    ),
     sharedAlbums: albumSummaries
       .filter((summary) => new Set(summary.listens.map((listen) => listen.userId)).size >= 2)
       .toSorted((a, b) => b.spread - a.spread || b.ratingCount - a.ratingCount)
       .slice(0, 5),
     fastestGroupCompletions: buildGroupCompletionSummaries(listens).slice(0, 5),
   };
+}
+
+export function buildRankedRatedListens<TListen extends StatsListen>(
+  listens: TListen[],
+  direction: "high" | "low",
+): TListen[] {
+  const rated = listens.filter(isLoggedListen);
+  const ratingOrder =
+    direction === "high"
+      ? (a: TListen, b: TListen) => (b.rating ?? 0) - (a.rating ?? 0)
+      : (a: TListen, b: TListen) => (a.rating ?? 0) - (b.rating ?? 0);
+
+  return rated.toSorted(
+    (a, b) =>
+      ratingOrder(a, b) ||
+      getListenSortDate(b).localeCompare(getListenSortDate(a)) ||
+      a.album.title.localeCompare(b.album.title) ||
+      a.id.localeCompare(b.id),
+  );
 }
 
 export function buildAlbumSummaries<TListen extends StatsListen>(
@@ -233,4 +256,8 @@ export function buildGroupCompletionSummaries<TListen extends StatsListen>(
 
 function isLoggedListen(listen: StatsListen) {
   return listen.status === "rated" && listen.rating != null;
+}
+
+function getListenSortDate(listen: StatsListen) {
+  return listen.ratedAt || listen.created || "";
 }
