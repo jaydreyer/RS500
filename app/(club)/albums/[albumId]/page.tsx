@@ -60,6 +60,9 @@ export default async function AlbumDetailPage({
             rank={detail.album.rank}
             src={detail.album.coverUrl}
             title={detail.album.title}
+            sizes="(max-width: 1024px) calc(100vw - 2rem), 340px"
+            loading="eager"
+            fetchPriority="high"
             className="cover-lift relative w-full rounded-md"
           />
           <div className="mt-3 grid grid-cols-2 border-y border-[var(--line-strong)] py-3">

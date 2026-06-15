@@ -45,6 +45,18 @@ const nextConfig: NextConfig = {
   experimental: {
     serverActions,
   },
+  images: {
+    minimumCacheTTL: 60 * 60 * 24 * 30,
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "coverartarchive.org",
+        port: "",
+        pathname: "/release-group/**",
+        search: "",
+      },
+    ],
+  },
   async headers() {
     return [
       {

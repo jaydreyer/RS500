@@ -104,6 +104,7 @@ export function CatalogClient({ initialState }: { initialState: CatalogState }) 
                 rank={album.rank}
                 src={album.coverUrl}
                 title={album.title}
+                sizes="48px"
                 className={cn("cover-lift rounded-sm", index % 2 === 0 && "translate-y-3")}
               />
             ))}
@@ -220,6 +221,7 @@ function CatalogRow({
         rank={album.rank}
         src={album.coverUrl}
         title={album.title}
+        sizes="64px"
         className="cover-lift size-14 rounded-sm sm:size-16"
       />
       <span className="min-w-0 text-left">
