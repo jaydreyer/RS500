@@ -16,6 +16,48 @@ type ReviewTextareaProps = Omit<
   value: string;
 };
 
+export type ReviewMarkdownMarker = "*" | "**";
+
+export function ReviewMarkdownToolbar({
+  className,
+  onWrap,
+}: {
+  className?: string;
+  onWrap: (marker: ReviewMarkdownMarker) => void;
+}) {
+  return (
+    <div
+      className={cn(
+        "flex items-center gap-1 border-b border-[var(--line)] bg-[var(--paper-2)] px-2 py-1.5",
+        className,
+      )}
+    >
+      <Button
+        type="button"
+        variant="quiet"
+        size="icon"
+        className="size-8"
+        aria-label="Bold"
+        title="Bold"
+        onClick={() => onWrap("**")}
+      >
+        <Bold className="size-4" aria-hidden="true" />
+      </Button>
+      <Button
+        type="button"
+        variant="quiet"
+        size="icon"
+        className="size-8"
+        aria-label="Italic"
+        title="Italic"
+        onClick={() => onWrap("*")}
+      >
+        <Italic className="size-4" aria-hidden="true" />
+      </Button>
+    </div>
+  );
+}
+
 export function ReviewTextarea({
   className,
   containerClassName,
@@ -58,30 +100,7 @@ export function ReviewTextarea({
         containerClassName,
       )}
     >
-      <div className="flex items-center gap-1 border-b border-[var(--line)] bg-[var(--paper-2)] px-2 py-1.5">
-        <Button
-          type="button"
-          variant="quiet"
-          size="icon"
-          className="size-8"
-          aria-label="Bold"
-          title="Bold"
-          onClick={() => wrapSelection("**")}
-        >
-          <Bold className="size-4" aria-hidden="true" />
-        </Button>
-        <Button
-          type="button"
-          variant="quiet"
-          size="icon"
-          className="size-8"
-          aria-label="Italic"
-          title="Italic"
-          onClick={() => wrapSelection("*")}
-        >
-          <Italic className="size-4" aria-hidden="true" />
-        </Button>
-      </div>
+      <ReviewMarkdownToolbar onWrap={wrapSelection} />
       <textarea
         ref={textareaRef}
         value={value}

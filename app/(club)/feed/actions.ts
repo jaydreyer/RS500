@@ -31,6 +31,7 @@ const ALLOWED_IMAGE_TYPES = new Set([
   "image/gif",
 ]);
 const QUICK_REACTIONS = new Set(["heart", "fire", "100", "wow", "needle"]);
+const MAX_REACTION_LENGTH = 24;
 
 export type FeedPostActionState = {
   status: "idle" | "success" | "error";
@@ -345,10 +346,21 @@ function parseReaction(value: FormDataEntryValue | null) {
   const reaction = parseRequiredId(value, "Missing reaction.");
 
   if (!QUICK_REACTIONS.has(reaction)) {
-    throw new Error("That reaction is not available.");
+    if (!isEmojiReaction(reaction)) {
+      throw new Error("That reaction is not available.");
+    }
   }
 
   return reaction;
+}
+
+function isEmojiReaction(value: string) {
+  return (
+    value.length <= MAX_REACTION_LENGTH &&
+    !/\s/u.test(value) &&
+    !/[\p{L}\p{N}]/u.test(value) &&
+    /\p{Extended_Pictographic}/u.test(value)
+  );
 }
 
 function parseOptionalImage(value: FormDataEntryValue | null) {

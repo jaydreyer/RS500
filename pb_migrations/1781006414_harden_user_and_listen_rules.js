@@ -3,10 +3,10 @@ migrate((app) => {
   const listens = app.findCollectionByNameOrId("listens")
 
   if (!hasField(users, "deactivated_at")) {
-    users.fields.add({
+    users.fields.addMarshaledJSON(JSON.stringify([{
       type: "date",
       name: "deactivated_at",
-    })
+    }]))
     app.save(users)
   }
 

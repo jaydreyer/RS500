@@ -1,7 +1,11 @@
 "use client";
 
 import {
+  Children,
+  cloneElement,
+  isValidElement,
   type KeyboardEvent,
+  type ReactNode,
   type RefObject,
   useActionState,
   useMemo,
@@ -16,11 +20,13 @@ import {
   Music2,
   Search,
   Send,
+  SmilePlus,
   Trash2,
   X,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import Markdown from "react-markdown";
 
 import {
   createFeedPostAction,
@@ -32,6 +38,10 @@ import {
 } from "@/app/(club)/feed/actions";
 import { AlbumCover } from "@/components/album-cover";
 import { ClubAvatar, Eyebrow } from "@/components/primitives";
+import {
+  ReviewMarkdownToolbar,
+  type ReviewMarkdownMarker,
+} from "@/components/review-textarea";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type {
@@ -54,6 +64,250 @@ const QUICK_REACTIONS = [
   { key: "wow", emoji: "🤯", label: "Mind blown" },
   { key: "needle", emoji: "📍", label: "Pinned" },
 ] as const;
+
+const QUICK_REACTION_KEYS: ReadonlySet<string> = new Set(
+  QUICK_REACTIONS.map((reaction) => reaction.key),
+);
+const FEED_ALLOWED_MARKDOWN = ["p", "strong", "em", "br"] as const;
+
+type ExtraReaction = {
+  emoji: string;
+  label: string;
+};
+
+type ExtraReactionGroup = {
+  key: string;
+  icon: string;
+  label: string;
+  reactions: readonly ExtraReaction[];
+};
+
+const EXTRA_REACTION_GROUPS = [
+  {
+    key: "faces",
+    icon: "😀",
+    label: "Faces",
+    reactions: [
+      { emoji: "😀", label: "Grinning" },
+      { emoji: "😄", label: "Big grin" },
+      { emoji: "😁", label: "Beaming" },
+      { emoji: "😆", label: "Laughing hard" },
+      { emoji: "😂", label: "Laughing" },
+      { emoji: "🤣", label: "Cracking up" },
+      { emoji: "😊", label: "Smiling" },
+      { emoji: "😅", label: "Nervous laugh" },
+      { emoji: "😇", label: "Angel" },
+      { emoji: "🙂", label: "Slight smile" },
+      { emoji: "🙃", label: "Upside down" },
+      { emoji: "😉", label: "Wink" },
+      { emoji: "😍", label: "Adore" },
+      { emoji: "🥰", label: "Warm fuzzies" },
+      { emoji: "😘", label: "Kiss" },
+      { emoji: "😜", label: "Wink tongue" },
+      { emoji: "🤪", label: "Zany" },
+      { emoji: "😋", label: "Tasty" },
+      { emoji: "😎", label: "Cool" },
+      { emoji: "🤓", label: "Nerdy" },
+      { emoji: "🧐", label: "Inspecting" },
+      { emoji: "🤔", label: "Thinking" },
+      { emoji: "🤨", label: "Skeptical" },
+      { emoji: "😐", label: "Neutral" },
+      { emoji: "😑", label: "Expressionless" },
+      { emoji: "😶", label: "Speechless" },
+      { emoji: "😏", label: "Smirk" },
+      { emoji: "😒", label: "Unamused" },
+      { emoji: "🙄", label: "Eye roll" },
+      { emoji: "😬", label: "Yikes" },
+      { emoji: "😮", label: "Surprised" },
+      { emoji: "😲", label: "Astonished" },
+      { emoji: "😳", label: "Flushed" },
+      { emoji: "🥺", label: "Pleading" },
+      { emoji: "😢", label: "Sad" },
+      { emoji: "😭", label: "Crying" },
+      { emoji: "😡", label: "Angry" },
+      { emoji: "😤", label: "Huffing" },
+      { emoji: "🤮", label: "Nauseated" },
+      { emoji: "😈", label: "Mischievous" },
+      { emoji: "🤡", label: "Clown" },
+      { emoji: "😵", label: "Dizzy face" },
+      { emoji: "🥴", label: "Woozy" },
+      { emoji: "🫠", label: "Melting" },
+      { emoji: "🫡", label: "Salute" },
+      { emoji: "😴", label: "Sleepy" },
+      { emoji: "🥱", label: "Yawning" },
+      { emoji: "🤐", label: "Zipped lips" },
+    ],
+  },
+  {
+    key: "hands",
+    icon: "👏",
+    label: "Hands",
+    reactions: [
+      { emoji: "👏", label: "Applause" },
+      { emoji: "🙌", label: "Raised hands" },
+      { emoji: "🙏", label: "Thanks" },
+      { emoji: "👍", label: "Thumbs up" },
+      { emoji: "👎", label: "Thumbs down" },
+      { emoji: "👊", label: "Fist bump" },
+      { emoji: "✊", label: "Raised fist" },
+      { emoji: "🤛", label: "Left fist" },
+      { emoji: "🤜", label: "Right fist" },
+      { emoji: "🤝", label: "Handshake" },
+      { emoji: "🤞", label: "Fingers crossed" },
+      { emoji: "✌️", label: "Peace" },
+      { emoji: "🤟", label: "Love you" },
+      { emoji: "🤘", label: "Rock on" },
+      { emoji: "👌", label: "OK hand" },
+      { emoji: "🤌", label: "Chef kiss" },
+      { emoji: "👋", label: "Wave" },
+      { emoji: "🤙", label: "Call me" },
+      { emoji: "👈", label: "Point left" },
+      { emoji: "👉", label: "Point right" },
+      { emoji: "👆", label: "Point up" },
+      { emoji: "👇", label: "Point down" },
+      { emoji: "🫵", label: "Point at you" },
+      { emoji: "✍️", label: "Writing" },
+      { emoji: "💪", label: "Strong" },
+      { emoji: "🫶", label: "Heart hands" },
+    ],
+  },
+  {
+    key: "music",
+    icon: "🎧",
+    label: "Music",
+    reactions: [
+      { emoji: "🎧", label: "Headphones" },
+      { emoji: "🎤", label: "Microphone" },
+      { emoji: "🎙️", label: "Studio mic" },
+      { emoji: "🎸", label: "Guitar" },
+      { emoji: "🥁", label: "Drums" },
+      { emoji: "🎹", label: "Keyboard" },
+      { emoji: "🎺", label: "Trumpet" },
+      { emoji: "🎷", label: "Saxophone" },
+      { emoji: "🎻", label: "Violin" },
+      { emoji: "🪕", label: "Banjo" },
+      { emoji: "🪘", label: "Long drum" },
+      { emoji: "🎶", label: "Music notes" },
+      { emoji: "🎵", label: "Music note" },
+      { emoji: "🎼", label: "Score" },
+      { emoji: "💿", label: "Disc" },
+      { emoji: "📀", label: "DVD" },
+      { emoji: "📻", label: "Radio" },
+      { emoji: "🎚️", label: "Level slider" },
+      { emoji: "🎛️", label: "Control knobs" },
+      { emoji: "🪩", label: "Disco ball" },
+      { emoji: "🕺", label: "Dancing" },
+      { emoji: "💃", label: "Dance" },
+      { emoji: "🎬", label: "Clapper" },
+      { emoji: "🎭", label: "Drama" },
+    ],
+  },
+  {
+    key: "hearts",
+    icon: "💜",
+    label: "Hearts",
+    reactions: [
+      { emoji: "💘", label: "Arrow heart" },
+      { emoji: "💝", label: "Gift heart" },
+      { emoji: "💖", label: "Sparkle heart" },
+      { emoji: "💗", label: "Growing heart" },
+      { emoji: "💓", label: "Beating heart" },
+      { emoji: "💕", label: "Two hearts" },
+      { emoji: "💞", label: "Revolving hearts" },
+      { emoji: "💟", label: "Heart decoration" },
+      { emoji: "❣️", label: "Heart exclamation" },
+      { emoji: "💔", label: "Broken heart" },
+      { emoji: "❤️‍🔥", label: "Heart on fire" },
+      { emoji: "❤️‍🩹", label: "Mending heart" },
+      { emoji: "🩷", label: "Pink heart" },
+      { emoji: "🧡", label: "Orange heart" },
+      { emoji: "💛", label: "Yellow heart" },
+      { emoji: "💚", label: "Green heart" },
+      { emoji: "💙", label: "Blue heart" },
+      { emoji: "💜", label: "Purple heart" },
+      { emoji: "🤎", label: "Brown heart" },
+      { emoji: "🖤", label: "Black heart" },
+      { emoji: "🩶", label: "Gray heart" },
+      { emoji: "🤍", label: "White heart" },
+    ],
+  },
+  {
+    key: "spark",
+    icon: "✨",
+    label: "Spark",
+    reactions: [
+      { emoji: "✨", label: "Sparkles" },
+      { emoji: "⭐", label: "Star" },
+      { emoji: "🌟", label: "Glowing star" },
+      { emoji: "💫", label: "Dizzy" },
+      { emoji: "💥", label: "Boom" },
+      { emoji: "💢", label: "Anger pop" },
+      { emoji: "💦", label: "Sweat drops" },
+      { emoji: "💨", label: "Dash" },
+      { emoji: "💤", label: "Sleep" },
+      { emoji: "⚡", label: "Electric" },
+      { emoji: "🌈", label: "Rainbow" },
+      { emoji: "☀️", label: "Sun" },
+      { emoji: "🌙", label: "Moon" },
+      { emoji: "☁️", label: "Cloud" },
+      { emoji: "🌊", label: "Wave" },
+      { emoji: "🌀", label: "Spiral" },
+      { emoji: "🎯", label: "Bullseye" },
+      { emoji: "🏆", label: "Trophy" },
+      { emoji: "🥇", label: "Gold medal" },
+      { emoji: "🎉", label: "Party popper" },
+      { emoji: "🎊", label: "Confetti" },
+      { emoji: "🥳", label: "Partying" },
+      { emoji: "💎", label: "Gem" },
+      { emoji: "🚀", label: "Rocket" },
+      { emoji: "🧨", label: "Firecracker" },
+      { emoji: "🪄", label: "Magic wand" },
+      { emoji: "🔮", label: "Crystal ball" },
+    ],
+  },
+  {
+    key: "vibes",
+    icon: "🍿",
+    label: "Vibes",
+    reactions: [
+      { emoji: "👀", label: "Eyes" },
+      { emoji: "🧠", label: "Brainy" },
+      { emoji: "💡", label: "Idea" },
+      { emoji: "📝", label: "Notes" },
+      { emoji: "✅", label: "Check" },
+      { emoji: "❌", label: "Cross" },
+      { emoji: "📚", label: "Studious" },
+      { emoji: "🗣️", label: "Talk" },
+      { emoji: "💬", label: "Comment" },
+      { emoji: "📣", label: "Announcement" },
+      { emoji: "🔊", label: "Loud" },
+      { emoji: "🔇", label: "Muted" },
+      { emoji: "🍿", label: "Popcorn" },
+      { emoji: "☕", label: "Coffee" },
+      { emoji: "🍷", label: "Wine" },
+      { emoji: "🍻", label: "Cheers" },
+      { emoji: "🥂", label: "Toast" },
+      { emoji: "🍾", label: "Celebration" },
+      { emoji: "🧂", label: "Salty" },
+      { emoji: "🧊", label: "Ice cold" },
+      { emoji: "🛋️", label: "Couch" },
+      { emoji: "🧯", label: "Extinguisher" },
+      { emoji: "🧪", label: "Experiment" },
+      { emoji: "🧭", label: "Compass" },
+      { emoji: "🧱", label: "Brick" },
+      { emoji: "💩", label: "Pile of poo" },
+      { emoji: "💀", label: "Dead laughing" },
+      { emoji: "☠️", label: "Skull and crossbones" },
+      { emoji: "🍑", label: "Peach" },
+      { emoji: "🍆", label: "Eggplant" },
+      { emoji: "🪦", label: "Dead" },
+      { emoji: "🏁", label: "Finish" },
+    ],
+  },
+] as const satisfies readonly ExtraReactionGroup[];
+const EXTRA_REACTIONS: ExtraReaction[] = EXTRA_REACTION_GROUPS.flatMap(
+  (group): readonly ExtraReaction[] => group.reactions,
+);
 
 export function FeedClient({ state }: { state: FeedState }) {
   const attachedCount = state.posts.filter((post) => post.album).length;
@@ -195,10 +449,14 @@ function FeedComposer({
       )}
       <div className="flex gap-3 p-4">
         <ClubAvatar initials="TF" label="The Feed" size="md" />
-        <label className="relative min-w-0 flex-1">
-          <span className="sr-only">Post</span>
+        <div className="min-w-0 flex-1">
+          <label className="sr-only" htmlFor="feed-post-body">
+            Post
+          </label>
           <MentionTextarea
-            className="input-control min-h-28 resize-y border-0 bg-transparent p-0 text-xl leading-snug shadow-none focus:shadow-none"
+            id="feed-post-body"
+            className="min-h-28 text-xl leading-snug"
+            containerClassName="border-0 bg-transparent shadow-none focus-within:shadow-none"
             maxLength={560}
             members={members}
             name="body"
@@ -206,7 +464,7 @@ function FeedComposer({
             placeholder="Post to The Feed"
             value={body}
           />
-        </label>
+        </div>
       </div>
       <div className="flex flex-wrap items-center gap-2 border-t border-[var(--line-strong)] bg-[var(--paper-2)] px-4 py-3">
         <label
@@ -448,7 +706,7 @@ function FeedPostCard({
   const isMine = post.userId === currentUserId;
 
   return (
-    <article className="surface-panel overflow-hidden rounded-lg">
+    <article className="surface-panel overflow-visible rounded-lg">
       <div className="flex items-start gap-3 p-4">
         <ClubAvatar
           imageUrl={post.user.avatarUrl}
@@ -467,9 +725,10 @@ function FeedPostCard({
             {post.album && <AlbumChip album={post.album} />}
           </div>
           {post.body && (
-            <p className="mt-3 whitespace-pre-wrap font-quote text-xl leading-snug text-[var(--ink)]">
-              <MentionText value={post.body} />
-            </p>
+            <FeedMarkdown
+              value={post.body}
+              className="mt-3 font-quote text-xl leading-snug text-[var(--ink)]"
+            />
           )}
         </div>
         {isMine && (
@@ -534,7 +793,7 @@ function FeedPostCard({
                   <strong className="text-[var(--ink)]">
                     {reply.userId === currentUserId ? "You" : reply.user.displayName}
                   </strong>{" "}
-                  <MentionText value={reply.body} />
+                  <FeedMarkdown value={reply.body} inline />
                 </p>
                 {reply.userId === currentUserId && (
                   <form action={deleteFeedReplyAction}>
@@ -615,6 +874,8 @@ type MentionMenuPlacement = "top" | "bottom";
 
 function MentionTextarea({
   className,
+  containerClassName,
+  id,
   maxLength,
   members,
   name,
@@ -623,6 +884,8 @@ function MentionTextarea({
   value,
 }: {
   className?: string;
+  containerClassName?: string;
+  id?: string;
   maxLength: number;
   members: FeedMentionMember[];
   name: string;
@@ -639,11 +902,46 @@ function MentionTextarea({
     value,
   });
 
+  function wrapSelection(marker: ReviewMarkdownMarker) {
+    const textarea = ref.current;
+    if (!textarea) {
+      return;
+    }
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selected = value.slice(start, end);
+    const nextValue = `${value.slice(0, start)}${marker}${selected}${marker}${value.slice(end)}`;
+
+    if (nextValue.length > maxLength) {
+      return;
+    }
+
+    onValueChange(nextValue);
+    const nextStart = start + marker.length;
+    const nextEnd = end + marker.length;
+
+    window.requestAnimationFrame(() => {
+      textarea.focus();
+      textarea.setSelectionRange(nextStart, selected ? nextEnd : nextStart);
+    });
+  }
+
   return (
-    <>
+    <div
+      className={cn(
+        "input-control relative p-0 focus-within:border-[var(--accent)] focus-within:shadow-[0_0_0_2px_color-mix(in_srgb,var(--accent)_18%,transparent)]",
+        containerClassName,
+      )}
+    >
+      <ReviewMarkdownToolbar onWrap={wrapSelection} />
       <textarea
         ref={ref}
-        className={className}
+        id={id}
+        className={cn(
+          "block w-full resize-y bg-transparent px-3.5 py-3 outline-none placeholder:text-[var(--ink-soft)]",
+          className,
+        )}
         maxLength={maxLength}
         name={name}
         onChange={(event) => mention.handleChange(event.currentTarget)}
@@ -660,7 +958,7 @@ function MentionTextarea({
         open={mention.open}
         placement="bottom"
       />
-    </>
+    </div>
   );
 }
 
@@ -948,31 +1246,268 @@ function ReactionForms({
       })),
     [currentUserId, reactions],
   );
+  const extraGrouped = useMemo(() => {
+    const byEmoji = new Map<string, { active: boolean; count: number; emoji: string }>();
+
+    reactions.forEach((reaction) => {
+      if (QUICK_REACTION_KEYS.has(reaction.emoji)) {
+        return;
+      }
+
+      const entry = byEmoji.get(reaction.emoji) ?? {
+        active: false,
+        count: 0,
+        emoji: reaction.emoji,
+      };
+
+      entry.count += 1;
+      entry.active = entry.active || reaction.userId === currentUserId;
+      byEmoji.set(reaction.emoji, entry);
+    });
+
+    return [...byEmoji.values()].sort((a, b) => b.count - a.count || a.emoji.localeCompare(b.emoji));
+  }, [currentUserId, reactions]);
 
   return (
     <div className="flex flex-wrap items-center gap-1.5">
       {grouped.map((reaction) => (
-        <form key={reaction.key} action={toggleFeedReactionAction}>
-          <input type="hidden" name="postId" value={postId} />
-          <input type="hidden" name="emoji" value={reaction.key} />
-          <button
-            type="submit"
-            title={reaction.label}
-            aria-label={`React ${reaction.emoji} ${reaction.label}`}
-            className={cn(
-              "inline-flex h-8 items-center gap-1 rounded-full border px-2.5 text-sm leading-none transition-colors",
-              reaction.active
-                ? "border-[var(--accent)] bg-[var(--accent)] text-[var(--accent-ink)]"
-                : "border-[var(--line-strong)] bg-[var(--card)] text-[var(--ink-soft)] hover:text-[var(--ink)]",
-            )}
-          >
-            <span>{reaction.emoji}</span>
-            {reaction.count > 0 && <span className="mono text-[10px]">{reaction.count}</span>}
-          </button>
-        </form>
+        <ReactionButton
+          key={reaction.key}
+          active={reaction.active}
+          count={reaction.count}
+          emoji={reaction.emoji}
+          label={reaction.label}
+          postId={postId}
+          value={reaction.key}
+        />
       ))}
+      {extraGrouped.map((reaction) => (
+        <ReactionButton
+          key={reaction.emoji}
+          active={reaction.active}
+          count={reaction.count}
+          emoji={reaction.emoji}
+          label={getExtraReactionLabel(reaction.emoji)}
+          postId={postId}
+          value={reaction.emoji}
+        />
+      ))}
+      <EmojiReactionPicker postId={postId} />
     </div>
   );
+}
+
+function ReactionButton({
+  active,
+  count,
+  emoji,
+  label,
+  postId,
+  value,
+}: {
+  active: boolean;
+  count: number;
+  emoji: string;
+  label: string;
+  postId: string;
+  value: string;
+}) {
+  return (
+    <form action={toggleFeedReactionAction}>
+      <input type="hidden" name="postId" value={postId} />
+      <input type="hidden" name="emoji" value={value} />
+      <button
+        type="submit"
+        title={label}
+        aria-label={`React ${emoji} ${label}`}
+        className={cn(
+          "inline-flex h-8 items-center gap-1 rounded-full border px-2.5 text-sm leading-none transition-colors",
+          active
+            ? "border-[var(--accent)] bg-[var(--accent)] text-[var(--accent-ink)]"
+            : "border-[var(--line-strong)] bg-[var(--card)] text-[var(--ink-soft)] hover:text-[var(--ink)]",
+        )}
+      >
+        <span>{emoji}</span>
+        {count > 0 && <span className="mono text-[10px]">{count}</span>}
+      </button>
+    </form>
+  );
+}
+
+function EmojiReactionPicker({ postId }: { postId: string }) {
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const [categoryKey, setCategoryKey] = useState<string>(EXTRA_REACTION_GROUPS[0].key);
+  const normalizedQuery = normalizeEmojiSearch(query);
+  const activeGroup =
+    EXTRA_REACTION_GROUPS.find((group) => group.key === categoryKey) ?? EXTRA_REACTION_GROUPS[0];
+  const matches = useMemo(() => {
+    if (!normalizedQuery) {
+      return activeGroup.reactions;
+    }
+
+    return EXTRA_REACTIONS.filter((reaction) =>
+      normalizeEmojiSearch(`${reaction.emoji} ${reaction.label}`).includes(normalizedQuery),
+    ).slice(0, 60);
+  }, [activeGroup.reactions, normalizedQuery]);
+
+  return (
+    <div className="relative">
+      <Button
+        type="button"
+        variant="quiet"
+        size="icon"
+        className="size-8 rounded-full border border-[var(--line-strong)] bg-[var(--card)] px-0"
+        aria-label="More emoji"
+        title="More emoji"
+        aria-expanded={open}
+        onClick={() => setOpen((value) => !value)}
+      >
+        <SmilePlus className="size-4" aria-hidden="true" />
+      </Button>
+
+      {open && (
+        <div className="absolute left-0 top-full z-30 mt-2 w-[min(360px,calc(100vw-2rem))] overflow-hidden rounded-md border border-[var(--line-strong)] bg-[var(--card)] shadow-[0_18px_44px_-24px_#000] sm:left-auto sm:right-0">
+          <div className="border-b border-[var(--line)] bg-[var(--paper-2)] p-2">
+            <label className="sr-only" htmlFor={`emoji-search-${postId}`}>
+              Search emoji
+            </label>
+            <input
+              id={`emoji-search-${postId}`}
+              className="input-control h-9 w-full px-3 py-1 text-sm"
+              placeholder="Search emoji"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+            />
+          </div>
+          <div
+            className="flex gap-1 overflow-x-auto border-b border-[var(--line)] bg-[var(--paper-2)] px-2 py-1.5"
+            role="tablist"
+            aria-label="Emoji categories"
+          >
+            {EXTRA_REACTION_GROUPS.map((group) => (
+              <button
+                key={group.key}
+                type="button"
+                role="tab"
+                aria-selected={group.key === categoryKey}
+                className={cn(
+                  "grid size-8 shrink-0 place-items-center rounded-md border text-base transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]",
+                  group.key === categoryKey
+                    ? "border-[var(--accent)] bg-[color-mix(in_srgb,var(--accent)_16%,transparent)]"
+                    : "border-transparent hover:bg-[var(--card)]",
+                )}
+                title={group.label}
+                aria-label={group.label}
+                onClick={() => {
+                  setCategoryKey(group.key);
+                  setQuery("");
+                }}
+              >
+                <span aria-hidden="true">{group.icon}</span>
+              </button>
+            ))}
+          </div>
+          <div className="grid max-h-72 grid-cols-6 gap-1 overflow-auto p-2">
+            {matches.length === 0 ? (
+              <p className="tag col-span-6 px-1 py-2">No emoji found</p>
+            ) : (
+              matches.map((reaction) => (
+                <form key={`${reaction.emoji}-${reaction.label}`} action={toggleFeedReactionAction}>
+                  <input type="hidden" name="postId" value={postId} />
+                  <input type="hidden" name="emoji" value={reaction.emoji} />
+                  <button
+                    type="submit"
+                    className="grid size-10 place-items-center rounded-md text-xl transition-colors hover:bg-[var(--paper-2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+                    title={reaction.label}
+                    aria-label={`React ${reaction.emoji} ${reaction.label}`}
+                    onClick={() => setOpen(false)}
+                  >
+                    {reaction.emoji}
+                  </button>
+                </form>
+              ))
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function FeedMarkdown({
+  className,
+  inline = false,
+  value,
+}: {
+  className?: string;
+  inline?: boolean;
+  value: string;
+}) {
+  return (
+    <Markdown
+      allowedElements={[...FEED_ALLOWED_MARKDOWN]}
+      skipHtml
+      unwrapDisallowed
+      components={{
+        p({ children }) {
+          const content = renderMentionNodes(children);
+
+          return inline ? (
+            <>{content}</>
+          ) : (
+            <p className={cn("whitespace-pre-wrap", className)}>{content}</p>
+          );
+        },
+        strong({ children }) {
+          return (
+            <strong className="font-extrabold text-[var(--ink)]">
+              {renderMentionNodes(children)}
+            </strong>
+          );
+        },
+        em({ children }) {
+          return <em className="italic">{renderMentionNodes(children)}</em>;
+        },
+      }}
+    >
+      {value}
+    </Markdown>
+  );
+}
+
+function renderMentionNodes(children: ReactNode): ReactNode {
+  return Children.map(children, (child) => {
+    if (typeof child === "string") {
+      return renderMentionPieces(child);
+    }
+
+    if (isValidElement<{ children?: ReactNode }>(child)) {
+      return cloneElement(child, {
+        children: renderMentionNodes(child.props.children),
+      });
+    }
+
+    return child;
+  });
+}
+
+function renderMentionPieces(value: string) {
+  const pieces = value.split(/(@[\w.-]+)/g);
+
+  return pieces.map((piece, index) =>
+    piece.startsWith("@") ? (
+      <span key={`${piece}-${index}`} className="text-[var(--accent)]">
+        {piece}
+      </span>
+    ) : (
+      piece
+    ),
+  );
+}
+
+function getExtraReactionLabel(emoji: string) {
+  return EXTRA_REACTIONS.find((reaction) => reaction.emoji === emoji)?.label ?? "Emoji reaction";
 }
 
 function AlbumChip({ album }: { album: FeedAlbum }) {
@@ -986,24 +1521,6 @@ function AlbumChip({ album }: { album: FeedAlbum }) {
         #{album.rank} {album.title}
       </span>
     </Link>
-  );
-}
-
-function MentionText({ value }: { value: string }) {
-  const pieces = value.split(/(@[\w.-]+)/g);
-
-  return (
-    <>
-      {pieces.map((piece, index) =>
-        piece.startsWith("@") ? (
-          <span key={`${piece}-${index}`} className="text-[var(--accent)]">
-            {piece}
-          </span>
-        ) : (
-          piece
-        ),
-      )}
-    </>
   );
 }
 
@@ -1067,6 +1584,15 @@ function normalizeMentionSearch(value: string) {
     .normalize("NFKD")
     .replace(/\p{Diacritic}/gu, "")
     .replace(/[^\p{L}\p{N}]+/gu, "")
+    .toLowerCase()
+    .trim();
+}
+
+function normalizeEmojiSearch(value: string) {
+  return value
+    .normalize("NFKD")
+    .replace(/\p{Diacritic}/gu, "")
+    .replace(/[^\p{L}\p{N}\p{Extended_Pictographic}]+/gu, "")
     .toLowerCase()
     .trim();
 }
