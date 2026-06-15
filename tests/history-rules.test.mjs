@@ -80,6 +80,27 @@ test("shared albums include only albums rated by at least two members", () => {
   assert.equal(stats.sharedAlbums[0].spread, 6)
 })
 
+test("album leaderboards rank individual member ratings instead of album averages", () => {
+  const members = [
+    { id: "one", displayName: "One", initials: "O", email: "one@example.com" },
+    { id: "two", displayName: "Two", initials: "T", email: "two@example.com" },
+    { id: "three", displayName: "Three", initials: "TH", email: "three@example.com" },
+  ]
+  const listens = [
+    listen({ id: "shared-low", userId: "one", albumId: "shared", rating: 4 }),
+    listen({ id: "shared-high", userId: "two", albumId: "shared", rating: 10 }),
+    listen({ id: "solo-middle", userId: "three", albumId: "solo", rating: 5 }),
+  ]
+
+  const stats = buildStats(buildMemberSummaries(members, listens), listens)
+
+  assert.equal(stats.lowestRatedAlbums[0].id, "shared-low")
+  assert.equal(stats.lowestRatedAlbums[0].rating, 4)
+  assert.equal(stats.lowestRatedAlbums[1].id, "solo-middle")
+  assert.equal(stats.highestRatedAlbums[0].id, "shared-high")
+  assert.equal(stats.highestRatedAlbums[0].rating, 10)
+})
+
 test("member averages ignore unrated listens but include rated zeroes", () => {
   const members = [
     { id: "one", displayName: "One", initials: "O", email: "one@example.com" },

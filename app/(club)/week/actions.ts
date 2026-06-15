@@ -40,6 +40,7 @@ export async function drawAction(
     const adminPb = await createSuperuserPocketBase();
     const listen = await drawAlbum(adminPb, user.id);
     revalidatePath("/week");
+    revalidatePath("/stats");
 
     return {
       status: "success",
@@ -102,6 +103,7 @@ export async function skipRatingAction(
       take,
     });
     revalidatePath("/week");
+    revalidatePath("/stats");
 
     return {
       status: "success",
@@ -129,6 +131,7 @@ export async function replaceUnavailablePickAction(
     revalidatePath("/week");
     revalidatePath("/catalog");
     revalidatePath("/history");
+    revalidatePath("/stats");
 
     return {
       status: "success",
@@ -170,6 +173,7 @@ export async function freshRatingAction(
       take,
     });
     revalidatePath("/week");
+    revalidatePath("/stats");
 
     return {
       status: "success",
@@ -196,6 +200,7 @@ export async function groupDrawAction(
     revalidatePath("/week");
     revalidatePath("/board");
     revalidatePath("/history");
+    revalidatePath("/stats");
 
     return {
       status: "success",
