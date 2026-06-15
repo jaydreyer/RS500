@@ -101,6 +101,24 @@ test("album leaderboards rank individual member ratings instead of album average
   assert.equal(stats.highestRatedAlbums[0].rating, 10)
 })
 
+test("album leaderboards include the top ten individual ratings", () => {
+  const members = [
+    { id: "one", displayName: "One", initials: "O", email: "one@example.com" },
+  ]
+  const listens = Array.from({ length: 11 }, (_, rating) =>
+    listen({ id: `rating-${rating}`, userId: "one", albumId: `album-${rating}`, rating }),
+  )
+
+  const stats = buildStats(buildMemberSummaries(members, listens), listens)
+
+  assert.equal(stats.highestRatedAlbums.length, 10)
+  assert.equal(stats.highestRatedAlbums[0].rating, 10)
+  assert.equal(stats.highestRatedAlbums.at(-1)?.rating, 1)
+  assert.equal(stats.lowestRatedAlbums.length, 10)
+  assert.equal(stats.lowestRatedAlbums[0].rating, 0)
+  assert.equal(stats.lowestRatedAlbums.at(-1)?.rating, 9)
+})
+
 test("member averages ignore unrated listens but include rated zeroes", () => {
   const members = [
     { id: "one", displayName: "One", initials: "O", email: "one@example.com" },

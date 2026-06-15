@@ -18,6 +18,8 @@ export type StatsListen = {
   };
 };
 
+const RATED_ALBUM_LEADERBOARD_LIMIT = 10;
+
 export type StatsMember = {
   id: string;
   displayName: string;
@@ -133,8 +135,14 @@ export function buildStats<
       assignedMembers.toSorted(
         (a, b) => b.completedFreshListens.length - a.completedFreshListens.length,
       )[0] ?? null,
-    highestRatedAlbums: buildRankedRatedListens(listens, "high").slice(0, 5),
-    lowestRatedAlbums: buildRankedRatedListens(listens, "low").slice(0, 5),
+    highestRatedAlbums: buildRankedRatedListens(listens, "high").slice(
+      0,
+      RATED_ALBUM_LEADERBOARD_LIMIT,
+    ),
+    lowestRatedAlbums: buildRankedRatedListens(listens, "low").slice(
+      0,
+      RATED_ALBUM_LEADERBOARD_LIMIT,
+    ),
     sharedAlbums: albumSummaries
       .filter((summary) => new Set(summary.listens.map((listen) => listen.userId)).size >= 2)
       .toSorted((a, b) => b.spread - a.spread || b.ratingCount - a.ratingCount)
