@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useEffect, useMemo, useState } from "react";
-import { Disc3, Users } from "lucide-react";
+import { Disc3, ExternalLink, Music2, Users } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import {
@@ -10,16 +10,16 @@ import {
 } from "@/app/(club)/week/action-state";
 import {
   drawAction,
-  freshRatingAction,
   groupDrawAction,
   keepFreshPickAction,
   replaceUnavailablePickAction,
   skipRatingAction,
 } from "@/app/(club)/week/actions";
+import { AlbumRatingPanel } from "@/components/album-rating-panel";
 import { AlbumCover } from "@/components/album-cover";
 import { ClubAvatar, Eyebrow, RatingInput } from "@/components/primitives";
 import { ReviewTextarea } from "@/components/review-textarea";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { RATING_SCALE } from "@/lib/config";
 import { TAKE_MAX_LENGTH } from "@/lib/draw-rules";
 import type { ListenSummary, WeekState } from "@/lib/draw";
@@ -185,6 +185,7 @@ export function WeekDrawMachine({
 
   const activeFresh = weekState.activeFresh;
   const poolText = `${weekState.poolLeft} of ${weekState.totalAlbums} unlogged`;
+  const showActivePick = Boolean(activeFresh) && phase === "idle";
 
   function startDraw() {
     setDrawnListen(null);
@@ -202,7 +203,7 @@ export function WeekDrawMachine({
     <section className="mx-auto max-w-[920px]">
       <div className="mb-6 flex flex-wrap items-end justify-between gap-5">
         <div>
-          <Eyebrow>NEXT DRAW</Eyebrow>
+          <Eyebrow>{showActivePick ? "CURRENT PICK" : "NEXT DRAW"}</Eyebrow>
           <h1 className="mt-3 text-5xl md:text-7xl">My Pick</h1>
         </div>
         <div className="pressed-panel flex flex-wrap gap-4 rounded-lg px-4 py-3">
@@ -212,53 +213,53 @@ export function WeekDrawMachine({
         </div>
       </div>
 
-      <div className="hard-panel overflow-hidden rounded-lg">
-        <div className="flex items-center justify-between border-b border-dashed border-[var(--line-strong)] bg-[var(--paper-2)] px-5 py-3">
-          <span className="tag">SPIN / 500 RANDOMIZER</span>
-          <span className="mono text-[11px] text-[var(--ink-faint)]">{poolText}</span>
+      {showActivePick && activeFresh ? (
+        <>
+          <ActivePickReview listen={activeFresh} />
+          <LockedDrawPanel listen={activeFresh} poolText={poolText} />
+        </>
+      ) : (
+        <div className="hard-panel overflow-hidden rounded-lg">
+          <div className="flex items-center justify-between border-b border-dashed border-[var(--line-strong)] bg-[var(--paper-2)] px-5 py-3">
+            <span className="tag">SPIN / 500 RANDOMIZER</span>
+            <span className="mono text-[11px] text-[var(--ink-faint)]">{poolText}</span>
+          </div>
+          <div className="relative grid min-h-[500px] place-items-center overflow-hidden px-5 py-10 md:px-8">
+            <div className="record-ring pointer-events-none absolute -right-24 -top-24 size-72 rounded-full border border-[var(--line-strong)] opacity-25" />
+            {phase === "idle" && (
+              <IdleFace
+                activeFresh={activeFresh}
+                poolLeft={weekState.poolLeft}
+                isPending={isDrawPending}
+                onSubmit={startDraw}
+                action={drawFormAction}
+              />
+            )}
+            {phase === "spinning" && <SpinFace scramble={scramble} cue={spinCue} />}
+            {(phase === "presented" || phase === "rate-skip" || phase === "kept") &&
+              drawnListen && (
+                <PresentedFace
+                  phase={phase}
+                  listen={drawnListen}
+                  keepAction={keepFormAction}
+                  skipAction={skipFormAction}
+                  replaceAction={replaceFormAction}
+                  isKeepPending={isKeepPending}
+                  isSkipPending={isSkipPending}
+                  isReplacePending={isReplacePending}
+                  onHeard={() => setPhase("rate-skip")}
+                  onReset={resetMachine}
+                />
+              )}
+          </div>
         </div>
-        <div className="relative grid min-h-[500px] place-items-center overflow-hidden px-5 py-10 md:px-8">
-          <div className="record-ring pointer-events-none absolute -right-24 -top-24 size-72 rounded-full border border-[var(--line-strong)] opacity-25" />
-          {phase === "idle" && (
-            <IdleFace
-              activeFresh={activeFresh}
-              poolLeft={weekState.poolLeft}
-              isPending={isDrawPending}
-              onSubmit={startDraw}
-              action={drawFormAction}
-            />
-          )}
-          {phase === "spinning" && <SpinFace scramble={scramble} cue={spinCue} />}
-          {(phase === "presented" || phase === "rate-skip" || phase === "kept") && drawnListen && (
-            <PresentedFace
-              phase={phase}
-              listen={drawnListen}
-              keepAction={keepFormAction}
-              skipAction={skipFormAction}
-              replaceAction={replaceFormAction}
-              isKeepPending={isKeepPending}
-              isSkipPending={isSkipPending}
-              isReplacePending={isReplacePending}
-              onHeard={() => setPhase("rate-skip")}
-              onReset={resetMachine}
-            />
-          )}
-        </div>
-      </div>
+      )}
 
       {groupDrawState.groups.length > 0 && (
         <GroupDrawPanel
           groupDrawState={groupDrawState}
           action={groupFormAction}
           pending={isGroupPending}
-        />
-      )}
-
-      {activeFresh && phase === "idle" && (
-        <NowListening
-          listen={activeFresh}
-          replaceAction={replaceFormAction}
-          isReplacePending={isReplacePending}
         />
       )}
 
@@ -269,6 +270,143 @@ export function WeekDrawMachine({
       )}
     </section>
   );
+}
+
+function ActivePickReview({ listen }: { listen: ListenSummary }) {
+  return (
+    <div className="hard-panel grid gap-7 overflow-hidden rounded-lg p-4 lg:grid-cols-[minmax(240px,340px)_1fr] lg:gap-10 lg:p-6">
+      <div className="relative">
+        <div className="record-ring absolute -left-16 top-10 hidden size-48 rounded-full opacity-25 lg:block" />
+        <AlbumCover
+          rank={listen.album.rank}
+          src={listen.album.coverUrl}
+          title={listen.album.title}
+          className="cover-lift relative w-full rounded-md"
+        />
+        <div className="mt-3 grid grid-cols-2 border-y border-[var(--line-strong)] py-3">
+          <div>
+            <div className="tag">RS rank</div>
+            <div className="mono mt-1 text-2xl font-bold text-[var(--ink)]">
+              #{listen.album.rank}
+            </div>
+          </div>
+          <div className="border-l border-[var(--line-strong)] pl-4">
+            <div className="tag">Released</div>
+            <div className="mono mt-1 text-2xl font-bold text-[var(--ink)]">
+              {listen.album.year}
+            </div>
+          </div>
+        </div>
+        <ActiveServiceLinks
+          spotifyUrl={listen.album.spotifyUrl}
+          appleMusicUrl={listen.album.appleMusicUrl}
+          className="mt-4"
+        />
+      </div>
+
+      <div className="min-w-0 py-1">
+        <Eyebrow>rolling stone 500 / #{listen.album.rank}</Eyebrow>
+        <h2 className="title-wrap mt-3 text-5xl md:text-7xl">{listen.album.title}</h2>
+        <p className="mt-3 font-quote text-2xl text-[var(--ink-soft)]">
+          {listen.album.artist}
+        </p>
+        <div className="mt-4 flex flex-wrap items-center gap-2">
+          <span className="inline-flex items-center gap-2 rounded-md border border-[var(--line-strong)] bg-[var(--paper-2)] px-2.5 py-1 text-xs text-[var(--ink-soft)]">
+            <span className="size-2 rounded-full bg-[var(--accent)] animate-pulse-dot" />
+            currently listening
+          </span>
+          <span className="tag rounded-sm border border-[var(--line-strong)] px-1.5 py-0.5">
+            fresh pick
+          </span>
+          {listen.week && (
+            <span className="tag rounded-sm border border-[var(--line-strong)] px-1.5 py-0.5">
+              {listen.week}
+            </span>
+          )}
+        </div>
+
+        <AlbumRatingPanel
+          key={`${listen.id}-${listen.ratedAt ?? "listening"}`}
+          albumId={listen.album.id}
+          initialListen={listen}
+          replacementBehavior="refresh"
+        />
+      </div>
+    </div>
+  );
+}
+
+function LockedDrawPanel({
+  listen,
+  poolText,
+}: {
+  listen: ListenSummary;
+  poolText: string;
+}) {
+  return (
+    <div className="surface-panel mt-7 overflow-hidden rounded-lg">
+      <div className="flex items-center justify-between border-b border-[var(--line-strong)] px-5 py-3">
+        <span className="tag">SPIN / 500 RANDOMIZER</span>
+        <span className="mono text-[11px] text-[var(--ink-faint)]">{poolText}</span>
+      </div>
+      <div className="flex flex-wrap items-center justify-between gap-4 p-5">
+        <div className="min-w-0">
+          <h3 className="title-wrap text-2xl">Next draw unlocks after this review.</h3>
+          <p className="mt-2 font-quote text-lg text-[var(--ink-soft)]">
+            Finish {listen.album.title}, then the crate opens again.
+          </p>
+        </div>
+        <Button type="button" variant="accent" disabled>
+          <Disc3 className="size-4" />
+          Draw Next Album
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+function ActiveServiceLinks({
+  spotifyUrl,
+  appleMusicUrl,
+  className,
+}: {
+  spotifyUrl: string;
+  appleMusicUrl: string;
+  className?: string;
+}) {
+  const links = [
+    spotifyUrl ? { href: spotifyUrl, label: getSpotifyLinkLabel(spotifyUrl) } : null,
+    appleMusicUrl ? { href: appleMusicUrl, label: "Play on Apple Music" } : null,
+  ].filter(Boolean) as Array<{ href: string; label: string }>;
+
+  if (links.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className={cn("grid gap-2", className)}>
+      {links.map((link, index) => (
+        <a
+          key={link.href}
+          href={link.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={cn(
+            buttonVariants({ variant: index === 0 ? "accent" : "ghost" }),
+            "w-full",
+          )}
+        >
+          <Music2 className="size-4" aria-hidden="true" />
+          {link.label}
+          <ExternalLink className="size-3.5" aria-hidden="true" />
+        </a>
+      ))}
+    </div>
+  );
+}
+
+function getSpotifyLinkLabel(spotifyUrl: string) {
+  return spotifyUrl.includes("open.spotify.com/search/") ? "Find on Spotify" : "Play on Spotify";
 }
 
 function IdleFace({
@@ -511,83 +649,6 @@ function GroupDrawCard({
         </Button>
       </form>
     </article>
-  );
-}
-
-function NowListening({
-  listen,
-  replaceAction,
-  isReplacePending,
-}: {
-  listen: ListenSummary;
-  replaceAction: (payload: FormData) => void;
-  isReplacePending: boolean;
-}) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [rateState, rateFormAction, isRatePending] = useActionState(
-    freshRatingAction,
-    initialWeekActionState,
-  );
-  const router = useRouter();
-
-  useEffect(() => {
-    if (rateState.status === "success") {
-      const timer = window.setTimeout(() => {
-        setIsOpen(false);
-        router.refresh();
-      }, 0);
-
-      return () => window.clearTimeout(timer);
-    }
-  }, [rateState.status, router]);
-
-  return (
-    <div className="surface-panel mt-7 overflow-hidden rounded-lg">
-      <div className="flex items-center gap-2 border-b border-[var(--line-strong)] px-5 py-3">
-        <span className="size-2 rounded-full bg-[var(--accent)] animate-pulse-dot" />
-        <span className="tag">currently listening</span>
-      </div>
-      <div className="flex flex-wrap items-center gap-4 p-5">
-        <AlbumCover
-          rank={listen.album.rank}
-          src={listen.album.coverUrl}
-          title={listen.album.title}
-          className="cover-lift w-24"
-        />
-        <div className="min-w-[180px] flex-1">
-          <h3 className="title-wrap text-2xl">{listen.album.title}</h3>
-          <div className="mt-1 font-quote text-lg text-[var(--ink-soft)]">
-            {listen.album.artist} / {listen.album.year}
-          </div>
-        </div>
-        {!isOpen && (
-          <div className="flex flex-wrap gap-3">
-            <Button type="button" variant="accent" onClick={() => setIsOpen(true)}>
-              I have finished - rate it
-            </Button>
-            <form action={replaceAction}>
-              <input type="hidden" name="listenId" value={listen.id} />
-              <Button type="submit" variant="ghost" disabled={isReplacePending}>
-                {isReplacePending ? "REPLACING..." : "Can't find it - replace"}
-              </Button>
-            </form>
-          </div>
-        )}
-      </div>
-
-      {isOpen && (
-        <div className="px-5 pb-5">
-          <hr className="hairline mb-5" />
-          <RatingForm
-            action={rateFormAction}
-            listenId={listen.id}
-            pending={isRatePending}
-            buttonLabel="Lock in my rating"
-            errorMessage={rateState.status === "error" ? rateState.message : null}
-          />
-        </div>
-      )}
-    </div>
   );
 }
 

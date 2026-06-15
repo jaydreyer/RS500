@@ -16,6 +16,11 @@ import { RATING_SCALE } from "@/lib/config";
 import { TAKE_MAX_LENGTH } from "@/lib/draw-rules";
 import type { AlbumDetailListen } from "@/lib/catalog";
 
+type RatingPanelListen = Pick<
+  AlbumDetailListen,
+  "id" | "kind" | "status" | "rating" | "take" | "ratedAt"
+>;
+
 type AlbumRatingActionState = {
   status: "idle" | "success" | "error";
   message: string | null;
@@ -41,9 +46,11 @@ const initialAlbumReplacementActionState: AlbumReplacementActionState = {
 export function AlbumRatingPanel({
   albumId,
   initialListen,
+  replacementBehavior = "album",
 }: {
   albumId: string;
-  initialListen: AlbumDetailListen | null;
+  initialListen: RatingPanelListen | null;
+  replacementBehavior?: "album" | "refresh";
 }) {
   const router = useRouter();
   const [state, formAction, isPending] = useActionState(
@@ -82,12 +89,19 @@ export function AlbumRatingPanel({
     }
 
     const timer = window.setTimeout(() => {
-      router.push(`/albums/${replacementState.replacementAlbumId}`);
+      if (replacementBehavior === "album") {
+        router.push(`/albums/${replacementState.replacementAlbumId}`);
+      }
       router.refresh();
     }, 0);
 
     return () => window.clearTimeout(timer);
-  }, [replacementState.replacementAlbumId, replacementState.status, router]);
+  }, [
+    replacementBehavior,
+    replacementState.replacementAlbumId,
+    replacementState.status,
+    router,
+  ]);
 
   return (
     <div className="surface-panel mt-6 rounded-lg p-4">
