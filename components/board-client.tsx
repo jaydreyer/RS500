@@ -223,6 +223,7 @@ function BoardCard({
             rank={pick.album.rank}
             src={pick.album.coverUrl}
             title={pick.album.title}
+            sizes="124px"
             className="cover-lift rounded-sm"
           />
         </Link>

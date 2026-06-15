@@ -401,6 +401,7 @@ function ActivePicksSection({
                   rank={listen.album.rank}
                   src={listen.album.coverUrl}
                   title={listen.album.title}
+                  sizes="72px"
                   className="cover-lift rounded-sm"
                 />
                 <div className="min-w-0">
@@ -595,6 +596,7 @@ function GroupCompletionSection({ historyState }: { historyState: HistoryState }
               rank={summary.album.rank}
               src={summary.album.coverUrl}
               title={summary.album.title}
+              sizes="64px"
               className="cover-lift rounded-sm"
             />
             <div className="min-w-0">
@@ -636,6 +638,7 @@ function AlbumLeaderboard({
               rank={summary.album.rank}
               src={summary.album.coverUrl}
               title={summary.album.title}
+              sizes="64px"
               className="cover-lift rounded-sm"
             />
             <div className="min-w-0">
@@ -671,6 +674,7 @@ function SharedAlbumRow({
           rank={summary.album.rank}
           src={summary.album.coverUrl}
           title={summary.album.title}
+          sizes="72px"
           className="cover-lift rounded-sm"
         />
       </Link>

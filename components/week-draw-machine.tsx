@@ -281,6 +281,9 @@ function ActivePickReview({ listen }: { listen: ListenSummary }) {
           rank={listen.album.rank}
           src={listen.album.coverUrl}
           title={listen.album.title}
+          sizes="(max-width: 1024px) calc(100vw - 2rem), 340px"
+          loading="eager"
+          fetchPriority="high"
           className="cover-lift relative w-full rounded-md"
         />
         <div className="mt-3 grid grid-cols-2 border-y border-[var(--line-strong)] py-3">
@@ -489,6 +492,9 @@ function PresentedFace({
             rank={listen.album.rank}
             src={listen.album.coverUrl}
             title={listen.album.title}
+            sizes="240px"
+            loading="eager"
+            fetchPriority="high"
             className="cover-lift animate-[flipIn_.7s_cubic-bezier(.2,.7,.2,1)_both]"
           />
         </div>

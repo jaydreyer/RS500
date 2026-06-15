@@ -119,6 +119,7 @@ export function FeedClient({ state }: { state: FeedState }) {
                           rank={post.album.rank}
                           src={post.album.coverUrl}
                           title={post.album.title}
+                          sizes="42px"
                           className="rounded-sm"
                         />
                         <span className="min-w-0">
@@ -275,6 +276,7 @@ function CurrentListeningShare({
               rank={listen.album.rank}
               src={listen.album.coverUrl}
               title={listen.album.title}
+              sizes="44px"
               className="rounded-sm"
             />
             <span className="min-w-0">
@@ -410,6 +412,7 @@ function AlbumAttachPicker({
                     rank={album.rank}
                     src={album.coverUrl}
                     title={album.title}
+                    sizes="48px"
                     className="rounded-sm"
                   />
                   <span className="min-w-0">

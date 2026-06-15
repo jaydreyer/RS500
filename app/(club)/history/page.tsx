@@ -130,6 +130,7 @@ function RecentListenRow({
           rank={listen.album.rank}
           src={listen.album.coverUrl}
           title={listen.album.title}
+          sizes="64px"
           className="cover-lift rounded-sm"
         />
       </div>
@@ -264,6 +265,7 @@ function MemberListenRow({
           rank={listen.album.rank}
           src={listen.album.coverUrl}
           title={listen.album.title}
+          sizes="56px"
           className="cover-lift rounded-sm"
         />
       </div>

@@ -7,11 +7,17 @@ export function AlbumCover({
   src,
   title,
   className,
+  sizes = "(max-width: 768px) 52vw, 200px",
+  loading,
+  fetchPriority,
 }: {
   rank?: number;
   src?: string;
   title?: string;
   className?: string;
+  sizes?: string;
+  loading?: "eager" | "lazy";
+  fetchPriority?: "high" | "low" | "auto";
 }) {
   return (
     <div
@@ -25,8 +31,9 @@ export function AlbumCover({
           src={src}
           alt={title ? `${title} album cover` : `Album cover for rank ${rank}`}
           fill
-          sizes="(max-width: 768px) 52vw, 200px"
-          unoptimized
+          sizes={sizes}
+          loading={loading}
+          fetchPriority={fetchPriority}
           className="absolute inset-0 size-full object-cover"
         />
       ) : (
