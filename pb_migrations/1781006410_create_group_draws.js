@@ -188,24 +188,21 @@ migrate((app) => {
   const savedGroupDraws = app.findCollectionByNameOrId("group_draws")
   const groupDrawsId = savedGroupDraws.id || savedGroupDraws.Id
 
-  if (!hasField(listens, "group_draw")) {
-    listens.fields.addMarshaledJSON(JSON.stringify({
+  let savedListens = listens
+
+  if (!hasField(savedListens, "group_draw")) {
+    savedListens.fields.addMarshaledJSON(JSON.stringify([{
       type: "relation",
       name: "group_draw",
       maxSelect: 1,
       collectionId: groupDrawsId,
       cascadeDelete: false,
-    }))
+    }]))
+    app.save(savedListens)
+    savedListens = app.findCollectionByNameOrId("listens")
   }
 
-  if (!listens.indexes.some((index) => index.includes("idx_listens_group_draw"))) {
-    listens.indexes = [
-      ...listens.indexes,
-      "CREATE INDEX idx_listens_group_draw ON listens (group_draw)",
-    ]
-  }
-
-  app.save(listens)
+  app.save(savedListens)
 }, (app) => {
   const listens = app.findCollectionByNameOrId("listens")
   if (hasField(listens, "group_draw")) {

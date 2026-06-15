@@ -7,6 +7,7 @@ const eslintConfig = [
       "design_handoff_rsd500_codex/**",
       ".next/**",
       "node_modules/**",
+      "tmp/**",
     ],
   },
   ...nextVitals,
