@@ -43,6 +43,8 @@ Use a separate development or staging PocketBase instance before applying new mi
 
 For Codex/maintenance notes about the owner backend, missing local CLI fallback, and live schema verification, see [docs/pocketbase-runbook.md](docs/pocketbase-runbook.md).
 
+For the recommended branch, worktree, commit, push, and PR routine for new Codex feature sessions, see [docs/github-feature-workflow.md](docs/github-feature-workflow.md).
+
 Seed albums from the owner-supplied CSV or JSON:
 
 ```bash
