@@ -41,6 +41,8 @@ pocketbase serve --dir ./pb_data --migrationsDir /Users/jaydreyer/projects/RS500
 
 Use a separate development or staging PocketBase instance before applying new migrations to the live club backend. See [docs/dev-pocketbase.md](docs/dev-pocketbase.md).
 
+For Codex/maintenance notes about the owner backend, missing local CLI fallback, and live schema verification, see [docs/pocketbase-runbook.md](docs/pocketbase-runbook.md).
+
 Seed albums from the owner-supplied CSV or JSON:
 
 ```bash

@@ -4,6 +4,8 @@ Use a separate PocketBase instance before applying schema or rule changes to the
 
 The production-like instance currently used by `.env.local` is `http://ai-lab:8091`. Do not use it as the first target for migrations that change API rules or add indexes.
 
+For the exact live-backend inspection and fallback schema-application workflow used from Codex, see [docs/pocketbase-runbook.md](pocketbase-runbook.md).
+
 ## Local Instance
 
 Create a local data directory outside the repo's tracked files:
