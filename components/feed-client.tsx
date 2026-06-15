@@ -1,6 +1,13 @@
 "use client";
 
-import { useActionState, useMemo, useRef, useState } from "react";
+import {
+  type KeyboardEvent,
+  type RefObject,
+  useActionState,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   Disc3,
   ImagePlus,
@@ -27,7 +34,13 @@ import { AlbumCover } from "@/components/album-cover";
 import { ClubAvatar, Eyebrow } from "@/components/primitives";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import type { FeedAlbum, FeedCurrentListen, FeedPost, FeedState } from "@/lib/feed";
+import type {
+  FeedAlbum,
+  FeedCurrentListen,
+  FeedMentionMember,
+  FeedPost,
+  FeedState,
+} from "@/lib/feed";
 
 const INITIAL_POST_STATE: FeedPostActionState = {
   status: "idle",
@@ -62,7 +75,11 @@ export function FeedClient({ state }: { state: FeedState }) {
 
       <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_280px]">
         <div className="grid min-w-0 gap-4">
-          <FeedComposer albums={state.albums} currentListens={state.currentListens} />
+          <FeedComposer
+            albums={state.albums}
+            currentListens={state.currentListens}
+            members={state.members}
+          />
 
           {state.posts.length === 0 ? (
             <div className="pressed-panel rounded-lg p-6 text-center">
@@ -73,6 +90,7 @@ export function FeedClient({ state }: { state: FeedState }) {
               <FeedPostCard
                 key={`${post.id}-${post.updated}-${post.replies.length}-${post.reactions.length}`}
                 currentUserId={state.currentUser.id}
+                members={state.members}
                 post={post}
               />
             ))
@@ -129,9 +147,11 @@ export function FeedClient({ state }: { state: FeedState }) {
 function FeedComposer({
   albums,
   currentListens,
+  members,
 }: {
   albums: FeedAlbum[];
   currentListens: FeedCurrentListen[];
+  members: FeedMentionMember[];
 }) {
   const formRef = useRef<HTMLFormElement>(null);
   const [resetKey, setResetKey] = useState(0);
@@ -174,13 +194,14 @@ function FeedComposer({
       )}
       <div className="flex gap-3 p-4">
         <ClubAvatar initials="TF" label="The Feed" size="md" />
-        <label className="min-w-0 flex-1">
+        <label className="relative min-w-0 flex-1">
           <span className="sr-only">Post</span>
-          <textarea
+          <MentionTextarea
             className="input-control min-h-28 resize-y border-0 bg-transparent p-0 text-xl leading-snug shadow-none focus:shadow-none"
             maxLength={560}
+            members={members}
             name="body"
-            onChange={(event) => setBody(event.target.value)}
+            onValueChange={setBody}
             placeholder="Post to The Feed"
             value={body}
           />
@@ -414,9 +435,11 @@ function AlbumAttachPicker({
 
 function FeedPostCard({
   currentUserId,
+  members,
   post,
 }: {
   currentUserId: string;
+  members: FeedMentionMember[];
   post: FeedPost;
 }) {
   const isMine = post.userId === currentUserId;
@@ -530,35 +553,376 @@ function FeedPostCard({
           </div>
         )}
 
-        <form action={createFeedReplyAction} className="flex items-center gap-2">
-          <input type="hidden" name="postId" value={post.id} />
-          <label className="sr-only" htmlFor={`reply-${post.id}`}>
-            Reply
-          </label>
-          <div className="flex h-10 min-w-0 flex-1 items-center gap-2 rounded-md border border-[var(--line-strong)] bg-[var(--card)] px-3 focus-within:border-[var(--accent)] focus-within:shadow-[0_0_0_2px_color-mix(in_srgb,var(--accent)_18%,transparent)]">
-            <MessageCircle className="size-4 shrink-0 text-[var(--ink-faint)]" aria-hidden="true" />
-            <input
-              id={`reply-${post.id}`}
-              name="body"
-              maxLength={280}
-              placeholder="Reply"
-              className="min-w-0 flex-1 border-0 bg-transparent p-0 text-sm text-[var(--ink)] outline-none placeholder:text-[var(--ink-soft)]"
-            />
-          </div>
-          <Button
-            type="submit"
-            aria-label="Post reply"
-            title="Post reply"
-            size="icon"
-            variant="quiet"
-            className="size-10 px-0"
-          >
-            <Send className="size-4" />
-          </Button>
-        </form>
+        <ReplyForm members={members} postId={post.id} />
       </div>
     </article>
   );
+}
+
+function ReplyForm({
+  members,
+  postId,
+}: {
+  members: FeedMentionMember[];
+  postId: string;
+}) {
+  const [body, setBody] = useState("");
+
+  async function replyAction(formData: FormData) {
+    await createFeedReplyAction(formData);
+    setBody("");
+  }
+
+  return (
+    <form action={replyAction} className="flex items-center gap-2">
+      <input type="hidden" name="postId" value={postId} />
+      <label className="sr-only" htmlFor={`reply-${postId}`}>
+        Reply
+      </label>
+      <div className="relative flex h-10 min-w-0 flex-1 items-center gap-2 rounded-md border border-[var(--line-strong)] bg-[var(--card)] px-3 focus-within:border-[var(--accent)] focus-within:shadow-[0_0_0_2px_color-mix(in_srgb,var(--accent)_18%,transparent)]">
+        <MessageCircle className="size-4 shrink-0 text-[var(--ink-faint)]" aria-hidden="true" />
+        <MentionInput
+          id={`reply-${postId}`}
+          name="body"
+          maxLength={280}
+          members={members}
+          menuPlacement="top"
+          onValueChange={setBody}
+          placeholder="Reply"
+          value={body}
+          className="min-w-0 flex-1 border-0 bg-transparent p-0 text-sm text-[var(--ink)] outline-none placeholder:text-[var(--ink-soft)]"
+        />
+      </div>
+      <Button
+        type="submit"
+        aria-label="Post reply"
+        title="Post reply"
+        size="icon"
+        variant="quiet"
+        className="size-10 px-0"
+      >
+        <Send className="size-4" />
+      </Button>
+    </form>
+  );
+}
+
+type MentionEditorElement = HTMLInputElement | HTMLTextAreaElement;
+type MentionMenuPlacement = "top" | "bottom";
+
+function MentionTextarea({
+  className,
+  maxLength,
+  members,
+  name,
+  onValueChange,
+  placeholder,
+  value,
+}: {
+  className?: string;
+  maxLength: number;
+  members: FeedMentionMember[];
+  name: string;
+  onValueChange: (value: string) => void;
+  placeholder: string;
+  value: string;
+}) {
+  const ref = useRef<HTMLTextAreaElement>(null);
+  const mention = useMentionEditor({
+    inputRef: ref,
+    maxLength,
+    members,
+    onValueChange,
+    value,
+  });
+
+  return (
+    <>
+      <textarea
+        ref={ref}
+        className={className}
+        maxLength={maxLength}
+        name={name}
+        onChange={(event) => mention.handleChange(event.currentTarget)}
+        onKeyDown={mention.handleKeyDown}
+        onSelect={(event) => mention.updateCaret(event.currentTarget)}
+        placeholder={placeholder}
+        value={value}
+      />
+      <MentionSuggestions
+        activeIndex={mention.activeIndex}
+        members={mention.matches}
+        onActiveIndexChange={mention.setActiveIndex}
+        onPick={mention.pickMember}
+        open={mention.open}
+        placement="bottom"
+      />
+    </>
+  );
+}
+
+function MentionInput({
+  className,
+  id,
+  maxLength,
+  members,
+  menuPlacement,
+  name,
+  onValueChange,
+  placeholder,
+  value,
+}: {
+  className?: string;
+  id: string;
+  maxLength: number;
+  members: FeedMentionMember[];
+  menuPlacement: MentionMenuPlacement;
+  name: string;
+  onValueChange: (value: string) => void;
+  placeholder: string;
+  value: string;
+}) {
+  const ref = useRef<HTMLInputElement>(null);
+  const mention = useMentionEditor({
+    inputRef: ref,
+    maxLength,
+    members,
+    onValueChange,
+    value,
+  });
+
+  return (
+    <>
+      <input
+        ref={ref}
+        id={id}
+        name={name}
+        maxLength={maxLength}
+        placeholder={placeholder}
+        className={className}
+        onChange={(event) => mention.handleChange(event.currentTarget)}
+        onKeyDown={mention.handleKeyDown}
+        onSelect={(event) => mention.updateCaret(event.currentTarget)}
+        value={value}
+      />
+      <MentionSuggestions
+        activeIndex={mention.activeIndex}
+        members={mention.matches}
+        onActiveIndexChange={mention.setActiveIndex}
+        onPick={mention.pickMember}
+        open={mention.open}
+        placement={menuPlacement}
+      />
+    </>
+  );
+}
+
+function useMentionEditor<TElement extends MentionEditorElement>({
+  inputRef,
+  maxLength,
+  members,
+  onValueChange,
+  value,
+}: {
+  inputRef: RefObject<TElement | null>;
+  maxLength: number;
+  members: FeedMentionMember[];
+  onValueChange: (value: string) => void;
+  value: string;
+}) {
+  const [caret, setCaret] = useState(value.length);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeMention = getActiveMention(value, caret);
+  const matches = useMemo(
+    () => getMentionMatches(members, activeMention?.query ?? ""),
+    [activeMention?.query, members],
+  );
+  const open = Boolean(activeMention && matches.length > 0);
+  const boundedActiveIndex = open ? Math.min(activeIndex, matches.length - 1) : 0;
+
+  function updateCaret(element: MentionEditorElement) {
+    setCaret(element.selectionStart ?? element.value.length);
+  }
+
+  function handleChange(element: MentionEditorElement) {
+    onValueChange(element.value);
+    setCaret(element.selectionStart ?? element.value.length);
+    setActiveIndex(0);
+  }
+
+  function pickMember(member: FeedMentionMember) {
+    if (!activeMention) {
+      return;
+    }
+
+    const insertedMention = `@${member.mentionHandle} `;
+    const nextValue = [
+      value.slice(0, activeMention.start),
+      insertedMention,
+      value.slice(activeMention.end),
+    ]
+      .join("")
+      .slice(0, maxLength);
+    const nextCaret = Math.min(activeMention.start + insertedMention.length, nextValue.length);
+
+    onValueChange(nextValue);
+    setCaret(nextCaret);
+    setActiveIndex(0);
+    window.requestAnimationFrame(() => {
+      inputRef.current?.focus();
+      inputRef.current?.setSelectionRange(nextCaret, nextCaret);
+    });
+  }
+
+  function handleKeyDown(event: KeyboardEvent<TElement>) {
+    if (!open) {
+      return;
+    }
+
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      setActiveIndex((index) => (index + 1) % matches.length);
+      return;
+    }
+
+    if (event.key === "ArrowUp") {
+      event.preventDefault();
+      setActiveIndex((index) => (index - 1 + matches.length) % matches.length);
+      return;
+    }
+
+    if (event.key === "Enter" || event.key === "Tab") {
+      event.preventDefault();
+      pickMember(matches[boundedActiveIndex]);
+      return;
+    }
+
+    if (event.key === "Escape") {
+      event.preventDefault();
+      setCaret(0);
+    }
+  }
+
+  return {
+    activeIndex: boundedActiveIndex,
+    handleChange,
+    handleKeyDown,
+    matches,
+    open,
+    pickMember,
+    setActiveIndex,
+    updateCaret,
+  };
+}
+
+function MentionSuggestions({
+  activeIndex,
+  members,
+  onActiveIndexChange,
+  onPick,
+  open,
+  placement,
+}: {
+  activeIndex: number;
+  members: FeedMentionMember[];
+  onActiveIndexChange: (index: number) => void;
+  onPick: (member: FeedMentionMember) => void;
+  open: boolean;
+  placement: MentionMenuPlacement;
+}) {
+  if (!open) {
+    return null;
+  }
+
+  return (
+    <div
+      className={cn(
+        "absolute left-0 right-0 z-30 overflow-hidden rounded-md border border-[var(--line-strong)] bg-[var(--card)] shadow-[0_18px_44px_-24px_#000]",
+        placement === "top" ? "bottom-full mb-2" : "top-full mt-2",
+      )}
+      role="listbox"
+    >
+      <div className="max-h-64 overflow-auto py-1">
+        {members.map((member, index) => (
+          <button
+            key={member.id}
+            type="button"
+            className={cn(
+              "grid w-full grid-cols-[32px_1fr_auto] items-center gap-2 px-3 py-2 text-left transition-colors",
+              index === activeIndex
+                ? "bg-[color-mix(in_srgb,var(--accent)_12%,transparent)]"
+                : "hover:bg-[var(--paper-2)]",
+            )}
+            onMouseDown={(event) => {
+              event.preventDefault();
+              onPick(member);
+            }}
+            onMouseEnter={() => onActiveIndexChange(index)}
+            role="option"
+            aria-selected={index === activeIndex}
+          >
+            <ClubAvatar
+              imageUrl={member.avatarUrl}
+              initials={member.initials}
+              label={member.displayName}
+              size="sm"
+            />
+            <span className="min-w-0">
+              <span className="block truncate text-sm font-bold text-[var(--ink)]">
+                {member.displayName}
+              </span>
+              <span className="mono block text-[10px] text-[var(--ink-faint)]">
+                @{member.mentionHandle}
+              </span>
+            </span>
+            <span className="mono text-[10px] text-[var(--accent)]">mention</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function getActiveMention(value: string, caret: number) {
+  const beforeCaret = value.slice(0, caret);
+  const start = beforeCaret.lastIndexOf("@");
+
+  if (start < 0) {
+    return null;
+  }
+
+  const prefix = start > 0 ? beforeCaret[start - 1] : "";
+  const query = beforeCaret.slice(start + 1);
+
+  if (prefix && /[\p{L}\p{N}_]/u.test(prefix)) {
+    return null;
+  }
+
+  if (/[^\p{L}\p{N}._-]/u.test(query)) {
+    return null;
+  }
+
+  return {
+    start,
+    end: caret,
+    query,
+  };
+}
+
+function getMentionMatches(members: FeedMentionMember[], query: string) {
+  const normalizedQuery = normalizeMentionSearch(query);
+
+  return members
+    .filter((member) => {
+      if (!normalizedQuery) {
+        return true;
+      }
+
+      return normalizeMentionSearch(
+        `${member.displayName} ${member.mentionHandle}`,
+      ).includes(normalizedQuery);
+    })
+    .slice(0, 6);
 }
 
 function ReactionForms({
@@ -692,5 +1056,14 @@ function normalizeAlbumSearch(value: string) {
     .toLowerCase()
     .replace(/^#/, "")
     .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .trim();
+}
+
+function normalizeMentionSearch(value: string) {
+  return value
+    .normalize("NFKD")
+    .replace(/\p{Diacritic}/gu, "")
+    .replace(/[^\p{L}\p{N}]+/gu, "")
+    .toLowerCase()
     .trim();
 }

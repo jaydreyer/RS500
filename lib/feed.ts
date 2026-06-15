@@ -9,12 +9,20 @@ import {
   getPocketBaseUrl,
   type ClubUser,
 } from "@/lib/auth";
+import {
+  getPreferredMentionHandle,
+  type MentionUserRecord,
+} from "@/lib/feed-mentions";
 
 export type FeedMember = {
   id: string;
   displayName: string;
   initials: string;
   avatarUrl: string | null;
+};
+
+export type FeedMentionMember = FeedMember & {
+  mentionHandle: string;
 };
 
 export type FeedAlbum = {
@@ -68,6 +76,7 @@ export type FeedCurrentListen = {
 
 export type FeedState = {
   currentUser: ClubUser;
+  members: FeedMentionMember[];
   albums: FeedAlbum[];
   currentListens: FeedCurrentListen[];
   posts: FeedPost[];
@@ -87,7 +96,7 @@ export async function getFeedState(
   pb: PocketBase,
   currentUser: ClubUser,
 ): Promise<FeedState> {
-  const [albums, currentListens, postsPage] = await Promise.all([
+  const [albums, currentListens, postsPage, users] = await Promise.all([
     pb.collection("albums").getFullList({
       sort: "rank",
       requestKey: null,
@@ -105,10 +114,15 @@ export async function getFeedState(
       sort: "-created",
       requestKey: null,
     }),
+    pb.collection("users").getFullList<MentionUserRecord>({
+      sort: "display_name,email",
+      requestKey: null,
+    }),
   ]);
 
   return {
     currentUser,
+    members: mapMentionMembers(users, currentUser.id),
     albums: albums.map((album) => mapAlbum(album)),
     currentListens: currentListens.map((listen) => mapCurrentListen(listen)),
     posts: await hydratePosts(pb, postsPage.items),
@@ -116,6 +130,20 @@ export async function getFeedState(
 }
 
 export async function getFeedUnreadCount(pb: PocketBase, userId: string) {
+  const unreadMentions = await getFeedUnreadMentions(pb, userId);
+  const mentionedPostIds = new Set(
+    unreadMentions.map((mention) => asString(mention.post)).filter(Boolean),
+  );
+  const postUnreadCount = await getFeedPostUnreadCount(pb, userId, mentionedPostIds);
+
+  return postUnreadCount + unreadMentions.length;
+}
+
+async function getFeedPostUnreadCount(
+  pb: PocketBase,
+  userId: string,
+  excludedPostIds = new Set<string>(),
+) {
   const readState = await getFeedReadState(pb, userId);
   if (!readState.available) {
     return 0;
@@ -129,14 +157,27 @@ export async function getFeedUnreadCount(pb: PocketBase, userId: string) {
     : pb.filter("user != {:user}", { user: userId });
 
   try {
-    const page = await pb.collection("feed_posts").getList(1, 1, {
+    const posts = await pb.collection("feed_posts").getFullList({
       filter,
       requestKey: null,
     });
 
-    return page.totalItems;
+    return posts.filter((post) => !excludedPostIds.has(post.id)).length;
   } catch {
     return 0;
+  }
+}
+
+async function getFeedUnreadMentions(pb: PocketBase, userId: string) {
+  try {
+    const mentions = await pb.collection("feed_mentions").getFullList({
+      filter: pb.filter("user = {:user}", { user: userId }),
+      requestKey: null,
+    });
+
+    return mentions.filter((mention) => !asString(mention.read_at));
+  } catch {
+    return [];
   }
 }
 
@@ -165,8 +206,10 @@ export async function markFeedRead(
       { requestKey: null },
     );
   } catch {
-    return;
+    // Keep mention read state independent from the legacy feed read marker.
   }
+
+  await markFeedMentionsRead(pb, userId, lastReadAt);
 }
 
 export async function getAlbumFeedPosts({
@@ -215,6 +258,32 @@ async function getFeedReadRecord(pb: PocketBase, userId: string): Promise<Record
     );
   } catch {
     return null;
+  }
+}
+
+async function markFeedMentionsRead(
+  pb: PocketBase,
+  userId: string,
+  readAt: string,
+) {
+  try {
+    const mentions = await pb.collection("feed_mentions").getFullList({
+      filter: pb.filter("user = {:user}", { user: userId }),
+      requestKey: null,
+    });
+    const unreadMentions = mentions.filter((mention) => !asString(mention.read_at));
+
+    await Promise.all(
+      unreadMentions.map((mention) =>
+        pb.collection("feed_mentions").update(
+          mention.id,
+          { read_at: readAt },
+          { requestKey: null },
+        ),
+      ),
+    );
+  } catch {
+    return;
   }
 }
 
@@ -337,6 +406,20 @@ function mapMember(record: RecordLike): FeedMember {
     initials: getClubUserInitials(record),
     avatarUrl: getClubUserAvatarUrl(record),
   };
+}
+
+function mapMentionMembers(
+  records: MentionUserRecord[],
+  currentUserId: string,
+): FeedMentionMember[] {
+  return records
+    .filter((record) => record.id !== currentUserId && !asString(record.deactivated_at))
+    .map((record) => ({
+      ...mapMember(record),
+      mentionHandle: getPreferredMentionHandle(record, records, currentUserId),
+    }))
+    .filter((member) => member.mentionHandle)
+    .sort((first, second) => first.displayName.localeCompare(second.displayName));
 }
 
 function getFileUrl(record: RecordLike, field: string, thumb?: string) {

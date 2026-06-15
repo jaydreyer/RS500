@@ -190,7 +190,7 @@ function UnreadBadge({ count, className }: { count: number; className?: string }
         "absolute grid min-w-5 place-items-center rounded-full border-2 border-[var(--paper)] bg-[var(--accent)] px-1.5 py-0.5 text-[10px] font-black leading-none text-[var(--paper)] shadow-sm",
         className,
       )}
-      title={`${count} unread feed ${count === 1 ? "post" : "posts"}`}
+      title={`${count} unread feed ${count === 1 ? "notification" : "notifications"}`}
     >
       {count > 99 ? "99+" : count}
     </span>

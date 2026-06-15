@@ -26,6 +26,8 @@ Do not expose `PB_ADMIN_EMAIL` or `PB_ADMIN_PASSWORD` to browser code.
 
 PocketBase reads JavaScript migrations from `pb_migrations/`.
 
+For day-to-day maintenance commands, live-backend checks, and the fallback process used when the local PocketBase CLI is unavailable, see [docs/pocketbase-runbook.md](pocketbase-runbook.md).
+
 Added Phase 1 migrations:
 
 - `1781006400_update_users_profile_fields.js`: extends `users` with `display_name` and optional `avatar`; authenticated members can list/view users.
@@ -39,6 +41,10 @@ Added Phase 1 migrations:
 Added Phase 2 migration:
 
 - `1781006404_lock_users_signup.js`: locks direct public `users` creation so signup can only happen through the Next.js trusted server action after invite-code validation. PocketBase superusers can still create users from the dashboard.
+
+Added Feed migration:
+
+- `1781006417_create_feed_mentions.js`: creates `feed_mentions` for targeted Feed `@mention` notifications. On the live `ai-lab:8091` instance, this collection was created once through the PocketBase superuser Collections API because the local Codex workspace did not have a `pocketbase` binary on `PATH`; the migration is idempotent so a future official migration run can safely skip an already-created collection.
 
 Run migrations from the PocketBase directory that contains or can see this app's `pb_migrations` folder. A local development example:
 

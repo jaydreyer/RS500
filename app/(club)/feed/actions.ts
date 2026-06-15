@@ -5,6 +5,11 @@ import { redirect } from "next/navigation";
 
 import { consumeUserActionLimit } from "@/lib/action-rate-limit";
 import { getAuthenticatedPocketBase } from "@/lib/auth";
+import {
+  extractMentionHandles,
+  resolveMentionRecipients,
+  type MentionUserRecord,
+} from "@/lib/feed-mentions";
 
 const POST_LIMIT = {
   limit: 24,
@@ -74,6 +79,13 @@ export async function createFeedPostAction(
       requestKey: null,
     });
 
+    await createFeedMentions({
+      pb,
+      actorUserId: user.id,
+      postId: post.id,
+      body,
+    });
+
     revalidatePath("/feed");
     if (albumId) {
       revalidatePath(`/albums/${albumId}`);
@@ -115,7 +127,7 @@ export async function createFeedReplyAction(formData: FormData) {
       requestKey: null,
     });
 
-    await pb.collection("feed_replies").create(
+    const reply = await pb.collection("feed_replies").create(
       {
         post: postId,
         user: user.id,
@@ -123,6 +135,14 @@ export async function createFeedReplyAction(formData: FormData) {
       },
       { requestKey: null },
     );
+
+    await createFeedMentions({
+      pb,
+      actorUserId: user.id,
+      postId,
+      replyId: reply.id,
+      body,
+    });
 
     revalidateFeedPaths(asString(post.album));
   } catch (error) {
@@ -240,6 +260,50 @@ async function getExistingReaction(
     );
   } catch {
     return null;
+  }
+}
+
+async function createFeedMentions({
+  pb,
+  actorUserId,
+  postId,
+  replyId,
+  body,
+}: {
+  pb: Awaited<ReturnType<typeof getAuthenticatedPocketBase>>["pb"];
+  actorUserId: string;
+  postId: string;
+  replyId?: string;
+  body: string;
+}) {
+  const handles = extractMentionHandles(body);
+
+  if (handles.length === 0) {
+    return;
+  }
+
+  try {
+    const users = await pb.collection("users").getFullList<MentionUserRecord>({
+      requestKey: null,
+      sort: "display_name,email",
+    });
+    const recipients = resolveMentionRecipients(users, handles, actorUserId);
+
+    await Promise.all(
+      recipients.map((recipient) =>
+        pb.collection("feed_mentions").create(
+          {
+            post: postId,
+            ...(replyId ? { reply: replyId } : {}),
+            actor: actorUserId,
+            user: recipient.id,
+          },
+          { requestKey: null },
+        ),
+      ),
+    );
+  } catch {
+    return;
   }
 }
 
