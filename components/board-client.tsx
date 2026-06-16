@@ -182,7 +182,12 @@ function BoardCard({
             size="lg"
             ring={isMe}
           />
-          <h2 className="title-wrap mt-4 text-2xl">{isMe ? "You" : member.displayName}</h2>
+          <Link
+            href={`/history?member=${member.id}`}
+            className="title-wrap mt-4 block text-2xl transition-colors hover:text-[var(--accent)]"
+          >
+            {isMe ? "You" : member.displayName}
+          </Link>
           <p className="tag mt-2">{isMe ? "haven't drawn yet" : "no pick yet"}</p>
           {isMe && (
             <Link
@@ -211,7 +216,12 @@ function BoardCard({
           size="sm"
           ring={isMe}
         />
-        <h2 className="min-w-0 truncate text-lg">{isMe ? "You" : member.displayName}</h2>
+        <Link
+          href={`/history?member=${member.id}`}
+          className="min-w-0 truncate text-lg transition-colors hover:text-[var(--accent)]"
+        >
+          {isMe ? "You" : member.displayName}
+        </Link>
         <div className="ml-auto shrink-0">
           {listening ? <ListeningBadge /> : <ScoreBadge score={pick.rating} label={`/${RATING_SCALE.max}`} />}
         </div>

@@ -1,4 +1,4 @@
-import { ArrowLeft, Users } from "lucide-react";
+import { ArrowLeft, ArrowUpDown, Users } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -6,6 +6,7 @@ import { AlbumCover } from "@/components/album-cover";
 import { ClubAvatar, ScoreBadge } from "@/components/primitives";
 import { ReviewMarkdown } from "@/components/review-markdown";
 import { RouteShell } from "@/components/route-shell";
+import { buttonVariants } from "@/components/ui/button";
 import { getAuthenticatedPocketBase } from "@/lib/auth";
 import { RATING_SCALE } from "@/lib/config";
 import {
@@ -21,12 +22,27 @@ import { cn } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
+type HistorySortKey = "date" | "score";
+type HistorySortDirection = "asc" | "desc";
+type HistorySortState = {
+  sort: HistorySortKey;
+  dir: HistorySortDirection;
+};
+
+const HISTORY_SORT_OPTIONS: Array<HistorySortState & { label: string }> = [
+  { sort: "date", dir: "desc", label: "Date desc" },
+  { sort: "date", dir: "asc", label: "Date asc" },
+  { sort: "score", dir: "desc", label: "Score high to low" },
+  { sort: "score", dir: "asc", label: "Score low to high" },
+];
+
 export default async function HistoryPage({
   searchParams,
 }: {
-  searchParams: Promise<{ member?: string }>;
+  searchParams: Promise<{ member?: string; sort?: string; dir?: string }>;
 }) {
-  const { member: selectedMemberId } = await searchParams;
+  const { member: selectedMemberId, sort, dir } = await searchParams;
+  const sortState = getHistorySortState(sort, dir);
   let historyState: HistoryState;
 
   try {
@@ -45,8 +61,16 @@ export default async function HistoryPage({
     : null;
 
   if (selectedSummary) {
-    return <MemberHistoryDetail historyState={historyState} summary={selectedSummary} />;
+    return (
+      <MemberHistoryDetail
+        historyState={historyState}
+        summary={selectedSummary}
+        sortState={sortState}
+      />
+    );
   }
+
+  const sortedFreshListens = sortHistoryListens(historyState.freshGridListens, sortState);
 
   return (
     <RouteShell eyebrow="THE LOG" title="History">
@@ -54,6 +78,8 @@ export default async function HistoryPage({
         Every reviewed fresh pick in reverse chronology. Member names open reviewed logs, including
         skips.
       </p>
+
+      <HistorySortControls sortState={sortState} />
 
       <section className="mb-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {historyState.memberSummaries.map((summary) => (
@@ -82,7 +108,7 @@ export default async function HistoryPage({
       </section>
 
       <div className="hard-panel overflow-hidden rounded-lg">
-        {historyState.freshGridListens.map((listen) => {
+        {sortedFreshListens.map((listen) => {
           const member = historyState.members.find((entry) => entry.id === listen.userId);
 
           return member ? (
@@ -96,7 +122,7 @@ export default async function HistoryPage({
         })}
       </div>
 
-      {historyState.freshGridListens.length === 0 && (
+      {sortedFreshListens.length === 0 && (
         <div className="pressed-panel mt-5 rounded-lg p-6 text-center">
           <p className="tag">No reviewed fresh picks yet</p>
         </div>
@@ -145,7 +171,7 @@ function RecentListenRow({
               group draw
             </span>
           )}
-          <span className="tag">{listen.weekLabel}</span>
+          <span className="tag">{formatReviewDate(listen)}</span>
         </div>
         <h2 className="mt-1 truncate text-xl">{listen.album.title}</h2>
         <p className="mt-1 truncate font-quote text-lg leading-tight text-[var(--ink-soft)]">
@@ -167,12 +193,14 @@ function RecentListenRow({
 function MemberHistoryDetail({
   historyState,
   summary,
+  sortState,
 }: {
   historyState: HistoryState;
   summary: MemberSummary;
+  sortState: HistorySortState;
 }) {
   const memberLabel = getMemberLabel(summary.member, historyState.currentUser.id);
-  const reviewedListens = summary.loggedListens;
+  const reviewedListens = sortHistoryListens(summary.loggedListens, sortState);
 
   return (
     <section className="mx-auto w-full max-w-[820px]">
@@ -208,6 +236,8 @@ function MemberHistoryDetail({
           />
         </div>
       </div>
+
+      <HistorySortControls sortState={sortState} memberId={summary.member.id} />
 
       <div className="hard-panel overflow-hidden rounded-lg">
         {reviewedListens.length === 0 ? (
@@ -283,7 +313,7 @@ function MemberListenRow({
           )}
         </div>
         <p className="mt-1 font-quote text-lg leading-tight text-[var(--ink-soft)]">
-          {listen.album.artist} / #{listen.album.rank} / {listen.weekLabel}
+          {listen.album.artist} / #{listen.album.rank} / {formatReviewDate(listen)}
         </p>
         {listen.take && (
           <ReviewMarkdown className="mt-2 line-clamp-3 font-quote text-base leading-relaxed text-[var(--ink-soft)]">
@@ -297,4 +327,111 @@ function MemberListenRow({
       </div>
     </Link>
   );
+}
+
+function HistorySortControls({
+  sortState,
+  memberId,
+}: {
+  sortState: HistorySortState;
+  memberId?: string;
+}) {
+  return (
+    <div className="mb-4 flex flex-wrap items-center gap-2">
+      <span className="tag inline-flex items-center gap-1.5">
+        <ArrowUpDown className="size-3.5" aria-hidden="true" />
+        sort
+      </span>
+      {HISTORY_SORT_OPTIONS.map((option) => {
+        const active = option.sort === sortState.sort && option.dir === sortState.dir;
+
+        return (
+          <Link
+            key={`${option.sort}-${option.dir}`}
+            href={buildHistorySortHref(option, memberId)}
+            aria-current={active ? "page" : undefined}
+            className={cn(
+              buttonVariants({ variant: active ? "solid" : "ghost", size: "sm" }),
+              "h-8 px-2.5",
+            )}
+          >
+            {option.label}
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
+
+function getHistorySortState(sort?: string, dir?: string): HistorySortState {
+  return {
+    sort: sort === "score" ? "score" : "date",
+    dir: dir === "asc" ? "asc" : "desc",
+  };
+}
+
+function sortHistoryListens<TListen extends HistoryListen>(
+  listens: TListen[],
+  sortState: HistorySortState,
+) {
+  return listens.toSorted((left, right) => {
+    const direction = sortState.dir === "asc" ? 1 : -1;
+    const primary =
+      sortState.sort === "score"
+        ? compareNumbers(left.rating ?? 0, right.rating ?? 0)
+        : compareStrings(getReviewSubmittedAt(left), getReviewSubmittedAt(right));
+
+    if (primary !== 0) {
+      return primary * direction;
+    }
+
+    const dateTie = compareStrings(getReviewSubmittedAt(right), getReviewSubmittedAt(left));
+    const scoreTie = compareNumbers(right.rating ?? 0, left.rating ?? 0);
+
+    return (
+      (sortState.sort === "score" ? dateTie : scoreTie) ||
+      left.album.title.localeCompare(right.album.title) ||
+      left.id.localeCompare(right.id)
+    );
+  });
+}
+
+function buildHistorySortHref(sortState: HistorySortState, memberId?: string) {
+  const params = new URLSearchParams({
+    sort: sortState.sort,
+    dir: sortState.dir,
+  });
+
+  if (memberId) {
+    params.set("member", memberId);
+  }
+
+  return `/history?${params.toString()}`;
+}
+
+function formatReviewDate(listen: HistoryListen) {
+  const submittedAt = getReviewSubmittedAt(listen);
+  const date = new Date(submittedAt);
+
+  if (!submittedAt || Number.isNaN(date.getTime())) {
+    return "date unavailable";
+  }
+
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(new Date(submittedAt));
+}
+
+function getReviewSubmittedAt(listen: HistoryListen) {
+  return listen.ratedAt || listen.created || "";
+}
+
+function compareNumbers(left: number, right: number) {
+  return left - right;
+}
+
+function compareStrings(left: string, right: string) {
+  return left.localeCompare(right);
 }
