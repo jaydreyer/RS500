@@ -2,6 +2,7 @@ import assert from "node:assert/strict"
 import test from "node:test"
 
 import {
+  assertSafeDevSeedTarget,
   buildDevSeedPlan,
   SAMPLE_USERS,
 } from "../scripts/seed-dev.mjs"
@@ -57,4 +58,16 @@ test("dev seed plan creates rich sample activity across app surfaces", () => {
   assert.ok(plan.feedPosts.length >= 60)
   assert.ok(plan.listens.length > 900)
   assert.ok(Array.from(activeByUser.values()).every((count) => count === 1))
+})
+
+test("dev seed refuses remote PocketBase targets by default", () => {
+  assert.doesNotThrow(() => assertSafeDevSeedTarget("http://127.0.0.1:8090"))
+  assert.doesNotThrow(() => assertSafeDevSeedTarget("http://localhost:8090"))
+  assert.throws(
+    () => assertSafeDevSeedTarget("http://ai-lab:8091"),
+    /Refusing to run seed:dev/,
+  )
+  assert.doesNotThrow(() =>
+    assertSafeDevSeedTarget("http://ai-lab:8091", { allowRemoteDevSeed: true }),
+  )
 })
