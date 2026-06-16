@@ -1,4 +1,5 @@
-import { Save, ShieldCheck, UserX } from "lucide-react";
+import { Megaphone, Save, ShieldCheck, UserX } from "lucide-react";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { deactivateAccountAction, updateProfileAction } from "@/app/(club)/settings/actions";
@@ -7,6 +8,7 @@ import { ClubAvatar } from "@/components/primitives";
 import { RouteShell } from "@/components/route-shell";
 import { Button } from "@/components/ui/button";
 import { getAuthenticatedPocketBase } from "@/lib/auth";
+import { hasReleaseNotes, releaseNoteCount } from "@/lib/release-notes";
 
 export const dynamic = "force-dynamic";
 
@@ -115,6 +117,24 @@ export default async function SettingsPage({ searchParams }: SettingsPageProps) 
             Password and email changes stay manual for now so the invite-only account list remains
             easy to supervise.
           </p>
+
+          <Link
+            href="/updates"
+            className="mt-5 flex items-center gap-3 rounded-md border border-[var(--line-strong)] bg-[var(--paper-2)] px-3 py-3 transition-colors hover:border-[var(--accent)] hover:text-[var(--ink)]"
+          >
+            <span className="relative grid size-9 shrink-0 place-items-center rounded-md border border-[var(--line-strong)] text-[var(--accent)]">
+              <Megaphone className="size-4" aria-hidden="true" />
+              {hasReleaseNotes && (
+                <span className="absolute -right-1 -top-1 size-2.5 rounded-full border-2 border-[var(--paper-2)] bg-[var(--accent)]" />
+              )}
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block font-display text-base font-extrabold">What&apos;s New</span>
+              <span className="tag mt-1 block">
+                {releaseNoteCount} {releaseNoteCount === 1 ? "update" : "updates"}
+              </span>
+            </span>
+          </Link>
 
           <form
             action={deactivateAccountAction}
