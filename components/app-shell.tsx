@@ -3,7 +3,7 @@
 import { LogOut, Megaphone } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 
 import { logoutAction } from "@/app/auth/actions";
 import { BrandMark } from "@/components/brand-mark";
@@ -11,10 +11,13 @@ import { ClubAvatar } from "@/components/primitives";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { CURRENT_WEEK_LABEL } from "@/lib/config";
 import { clubNavItems } from "@/lib/navigation";
-import { hasReleaseNotes, releaseNoteCount } from "@/lib/release-notes";
+import { hasReleaseNotes, latestReleaseNoteId, releaseNoteCount } from "@/lib/release-notes";
 import { cn } from "@/lib/utils";
 import type { ClubUser } from "@/lib/auth";
 import type { ClubNavItem } from "@/lib/navigation";
+
+const RELEASE_NOTES_SEEN_STORAGE_KEY = "spin500:release-notes-seen";
+const RELEASE_NOTES_SEEN_EVENT = "spin500:release-notes-seen-change";
 
 export function AppShell({
   children,
@@ -27,6 +30,13 @@ export function AppShell({
 }) {
   const pathname = usePathname();
   const [remoteFeedUnreadCount, setRemoteFeedUnreadCount] = useState(feedUnreadCount);
+  const seenReleaseNoteId = useSyncExternalStore(
+    subscribeToReleaseNoteSeenChanges,
+    getSeenReleaseNoteIdSnapshot,
+    getSeenReleaseNoteIdServerSnapshot,
+  );
+  const hasUnreadReleaseNotes =
+    hasReleaseNotes && Boolean(latestReleaseNoteId) && seenReleaseNoteId !== latestReleaseNoteId;
   const visibleFeedUnreadCount = isFeedPath(pathname) ? 0 : remoteFeedUnreadCount;
   const visibleNavItems = user.isAdmin
     ? clubNavItems
@@ -68,9 +78,20 @@ export function AppShell({
     };
   }, [pathname]);
 
+  useEffect(() => {
+    if (hasReleaseNotes && latestReleaseNoteId && isUpdatesPath(pathname)) {
+      markLatestReleaseNotesSeen();
+    }
+  }, [pathname]);
+
   return (
     <div className="page-surface min-h-screen bg-[var(--paper)] pb-24 md:pb-0">
-      <TopNav user={user} feedUnreadCount={visibleFeedUnreadCount} navItems={visibleNavItems} />
+      <TopNav
+        user={user}
+        feedUnreadCount={visibleFeedUnreadCount}
+        hasUnreadReleaseNotes={hasUnreadReleaseNotes}
+        navItems={visibleNavItems}
+      />
       <main className="mx-auto w-full max-w-7xl px-4 py-7 sm:px-6 md:px-10 md:py-10">
         {children}
       </main>
@@ -82,10 +103,12 @@ export function AppShell({
 function TopNav({
   user,
   feedUnreadCount,
+  hasUnreadReleaseNotes,
   navItems,
 }: {
   user: ClubUser;
   feedUnreadCount: number;
+  hasUnreadReleaseNotes: boolean;
   navItems: readonly ClubNavItem[];
 }) {
   const pathname = usePathname();
@@ -139,7 +162,7 @@ function TopNav({
             title="What's New"
           >
             <Megaphone className="size-4" aria-hidden="true" />
-            {hasReleaseNotes && pathname !== "/updates" && <UpdateIndicator />}
+            {hasUnreadReleaseNotes && pathname !== "/updates" && <UpdateIndicator />}
           </Link>
           <Link
             aria-label="Profile settings"
@@ -241,4 +264,39 @@ function UnreadBadge({ count, className }: { count: number; className?: string }
 
 function isFeedPath(pathname: string) {
   return pathname === "/feed" || pathname.startsWith("/feed/");
+}
+
+function isUpdatesPath(pathname: string) {
+  return pathname === "/updates" || pathname.startsWith("/updates/");
+}
+
+function subscribeToReleaseNoteSeenChanges(onChange: () => void) {
+  window.addEventListener(RELEASE_NOTES_SEEN_EVENT, onChange);
+  window.addEventListener("storage", onChange);
+
+  return () => {
+    window.removeEventListener(RELEASE_NOTES_SEEN_EVENT, onChange);
+    window.removeEventListener("storage", onChange);
+  };
+}
+
+function getSeenReleaseNoteIdSnapshot() {
+  try {
+    return window.localStorage.getItem(RELEASE_NOTES_SEEN_STORAGE_KEY) ?? "";
+  } catch {
+    return latestReleaseNoteId;
+  }
+}
+
+function getSeenReleaseNoteIdServerSnapshot() {
+  return latestReleaseNoteId;
+}
+
+function markLatestReleaseNotesSeen() {
+  try {
+    window.localStorage.setItem(RELEASE_NOTES_SEEN_STORAGE_KEY, latestReleaseNoteId);
+    window.dispatchEvent(new Event(RELEASE_NOTES_SEEN_EVENT));
+  } catch {
+    return;
+  }
 }

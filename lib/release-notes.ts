@@ -25,3 +25,8 @@ export const releaseNotes = [
 
 export const releaseNoteCount = releaseNotes.length;
 export const hasReleaseNotes = releaseNoteCount > 0;
+export const latestReleaseNoteId = releaseNotes[0] ? getReleaseNoteId(releaseNotes[0]) : "";
+
+export function getReleaseNoteId(note: ReleaseNote) {
+  return `${note.date}:${note.title}`;
+}
