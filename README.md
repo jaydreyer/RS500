@@ -53,6 +53,15 @@ npm run import:albums -- --file ./data/rs500.csv --dry-run
 npm run import:albums -- --file ./data/rs500.csv
 ```
 
+Or fill a local development backend with the complete RS500 album/artwork dataset plus sample users, listens, reviews, reactions, groups, group draws, feed posts, replies, mentions, and feed read state:
+
+```bash
+npm run seed:dev -- --validate-only
+npm run seed:dev
+```
+
+The sample accounts use the password `spin500-dev`; for example, log in as `maya.dev@example.com`.
+
 Start the app:
 
 ```bash

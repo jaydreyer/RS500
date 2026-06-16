@@ -16,7 +16,7 @@ const ALL_FIELDS = [
   "review_links",
 ]
 
-function loadDotenvFile(filePath) {
+export function loadDotenvFile(filePath) {
   if (!fs.existsSync(filePath)) {
     return
   }
@@ -87,7 +87,7 @@ function normalizeHeader(header) {
   return String(header).trim().toLowerCase().replace(/[\s-]+/g, "_")
 }
 
-function readRows(filePath) {
+export function readRows(filePath) {
   const absolutePath = path.resolve(filePath)
   const ext = path.extname(absolutePath).toLowerCase()
   const contents = fs.readFileSync(absolutePath, "utf8").replace(/^\uFEFF/, "")
@@ -366,7 +366,7 @@ function formatPocketBaseError(error) {
   return `${error?.message ?? "PocketBase error"} (${details})`
 }
 
-async function findAlbumByRank(pb, rank) {
+export async function findAlbumByRank(pb, rank) {
   try {
     return await pb.collection("albums").getFirstListItem(pb.filter("rank = {:rank}", { rank }), {
       requestKey: null,
@@ -380,7 +380,7 @@ async function findAlbumByRank(pb, rank) {
   }
 }
 
-async function upsertAlbum(pb, album, dryRun) {
+export async function upsertAlbum(pb, album, dryRun) {
   const existing = await findAlbumByRank(pb, album.rank)
 
   if (!existing) {

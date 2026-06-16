@@ -10,6 +10,7 @@
     "enrich:links": "node scripts/enrich-streaming-links.mjs",
     "enrich:reviews": "node scripts/enrich-review-links.mjs",
     "import:albums": "node scripts/import-albums.mjs",
+    "seed:dev": "node scripts/seed-dev.mjs",
     "start": "next start",
     "lint": "eslint .",
     "test": "node --test tests/*.test.mjs",
