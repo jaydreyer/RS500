@@ -17,3 +17,5 @@ export const clubNavItems = [
   { href: "/history", label: "History", Icon: History },
   { href: "/stats", label: "Stats", Icon: ChartNoAxesColumn },
 ] as const;
+
+export type ClubNavItem = (typeof clubNavItems)[number];

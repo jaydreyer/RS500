@@ -13,6 +13,7 @@ import { CURRENT_WEEK_LABEL } from "@/lib/config";
 import { clubNavItems } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 import type { ClubUser } from "@/lib/auth";
+import type { ClubNavItem } from "@/lib/navigation";
 
 export function AppShell({
   children,
@@ -26,6 +27,9 @@ export function AppShell({
   const pathname = usePathname();
   const [remoteFeedUnreadCount, setRemoteFeedUnreadCount] = useState(feedUnreadCount);
   const visibleFeedUnreadCount = isFeedPath(pathname) ? 0 : remoteFeedUnreadCount;
+  const visibleNavItems = user.isAdmin
+    ? clubNavItems
+    : clubNavItems.filter((item) => item.href !== "/groups");
 
   useEffect(() => {
     if (isFeedPath(pathname)) {
@@ -65,16 +69,24 @@ export function AppShell({
 
   return (
     <div className="page-surface min-h-screen bg-[var(--paper)] pb-24 md:pb-0">
-      <TopNav user={user} feedUnreadCount={visibleFeedUnreadCount} />
+      <TopNav user={user} feedUnreadCount={visibleFeedUnreadCount} navItems={visibleNavItems} />
       <main className="mx-auto w-full max-w-7xl px-4 py-7 sm:px-6 md:px-10 md:py-10">
         {children}
       </main>
-      <BottomNav feedUnreadCount={visibleFeedUnreadCount} />
+      <BottomNav feedUnreadCount={visibleFeedUnreadCount} navItems={visibleNavItems} />
     </div>
   );
 }
 
-function TopNav({ user, feedUnreadCount }: { user: ClubUser; feedUnreadCount: number }) {
+function TopNav({
+  user,
+  feedUnreadCount,
+  navItems,
+}: {
+  user: ClubUser;
+  feedUnreadCount: number;
+  navItems: readonly ClubNavItem[];
+}) {
   const pathname = usePathname();
 
   return (
@@ -82,7 +94,7 @@ function TopNav({ user, feedUnreadCount }: { user: ClubUser; feedUnreadCount: nu
       <div className="mx-auto flex h-[61px] max-w-7xl items-center gap-4 px-4 sm:px-6 md:px-10">
         <BrandMark />
         <nav className="ml-5 hidden items-center gap-1 md:flex">
-          {clubNavItems.map(({ href, label }) => {
+          {navItems.map(({ href, label }) => {
             const active = pathname === href || pathname.startsWith(`${href}/`);
             const showUnread = href === "/feed" && !active && feedUnreadCount > 0;
 
@@ -148,16 +160,22 @@ function TopNav({ user, feedUnreadCount }: { user: ClubUser; feedUnreadCount: nu
   );
 }
 
-function BottomNav({ feedUnreadCount }: { feedUnreadCount: number }) {
+function BottomNav({
+  feedUnreadCount,
+  navItems,
+}: {
+  feedUnreadCount: number;
+  navItems: readonly ClubNavItem[];
+}) {
   const pathname = usePathname();
 
   return (
     <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--line-strong)] bg-[color-mix(in_srgb,var(--paper)_88%,transparent)] pb-[env(safe-area-inset-bottom)] backdrop-blur-xl md:hidden">
       <div
         className="grid overflow-x-auto"
-        style={{ gridTemplateColumns: `repeat(${clubNavItems.length}, minmax(72px, 1fr))` }}
+        style={{ gridTemplateColumns: `repeat(${navItems.length}, minmax(72px, 1fr))` }}
       >
-        {clubNavItems.map(({ href, label, Icon }) => {
+        {navItems.map(({ href, label, Icon }) => {
           const active = pathname === href || pathname.startsWith(`${href}/`);
           const showUnread = href === "/feed" && !active && feedUnreadCount > 0;
 
