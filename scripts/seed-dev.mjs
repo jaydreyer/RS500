@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-import path from "node:path"
 import process from "node:process"
 import { pathToFileURL } from "node:url"
 import PocketBase from "pocketbase"
@@ -8,10 +7,10 @@ import PocketBase from "pocketbase"
 import {
   findAlbumByRank,
   hasAlbumChanges,
-  loadDotenvFile,
   normalizeAlbum,
   readRows,
 } from "./import-albums.mjs"
+import { getMissingEnv, loadProjectEnv } from "./env.mjs"
 
 export const SAMPLE_USER_PASSWORD = "spin500-dev"
 
@@ -448,20 +447,17 @@ function isoWeekKey(baseDate, weekOffset) {
 }
 
 async function seedPocketBase(plan, options) {
-  loadDotenvFile(path.resolve(".env.local"))
-  loadDotenvFile(path.resolve(".env"))
+  loadProjectEnv()
 
   const pbUrl = process.env.NEXT_PUBLIC_PB_URL
   const adminEmail = process.env.PB_ADMIN_EMAIL
   const adminPassword = process.env.PB_ADMIN_PASSWORD
-  const missingEnv = [
-    ["NEXT_PUBLIC_PB_URL", pbUrl],
-    ["PB_ADMIN_EMAIL", adminEmail],
-    ["PB_ADMIN_PASSWORD", adminPassword],
-  ].filter(([, value]) => !value)
+  const missingEnv = getMissingEnv(["NEXT_PUBLIC_PB_URL", "PB_ADMIN_EMAIL", "PB_ADMIN_PASSWORD"])
 
   if (missingEnv.length > 0) {
-    throw new Error(`Missing environment variable(s): ${missingEnv.map(([key]) => key).join(", ")}`)
+    throw new Error(
+      `Missing environment variable(s): ${missingEnv.join(", ")}. Checked the shell plus .env.local/.env in this checkout and the primary Git checkout.`,
+    )
   }
 
   const pb = new PocketBase(pbUrl)
