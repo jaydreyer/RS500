@@ -6,6 +6,7 @@ import process from "node:process"
 import { pathToFileURL } from "node:url"
 import { parse } from "csv-parse/sync"
 import PocketBase from "pocketbase"
+import { getMissingEnv, loadProjectEnv } from "./env.mjs"
 
 const REQUIRED_FIELDS = ["rank", "title", "artist", "year", "cover_url"]
 const OPTIONAL_URL_FIELDS = ["spotify_url", "apple_music_url"]
@@ -16,7 +17,7 @@ const ALL_FIELDS = [
   "review_links",
 ]
 
-function loadDotenvFile(filePath) {
+export function loadDotenvFile(filePath) {
   if (!fs.existsSync(filePath)) {
     return
   }
@@ -80,14 +81,17 @@ function printHelp() {
 Required environment:
   NEXT_PUBLIC_PB_URL
   PB_ADMIN_EMAIL
-  PB_ADMIN_PASSWORD`)
+  PB_ADMIN_PASSWORD
+
+Environment is read from the shell, then .env.local/.env in this checkout,
+then .env.local/.env in the primary Git checkout for Codex worktrees.`)
 }
 
 function normalizeHeader(header) {
   return String(header).trim().toLowerCase().replace(/[\s-]+/g, "_")
 }
 
-function readRows(filePath) {
+export function readRows(filePath) {
   const absolutePath = path.resolve(filePath)
   const ext = path.extname(absolutePath).toLowerCase()
   const contents = fs.readFileSync(absolutePath, "utf8").replace(/^\uFEFF/, "")
@@ -366,7 +370,7 @@ function formatPocketBaseError(error) {
   return `${error?.message ?? "PocketBase error"} (${details})`
 }
 
-async function findAlbumByRank(pb, rank) {
+export async function findAlbumByRank(pb, rank) {
   try {
     return await pb.collection("albums").getFirstListItem(pb.filter("rank = {:rank}", { rank }), {
       requestKey: null,
@@ -380,7 +384,7 @@ async function findAlbumByRank(pb, rank) {
   }
 }
 
-async function upsertAlbum(pb, album, dryRun) {
+export async function upsertAlbum(pb, album, dryRun) {
   const existing = await findAlbumByRank(pb, album.rank)
 
   if (!existing) {
@@ -403,8 +407,7 @@ async function upsertAlbum(pb, album, dryRun) {
 }
 
 async function main() {
-  loadDotenvFile(path.resolve(".env.local"))
-  loadDotenvFile(path.resolve(".env"))
+  loadProjectEnv()
 
   const options = parseArgs(process.argv.slice(2))
   if (options.help) {
@@ -463,14 +466,12 @@ async function main() {
   const adminEmail = process.env.PB_ADMIN_EMAIL
   const adminPassword = process.env.PB_ADMIN_PASSWORD
 
-  const missingEnv = [
-    ["NEXT_PUBLIC_PB_URL", pbUrl],
-    ["PB_ADMIN_EMAIL", adminEmail],
-    ["PB_ADMIN_PASSWORD", adminPassword],
-  ].filter(([, value]) => !value)
+  const missingEnv = getMissingEnv(["NEXT_PUBLIC_PB_URL", "PB_ADMIN_EMAIL", "PB_ADMIN_PASSWORD"])
 
   if (missingEnv.length > 0) {
-    throw new Error(`Missing environment variable(s): ${missingEnv.map(([key]) => key).join(", ")}`)
+    throw new Error(
+      `Missing environment variable(s): ${missingEnv.join(", ")}. Checked the shell plus .env.local/.env in this checkout and the primary Git checkout.`,
+    )
   }
 
   const pb = new PocketBase(pbUrl)

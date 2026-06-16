@@ -46,7 +46,13 @@ Added Feed migration:
 
 - `1781006417_create_feed_mentions.js`: creates `feed_mentions` for targeted Feed `@mention` notifications. On the live `ai-lab:8091` instance, this collection was created once through the PocketBase superuser Collections API because the local Codex workspace did not have a `pocketbase` binary on `PATH`; the migration is idempotent so a future official migration run can safely skip an already-created collection.
 
-Run migrations from the PocketBase directory that contains or can see this app's `pb_migrations` folder. A local development example:
+Run migrations from the PocketBase directory that contains or can see this app's `pb_migrations` folder. For local development, prefer the combined helper:
+
+```bash
+npm run dev:local
+```
+
+It runs PocketBase from `./tmp/pb_dev_data` with this repo's migrations directory and starts Next.js against `http://127.0.0.1:8090`. A manual PocketBase-only equivalent is:
 
 ```bash
 pocketbase serve --dir ./pb_data --migrationsDir /Users/jaydreyer/projects/RS500/pb_migrations
@@ -135,7 +141,7 @@ npm run import:albums -- ./data/rs500.json
 
 The importer:
 
-- Authenticates as the PocketBase superuser from `.env.local` or shell environment.
+- Authenticates as the PocketBase superuser from the shell, this checkout's `.env.local`/`.env`, or the primary Git checkout's `.env.local`/`.env` when running from a Codex worktree.
 - Supports `--validate-only` for local file validation without contacting PocketBase.
 - Upserts albums by `rank`.
 - Creates missing ranks.

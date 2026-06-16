@@ -4,9 +4,10 @@ Quick reference for future maintenance work in this repo.
 
 ## Current Project Setup
 
-- The app reads `NEXT_PUBLIC_PB_URL`, `PB_ADMIN_EMAIL`, and `PB_ADMIN_PASSWORD` from `.env.local` or the shell environment.
+- Maintenance scripts read `NEXT_PUBLIC_PB_URL`, `PB_ADMIN_EMAIL`, and `PB_ADMIN_PASSWORD` from the shell, then `.env.local`/`.env` in the current checkout, then `.env.local`/`.env` in the primary Git checkout. This lets Codex worktrees reuse `/Users/jaydreyer/projects/RS500/.env.local` without copying secrets.
 - In the current owner/dev workspace, `.env.local` points at `http://ai-lab:8091`.
-- The Codex desktop workspace may not have a `pocketbase` binary on `PATH`. Check first with:
+- For local app development, prefer `npm run dev:local`. It downloads a local PocketBase binary into `./tmp/pocketbase-bin` if needed, runs PocketBase from `./tmp/pb_dev_data`, ensures the configured local superuser exists, and starts Next.js with `NEXT_PUBLIC_PB_URL=http://127.0.0.1:8090`.
+- The system `PATH` may still not have a global `pocketbase` binary. Check first with:
 
 ```bash
 command -v pocketbase || true
@@ -22,7 +23,7 @@ Never print or commit superuser credentials.
 
 ## Normal Migration Path
 
-PocketBase applies JavaScript migrations when the PocketBase server runs with this repo's migration directory:
+PocketBase applies JavaScript migrations when the PocketBase server runs with this repo's migration directory. For local development, `npm run dev:local` handles this automatically. The manual equivalent is:
 
 ```bash
 pocketbase serve --dir ./pb_data --migrationsDir /Users/jaydreyer/projects/RS500/pb_migrations
@@ -92,7 +93,7 @@ NODE
 
 ## Session Note: Feed Mentions
 
-On June 15, 2026, `feed_mentions` was created on the live `ai-lab:8091` backend through the superuser Collections API because no local `pocketbase` binary was available in the Codex desktop environment. The matching migration is `pb_migrations/1781006417_create_feed_mentions.js` and is idempotent.
+On June 15, 2026, `feed_mentions` was created on the live `ai-lab:8091` backend through the superuser Collections API because no local `pocketbase` binary was available in the Codex desktop environment at that time. The matching migration is `pb_migrations/1781006417_create_feed_mentions.js` and is idempotent. Local development now uses `npm run dev:local`, which can download and run a local PocketBase binary under `./tmp/`.
 
 Verified live collection details after creation:
 

@@ -15,6 +15,14 @@ mkdir -p ./tmp/pb_dev_data
 pocketbase serve --dir ./tmp/pb_dev_data --migrationsDir /Users/jaydreyer/projects/RS500/pb_migrations --http 127.0.0.1:8090
 ```
 
+For the usual app workflow, use the combined local command instead:
+
+```bash
+npm run dev:local
+```
+
+`dev:local` starts PocketBase from `./tmp/pb_dev_data`, downloading a local PocketBase binary into `./tmp/pocketbase-bin` if one is not already available, ensures the configured superuser exists, forces the Next.js process to use `NEXT_PUBLIC_PB_URL=http://127.0.0.1:8090`, and then starts the Next.js dev server. Set `SPIN500_LOCAL_PB_URL` only if you need a different localhost PocketBase URL.
+
 Create a local env file that points the app at the dev instance:
 
 ```bash
@@ -37,6 +45,17 @@ Create the PocketBase superuser in the dev dashboard, then seed albums:
 npm run import:albums -- --file ./data/rs500-albums.csv --validate-only
 npm run import:albums -- --file ./data/rs500-albums.csv
 ```
+
+For a fuller development sandbox, seed the complete album/artwork dataset and broad sample activity:
+
+```bash
+npm run seed:dev -- --validate-only
+npm run seed:dev
+```
+
+The development seeder refuses non-local PocketBase URLs by default. `NEXT_PUBLIC_PB_URL` must point at `localhost`, `127.0.0.1`, or `::1` unless you pass `--allow-remote-dev-seed` for a confirmed disposable remote development backend. Do not use that override for `http://ai-lab:8091`.
+
+The development seeder authenticates as the PocketBase superuser, upserts all 500 albums from `data/rs500-albums.json`, creates sample users with the password `spin500-dev`, and fills listens/reviews, reactions, groups, group draws, feed posts, feed replies, feed mentions, and feed read state. It is idempotent for the generated sample records, so rerunning it should update the same development data instead of creating another independent sample crew.
 
 ## Staging Instance
 

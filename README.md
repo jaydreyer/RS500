@@ -33,15 +33,17 @@ Required variables:
 
 Rotate the shared signup code before production use; it is validated server-side.
 
-Run PocketBase with this repo's migrations directory:
+For day-to-day local development, start PocketBase and Next.js together:
 
 ```bash
-pocketbase serve --dir ./pb_data --migrationsDir /Users/jaydreyer/projects/RS500/pb_migrations
+npm run dev:local
 ```
+
+`dev:local` uses `./tmp/pb_dev_data` for local PocketBase data, applies this repo's migrations, creates or updates the configured local superuser, and forces the app process to use `NEXT_PUBLIC_PB_URL=http://127.0.0.1:8090`.
 
 Use a separate development or staging PocketBase instance before applying new migrations to the live club backend. See [docs/dev-pocketbase.md](docs/dev-pocketbase.md).
 
-For Codex/maintenance notes about the owner backend, missing local CLI fallback, and live schema verification, see [docs/pocketbase-runbook.md](docs/pocketbase-runbook.md).
+For Codex/maintenance notes about the owner backend, local CLI fallback, and live schema verification, see [docs/pocketbase-runbook.md](docs/pocketbase-runbook.md).
 
 Seed albums from the owner-supplied CSV or JSON:
 
@@ -53,11 +55,24 @@ npm run import:albums -- --file ./data/rs500.csv --dry-run
 npm run import:albums -- --file ./data/rs500.csv
 ```
 
-Start the app:
+Or fill a local development backend with the complete RS500 album/artwork dataset plus sample users, listens, reviews, reactions, groups, group draws, feed posts, replies, mentions, and feed read state:
+
+```bash
+npm run seed:dev -- --validate-only
+npm run seed:dev
+```
+
+`seed:dev` refuses non-local PocketBase URLs by default. Keep `NEXT_PUBLIC_PB_URL` pointed at `http://127.0.0.1:8090` or another localhost dev instance before running it.
+
+The sample accounts use the password `spin500-dev`; for example, log in as `maya.dev@example.com`.
+
+If PocketBase is already running and intentionally managed separately, start only the app:
 
 ```bash
 npm run dev
 ```
+
+Prefer `npm run dev:local` for normal local work.
 
 Open `http://localhost:3000`.
 
