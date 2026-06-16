@@ -135,7 +135,7 @@ npm run import:albums -- ./data/rs500.json
 
 The importer:
 
-- Authenticates as the PocketBase superuser from `.env.local` or shell environment.
+- Authenticates as the PocketBase superuser from the shell, this checkout's `.env.local`/`.env`, or the primary Git checkout's `.env.local`/`.env` when running from a Codex worktree.
 - Supports `--validate-only` for local file validation without contacting PocketBase.
 - Upserts albums by `rank`.
 - Creates missing ranks.

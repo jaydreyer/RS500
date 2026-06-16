@@ -6,6 +6,7 @@ import process from "node:process"
 import { pathToFileURL } from "node:url"
 import { parse } from "csv-parse/sync"
 import PocketBase from "pocketbase"
+import { getMissingEnv, loadProjectEnv } from "./env.mjs"
 
 const REQUIRED_FIELDS = ["rank", "title", "artist", "year", "cover_url"]
 const OPTIONAL_URL_FIELDS = ["spotify_url", "apple_music_url"]
@@ -15,33 +16,6 @@ const ALL_FIELDS = [
   "external_ids",
   "review_links",
 ]
-
-function loadDotenvFile(filePath) {
-  if (!fs.existsSync(filePath)) {
-    return
-  }
-
-  const lines = fs.readFileSync(filePath, "utf8").split(/\r?\n/)
-  for (const line of lines) {
-    const trimmed = line.trim()
-    if (!trimmed || trimmed.startsWith("#")) {
-      continue
-    }
-
-    const separatorIndex = trimmed.indexOf("=")
-    if (separatorIndex === -1) {
-      continue
-    }
-
-    const key = trimmed.slice(0, separatorIndex).trim()
-    const rawValue = trimmed.slice(separatorIndex + 1).trim()
-    if (!key || process.env[key] !== undefined) {
-      continue
-    }
-
-    process.env[key] = rawValue.replace(/^["']|["']$/g, "")
-  }
-}
 
 function parseArgs(argv) {
   const options = {
@@ -80,7 +54,10 @@ function printHelp() {
 Required environment:
   NEXT_PUBLIC_PB_URL
   PB_ADMIN_EMAIL
-  PB_ADMIN_PASSWORD`)
+  PB_ADMIN_PASSWORD
+
+Environment is read from the shell, then .env.local/.env in this checkout,
+then .env.local/.env in the primary Git checkout for Codex worktrees.`)
 }
 
 function normalizeHeader(header) {
@@ -403,8 +380,7 @@ async function upsertAlbum(pb, album, dryRun) {
 }
 
 async function main() {
-  loadDotenvFile(path.resolve(".env.local"))
-  loadDotenvFile(path.resolve(".env"))
+  loadProjectEnv()
 
   const options = parseArgs(process.argv.slice(2))
   if (options.help) {
@@ -463,14 +439,12 @@ async function main() {
   const adminEmail = process.env.PB_ADMIN_EMAIL
   const adminPassword = process.env.PB_ADMIN_PASSWORD
 
-  const missingEnv = [
-    ["NEXT_PUBLIC_PB_URL", pbUrl],
-    ["PB_ADMIN_EMAIL", adminEmail],
-    ["PB_ADMIN_PASSWORD", adminPassword],
-  ].filter(([, value]) => !value)
+  const missingEnv = getMissingEnv(["NEXT_PUBLIC_PB_URL", "PB_ADMIN_EMAIL", "PB_ADMIN_PASSWORD"])
 
   if (missingEnv.length > 0) {
-    throw new Error(`Missing environment variable(s): ${missingEnv.map(([key]) => key).join(", ")}`)
+    throw new Error(
+      `Missing environment variable(s): ${missingEnv.join(", ")}. Checked the shell plus .env.local/.env in this checkout and the primary Git checkout.`,
+    )
   }
 
   const pb = new PocketBase(pbUrl)

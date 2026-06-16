@@ -4,7 +4,7 @@ Quick reference for future maintenance work in this repo.
 
 ## Current Project Setup
 
-- The app reads `NEXT_PUBLIC_PB_URL`, `PB_ADMIN_EMAIL`, and `PB_ADMIN_PASSWORD` from `.env.local` or the shell environment.
+- Maintenance scripts read `NEXT_PUBLIC_PB_URL`, `PB_ADMIN_EMAIL`, and `PB_ADMIN_PASSWORD` from the shell, then `.env.local`/`.env` in the current checkout, then `.env.local`/`.env` in the primary Git checkout. This lets Codex worktrees reuse `/Users/jaydreyer/projects/RS500/.env.local` without copying secrets.
 - In the current owner/dev workspace, `.env.local` points at `http://ai-lab:8091`.
 - The Codex desktop workspace may not have a `pocketbase` binary on `PATH`. Check first with:
 
