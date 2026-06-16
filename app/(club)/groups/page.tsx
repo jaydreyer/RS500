@@ -11,10 +11,15 @@ import { cn } from "@/lib/utils";
 export const dynamic = "force-dynamic";
 
 export default async function GroupsPage() {
+  let auth;
   let groupState;
 
   try {
-    await getAuthenticatedPocketBase();
+    auth = await getAuthenticatedPocketBase();
+    if (!auth.user.isAdmin) {
+      redirect("/week");
+    }
+
     groupState = await getAllGroupDrawState();
   } catch (error) {
     if (error instanceof Error && error.message === "Unauthorized.") {

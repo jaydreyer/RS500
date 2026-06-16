@@ -3,6 +3,8 @@ import "server-only";
 import { cookies } from "next/headers";
 import PocketBase, { getTokenPayload, type AuthRecord } from "pocketbase";
 
+import { isAdminEmail } from "@/lib/auth-rules";
+
 export const PB_AUTH_COOKIE = "pb_auth";
 
 export type ClubUser = {
@@ -11,6 +13,7 @@ export type ClubUser = {
   displayName: string;
   initials: string;
   avatarUrl: string | null;
+  isAdmin: boolean;
 };
 
 export const DELETED_MEMBER_DISPLAY_NAME = "Deleted member";
@@ -148,6 +151,7 @@ export function mapClubUser(record: NonNullable<AuthRecord>): ClubUser {
     displayName,
     initials: getClubUserInitials(record),
     avatarUrl: getClubUserAvatarUrl(record),
+    isAdmin: isAdminEmail(email, process.env.PB_ADMIN_EMAIL),
   };
 }
 
