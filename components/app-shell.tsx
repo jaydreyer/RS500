@@ -1,6 +1,6 @@
 "use client";
 
-import { LogOut } from "lucide-react";
+import { LogOut, Megaphone } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -8,9 +8,10 @@ import { useEffect, useState } from "react";
 import { logoutAction } from "@/app/auth/actions";
 import { BrandMark } from "@/components/brand-mark";
 import { ClubAvatar } from "@/components/primitives";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { CURRENT_WEEK_LABEL } from "@/lib/config";
 import { clubNavItems } from "@/lib/navigation";
+import { hasReleaseNotes, releaseNoteCount } from "@/lib/release-notes";
 import { cn } from "@/lib/utils";
 import type { ClubUser } from "@/lib/auth";
 import type { ClubNavItem } from "@/lib/navigation";
@@ -124,6 +125,23 @@ function TopNav({
             {CURRENT_WEEK_LABEL}
           </span>
           <Link
+            aria-label={
+              hasReleaseNotes
+                ? `What's New, ${releaseNoteCount} ${releaseNoteCount === 1 ? "update" : "updates"}`
+                : "What's New"
+            }
+            className={cn(
+              buttonVariants({ variant: "quiet", size: "icon" }),
+              "relative size-9 px-0",
+              pathname === "/updates" && "bg-[color-mix(in_srgb,var(--ink)_12%,transparent)] text-[var(--ink)]",
+            )}
+            href="/updates"
+            title="What's New"
+          >
+            <Megaphone className="size-4" aria-hidden="true" />
+            {hasReleaseNotes && pathname !== "/updates" && <UpdateIndicator />}
+          </Link>
+          <Link
             aria-label="Profile settings"
             className={cn(
               "flex min-w-0 items-center gap-3 rounded-md px-1.5 py-1 transition-colors hover:bg-[color-mix(in_srgb,var(--ink)_7%,transparent)]",
@@ -157,6 +175,12 @@ function TopNav({
         </div>
       </div>
     </header>
+  );
+}
+
+function UpdateIndicator() {
+  return (
+    <span className="absolute right-1.5 top-1.5 size-2.5 rounded-full border-2 border-[var(--paper)] bg-[var(--accent)]" />
   );
 }
 
