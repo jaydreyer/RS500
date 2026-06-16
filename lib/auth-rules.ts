@@ -47,3 +47,10 @@ export function validateDisplayName(displayName: string) {
 
   return null;
 }
+
+export function isAdminEmail(email: string, adminEmail: string | undefined) {
+  const normalizedEmail = email.trim().toLowerCase();
+  const normalizedAdminEmail = adminEmail?.trim().toLowerCase();
+
+  return Boolean(normalizedEmail && normalizedAdminEmail && normalizedEmail === normalizedAdminEmail);
+}
