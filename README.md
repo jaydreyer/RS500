@@ -67,8 +67,10 @@ The sample accounts use the password `spin500-dev`; for example, log in as `maya
 Start the app:
 
 ```bash
-npm run dev
+npm run dev:local
 ```
+
+`dev:local` starts a local PocketBase dev server from `./tmp/pb_dev_data`, ensures the configured local superuser exists, forces the app process to use `NEXT_PUBLIC_PB_URL=http://127.0.0.1:8090`, and then starts Next.js. Use `npm run dev` only when you are intentionally managing PocketBase yourself.
 
 Open `http://localhost:3000`.
 

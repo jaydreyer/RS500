@@ -15,6 +15,14 @@ mkdir -p ./tmp/pb_dev_data
 pocketbase serve --dir ./tmp/pb_dev_data --migrationsDir /Users/jaydreyer/projects/RS500/pb_migrations --http 127.0.0.1:8090
 ```
 
+For the usual app workflow, use the combined local command instead:
+
+```bash
+npm run dev:local
+```
+
+`dev:local` starts PocketBase from `./tmp/pb_dev_data`, downloading a local PocketBase binary into `./tmp/pocketbase-bin` if one is not already available, ensures the configured superuser exists, forces the Next.js process to use `NEXT_PUBLIC_PB_URL=http://127.0.0.1:8090`, and then starts the Next.js dev server. Set `SPIN500_LOCAL_PB_URL` only if you need a different localhost PocketBase URL.
+
 Create a local env file that points the app at the dev instance:
 
 ```bash
