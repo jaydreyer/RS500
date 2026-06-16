@@ -5,6 +5,7 @@ import fsSync from "node:fs"
 import crypto from "node:crypto"
 import path from "node:path"
 import process from "node:process"
+import { loadProjectEnv } from "./env.mjs"
 
 const DATA_JSON = path.resolve("data/rs500-albums.json")
 const DATA_CSV = path.resolve("data/rs500-albums.csv")
@@ -47,33 +48,6 @@ const SPOTIFY_DIRECT_OVERRIDES_BY_RANK = new Map([
   [494, "https://open.spotify.com/album/0CoNLgOwcZGBUSwd9fAZuy"],
   [497, "https://open.spotify.com/album/1DIr8JMRBnm1cZMYIGKb8t"],
 ])
-
-function loadDotenvFile(filePath) {
-  if (!fsSync.existsSync(filePath)) {
-    return
-  }
-
-  const lines = fsSync.readFileSync(filePath, "utf8").split(/\r?\n/)
-  for (const line of lines) {
-    const trimmed = line.trim()
-    if (!trimmed || trimmed.startsWith("#")) {
-      continue
-    }
-
-    const separatorIndex = trimmed.indexOf("=")
-    if (separatorIndex === -1) {
-      continue
-    }
-
-    const key = trimmed.slice(0, separatorIndex).trim()
-    const rawValue = trimmed.slice(separatorIndex + 1).trim()
-    if (!key || process.env[key] !== undefined) {
-      continue
-    }
-
-    process.env[key] = rawValue.replace(/^["']|["']$/g, "")
-  }
-}
 
 function parseArgs(argv) {
   const options = {
@@ -702,7 +676,7 @@ function buildSpotifyAlbumSearchUrl(album) {
 }
 
 async function main() {
-  loadDotenvFile(path.resolve(".env.local"))
+  loadProjectEnv()
   const options = parseArgs(process.argv.slice(2))
   if (options.help) {
     printHelp()

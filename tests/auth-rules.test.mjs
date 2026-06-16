@@ -1,7 +1,7 @@
 import assert from "node:assert/strict"
 import test from "node:test"
 
-import { validateDisplayName, validateSignupInput } from "../lib/auth-rules.ts"
+import { isAdminEmail, validateDisplayName, validateSignupInput } from "../lib/auth-rules.ts"
 
 const configuredInviteCode = "VINYL-NIGHT"
 
@@ -42,4 +42,10 @@ test("display names must be recognizable but compact", () => {
     validateDisplayName("A".repeat(81)),
     "Display name must be 80 characters or less.",
   )
+})
+
+test("admin email matching is case-insensitive and requires configuration", () => {
+  assert.equal(isAdminEmail(" owner@example.com ", "OWNER@example.com"), true)
+  assert.equal(isAdminEmail("member@example.com", "owner@example.com"), false)
+  assert.equal(isAdminEmail("owner@example.com", undefined), false)
 })

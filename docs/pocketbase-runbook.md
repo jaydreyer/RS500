@@ -4,7 +4,7 @@ Quick reference for future maintenance work in this repo.
 
 ## Current Project Setup
 
-- The app reads `NEXT_PUBLIC_PB_URL`, `PB_ADMIN_EMAIL`, and `PB_ADMIN_PASSWORD` from `.env.local` or the shell environment.
+- Maintenance scripts read `NEXT_PUBLIC_PB_URL`, `PB_ADMIN_EMAIL`, and `PB_ADMIN_PASSWORD` from the shell, then `.env.local`/`.env` in the current checkout, then `.env.local`/`.env` in the primary Git checkout. This lets Codex worktrees reuse `/Users/jaydreyer/projects/RS500/.env.local` without copying secrets.
 - In the current owner/dev workspace, `.env.local` points at `http://ai-lab:8091`.
 - For local app development, prefer `npm run dev:local`. It downloads a local PocketBase binary into `./tmp/pocketbase-bin` if needed, runs PocketBase from `./tmp/pb_dev_data`, ensures the configured local superuser exists, and starts Next.js with `NEXT_PUBLIC_PB_URL=http://127.0.0.1:8090`.
 - The system `PATH` may still not have a global `pocketbase` binary. Check first with:
