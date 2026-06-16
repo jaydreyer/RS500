@@ -38,6 +38,15 @@ npm run import:albums -- --file ./data/rs500-albums.csv --validate-only
 npm run import:albums -- --file ./data/rs500-albums.csv
 ```
 
+For a fuller development sandbox, seed the complete album/artwork dataset and broad sample activity:
+
+```bash
+npm run seed:dev -- --validate-only
+npm run seed:dev
+```
+
+The development seeder authenticates as the PocketBase superuser, upserts all 500 albums from `data/rs500-albums.json`, creates sample users with the password `spin500-dev`, and fills listens/reviews, reactions, groups, group draws, feed posts, feed replies, feed mentions, and feed read state. It is idempotent for the generated sample records, so rerunning it should update the same development data instead of creating another independent sample crew.
+
 ## Staging Instance
 
 For a shared staging instance, use a different PocketBase data directory, port, and DNS/tunnel from production. Copy production data only when needed for migration rehearsals, and treat it as sensitive club data.
