@@ -60,6 +60,8 @@ npm run seed:dev -- --validate-only
 npm run seed:dev
 ```
 
+`seed:dev` refuses non-local PocketBase URLs by default. Keep `NEXT_PUBLIC_PB_URL` pointed at `http://127.0.0.1:8090` or another localhost dev instance before running it.
+
 The sample accounts use the password `spin500-dev`; for example, log in as `maya.dev@example.com`.
 
 Start the app:

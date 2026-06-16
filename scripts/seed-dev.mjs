@@ -98,6 +98,7 @@ const FEED_REACTION_EMOJIS = ["heart", "fire", "100", "wow"]
 
 function parseArgs(argv) {
   const options = {
+    allowRemoteDevSeed: false,
     albumFile: "./data/rs500-albums.json",
     dryRun: false,
     help: false,
@@ -118,6 +119,8 @@ function parseArgs(argv) {
       options.dryRun = true
     } else if (arg === "--validate-only") {
       options.validateOnly = true
+    } else if (arg === "--allow-remote-dev-seed") {
+      options.allowRemoteDevSeed = true
     } else if (arg === "--help" || arg === "-h") {
       options.help = true
     } else {
@@ -140,8 +143,32 @@ Required environment unless --validate-only:
   PB_ADMIN_EMAIL
   PB_ADMIN_PASSWORD
 
+Safety:
+  seed:dev only writes to localhost/127.0.0.1/::1 PocketBase URLs by default.
+  Use --allow-remote-dev-seed only for a confirmed disposable remote development backend.
+
 Sample user password:
   ${SAMPLE_USER_PASSWORD}`)
+}
+
+export function assertSafeDevSeedTarget(pbUrl, options = {}) {
+  if (options.allowRemoteDevSeed) {
+    return
+  }
+
+  let parsed
+  try {
+    parsed = new URL(pbUrl)
+  } catch {
+    throw new Error(`NEXT_PUBLIC_PB_URL must be a valid URL before running seed:dev.`)
+  }
+
+  const safeHosts = new Set(["localhost", "127.0.0.1", "::1", "[::1]"])
+  if (!safeHosts.has(parsed.hostname)) {
+    throw new Error(
+      `Refusing to run seed:dev against ${pbUrl}. seed:dev writes sample users and reviews, so it only targets localhost by default. Set NEXT_PUBLIC_PB_URL to a local dev PocketBase instance, or pass --allow-remote-dev-seed only for a confirmed disposable remote development backend.`,
+    )
+  }
 }
 
 export function loadAlbums(albumFile) {
@@ -459,6 +486,8 @@ async function seedPocketBase(plan, options) {
       `Missing environment variable(s): ${missingEnv.join(", ")}. Checked the shell plus .env.local/.env in this checkout and the primary Git checkout.`,
     )
   }
+
+  assertSafeDevSeedTarget(pbUrl, options)
 
   const pb = new PocketBase(pbUrl)
   pb.autoCancellation(false)
