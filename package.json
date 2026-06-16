@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "next dev",
     "dev:local": "node scripts/dev-local.mjs",
+    "review:local": "node scripts/review-local.mjs",
+    "review:check": "node scripts/review-check.mjs",
     "build": "next build",
     "build:seed": "node scripts/build-rs500-seed.mjs",
     "enrich:links": "node scripts/enrich-streaming-links.mjs",

@@ -99,6 +99,13 @@ export async function getAuthenticatedPocketBase() {
 }
 
 export async function setAuthCookie(pb: PocketBase) {
+  const authCookie = createAuthCookie(pb);
+  const cookieStore = await cookies();
+
+  cookieStore.set(authCookie);
+}
+
+export function createAuthCookie(pb: PocketBase) {
   const token = pb.authStore.token;
   const record = pb.authStore.record;
 
@@ -106,10 +113,9 @@ export async function setAuthCookie(pb: PocketBase) {
     throw new Error("PocketBase auth store is empty.");
   }
 
-  const cookieStore = await cookies();
   const expires = getTokenExpires(token);
 
-  cookieStore.set({
+  return {
     name: PB_AUTH_COOKIE,
     value: encodeURIComponent(JSON.stringify({ token, record })),
     httpOnly: true,
@@ -117,7 +123,7 @@ export async function setAuthCookie(pb: PocketBase) {
     sameSite: "strict",
     path: "/",
     ...(expires ? { expires } : { maxAge: 60 * 60 * 24 * 7 }),
-  });
+  } as const;
 }
 
 export async function clearAuthCookie() {
