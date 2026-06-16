@@ -76,6 +76,41 @@ Prefer `npm run dev:local` for normal local work.
 
 Open `http://localhost:3000`.
 
+## Local PR Review
+
+Use the dedicated local review stack before browser QA or PR screenshots:
+
+```bash
+npm run review:local
+```
+
+`review:local` refuses remote backends. It forces PocketBase to
+`http://127.0.0.1:8092`, stores review data in `./tmp/pb_review_data`, enables
+the local-only dev login route, seeds the sample data, waits for PocketBase and
+Next.js to be reachable, and then runs the review readiness check.
+
+Sample users are seeded with the password `spin500-dev`; for example:
+
+```text
+maya.dev@example.com / spin500-dev
+```
+
+For Codex screenshots or quick reviewer access while `review:local` is running,
+open:
+
+```text
+http://localhost:3000/api/dev/login?user=maya
+```
+
+The dev login endpoint is disabled unless `ENABLE_DEV_LOGIN=1`, the app is not
+running in production, the request host is localhost, and `NEXT_PUBLIC_PB_URL`
+also points at localhost. To verify an already-running review stack without
+starting it:
+
+```bash
+npm run review:check
+```
+
 ## Verification
 
 Run the local checks:

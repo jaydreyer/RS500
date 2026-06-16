@@ -13,7 +13,7 @@ import { assertSafeDevSeedTarget } from "./seed-dev.mjs"
 const POCKETBASE_VERSION = "0.39.4"
 const POCKETBASE_DIR = path.resolve("tmp/pocketbase-bin")
 const POCKETBASE_BIN = path.join(POCKETBASE_DIR, "pocketbase")
-const POCKETBASE_DATA_DIR = path.resolve("tmp/pb_dev_data")
+const POCKETBASE_DATA_DIR = path.resolve(process.env.SPIN500_LOCAL_PB_DATA_DIR || "tmp/pb_dev_data")
 const MIGRATIONS_DIR = path.resolve("pb_migrations")
 const DEFAULT_LOCAL_PB_URL = "http://127.0.0.1:8090"
 
