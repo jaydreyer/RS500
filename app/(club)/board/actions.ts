@@ -32,10 +32,6 @@ export async function upsertReactionAction({
       requestKey: null,
     });
 
-    if (listen.kind !== "fresh") {
-      throw new Error("That board item is no longer active.");
-    }
-
     const existing = await getExistingReaction(pb, cleanListenId, user.id);
     const payload = {
       listen: cleanListenId,
@@ -55,6 +51,9 @@ export async function upsertReactionAction({
     }
 
     revalidatePath("/board");
+    if (typeof listen.album === "string" && listen.album.trim()) {
+      revalidatePath(`/albums/${listen.album.trim()}`);
+    }
 
     return {
       status: "success",
