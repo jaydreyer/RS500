@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useMemo, useState, useTransition } from "react";
 import { MessageCircle, Send, SmilePlus } from "lucide-react";
 
 import { upsertReactionAction } from "@/app/(club)/board/actions";
@@ -8,16 +8,16 @@ import { ClubAvatar, ScoreBadge } from "@/components/primitives";
 import { ReviewMarkdown } from "@/components/review-markdown";
 import { Button } from "@/components/ui/button";
 import { RATING_SCALE } from "@/lib/config";
+import {
+  EXTRA_REACTIONS,
+  EXTRA_REACTION_GROUPS,
+  QUICK_REACTIONS,
+  getReactionEmoji,
+  getReactionKey,
+  normalizeEmojiSearch,
+} from "@/lib/reaction-options";
 import { cn } from "@/lib/utils";
 import type { AlbumDetailListen, AlbumDetailReaction } from "@/lib/catalog";
-
-const QUICK_REACTIONS = [
-  { key: "fire", emoji: "🔥", label: "Fire" },
-  { key: "100", emoji: "💯", label: "One hundred" },
-  { key: "heart", emoji: "❤️", label: "Love" },
-  { key: "wow", emoji: "🤯", label: "Mind blown" },
-  { key: "eyes", emoji: "👀", label: "Watching" },
-] as const;
 
 export function AlbumReviewThread({
   currentUserId,
@@ -223,6 +223,16 @@ function ReactionEditor({
             {reaction.emoji}
           </button>
         ))}
+        <EmojiReactionPicker
+          currentEmoji={emoji}
+          idBase={listenId}
+          onSelect={(value) => {
+            const nextEmoji = emoji === value ? "" : value;
+            const nextComment = comment.trim() ? comment : savedComment;
+            setEmoji(nextEmoji);
+            saveReaction(nextEmoji, nextComment);
+          }}
+        />
       </div>
       <form
         className="flex items-center gap-2"
@@ -262,6 +272,119 @@ function ReactionEditor({
   );
 }
 
+function EmojiReactionPicker({
+  currentEmoji,
+  idBase,
+  onSelect,
+}: {
+  currentEmoji: string;
+  idBase: string;
+  onSelect: (emoji: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const [categoryKey, setCategoryKey] = useState<string>(EXTRA_REACTION_GROUPS[0].key);
+  const normalizedQuery = normalizeEmojiSearch(query);
+  const activeGroup =
+    EXTRA_REACTION_GROUPS.find((group) => group.key === categoryKey) ?? EXTRA_REACTION_GROUPS[0];
+  const matches = useMemo(() => {
+    if (!normalizedQuery) {
+      return activeGroup.reactions;
+    }
+
+    return EXTRA_REACTIONS.filter((reaction) =>
+      normalizeEmojiSearch(`${reaction.emoji} ${reaction.label}`).includes(normalizedQuery),
+    ).slice(0, 60);
+  }, [activeGroup.reactions, normalizedQuery]);
+
+  return (
+    <div className="relative">
+      <Button
+        type="button"
+        variant="quiet"
+        size="icon"
+        className="size-8 rounded-full border border-[var(--line-strong)] bg-[var(--card)] px-0"
+        aria-label="More emoji"
+        title="More emoji"
+        aria-expanded={open}
+        onClick={() => setOpen((value) => !value)}
+      >
+        <SmilePlus className="size-4" aria-hidden="true" />
+      </Button>
+
+      {open && (
+        <div className="absolute left-0 top-full z-30 mt-2 w-[min(360px,calc(100vw-2rem))] overflow-hidden rounded-md border border-[var(--line-strong)] bg-[var(--card)] shadow-[0_18px_44px_-24px_#000] sm:left-auto sm:right-0">
+          <div className="border-b border-[var(--line)] bg-[var(--paper-2)] p-2">
+            <label className="sr-only" htmlFor={`album-emoji-search-${idBase}`}>
+              Search emoji
+            </label>
+            <input
+              id={`album-emoji-search-${idBase}`}
+              className="input-control h-9 w-full px-3 py-1 text-sm"
+              placeholder="Search emoji"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+            />
+          </div>
+          <div
+            className="flex gap-1 overflow-x-auto border-b border-[var(--line)] bg-[var(--paper-2)] px-2 py-1.5"
+            role="tablist"
+            aria-label="Emoji categories"
+          >
+            {EXTRA_REACTION_GROUPS.map((group) => (
+              <button
+                key={group.key}
+                type="button"
+                role="tab"
+                aria-selected={group.key === categoryKey}
+                className={cn(
+                  "grid size-8 shrink-0 place-items-center rounded-md border text-base transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]",
+                  group.key === categoryKey
+                    ? "border-[var(--accent)] bg-[color-mix(in_srgb,var(--accent)_16%,transparent)]"
+                    : "border-transparent hover:bg-[var(--card)]",
+                )}
+                title={group.label}
+                aria-label={group.label}
+                onClick={() => {
+                  setCategoryKey(group.key);
+                  setQuery("");
+                }}
+              >
+                <span aria-hidden="true">{group.icon}</span>
+              </button>
+            ))}
+          </div>
+          <div className="grid max-h-72 grid-cols-6 gap-1 overflow-auto p-2">
+            {matches.length === 0 ? (
+              <p className="tag col-span-6 px-1 py-2">No emoji found</p>
+            ) : (
+              matches.map((reaction) => (
+                <button
+                  key={`${reaction.emoji}-${reaction.label}`}
+                  type="button"
+                  className={cn(
+                    "grid size-10 place-items-center rounded-md text-xl transition-colors hover:bg-[var(--paper-2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]",
+                    currentEmoji === reaction.emoji &&
+                      "bg-[color-mix(in_srgb,var(--accent)_16%,transparent)]",
+                  )}
+                  title={reaction.label}
+                  aria-label={`React ${reaction.emoji} ${reaction.label}`}
+                  onClick={() => {
+                    onSelect(reaction.emoji);
+                    setOpen(false);
+                  }}
+                >
+                  {reaction.emoji}
+                </button>
+              ))
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function ReactionChips({ reactions }: { reactions: AlbumDetailReaction[] }) {
   const emojiReactions = reactions.filter((reaction) => reaction.emoji);
 
@@ -285,11 +408,5 @@ function ReactionChips({ reactions }: { reactions: AlbumDetailReaction[] }) {
 }
 
 function displayEmoji(value: string) {
-  return QUICK_REACTIONS.find((reaction) => reaction.key === value)?.emoji ?? value;
-}
-
-function getReactionKey(value: string) {
-  return QUICK_REACTIONS.find(
-    (reaction) => reaction.key === value || reaction.emoji === value,
-  )?.key;
+  return getReactionEmoji(value);
 }
