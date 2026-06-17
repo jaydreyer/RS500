@@ -81,8 +81,8 @@ function ReviewEntry({
   const comments = reactions.filter((reaction) => reaction.comment);
 
   return (
-    <article className="hard-panel overflow-hidden rounded-lg">
-      <div className="flex flex-wrap items-center gap-3 border-b border-[var(--line-strong)] bg-[var(--paper-2)] px-4 py-3">
+    <article className="hard-panel overflow-visible rounded-lg">
+      <div className="flex flex-wrap items-center gap-3 rounded-t-md border-b border-[var(--line-strong)] bg-[var(--paper-2)] px-4 py-3">
         <ClubAvatar
           imageUrl={listen.user.avatarUrl}
           initials={listen.user.initials}
@@ -298,7 +298,7 @@ function EmojiReactionPicker({
   }, [activeGroup.reactions, normalizedQuery]);
 
   return (
-    <div className="relative">
+    <div className={cn("relative", open && "z-50")}>
       <Button
         type="button"
         variant="quiet"
@@ -313,7 +313,7 @@ function EmojiReactionPicker({
       </Button>
 
       {open && (
-        <div className="absolute left-0 top-full z-30 mt-2 w-[min(360px,calc(100vw-2rem))] overflow-hidden rounded-md border border-[var(--line-strong)] bg-[var(--card)] shadow-[0_18px_44px_-24px_#000] sm:left-auto sm:right-0">
+        <div className="absolute left-0 top-full z-50 mt-2 w-[min(360px,calc(100vw-2rem))] overflow-hidden rounded-md border border-[var(--line-strong)] bg-[var(--card)] shadow-[0_18px_44px_-24px_#000] sm:left-auto sm:right-0">
           <div className="border-b border-[var(--line)] bg-[var(--paper-2)] p-2">
             <label className="sr-only" htmlFor={`album-emoji-search-${idBase}`}>
               Search emoji
