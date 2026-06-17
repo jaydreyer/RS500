@@ -4,13 +4,12 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
 import { AlbumRatingPanel } from "@/components/album-rating-panel";
+import { AlbumReviewThread } from "@/components/album-review-thread";
 import { AlbumCover } from "@/components/album-cover";
-import { ClubAvatar, Eyebrow, ScoreBadge } from "@/components/primitives";
-import { ReviewMarkdown } from "@/components/review-markdown";
+import { ClubAvatar, Eyebrow } from "@/components/primitives";
 import { buttonVariants } from "@/components/ui/button";
 import { getAuthenticatedPocketBase } from "@/lib/auth";
-import { getAlbumDetailState, type AlbumDetailListen, type AlbumReviewLink } from "@/lib/catalog";
-import { RATING_SCALE } from "@/lib/config";
+import { getAlbumDetailState, type AlbumReviewLink } from "@/lib/catalog";
 import { getAlbumFeedPosts, type FeedPost } from "@/lib/feed";
 import { cn } from "@/lib/utils";
 
@@ -24,9 +23,11 @@ export default async function AlbumDetailPage({
   const { albumId } = await params;
   let detail;
   let feedPosts: FeedPost[] = [];
+  let currentUserId = "";
 
   try {
     const { pb, user } = await getAuthenticatedPocketBase();
+    currentUserId = user.id;
     [detail, feedPosts] = await Promise.all([
       getAlbumDetailState(pb, albumId, user.id),
       getAlbumFeedPosts({ pb, albumId }),
@@ -128,57 +129,21 @@ export default async function AlbumDetailPage({
 
           <hr className="hairline" />
           <div className="mt-5">
-            <Eyebrow>who drew it</Eyebrow>
-            <div className="mt-3 grid gap-2">
-              {detail.listens.length === 0 && <p className="tag py-4">Nobody in the crew has logged this yet</p>}
-              {detail.listens.map((listen) => (
-                <ListenRow key={listen.id} listen={listen} />
-              ))}
-            </div>
+            <Eyebrow>review activity</Eyebrow>
+            <p className="mt-3 font-quote text-xl leading-snug text-[var(--ink-soft)]">
+              {detail.listens.length === 0
+                ? "No one has pulled this record yet."
+                : `${detail.ratedCount} rated review${detail.ratedCount === 1 ? "" : "s"} from ${detail.listens.length} logged listen${detail.listens.length === 1 ? "" : "s"}.`}
+            </p>
           </div>
         </div>
       </div>
 
-      <section className="surface-panel mt-8 rounded-lg p-5">
-        <h2 className="text-2xl">Crew thread</h2>
-        <div className="mt-4 grid gap-3">
-          {detail.reactions.filter((reaction) => reaction.comment || reaction.emoji).length === 0 && (
-            <p className="tag">No comments or reactions yet</p>
-          )}
-          {detail.reactions
-            .filter((reaction) => reaction.comment || reaction.emoji)
-            .map((reaction) => (
-              <div
-                key={reaction.id}
-                className="flex gap-3 rounded-md border border-dashed border-[var(--line-strong)] bg-[var(--paper-2)] p-3"
-              >
-                <ClubAvatar
-                  imageUrl={reaction.user.avatarUrl}
-                  initials={reaction.user.initials}
-                  label={reaction.user.displayName}
-                  size="sm"
-                />
-                <div className="min-w-0">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <strong className="font-display text-[var(--ink)]">
-                      {reaction.user.displayName}
-                    </strong>
-                    {reaction.emoji && (
-                      <span className="mono rounded-full border border-[var(--line-strong)] px-2 py-0.5 text-[10px] text-[var(--ink-soft)]">
-                        {reaction.emoji}
-                      </span>
-                    )}
-                  </div>
-                  {reaction.comment && (
-                    <p className="mt-1 font-quote text-lg text-[var(--ink-soft)]">
-                      {reaction.comment}
-                    </p>
-                  )}
-                </div>
-              </div>
-            ))}
-        </div>
-      </section>
+      <AlbumReviewThread
+        currentUserId={currentUserId}
+        listens={detail.listens}
+        reactions={detail.reactions}
+      />
 
       <section className="surface-panel mt-8 rounded-lg p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
@@ -248,43 +213,6 @@ function AlbumFeedPost({ post }: { post: FeedPost }) {
         )}
       </div>
     </article>
-  );
-}
-
-function ListenRow({ listen }: { listen: AlbumDetailListen }) {
-  return (
-    <div className="flex items-center gap-3 border-b border-[var(--line)] py-3 last:border-b-0">
-      <ClubAvatar
-        imageUrl={listen.user.avatarUrl}
-        initials={listen.user.initials}
-        label={listen.user.displayName}
-        size="sm"
-      />
-      <div className="min-w-0 flex-1">
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="font-display font-extrabold">{listen.user.displayName}</span>
-          <span className="tag rounded-sm border border-[var(--line-strong)] px-1.5 py-0.5">
-            {listen.kind === "skip" ? "already heard" : "fresh"}
-          </span>
-          <span className="tag">{listen.week}</span>
-        </div>
-        {listen.take && (
-          <ReviewMarkdown className="mt-1 line-clamp-4 font-quote text-sm leading-relaxed text-[var(--ink-soft)]">
-            {listen.take}
-          </ReviewMarkdown>
-        )}
-      </div>
-      <div className="shrink-0">
-        {listen.status === "listening" ? (
-          <span className="tag inline-flex items-center gap-1.5 text-[var(--accent)]">
-            <span className="size-1.5 rounded-full bg-[var(--accent)] animate-pulse-dot" />
-            listening
-          </span>
-        ) : (
-          <ScoreBadge score={listen.rating} label={`/${RATING_SCALE.max}`} emptyLabel="no score" />
-        )}
-      </div>
-    </div>
   );
 }
 
