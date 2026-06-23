@@ -16,6 +16,7 @@ Status legend:
 | Drawing excludes every album the user has already logged. | Verified | `npm test` covers drawable-pool exclusion; `lib/draw.ts` applies it before random selection. |
 | The same user cannot log the same album twice. | Verified | PocketBase migration adds unique `listens(user, album)` index. |
 | A user with an unrated fresh pick cannot draw again. | Verified | `lib/draw.ts` checks active fresh pick; `npm test` covers active-fresh guard. |
+| Active group members cannot create solo draws. | Verified | `/week` renders group mode for active group members, and `app/(club)/week/actions.ts` rejects direct solo draw submissions when `getUserGroupDrawState()` returns active groups. |
 | Drawing an already-heard album records a `skip` listen with `status = rated`, rating, optional take, and `rated_at`. | Verified | Production QA: Test One logged PJ Harvey, `Rid of Me` as an already-heard skip with rating/take/rated timestamp. |
 | Drawing an unheard album creates a `fresh` listen with `status = listening`, null rating, and null `rated_at`. | Verified | Production QA: Test Two drew Aretha Franklin, `I Never Loved a Man the Way I Love You` as a fresh listening pick. |
 | Rating a fresh pick updates it to `status = rated`, sets rating, optional take, and `rated_at`. | Verified | Production QA: Test One rated Shania Twain, `Come On Over` as a fresh pick with rating/take/rated timestamp. Automated tests cover 0-10 one-decimal rating validation. |

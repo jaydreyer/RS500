@@ -21,7 +21,12 @@ import {
   rateFreshPick,
   replaceUnavailablePick,
 } from "@/lib/draw";
-import { drawForGroup, GroupDrawRuleError, parseGroupId } from "@/lib/group-draw";
+import {
+  drawForGroup,
+  getUserGroupDrawState,
+  GroupDrawRuleError,
+  parseGroupId,
+} from "@/lib/group-draw";
 
 const REVIEW_WRITE_RATE_LIMIT = {
   limit: 30,
@@ -37,6 +42,15 @@ export async function drawAction(
 
   try {
     const { user } = await getAuthenticatedPocketBase();
+    const groupDrawState = await getUserGroupDrawState(user.id);
+    if (groupDrawState.groups.length > 0) {
+      return {
+        status: "error",
+        message: "Solo draws are paused while you are in an active group.",
+        listen: null,
+      };
+    }
+
     const adminPb = await createSuperuserPocketBase();
     const listen = await drawAlbum(adminPb, user.id);
     revalidatePath("/week");
