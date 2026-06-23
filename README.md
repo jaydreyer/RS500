@@ -30,6 +30,9 @@ Required variables:
 - `PB_ADMIN_PASSWORD`: PocketBase superuser password.
 - `CREW_INVITE_CODE`: Shared invite code for server-side signup validation.
 - `SERVER_ACTION_ALLOWED_ORIGINS`: Comma-separated trusted hosts for Next.js Server Actions, for example `localhost:3000` locally and your production app host in deployment.
+- `GOOGLE_OAUTH_CLIENT_ID`: Google OAuth web client ID for Google account signup/login.
+- `GOOGLE_OAUTH_CLIENT_SECRET`: Google OAuth web client secret.
+- `GOOGLE_OAUTH_REDIRECT_URI`: Optional explicit callback URL when request-origin inference does not match the Google OAuth client.
 
 Rotate the shared signup code before production use; it is validated server-side.
 
@@ -65,6 +68,14 @@ npm run seed:dev
 `seed:dev` refuses non-local PocketBase URLs by default. Keep `NEXT_PUBLIC_PB_URL` pointed at `http://127.0.0.1:8090` or another localhost dev instance before running it.
 
 The sample accounts use the password `spin500-dev`; for example, log in as `maya.dev@example.com`.
+
+To test Google login locally, create a Google OAuth Web application client and add this redirect URI:
+
+```text
+http://localhost:3000/api/auth/google/callback
+```
+
+Then set `GOOGLE_OAUTH_CLIENT_ID` and `GOOGLE_OAUTH_CLIENT_SECRET` in `.env.local` and restart the dev server.
 
 If PocketBase is already running and intentionally managed separately, start only the app:
 
@@ -132,7 +143,13 @@ A group draw is manual. When a member spins for the group, the server picks one 
 
 ## Deployment
 
-Deploy the Next.js app to Vercel with the same environment variables set in Vercel project settings. `NEXT_PUBLIC_PB_URL` should point at the owner's reachable PocketBase URL. Keep `PB_ADMIN_EMAIL` and `PB_ADMIN_PASSWORD` server-only.
+Deploy the Next.js app to Vercel with the same environment variables set in Vercel project settings. `NEXT_PUBLIC_PB_URL` should point at the owner's reachable PocketBase URL. Keep `PB_ADMIN_EMAIL`, `PB_ADMIN_PASSWORD`, and `GOOGLE_OAUTH_CLIENT_SECRET` server-only.
+
+For Google login in production, add the deployed callback URL to the Google OAuth client:
+
+```text
+https://your-production-domain.com/api/auth/google/callback
+```
 
 Before production use:
 

@@ -56,8 +56,9 @@ Fix: Add a seeded PocketBase test environment and Playwright smoke tests for sig
 ## Positive Security Notes
 
 - Auth helpers are marked server-only in `lib/auth.ts:1`.
-- Auth cookie is set HttpOnly, Secure in production, SameSite strict, and path `/` in `lib/auth.ts:101-108`.
+- Auth cookie is set HttpOnly, SameSite lax, path `/`, and uses request-aware Secure handling for HTTPS while allowing local HTTP testing in `lib/auth.ts` and `lib/auth-cookie.ts`.
 - Signup validation happens server-side before account creation in `app/auth/actions.ts`.
+- Google signup validates the invite code in the app route before creating a PocketBase user, keeping public PocketBase user creation locked.
 - Signup/login attempts are rate-limited before PocketBase auth calls in `app/auth/actions.ts`.
 - PocketBase user self-signup is disabled in `pb_migrations/1781006404_lock_users_signup.js:1-6`.
 - PocketBase rules restrict listen/reaction writes to the authenticated owner in `pb_migrations/1781006402_create_listens_collection.js:10-14` and `pb_migrations/1781006403_create_reactions_collection.js:10-14`.
