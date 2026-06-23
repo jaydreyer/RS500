@@ -1,8 +1,9 @@
 import "server-only";
 
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import PocketBase, { getTokenPayload, type AuthRecord } from "pocketbase";
 
+import { shouldUseSecureAuthCookie } from "@/lib/auth-cookie";
 import { isAdminEmail } from "@/lib/auth-rules";
 
 export const PB_AUTH_COOKIE = "pb_auth";
@@ -99,13 +100,16 @@ export async function getAuthenticatedPocketBase() {
 }
 
 export async function setAuthCookie(pb: PocketBase) {
-  const authCookie = createAuthCookie(pb);
   const cookieStore = await cookies();
+  const headerStore = await headers();
+  const authCookie = createAuthCookie(pb, {
+    secure: shouldUseSecureAuthCookie(headerStore),
+  });
 
   cookieStore.set(authCookie);
 }
 
-export function createAuthCookie(pb: PocketBase) {
+export function createAuthCookie(pb: PocketBase, options: { secure?: boolean } = {}) {
   const token = pb.authStore.token;
   const record = pb.authStore.record;
 
@@ -119,8 +123,8 @@ export function createAuthCookie(pb: PocketBase) {
     name: PB_AUTH_COOKIE,
     value: encodeURIComponent(JSON.stringify({ token, record })),
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
+    secure: options.secure ?? shouldUseSecureAuthCookie(),
+    sameSite: "lax",
     path: "/",
     ...(expires ? { expires } : { maxAge: 60 * 60 * 24 * 7 }),
   } as const;

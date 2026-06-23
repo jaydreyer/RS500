@@ -12,8 +12,13 @@ const heroFont = Archivo_Black({
   weight: "400",
 });
 
-export default async function AuthPage() {
+type AuthPageProps = {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+};
+
+export default async function AuthPage({ searchParams }: AuthPageProps) {
   const user = await getCurrentUser();
+  const params = searchParams ? await searchParams : {};
 
   if (user) {
     redirect("/week");
@@ -53,8 +58,33 @@ export default async function AuthPage() {
       </section>
 
       <section className="grid place-items-center px-5 py-12 md:px-12">
-        <AuthForm />
+        <AuthForm message={getGoogleAuthMessage(params.google)} />
       </section>
     </main>
   );
+}
+
+function getGoogleAuthMessage(value: string | string[] | undefined) {
+  const code = Array.isArray(value) ? value[0] : value;
+
+  switch (code) {
+    case "missing-config":
+      return "Google sign-in is not configured yet.";
+    case "invite":
+      return "Enter the invite code and display name before using Google.";
+    case "denied":
+      return "Google sign-in was cancelled.";
+    case "unverified":
+      return "Google did not confirm that email address.";
+    case "invite-required":
+      return "That Google account is not a member yet. Join with the invite code first.";
+    case "account-mismatch":
+      return "That email is already linked to a different Google account.";
+    case "deactivated":
+      return "That account is no longer active.";
+    case "failed":
+      return "Google sign-in did not work. Try again.";
+    default:
+      return null;
+  }
 }
