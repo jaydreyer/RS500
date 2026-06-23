@@ -11,5 +11,3 @@ export function formatRating(value: number) {
 }
 
 export const STATS_SAMPLE_THRESHOLD = 3;
-
-export const CURRENT_WEEK_LABEL = "2026 W23";

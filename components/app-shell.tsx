@@ -9,7 +9,6 @@ import { logoutAction } from "@/app/auth/actions";
 import { BrandMark } from "@/components/brand-mark";
 import { ClubAvatar } from "@/components/primitives";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { CURRENT_WEEK_LABEL } from "@/lib/config";
 import { clubNavItems } from "@/lib/navigation";
 import { hasReleaseNotes, latestReleaseNoteId, releaseNoteCount } from "@/lib/release-notes";
 import { cn } from "@/lib/utils";
@@ -144,9 +143,6 @@ function TopNav({
           })}
         </nav>
         <div className="ml-auto flex items-center gap-3">
-          <span className="mono hidden rounded-full border border-[var(--line-strong)] px-2.5 py-1 text-[11px] text-[var(--ink-soft)] sm:block">
-            {CURRENT_WEEK_LABEL}
-          </span>
           <Link
             aria-label={
               hasReleaseNotes
