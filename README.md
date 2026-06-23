@@ -141,6 +141,8 @@ Groups are admin-managed in PocketBase. Create an active `groups` record, then a
 
 A group draw is manual. When a member spins for the group, the server picks one album no active group member has logged, creates one `group_draws` record, and creates one individual fresh `listens` row per member. A group draw is blocked while any active member has an unrated fresh pick; the next group draw unlocks once those active picks are rated.
 
+Active group members do not get the personal draw machine. The `/week` page routes them to group mode, and `drawAction` rejects direct solo draw submissions while the user belongs to an active group. This prevents an accidental personal `fresh/listening` row from blocking the shared group redraw.
+
 ## Deployment
 
 Deploy the Next.js app to Vercel with the same environment variables set in Vercel project settings. `NEXT_PUBLIC_PB_URL` should point at the owner's reachable PocketBase URL. Keep `PB_ADMIN_EMAIL`, `PB_ADMIN_PASSWORD`, and `GOOGLE_OAUTH_CLIENT_SECRET` server-only.

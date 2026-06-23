@@ -186,6 +186,7 @@ export function WeekDrawMachine({
   const activeFresh = weekState.activeFresh;
   const poolText = `${weekState.poolLeft} of ${weekState.totalAlbums} unlogged`;
   const showActivePick = Boolean(activeFresh) && phase === "idle";
+  const isGroupMember = groupDrawState.groups.length > 0;
 
   function startDraw() {
     setDrawnListen(null);
@@ -218,6 +219,8 @@ export function WeekDrawMachine({
           <ActivePickReview listen={activeFresh} />
           <LockedDrawPanel listen={activeFresh} poolText={poolText} />
         </>
+      ) : isGroupMember ? (
+        <GroupOnlyDrawPanel groupCount={groupDrawState.groups.length} />
       ) : (
         <div className="hard-panel overflow-hidden rounded-lg">
           <div className="flex items-center justify-between border-b border-dashed border-[var(--line-strong)] bg-[var(--paper-2)] px-5 py-3">
@@ -269,6 +272,37 @@ export function WeekDrawMachine({
         </div>
       )}
     </section>
+  );
+}
+
+function GroupOnlyDrawPanel({ groupCount }: { groupCount: number }) {
+  return (
+    <div className="hard-panel overflow-hidden rounded-lg">
+      <div className="flex items-center justify-between border-b border-dashed border-[var(--line-strong)] bg-[var(--paper-2)] px-5 py-3">
+        <span className="tag">SPIN / GROUP MODE</span>
+        <span className="mono text-[11px] text-[var(--ink-faint)]">
+          {groupCount} active {groupCount === 1 ? "group" : "groups"}
+        </span>
+      </div>
+      <div className="relative grid min-h-[360px] place-items-center overflow-hidden px-5 py-10 text-center md:px-8">
+        <div className="record-ring pointer-events-none absolute -right-24 -top-24 size-72 rounded-full border border-[var(--line-strong)] opacity-25" />
+        <div className="animate-rise-in">
+          <div className="mx-auto mb-8 grid size-40 place-items-center rounded-full border-2 border-[var(--ink)] bg-[var(--paper-2)]">
+            <Users className="size-14 text-[var(--accent)]" aria-hidden="true" />
+          </div>
+          <h2 className="title-wrap mx-auto max-w-lg text-4xl md:text-6xl">
+            Group draw is active.
+          </h2>
+          <p className="mx-auto mt-4 max-w-md font-quote text-lg text-[var(--ink-soft)]">
+            Your next album comes from the shared group pool.
+          </p>
+          <a href="#group-draws" className={cn(buttonVariants({ variant: "accent", size: "lg" }), "mt-7")}>
+            <Users className="size-5" aria-hidden="true" />
+            Go to group draw
+          </a>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -568,7 +602,7 @@ function GroupDrawPanel({
   pending: boolean;
 }) {
   return (
-    <section className="surface-panel mt-7 overflow-hidden rounded-lg">
+    <section id="group-draws" className="surface-panel mt-7 scroll-mt-6 overflow-hidden rounded-lg">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--line-strong)] px-5 py-3">
         <div className="flex items-center gap-2">
           <Users className="size-4 text-[var(--accent)]" aria-hidden="true" />

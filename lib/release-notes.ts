@@ -10,6 +10,20 @@ export type ReleaseNote = {
 export const releaseNotes = [
   {
     date: "2026-06-23",
+    title: "Group draws stay group-only",
+    summary:
+      "Members in an active group now stay in the shared draw flow, keeping solo picks from blocking the crew.",
+    improved: [
+      "The Week page shows group mode instead of the personal draw machine for active group members.",
+      "Group members get a direct jump to the group draw cards when it is time to spin together.",
+    ],
+    fixed: [
+      "Direct solo draw submissions are now rejected server-side while a member belongs to an active group.",
+      "Removed an accidental active solo pick that was blocking a group redraw.",
+    ],
+  },
+  {
+    date: "2026-06-23",
     title: "Google sign-in joins the club",
     summary:
       "Members can now sign in with Google, while new accounts still stay invite-only.",

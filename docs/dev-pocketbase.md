@@ -86,6 +86,8 @@ Then run the app against staging and verify:
 - rating a fresh pick
 - logging an already-heard album from album detail
 - group draw readiness
+- active group members see group mode instead of the personal draw machine
+- direct solo draw submissions are rejected for active group members
 - board realtime
 - account deactivation
 
