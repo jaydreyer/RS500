@@ -49,6 +49,10 @@ Added Feed migration:
 
 - `1781006417_create_feed_mentions.js`: creates `feed_mentions` for targeted Feed `@mention` notifications. On the live `ai-lab:8091` instance, this collection was created once through the PocketBase superuser Collections API because the local Codex workspace did not have a `pocketbase` binary on `PATH`; the migration is idempotent so a future official migration run can safely skip an already-created collection.
 
+Added Google auth migration:
+
+- `1781006418_add_user_google_sub.js`: adds the hidden `users.google_sub` field and unique partial index used to link Google identities. On the live `ai-lab:8091` instance, this field and index were applied once through the PocketBase superuser Collections API and verified live after the Google auth deployment; the migration is idempotent for future official migration runs.
+
 Run migrations from the PocketBase directory that contains or can see this app's `pb_migrations` folder. For local development, prefer the combined helper:
 
 ```bash
