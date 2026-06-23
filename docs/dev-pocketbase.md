@@ -37,6 +37,14 @@ PB_ADMIN_EMAIL=owner@example.com
 PB_ADMIN_PASSWORD=change-me
 CREW_INVITE_CODE=dev-code
 SERVER_ACTION_ALLOWED_ORIGINS=localhost:3000,127.0.0.1:3000
+GOOGLE_OAUTH_CLIENT_ID=your-local-web-client-id.apps.googleusercontent.com
+GOOGLE_OAUTH_CLIENT_SECRET=your-local-web-client-secret
+```
+
+If you are testing Google login locally, configure the Google OAuth Web application with this redirect URI:
+
+```text
+http://localhost:3000/api/auth/google/callback
 ```
 
 Create the PocketBase superuser in the dev dashboard, then seed albums:
@@ -73,6 +81,7 @@ npm run build
 Then run the app against staging and verify:
 
 - signup and login
+- Google signup with an invite code, plus repeat Google login
 - drawing a personal pick
 - rating a fresh pick
 - logging an already-heard album from album detail
