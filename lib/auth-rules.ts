@@ -5,20 +5,14 @@ export type SignupInput = {
   password: string;
 };
 
+export type InviteProfileInput = Pick<SignupInput, "inviteCode" | "displayName">;
+
 export const CREW_INVITE_CODE = process.env.CREW_INVITE_CODE;
 
 export function validateSignupInput(input: SignupInput, expectedInviteCode: string | undefined) {
-  if (!expectedInviteCode) {
-    return "Signup is not configured yet.";
-  }
-
-  if (normalizeInviteCode(input.inviteCode) !== normalizeInviteCode(expectedInviteCode)) {
-    return "That invite code is not valid. Ask the crew.";
-  }
-
-  const displayNameError = validateDisplayName(input.displayName);
-  if (displayNameError) {
-    return displayNameError;
+  const inviteProfileError = validateInviteProfileInput(input, expectedInviteCode);
+  if (inviteProfileError) {
+    return inviteProfileError;
   }
 
   if (!input.email || !input.email.includes("@")) {
@@ -30,6 +24,18 @@ export function validateSignupInput(input: SignupInput, expectedInviteCode: stri
   }
 
   return null;
+}
+
+export function validateInviteProfileInput(input: InviteProfileInput, expectedInviteCode: string | undefined) {
+  if (!expectedInviteCode) {
+    return "Signup is not configured yet.";
+  }
+
+  if (normalizeInviteCode(input.inviteCode) !== normalizeInviteCode(expectedInviteCode)) {
+    return "That invite code is not valid. Ask the crew.";
+  }
+
+  return validateDisplayName(input.displayName);
 }
 
 export function normalizeInviteCode(value: string) {

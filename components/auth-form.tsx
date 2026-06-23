@@ -17,7 +17,7 @@ const initialAuthFormState: AuthFormState = {
   message: null,
 };
 
-export function AuthForm() {
+export function AuthForm({ message }: { message?: string | null }) {
   const [mode, setMode] = useState<AuthMode>("signup");
   const [signupState, signupFormAction] = useActionState(
     signupAction,
@@ -28,6 +28,7 @@ export function AuthForm() {
     initialAuthFormState,
   );
   const activeState = mode === "signup" ? signupState : loginState;
+  const activeMessage = activeState.message ?? message;
 
   return (
     <div className="w-full max-w-sm">
@@ -51,6 +52,8 @@ export function AuthForm() {
         action={mode === "signup" ? signupFormAction : loginFormAction}
         className="mt-7 grid gap-4"
       >
+        <input name="mode" type="hidden" value={mode} />
+
         {mode === "signup" ? (
           <>
             <Field label="Invite code">
@@ -72,6 +75,9 @@ export function AuthForm() {
             </Field>
           </>
         ) : null}
+
+        <GoogleButton mode={mode} />
+        <Divider label={mode === "signup" ? "or create a password account" : "or log in with email"} />
 
         <Field label="Email">
           <input
@@ -95,9 +101,9 @@ export function AuthForm() {
           />
         </Field>
 
-        {activeState.message ? (
+        {activeMessage ? (
           <p className="mono text-sm text-[var(--accent)]" role="alert">
-            x {activeState.message}
+            x {activeMessage}
           </p>
         ) : null}
 
@@ -107,6 +113,42 @@ export function AuthForm() {
       <p className="tag mt-5 text-center">
         private by default / server-validated code
       </p>
+    </div>
+  );
+}
+
+function GoogleButton({ mode }: { mode: AuthMode }) {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button
+      className="w-full border-[var(--ink)] bg-[var(--paper)] text-[var(--ink)] hover:bg-[color-mix(in_srgb,var(--ink)_7%,transparent)]"
+      disabled={pending}
+      formAction="/api/auth/google/start"
+      formMethod="post"
+      formNoValidate
+      size="lg"
+      type="submit"
+      variant="ghost"
+    >
+      <span className="grid size-6 place-items-center rounded-full border border-[var(--ink)] font-display text-sm">
+        G
+      </span>
+      {pending
+        ? "Opening Google..."
+        : mode === "signup"
+          ? "Create account with Google"
+          : "Continue with Google"}
+    </Button>
+  );
+}
+
+function Divider({ label }: { label: string }) {
+  return (
+    <div className="flex items-center gap-3 py-1">
+      <div className="h-px flex-1 bg-[var(--line-strong)]" />
+      <span className="tag text-[var(--ink-soft)]">{label}</span>
+      <div className="h-px flex-1 bg-[var(--line-strong)]" />
     </div>
   );
 }

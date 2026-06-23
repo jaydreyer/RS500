@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { shouldUseSecureAuthCookie } from "@/lib/auth-cookie";
 import { createAuthCookie, createPocketBase, getPocketBaseUrl } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
@@ -44,7 +45,11 @@ export async function GET(request: NextRequest) {
   });
 
   const response = NextResponse.redirect(new URL(getSafeNextPath(request), request.url));
-  response.cookies.set(createAuthCookie(pb));
+  response.cookies.set(
+    createAuthCookie(pb, {
+      secure: shouldUseSecureAuthCookie(request.headers),
+    }),
+  );
 
   return response;
 }

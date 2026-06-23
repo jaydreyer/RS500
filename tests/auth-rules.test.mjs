@@ -1,7 +1,12 @@
 import assert from "node:assert/strict"
 import test from "node:test"
 
-import { isAdminEmail, validateDisplayName, validateSignupInput } from "../lib/auth-rules.ts"
+import {
+  isAdminEmail,
+  validateDisplayName,
+  validateInviteProfileInput,
+  validateSignupInput,
+} from "../lib/auth-rules.ts"
 
 const configuredInviteCode = "VINYL-NIGHT"
 
@@ -32,6 +37,29 @@ test("invite-code signup rejects invalid codes before account creation", () => {
       configuredInviteCode,
     ),
     "That invite code is not valid. Ask the crew.",
+  )
+})
+
+test("google signup validates invite code and display name without requiring password fields", () => {
+  assert.equal(
+    validateInviteProfileInput(
+      {
+        inviteCode: "vinyl-night",
+        displayName: "Mavis",
+      },
+      configuredInviteCode,
+    ),
+    null,
+  )
+  assert.equal(
+    validateInviteProfileInput(
+      {
+        inviteCode: "vinyl-night",
+        displayName: "M",
+      },
+      configuredInviteCode,
+    ),
+    "Enter the name the board should show.",
   )
 })
 

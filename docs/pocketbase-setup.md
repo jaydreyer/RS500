@@ -15,6 +15,9 @@ Required values:
 - `NEXT_PUBLIC_PB_URL`: PocketBase base URL, for example `http://127.0.0.1:8090` locally or the Cloudflare Tunnel URL in production.
 - `PB_ADMIN_EMAIL`: PocketBase superuser email for seed/admin scripts and trusted server-side invite signup.
 - `PB_ADMIN_PASSWORD`: PocketBase superuser password for seed/admin scripts and trusted server-side invite signup.
+- `GOOGLE_OAUTH_CLIENT_ID`: Google OAuth web client ID for Google account signup/login.
+- `GOOGLE_OAUTH_CLIENT_SECRET`: Google OAuth web client secret.
+- `GOOGLE_OAUTH_REDIRECT_URI`: optional explicit callback URL when request origin inference is not suitable. If unset, the app uses `/api/auth/google/callback` on the current origin.
 - `CREW_INVITE_CODE`: Shared signup code used by the Next.js server action before account creation.
 - `SERVER_ACTION_ALLOWED_ORIGINS`: Comma-separated trusted hosts for Next.js Server Actions.
 
@@ -72,6 +75,7 @@ Phase 2 uses email/password auth against the PocketBase `users` collection:
 - The server action validates `CREW_INVITE_CODE` before touching PocketBase.
 - The server action authenticates as `_superusers`, creates the `users` record with `display_name`, then logs the new user in.
 - Login posts to a Next.js server action and calls `users.authWithPassword`.
+- Google auth posts to a Next.js route, validates the invite code for new members, completes Google's OAuth code flow server-side, then creates or impersonates the PocketBase user with superuser credentials.
 - The authenticated PocketBase token/record are stored in an HTTP-only `pb_auth` cookie.
 - The authenticated route group redirects unauthenticated requests to `/auth`.
 - `/auth` redirects authenticated members to `/week`.
@@ -79,6 +83,8 @@ Phase 2 uses email/password auth against the PocketBase `users` collection:
 Because `NEXT_PUBLIC_PB_URL` is intentionally visible to the browser, keeping `users.createRule = null` is important. Without that rule, a stranger could bypass the app form and call PocketBase signup directly.
 
 The same principle applies to `listens`: draw and rating rules are app-owned, so `listens.createRule` and `listens.updateRule` are locked. Server actions authenticate the current member, then use the trusted superuser client to create or update listen records.
+
+Google OAuth is intentionally app-owned rather than enabled as a public PocketBase OAuth provider. This preserves the invite gate: a new Google-backed account is only created after the Next.js route validates `CREW_INVITE_CODE`. Existing members can sign in with a Google account whose verified email matches their PocketBase user; the app stores Google's stable `sub` value on `users.google_sub` after the first successful Google login.
 
 Account deactivation is implemented as identity tombstoning rather than physical user deletion. `users.deleteRule` is locked, historical content keeps its user relation, and deactivated members render as `Deleted member`.
 

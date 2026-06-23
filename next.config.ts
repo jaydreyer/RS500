@@ -27,16 +27,18 @@ const imageSources = [
   ...(pocketBaseOrigin && !pocketBaseOrigin.startsWith("https:") ? [pocketBaseOrigin] : []),
 ];
 
+const formActionSources = ["'self'", "https://accounts.google.com"];
+
 const cspHeader = [
   "default-src 'self'",
   `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
   `img-src ${dedupe(imageSources).join(" ")}`,
-  "font-src 'self'",
+  "font-src 'self' data:",
   `connect-src ${dedupe(connectSources).join(" ")}`,
   "object-src 'none'",
   "base-uri 'self'",
-  "form-action 'self'",
+  `form-action ${dedupe(formActionSources).join(" ")}`,
   "frame-ancestors 'none'",
   ...(isDev ? [] : ["upgrade-insecure-requests"]),
 ].join("; ");
