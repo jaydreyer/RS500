@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import {
   Bricolage_Grotesque,
   Newsreader,
@@ -52,7 +53,10 @@ export default function RootLayout({
       data-theme="midnight"
       className={`${display.variable} ${body.variable} ${mono.variable} ${quote.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
