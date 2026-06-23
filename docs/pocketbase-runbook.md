@@ -102,3 +102,14 @@ Verified live collection details after creation:
 - Read marker: optional `read_at` date
 - Rules: authenticated actor/recipient can list/view; authenticated actor can create mentions for other users; recipient can update read state; delete locked
 - Indexes: `user, created`, `user, read_at`, `post`, `reply`
+
+## Session Note: Google OAuth User Link
+
+On June 23, 2026, the hidden `users.google_sub` text field and `idx_users_google_sub` unique partial index were applied on the live `ai-lab:8091` backend through the superuser Collections API after the Google auth deployment. The matching migration is `pb_migrations/1781006418_add_user_google_sub.js` and is idempotent.
+
+Verified live user collection details after the update:
+
+- `users.google_sub` field exists
+- `idx_users_google_sub` index exists
+
+If production Google login returns to `/auth?google=failed` after Google consent, check the live `users` schema first. The app queries and updates `users.google_sub` during Google login; if that field or index is missing from the live PocketBase instance, Google auth can complete successfully but the app will fail while matching or linking the PocketBase user.
