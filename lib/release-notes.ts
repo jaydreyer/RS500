@@ -9,6 +9,25 @@ export type ReleaseNote = {
 
 export const releaseNotes = [
   {
+    date: "2026-06-23",
+    title: "Google sign-in joins the club",
+    summary:
+      "Members can now sign in with Google, while new accounts still stay invite-only.",
+    added: [
+      "Google account signup and login on the auth screen.",
+      "Invite-code validation before creating a new Google-backed account.",
+      "Server-side Google OAuth handling that keeps PocketBase user creation app-owned.",
+    ],
+    improved: [
+      "Login sessions are friendlier on refresh, including local and mobile testing.",
+      "Existing password users can link Google on first successful Google login by verified email.",
+    ],
+    fixed: [
+      "Auth cookies now choose Secure based on the actual request context instead of production mode alone.",
+      "The app content security policy now allows the Google sign-in handoff.",
+    ],
+  },
+  {
     date: "2026-06-16",
     title: "Release notes get a home",
     summary:
@@ -23,7 +42,7 @@ export const releaseNotes = [
   },
 ] as const satisfies readonly ReleaseNote[];
 
-export const releaseNoteCount = releaseNotes.length;
+export const releaseNoteCount: number = releaseNotes.length;
 export const hasReleaseNotes = releaseNoteCount > 0;
 export const latestReleaseNoteId = releaseNotes[0] ? getReleaseNoteId(releaseNotes[0]) : "";
 
