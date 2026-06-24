@@ -113,3 +113,7 @@ Verified live user collection details after the update:
 - `idx_users_google_sub` index exists
 
 If production Google login returns to `/auth?google=failed` after Google consent, check the live `users` schema first. The app queries and updates `users.google_sub` during Google login; if that field or index is missing from the live PocketBase instance, Google auth can complete successfully but the app will fail while matching or linking the PocketBase user.
+
+## Session Note: Review Replies
+
+On June 24, 2026, `review_replies` was missing from the live `ai-lab:8091` backend, causing `/history` reply creation to fail with "Missing or invalid collection context." The collection was created through the superuser Collections API with `listen -> listens`, `user -> users`, `body`, `created`, and `updated` fields, plus the `idx_review_replies_listen_created` and `idx_review_replies_user_created` indexes. The matching migration `pb_migrations/1781006419_create_review_replies.js` is now idempotent, and live create/delete was verified through an impersonated member token.
