@@ -56,6 +56,7 @@ Added Google auth migration:
 Added Reviews migration:
 
 - `1781006419_create_review_replies.js`: creates `review_replies` for one-level conversations under logged reviews. Authenticated members can read replies, create replies as themselves, and update/delete only their own reply rows.
+  On the live `ai-lab:8091` instance, this collection was created once through the PocketBase superuser Collections API after `/history` replies exposed the missing schema; the migration is idempotent for future official migration runs.
 
 Run migrations from the PocketBase directory that contains or can see this app's `pb_migrations` folder. For local development, prefer the combined helper:
 
