@@ -517,6 +517,7 @@ async function seedPocketBase(plan, options) {
     summary,
   )
   await seedListenReactions(pb, listenRecords, plan.users, userRecords, options.dryRun, summary)
+  await seedReviewReplies(pb, listenRecords, plan.users, userRecords, options.dryRun, summary)
   const feedPostRecords = await seedFeed(pb, plan.feedPosts, albumRecords, userRecords, options.dryRun, summary)
   await seedFeedReads(pb, plan.feedReads, userRecords, options.dryRun, summary)
 
@@ -849,6 +850,52 @@ async function seedListenReactions(pb, listenRecords, users, userRecords, dryRun
   }
 }
 
+async function seedReviewReplies(pb, listenRecords, users, userRecords, dryRun, summary) {
+  const activeUsers = users.filter((user) => !user.deactivated)
+  let index = 0
+
+  for (const listen of listenRecords.values()) {
+    if (index % 6 !== 0) {
+      index += 1
+      continue
+    }
+
+    const listenUserId = asString(listen.user)
+    let actor = activeUsers[(index + 3) % activeUsers.length]
+
+    if (userRecords.get(actor.email)?.id === listenUserId) {
+      actor = activeUsers[(index + 4) % activeUsers.length]
+    }
+    const user = userRecords.get(actor.email)
+    const body = REPLY_TEMPLATES[index % REPLY_TEMPLATES.length]
+    const existing = await getFirst(
+      pb,
+      "review_replies",
+      pb.filter("listen = {:listen} && user = {:user} && body = {:body}", {
+        listen: listen.id,
+        user: user.id,
+        body,
+      }),
+    )
+    const payload = {
+      listen: listen.id,
+      user: user.id,
+      body,
+    }
+
+    if (existing) {
+      summary.reviewReplies.skipped += 1
+    } else {
+      if (!dryRun) {
+        await pb.collection("review_replies").create(payload, { requestKey: null })
+      }
+      summary.reviewReplies.created += 1
+    }
+
+    index += 1
+  }
+}
+
 async function seedFeed(pb, feedPosts, albumRecords, userRecords, dryRun, summary) {
   const postRecords = new Map()
 
@@ -1046,6 +1093,7 @@ function createSummary() {
     groups: emptyChangeSummary(),
     listenReactions: emptyChangeSummary(),
     listens: { ...emptyChangeSummary(), closed: 0 },
+    reviewReplies: emptyChangeSummary(),
     users: emptyChangeSummary(),
   }
 }

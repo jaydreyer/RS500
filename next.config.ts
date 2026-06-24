@@ -57,6 +57,13 @@ const nextConfig: NextConfig = {
         pathname: "/release-group/**",
         search: "",
       },
+      {
+        protocol: "https",
+        hostname: "coverartarchive.org",
+        port: "",
+        pathname: "/release/**",
+        search: "",
+      },
     ],
   },
   async headers() {

@@ -5,8 +5,8 @@ Invite-only Rolling Stone 500 listening club app built with Next.js App Router a
 ## Stack
 
 - Next.js, React, TypeScript, Tailwind CSS v4
-- PocketBase for auth, albums, listens, and reactions
-- Server actions for signup, draw/rating, logout, and reaction writes
+- PocketBase for auth, albums, listens, review replies, and reactions
+- Server actions for signup, draw/rating, logout, review replies, and reaction writes
 - PocketBase realtime for the current-week Board refresh loop
 
 ## Local Setup
@@ -58,7 +58,7 @@ npm run import:albums -- --file ./data/rs500.csv --dry-run
 npm run import:albums -- --file ./data/rs500.csv
 ```
 
-Or fill a local development backend with the complete RS500 album/artwork dataset plus sample users, listens, reviews, reactions, groups, group draws, feed posts, replies, mentions, and feed read state:
+Or fill a local development backend with the complete RS500 album/artwork dataset plus sample users, listens, reviews, review replies, reactions, groups, group draws, feed posts, replies, mentions, and feed read state:
 
 ```bash
 npm run seed:dev -- --validate-only
@@ -157,7 +157,7 @@ Before production use:
 
 - Apply all migrations in `pb_migrations/` to the owner's PocketBase instance.
 - Import the complete RS500 album dataset with required `cover_url` values.
-- Create or invite test members and verify signup, draw, board realtime, catalog, history, stats, and album detail against live data.
+- Create or invite test members and verify signup, draw, board realtime, catalog, reviews, stats, and album detail against live data.
 - Rehearse schema/rule changes against a non-production PocketBase instance.
 
 See [docs/pocketbase-setup.md](docs/pocketbase-setup.md) for backend details and [docs/mvp-verification-checklist.md](docs/mvp-verification-checklist.md) for the acceptance checklist.

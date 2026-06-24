@@ -2,7 +2,6 @@ import {
   ChartNoAxesColumn,
   Disc3,
   Grid3X3,
-  History,
   ListMusic,
   MessageSquareText,
   Users,
@@ -14,7 +13,7 @@ export const clubNavItems = [
   { href: "/feed", label: "The Feed", Icon: MessageSquareText },
   { href: "/catalog", label: "The 500", Icon: ListMusic },
   { href: "/groups", label: "Groups", Icon: Users },
-  { href: "/history", label: "History", Icon: History },
+  { href: "/history", label: "Reviews", Icon: MessageSquareText },
   { href: "/stats", label: "Stats", Icon: ChartNoAxesColumn },
 ] as const;
 

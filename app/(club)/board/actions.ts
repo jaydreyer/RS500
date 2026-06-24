@@ -51,6 +51,7 @@ export async function upsertReactionAction({
     }
 
     revalidatePath("/board");
+    revalidatePath("/history");
     if (typeof listen.album === "string" && listen.album.trim()) {
       revalidatePath(`/albums/${listen.album.trim()}`);
     }

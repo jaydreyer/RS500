@@ -24,8 +24,8 @@ Status legend:
 | All authenticated members can read everyone's board activity. | Verified | Production QA: Test One and Test Two both used The Board and saw cross-member activity. |
 | A user can have only one reaction row per listen. | Verified | PocketBase migration adds unique `reactions(listen, user)` index. |
 | The Board reflects another member's draw, rating, or reaction without manual refresh. | Verified | Production QA: two-user Board check completed with Test Two's fresh draw and Test One's reaction. |
-| The History grid shows members by weeks with album cover, album, and score per cell. | Blocked | UI/data mapper exists; needs seeded authenticated QA. |
-| Album covers render on Board, History, and detail views. | Blocked | Components use seeded `cover_url`; needs seeded authenticated visual QA. |
+| The Reviews page shows reviewed picks with album cover, album, score, reactions, and discussion controls. | Blocked | UI/data mapper exists; needs seeded authenticated QA. |
+| Album covers render on Board, Reviews, and detail views. | Blocked | Components use seeded `cover_url`; needs seeded authenticated visual QA. |
 | Spotify links render when `spotify_url` is present. | Blocked | Board/detail/catalog code paths exist; needs seeded URL QA. |
 | Apple Music links render when `apple_music_url` is present. | Blocked | Board/detail/catalog code paths exist; needs seeded URL QA. |
 | Re-running the seed script does not create duplicate albums. | Verified | Unique album rank index plus `npm test` importer idempotency coverage. |
@@ -44,5 +44,5 @@ Status legend:
 
 - Verify invalid signup in-browser.
 - Verify active-pick blocking remains visible after a fresh pick is kept but before rating.
-- Verify Catalog, History, Stats, and Album Detail with seeded cover and service URL data.
+- Verify Catalog, Reviews, Stats, and Album Detail with seeded cover and service URL data.
 - Test users/listens/reactions were cleaned from PocketBase after production QA; the album catalog remains seeded.

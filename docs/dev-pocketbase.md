@@ -63,7 +63,7 @@ npm run seed:dev
 
 The development seeder refuses non-local PocketBase URLs by default. `NEXT_PUBLIC_PB_URL` must point at `localhost`, `127.0.0.1`, or `::1` unless you pass `--allow-remote-dev-seed` for a confirmed disposable remote development backend. Do not use that override for `http://ai-lab:8091`.
 
-The development seeder authenticates as the PocketBase superuser, upserts all 500 albums from `data/rs500-albums.json`, creates sample users with the password `spin500-dev`, and fills listens/reviews, reactions, groups, group draws, feed posts, feed replies, feed mentions, and feed read state. It is idempotent for the generated sample records, so rerunning it should update the same development data instead of creating another independent sample crew.
+The development seeder authenticates as the PocketBase superuser, upserts all 500 albums from `data/rs500-albums.json`, creates sample users with the password `spin500-dev`, and fills listens/reviews, review replies, reactions, groups, group draws, feed posts, feed replies, feed mentions, and feed read state. It is idempotent for the generated sample records, so rerunning it should update the same development data instead of creating another independent sample crew.
 
 ## Staging Instance
 
