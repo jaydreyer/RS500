@@ -9,6 +9,25 @@ export type ReleaseNote = {
 
 export const releaseNotes = [
   {
+    date: "2026-06-24",
+    title: "Reviews get reactions, replies, and filters",
+    summary:
+      "The old History surface is now Reviews, with more ways to find, react to, and talk about the crew's takes.",
+    added: [
+      "Full emoji reactions on Reviews using the same picker as the album review thread.",
+      "One-level review replies on the Reviews page, plus display of album-page review comments there too.",
+      "Search, member, score, and activity filters for the Reviews page.",
+    ],
+    improved: [
+      "History is now labeled Reviews in navigation and page copy.",
+      "Reviews can be sorted by date, score, most discussed, or most reacted.",
+      "Local seed data now includes sample review replies for richer review-stack QA.",
+    ],
+    fixed: [
+      "Local seeded covers from Cover Art Archive release URLs are allowed by Next image configuration.",
+    ],
+  },
+  {
     date: "2026-06-23",
     title: "Group draws stay group-only",
     summary:

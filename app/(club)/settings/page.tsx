@@ -30,7 +30,7 @@ export default async function SettingsPage({ searchParams }: SettingsPageProps) 
             <div>
               <h2 className="text-2xl">Board identity</h2>
               <p className="mt-2 max-w-xl text-sm leading-6 text-[var(--ink-soft)]">
-                This is the name and face the crew sees on ratings, reactions, history, and stats.
+                This is the name and face the crew sees on ratings, reactions, reviews, and stats.
               </p>
             </div>
             <ClubAvatar
@@ -146,7 +146,7 @@ export default async function SettingsPage({ searchParams }: SettingsPageProps) 
             </div>
             <p className="mt-2 text-sm leading-6 text-[var(--ink-soft)]">
               Your login identity will be removed, but ratings, reviews, feed posts, and reactions
-              stay in the club history as Deleted member.
+              stay in the club reviews as Deleted member.
             </p>
             <label className="mt-3 grid gap-1.5">
               <span className="tag">type DELETE to confirm</span>

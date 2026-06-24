@@ -47,6 +47,28 @@ export type HistoryListen = StatsListen & {
   ratedAt: string | null;
   created: string;
   album: HistoryAlbum;
+  reactions: HistoryReaction[];
+  replies: HistoryReply[];
+};
+
+export type HistoryReaction = {
+  id: string;
+  listenId: string;
+  userId: string;
+  emoji: string;
+  comment: string;
+  created: string;
+  updated: string;
+  user: HistoryMember;
+};
+
+export type HistoryReply = {
+  id: string;
+  listenId: string;
+  userId: string;
+  body: string;
+  created: string;
+  user: HistoryMember;
 };
 
 export type MemberSummary = BaseMemberSummary<HistoryMember, HistoryListen>;
@@ -92,7 +114,10 @@ export async function getHistoryState(
   ]);
 
   const mappedMembers = members.map((member) => mapMember(member));
-  const mappedListens = listens.map((listen) => mapListen(listen));
+  const mappedListens = await hydrateReviewActivity(
+    pb,
+    listens.map((listen) => mapListen(listen)),
+  );
   const freshGridListens = mappedListens.filter(
     (listen) => listen.kind === "fresh" && listen.status === "rated" && listen.rating != null,
   );
@@ -140,6 +165,82 @@ function mapListen(record: RecordLike): HistoryListen {
     ratedAt: asNullableString(record.rated_at),
     created: asString(record.created),
     album: mapAlbum(getExpandedRecord(record, "album")),
+    reactions: [],
+    replies: [],
+  };
+}
+
+async function hydrateReviewActivity(pb: PocketBase, listens: HistoryListen[]) {
+  const listenIds = new Set(listens.map((listen) => listen.id));
+  const [reactions, replies] = await Promise.all([
+    getReactionsForListens(pb, listenIds),
+    getRepliesForListens(pb, listenIds),
+  ]);
+
+  return listens.map((listen) => ({
+    ...listen,
+    reactions: reactions.filter((reaction) => reaction.listenId === listen.id),
+    replies: replies.filter((reply) => reply.listenId === listen.id),
+  }));
+}
+
+async function getReactionsForListens(pb: PocketBase, listenIds: Set<string>) {
+  if (listenIds.size === 0) {
+    return [];
+  }
+
+  const reactions = await pb.collection("reactions").getFullList({
+    expand: "user",
+    sort: "created",
+    requestKey: null,
+  });
+
+  return reactions
+    .map((reaction) => mapReaction(reaction))
+    .filter((reaction) => listenIds.has(reaction.listenId));
+}
+
+async function getRepliesForListens(pb: PocketBase, listenIds: Set<string>) {
+  if (listenIds.size === 0) {
+    return [];
+  }
+
+  try {
+    const replies = await pb.collection("review_replies").getFullList({
+      expand: "user",
+      sort: "created",
+      requestKey: null,
+    });
+
+    return replies
+      .map((reply) => mapReply(reply))
+      .filter((reply) => listenIds.has(reply.listenId));
+  } catch {
+    return [];
+  }
+}
+
+function mapReaction(record: RecordLike): HistoryReaction {
+  return {
+    id: record.id,
+    listenId: asString(record.listen),
+    userId: asString(record.user),
+    emoji: asString(record.emoji),
+    comment: asString(record.comment),
+    created: asString(record.created),
+    updated: asString(record.updated),
+    user: mapMember(getExpandedRecord(record, "user")),
+  };
+}
+
+function mapReply(record: RecordLike): HistoryReply {
+  return {
+    id: record.id,
+    listenId: asString(record.listen),
+    userId: asString(record.user),
+    body: asString(record.body),
+    created: asString(record.created),
+    user: mapMember(getExpandedRecord(record, "user")),
   };
 }
 
