@@ -247,6 +247,11 @@ a {
   color: var(--ink-soft);
 }
 
+select.input-control {
+  line-height: 1.25;
+  padding-right: 40px;
+}
+
 .input-control:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 18%, transparent);
