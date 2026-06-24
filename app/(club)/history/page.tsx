@@ -190,7 +190,7 @@ function RecentListenRow({
   currentUserId: string;
 }) {
   return (
-    <article className="grid gap-3 border-b border-[var(--line)] p-4 transition-colors last:border-b-0 hover:bg-[var(--paper-2)] sm:grid-cols-[48px_64px_minmax(0,1fr)_auto] sm:items-center">
+    <article className="grid gap-3 border-b border-[var(--line)] p-4 transition-colors last:border-b-0 hover:bg-[var(--paper-2)] sm:grid-cols-[48px_64px_minmax(0,1fr)] sm:items-start">
       <ClubAvatar
         imageUrl={member.avatarUrl}
         initials={member.initials}
@@ -207,36 +207,40 @@ function RecentListenRow({
         />
       </Link>
       <div className="min-w-0">
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="font-display font-extrabold">
-            {getMemberLabel(member, currentUserId)}
-          </span>
-          {listen.groupDrawId && (
-            <span className="tag inline-flex items-center gap-1 rounded-sm border border-[var(--line-strong)] px-1.5 py-0.5">
-              <Users className="size-3" aria-hidden="true" />
-              group draw
-            </span>
-          )}
-          <span className="tag">{formatReviewDate(listen)}</span>
+        <div className="flex items-start justify-between gap-4">
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="font-display font-extrabold">
+                {getMemberLabel(member, currentUserId)}
+              </span>
+              {listen.groupDrawId && (
+                <span className="tag inline-flex items-center gap-1 rounded-sm border border-[var(--line-strong)] px-1.5 py-0.5">
+                  <Users className="size-3" aria-hidden="true" />
+                  group draw
+                </span>
+              )}
+              <span className="tag">{formatReviewDate(listen)}</span>
+            </div>
+            <Link href={`/albums/${listen.album.id}`} className="block">
+              <h2 className="mt-1 truncate text-xl transition-colors hover:text-[var(--accent)]">
+                {listen.album.title}
+              </h2>
+            </Link>
+            <p className="mt-1 truncate font-quote text-lg leading-tight text-[var(--ink-soft)]">
+              {listen.album.artist} / #{listen.album.rank}
+            </p>
+          </div>
+          <div className="shrink-0">
+            <ScoreBadge score={listen.rating} label={`/${RATING_SCALE.max}`} emptyLabel="no score" />
+          </div>
         </div>
-        <Link href={`/albums/${listen.album.id}`} className="block">
-          <h2 className="mt-1 truncate text-xl transition-colors hover:text-[var(--accent)]">
-            {listen.album.title}
-          </h2>
-        </Link>
-        <p className="mt-1 truncate font-quote text-lg leading-tight text-[var(--ink-soft)]">
-          {listen.album.artist} / #{listen.album.rank}
-        </p>
         {listen.take && (
-          <ReviewMarkdown className="mt-2 font-quote text-base leading-relaxed text-[var(--ink-soft)]">
+          <ReviewMarkdown className="mt-2 break-words font-quote text-base leading-relaxed text-[var(--ink-soft)]">
             {listen.take}
           </ReviewMarkdown>
         )}
       </div>
-      <div className="shrink-0 self-center">
-        <ScoreBadge score={listen.rating} label={`/${RATING_SCALE.max}`} emptyLabel="no score" />
-      </div>
-      <div className="min-w-0 sm:col-start-3 sm:col-span-2">
+      <div className="min-w-0 sm:col-start-3">
         <ReviewSocialPanel
           currentUserId={currentUserId}
           listenId={listen.id}
@@ -356,7 +360,7 @@ function MemberListenRow({
   currentUserId: string;
 }) {
   return (
-    <article className="grid gap-3 border-b border-[var(--line)] p-4 transition-colors last:border-b-0 hover:bg-[var(--paper-2)] sm:grid-cols-[56px_minmax(0,1fr)_auto]">
+    <article className="grid gap-3 border-b border-[var(--line)] p-4 transition-colors last:border-b-0 hover:bg-[var(--paper-2)] sm:grid-cols-[56px_minmax(0,1fr)]">
       <Link href={`/albums/${listen.album.id}`} className="w-14 shrink-0">
         <AlbumCover
           rank={listen.album.rank}
@@ -367,36 +371,40 @@ function MemberListenRow({
         />
       </Link>
       <div className="min-w-0 flex-1">
-        <div className="flex flex-wrap items-center gap-2">
-          <Link href={`/albums/${listen.album.id}`} className="min-w-0">
-            <h2 className="truncate text-xl transition-colors hover:text-[var(--accent)]">
-              {listen.album.title}
-            </h2>
-          </Link>
-          <span className="tag rounded-sm border border-[var(--line-strong)] px-1.5 py-0.5">
-            {listen.kind}
-          </span>
-          {listen.groupDrawId && (
-            <span className="tag inline-flex items-center gap-1 rounded-sm border border-[var(--line-strong)] px-1.5 py-0.5">
-              <Users className="size-3" aria-hidden="true" />
-              group draw
-            </span>
-          )}
+        <div className="flex items-start justify-between gap-4">
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-2">
+              <Link href={`/albums/${listen.album.id}`} className="min-w-0">
+                <h2 className="truncate text-xl transition-colors hover:text-[var(--accent)]">
+                  {listen.album.title}
+                </h2>
+              </Link>
+              <span className="tag rounded-sm border border-[var(--line-strong)] px-1.5 py-0.5">
+                {listen.kind}
+              </span>
+              {listen.groupDrawId && (
+                <span className="tag inline-flex items-center gap-1 rounded-sm border border-[var(--line-strong)] px-1.5 py-0.5">
+                  <Users className="size-3" aria-hidden="true" />
+                  group draw
+                </span>
+              )}
+            </div>
+            <p className="mt-1 font-quote text-lg leading-tight text-[var(--ink-soft)]">
+              {listen.album.artist} / #{listen.album.rank} / {formatReviewDate(listen)}
+            </p>
+          </div>
+          <div className="shrink-0">
+            <ScoreBadge score={listen.rating} label={`/${RATING_SCALE.max}`} emptyLabel="no score" />
+            <span className="sr-only">{member.displayName}</span>
+          </div>
         </div>
-        <p className="mt-1 font-quote text-lg leading-tight text-[var(--ink-soft)]">
-          {listen.album.artist} / #{listen.album.rank} / {formatReviewDate(listen)}
-        </p>
         {listen.take && (
-          <ReviewMarkdown className="mt-2 font-quote text-base leading-relaxed text-[var(--ink-soft)]">
+          <ReviewMarkdown className="mt-2 break-words font-quote text-base leading-relaxed text-[var(--ink-soft)]">
             {listen.take}
           </ReviewMarkdown>
         )}
       </div>
-      <div className="shrink-0 self-center">
-        <ScoreBadge score={listen.rating} label={`/${RATING_SCALE.max}`} emptyLabel="no score" />
-        <span className="sr-only">{member.displayName}</span>
-      </div>
-      <div className="min-w-0 sm:col-start-2 sm:col-span-2">
+      <div className="min-w-0 sm:col-start-2">
         <ReviewSocialPanel
           currentUserId={currentUserId}
           listenId={listen.id}
@@ -440,7 +448,7 @@ function HistoryReviewControls({
             name="q"
             defaultValue={filterState.q}
             placeholder="album, artist, take, reply"
-            className="input-control h-12 min-w-0 px-3 py-2 text-sm leading-normal"
+            className="input-control history-filter-control min-w-0 px-4"
           />
         </label>
         <label className="grid min-w-0 gap-1.5">
@@ -448,7 +456,7 @@ function HistoryReviewControls({
           <select
             name="reviewer"
             defaultValue={filterState.reviewer}
-            className="input-control h-12 min-w-0 px-3 py-2 pr-9 text-sm leading-normal"
+            className="input-control history-filter-control min-w-0 px-4 pr-11"
           >
             <option value="">All members</option>
             {members.map((member) => (
@@ -463,7 +471,7 @@ function HistoryReviewControls({
           <select
             name="score"
             defaultValue={filterState.score}
-            className="input-control h-12 min-w-0 px-3 py-2 pr-9 text-sm leading-normal"
+            className="input-control history-filter-control min-w-0 px-4 pr-11"
           >
             <option value="all">All scores</option>
             <option value="high">9+</option>
@@ -475,7 +483,7 @@ function HistoryReviewControls({
           <select
             name="activity"
             defaultValue={filterState.activity}
-            className="input-control h-12 min-w-0 px-3 py-2 pr-9 text-sm leading-normal"
+            className="input-control history-filter-control min-w-0 px-4 pr-11"
           >
             <option value="all">All activity</option>
             <option value="replies">Has replies</option>
@@ -483,10 +491,16 @@ function HistoryReviewControls({
           </select>
         </label>
         <div className="flex flex-wrap gap-2 xl:flex-nowrap">
-          <button type="submit" className={cn(buttonVariants({ variant: "solid", size: "sm" }), "h-12 px-4")}>
+          <button
+            type="submit"
+            className={cn(buttonVariants({ variant: "solid", size: "sm" }), "h-[52px] px-4 text-base")}
+          >
             Apply
           </button>
-          <Link href="/history" className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "h-12 px-4")}>
+          <Link
+            href="/history"
+            className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "h-[52px] px-4 text-base")}
+          >
             Reset
           </Link>
         </div>
