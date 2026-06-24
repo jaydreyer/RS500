@@ -228,7 +228,7 @@ function RecentListenRow({
           {listen.album.artist} / #{listen.album.rank}
         </p>
         {listen.take && (
-          <ReviewMarkdown className="mt-2 line-clamp-2 font-quote text-base leading-relaxed text-[var(--ink-soft)]">
+          <ReviewMarkdown className="mt-2 font-quote text-base leading-relaxed text-[var(--ink-soft)]">
             {listen.take}
           </ReviewMarkdown>
         )}
@@ -387,7 +387,7 @@ function MemberListenRow({
           {listen.album.artist} / #{listen.album.rank} / {formatReviewDate(listen)}
         </p>
         {listen.take && (
-          <ReviewMarkdown className="mt-2 line-clamp-3 font-quote text-base leading-relaxed text-[var(--ink-soft)]">
+          <ReviewMarkdown className="mt-2 font-quote text-base leading-relaxed text-[var(--ink-soft)]">
             {listen.take}
           </ReviewMarkdown>
         )}
