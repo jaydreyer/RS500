@@ -425,10 +425,13 @@ function HistoryReviewControls({
 }) {
   return (
     <section className="pressed-panel mb-5 grid gap-4 rounded-lg p-4">
-      <form action="/history" className="grid gap-3 lg:grid-cols-[minmax(220px,1fr)_180px_150px_160px_auto] lg:items-end">
+      <form
+        action="/history"
+        className="grid gap-3 lg:grid-cols-2 xl:grid-cols-[minmax(280px,1fr)_minmax(210px,240px)_minmax(170px,220px)_minmax(200px,240px)_auto] xl:items-end"
+      >
         <input type="hidden" name="sort" value={sortState.sort} />
         <input type="hidden" name="dir" value={sortState.dir} />
-        <label className="grid gap-1.5">
+        <label className="grid min-w-0 gap-1.5">
           <span className="tag inline-flex items-center gap-1.5">
             <Search className="size-3.5" aria-hidden="true" />
             search
@@ -437,15 +440,15 @@ function HistoryReviewControls({
             name="q"
             defaultValue={filterState.q}
             placeholder="album, artist, take, reply"
-            className="input-control h-10 px-3 py-1 text-sm"
+            className="input-control h-12 min-w-0 px-3 py-2 text-sm leading-normal"
           />
         </label>
-        <label className="grid gap-1.5">
+        <label className="grid min-w-0 gap-1.5">
           <span className="tag">member</span>
           <select
             name="reviewer"
             defaultValue={filterState.reviewer}
-            className="input-control h-10 px-3 py-1 text-sm"
+            className="input-control h-12 min-w-0 px-3 py-2 pr-9 text-sm leading-normal"
           >
             <option value="">All members</option>
             {members.map((member) => (
@@ -455,35 +458,35 @@ function HistoryReviewControls({
             ))}
           </select>
         </label>
-        <label className="grid gap-1.5">
+        <label className="grid min-w-0 gap-1.5">
           <span className="tag">score</span>
           <select
             name="score"
             defaultValue={filterState.score}
-            className="input-control h-10 px-3 py-1 text-sm"
+            className="input-control h-12 min-w-0 px-3 py-2 pr-9 text-sm leading-normal"
           >
             <option value="all">All scores</option>
             <option value="high">9+</option>
             <option value="low">Under 5</option>
           </select>
         </label>
-        <label className="grid gap-1.5">
+        <label className="grid min-w-0 gap-1.5">
           <span className="tag">activity</span>
           <select
             name="activity"
             defaultValue={filterState.activity}
-            className="input-control h-10 px-3 py-1 text-sm"
+            className="input-control h-12 min-w-0 px-3 py-2 pr-9 text-sm leading-normal"
           >
             <option value="all">All activity</option>
             <option value="replies">Has replies</option>
             <option value="reactions">Has reactions</option>
           </select>
         </label>
-        <div className="flex flex-wrap gap-2">
-          <button type="submit" className={cn(buttonVariants({ variant: "solid", size: "sm" }), "h-10 px-3")}>
+        <div className="flex flex-wrap gap-2 xl:flex-nowrap">
+          <button type="submit" className={cn(buttonVariants({ variant: "solid", size: "sm" }), "h-12 px-4")}>
             Apply
           </button>
-          <Link href="/history" className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "h-10 px-3")}>
+          <Link href="/history" className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "h-12 px-4")}>
             Reset
           </Link>
         </div>
