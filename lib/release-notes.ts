@@ -10,6 +10,16 @@ export type ReleaseNote = {
 export const releaseNotes = [
   {
     date: "2026-06-24",
+    title: "Reviews display polish",
+    summary:
+      "A quick cleanup pass makes Reviews easier to scan and read after the reactions-and-replies launch.",
+    improved: [
+      "Reviews filter controls now have room for their dropdown labels across wide and mid-size layouts.",
+      "Full review text now displays on Reviews and member review rows instead of being cut off behind an ellipsis.",
+    ],
+  },
+  {
+    date: "2026-06-24",
     title: "Reviews get reactions, replies, and filters",
     summary:
       "The old History surface is now Reviews, with more ways to find, react to, and talk about the crew's takes.",
