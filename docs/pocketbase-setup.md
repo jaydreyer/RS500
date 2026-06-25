@@ -58,6 +58,7 @@ Added Reviews migration:
 - `1781006419_create_review_replies.js`: creates `review_replies` for one-level conversations under logged reviews. Authenticated members can read replies, create replies as themselves, and update/delete only their own reply rows.
 - `1781006420_expand_listen_take_length_to_6000.js`: expands the `listens.take` field to support 6,000-character album reviews.
 - `1781006421_expand_listen_take_storage_length.js`: adds storage headroom for the `listens.take` field while the app enforces the user-facing 6,000-character review limit.
+  On the live `ai-lab:8091` instance, this collection was created once through the PocketBase superuser Collections API after `/history` replies exposed the missing schema; the migration is idempotent for future official migration runs.
 
 Run migrations from the PocketBase directory that contains or can see this app's `pb_migrations` folder. For local development, prefer the combined helper:
 

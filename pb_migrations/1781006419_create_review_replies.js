@@ -1,4 +1,11 @@
 migrate((app) => {
+  try {
+    app.findCollectionByNameOrId("review_replies")
+    return
+  } catch {
+    // Create the collection when it does not exist yet.
+  }
+
   const listens = app.findCollectionByNameOrId("listens")
   const users = app.findCollectionByNameOrId("users")
   const listensId = listens.id || listens.Id
