@@ -6,10 +6,12 @@ import type PocketBase from "pocketbase";
 import { RATING_SCALE } from "@/lib/config";
 import {
   assertActiveFreshListen,
+  countTakeCharacters,
   DrawRuleError,
   getDrawablePool,
   normalizeTake,
   parseRatingValue,
+  TAKE_MAX_LENGTH,
 } from "@/lib/draw-rules";
 import { mapStoredRating } from "@/lib/listen-rating";
 import { getIsoWeekKey } from "@/lib/week";
@@ -307,7 +309,13 @@ export function parseListenId(value: FormDataEntryValue | null) {
 }
 
 export function parseTake(value: FormDataEntryValue | null) {
-  return normalizeTake(typeof value === "string" ? value : "");
+  const take = normalizeTake(typeof value === "string" ? value : "");
+
+  if (countTakeCharacters(take) > TAKE_MAX_LENGTH) {
+    throw new DrawRuleError(`Review must be ${TAKE_MAX_LENGTH.toLocaleString()} characters or less.`);
+  }
+
+  return take;
 }
 
 async function getUserListens(pb: PocketBase, userId: string): Promise<RecordLike[]> {

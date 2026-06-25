@@ -238,7 +238,7 @@ One row per logged album, including active fresh picks and already-heard skips.
 | `kind` | select | `fresh` or `skip` |
 | `status` | select | `listening` or `rated` |
 | `rating` | number | null while listening; 1-10 when rated |
-| `take` | text | optional one-liner |
+| `take` | text | optional album review; app limit is 6,000 characters including spaces and line breaks |
 | `week` | text | ISO week key set at creation, e.g. `2026-W23` |
 | `rated_at` | date | null while listening; set when rating is completed |
 | `created` | autodate | PocketBase creation timestamp |

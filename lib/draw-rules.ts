@@ -12,7 +12,20 @@ export type DrawRuleListen = {
 
 export class DrawRuleError extends Error {}
 
-export const TAKE_MAX_LENGTH = 2000;
+export const TAKE_MAX_LENGTH = 6000;
+export const TAKE_STORAGE_MAX_LENGTH = 12000;
+
+export function countTakeCharacters(value: string) {
+  return getTakeCharacterSegments(value).length;
+}
+
+export function clampTake(value: string, maxLength = TAKE_MAX_LENGTH) {
+  return getTakeCharacterSegments(value).slice(0, maxLength).join("");
+}
+
+export function clampStoredTake(value: string) {
+  return getTakeCharacterSegments(value).slice(0, TAKE_STORAGE_MAX_LENGTH).join("");
+}
 
 export function assertActiveFreshListen(listen: DrawRuleListen) {
   if (listen.kind !== "fresh" || listen.status !== "listening") {
@@ -53,10 +66,20 @@ export function parseRatingValue(value: FormDataEntryValue | null, ratingScale: 
 }
 
 export function normalizeTake(value: string) {
-  return value.trim().slice(0, TAKE_MAX_LENGTH);
+  return clampStoredTake(value.trim());
 }
 
 function getPrecisionFromStep(step: number) {
   const [, decimals = ""] = String(step).split(".");
   return decimals.length;
+}
+
+function getTakeCharacterSegments(value: string) {
+  if (typeof Intl !== "undefined" && "Segmenter" in Intl) {
+    const segmenter = new Intl.Segmenter(undefined, { granularity: "grapheme" });
+
+    return Array.from(segmenter.segment(value), (segment) => segment.segment);
+  }
+
+  return Array.from(value);
 }
