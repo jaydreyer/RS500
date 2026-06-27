@@ -34,7 +34,6 @@ export type CatalogListen = {
   status: "listening" | "rated";
   rating: number | null;
   take: string;
-  week: string;
   ratedAt: string | null;
   created: string;
 };
@@ -185,7 +184,6 @@ function mapListen(record: RecordLike): CatalogListen {
     status,
     rating: mapStoredRating(status, record.rating),
     take: asString(record.take),
-    week: asString(record.week),
     ratedAt: asNullableString(record.rated_at),
     created: asString(record.created),
   };

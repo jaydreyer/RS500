@@ -21,7 +21,7 @@ export default async function AuthPage({ searchParams }: AuthPageProps) {
   const params = searchParams ? await searchParams : {};
 
   if (user) {
-    redirect("/week");
+    redirect("/pick");
   }
 
   return (

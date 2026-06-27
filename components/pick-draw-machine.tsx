@@ -6,15 +6,15 @@ import { useRouter } from "next/navigation";
 
 import {
   initialGroupDrawActionState,
-  initialWeekActionState,
-} from "@/app/(club)/week/action-state";
+  initialPickActionState,
+} from "@/app/(club)/pick/action-state";
 import {
   drawAction,
   groupDrawAction,
   keepFreshPickAction,
   replaceUnavailablePickAction,
   skipRatingAction,
-} from "@/app/(club)/week/actions";
+} from "@/app/(club)/pick/actions";
 import { AlbumRatingPanel } from "@/components/album-rating-panel";
 import { AlbumCover } from "@/components/album-cover";
 import { ClubAvatar, Eyebrow, RatingInput } from "@/components/primitives";
@@ -22,7 +22,7 @@ import { ReviewTextarea } from "@/components/review-textarea";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { RATING_SCALE } from "@/lib/config";
 import { TAKE_MAX_LENGTH } from "@/lib/draw-rules";
-import type { ListenSummary, WeekState } from "@/lib/draw";
+import type { ListenSummary, PickState } from "@/lib/draw";
 import type { UserGroupDraw, UserGroupDrawState } from "@/lib/group-draw-types";
 import { cn } from "@/lib/utils";
 
@@ -31,11 +31,11 @@ type Phase = "idle" | "spinning" | "presented" | "rate-skip" | "kept";
 const DRAW_LOCK_DELAY_MS = 1450;
 const DRAW_REVEAL_DELAY_MS = 1950;
 
-export function WeekDrawMachine({
-  weekState,
+export function PickDrawMachine({
+  pickState,
   groupDrawState,
 }: {
-  weekState: WeekState;
+  pickState: PickState;
   groupDrawState: UserGroupDrawState;
 }) {
   const router = useRouter();
@@ -46,19 +46,19 @@ export function WeekDrawMachine({
   const [toast, setToast] = useState<string | null>(null);
   const [drawState, drawFormAction, isDrawPending] = useActionState(
     drawAction,
-    initialWeekActionState,
+    initialPickActionState,
   );
   const [keepState, keepFormAction, isKeepPending] = useActionState(
     keepFreshPickAction,
-    initialWeekActionState,
+    initialPickActionState,
   );
   const [skipState, skipFormAction, isSkipPending] = useActionState(
     skipRatingAction,
-    initialWeekActionState,
+    initialPickActionState,
   );
   const [replaceState, replaceFormAction, isReplacePending] = useActionState(
     replaceUnavailablePickAction,
-    initialWeekActionState,
+    initialPickActionState,
   );
   const [groupState, groupFormAction, isGroupPending] = useActionState(
     groupDrawAction,
@@ -183,8 +183,8 @@ export function WeekDrawMachine({
     return () => window.clearTimeout(timer);
   }, [toast]);
 
-  const activeFresh = weekState.activeFresh;
-  const poolText = `${weekState.poolLeft} of ${weekState.totalAlbums} unlogged`;
+  const activeFresh = pickState.activeFresh;
+  const poolText = `${pickState.poolLeft} of ${pickState.totalAlbums} unlogged`;
   const showActivePick = Boolean(activeFresh) && phase === "idle";
   const isGroupMember = groupDrawState.groups.length > 0;
 
@@ -208,9 +208,9 @@ export function WeekDrawMachine({
           <h1 className="mt-3 text-5xl md:text-7xl">My Pick</h1>
         </div>
         <div className="pressed-panel flex flex-wrap gap-4 rounded-lg px-4 py-3">
-          <Stat label="picks kept" value={weekState.freshCount} />
-          <Stat label="skips logged" value={weekState.skipCount} />
-          <Stat label="pool left" value={weekState.poolLeft} accent />
+          <Stat label="picks kept" value={pickState.freshCount} />
+          <Stat label="skips logged" value={pickState.skipCount} />
+          <Stat label="pool left" value={pickState.poolLeft} accent />
         </div>
       </div>
 
@@ -232,7 +232,7 @@ export function WeekDrawMachine({
             {phase === "idle" && (
               <IdleFace
                 activeFresh={activeFresh}
-                poolLeft={weekState.poolLeft}
+                poolLeft={pickState.poolLeft}
                 isPending={isDrawPending}
                 onSubmit={startDraw}
                 action={drawFormAction}
@@ -355,11 +355,6 @@ function ActivePickReview({ listen }: { listen: ListenSummary }) {
           <span className="tag rounded-sm border border-[var(--line-strong)] px-1.5 py-0.5">
             fresh pick
           </span>
-          {listen.week && (
-            <span className="tag rounded-sm border border-[var(--line-strong)] px-1.5 py-0.5">
-              {listen.week}
-            </span>
-          )}
         </div>
 
         <AlbumRatingPanel

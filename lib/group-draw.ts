@@ -37,7 +37,6 @@ type RecordLike = {
 
 export async function getUserGroupDrawState(userId: string): Promise<UserGroupDrawState> {
   const pb = await createSuperuserPocketBase();
-  const weekKey = getIsoWeekKey();
   const memberships = await pb.collection("group_members").getFullList({
     filter: pb.filter("user = {:user} && active = true", { user: userId }),
     expand: "group",
@@ -54,14 +53,12 @@ export async function getUserGroupDrawState(userId: string): Promise<UserGroupDr
   );
 
   return {
-    weekKey,
     groups,
   };
 }
 
 export async function getAllGroupDrawState(): Promise<UserGroupDrawState> {
   const pb = await createSuperuserPocketBase();
-  const weekKey = getIsoWeekKey();
   const activeGroups = await pb.collection("groups").getFullList({
     filter: "active = true",
     sort: "name",
@@ -72,7 +69,6 @@ export async function getAllGroupDrawState(): Promise<UserGroupDrawState> {
   );
 
   return {
-    weekKey,
     groups,
   };
 }
@@ -322,7 +318,6 @@ function mapCurrentDraw(record: RecordLike): CurrentGroupDraw {
     id: record.id,
     groupId: asString(record.group),
     albumId: asString(record.album),
-    week: asString(record.week),
     createdById: asString(record.created_by),
     created: asString(record.created),
     album: mapAlbum(getExpandedRecord(record, "album")),

@@ -97,7 +97,6 @@ function ReviewEntry({
             <span className="tag rounded-sm border border-[var(--line-strong)] px-1.5 py-0.5">
               {listen.kind === "skip" ? "already heard" : "fresh"}
             </span>
-            <span className="tag">{listen.week}</span>
           </div>
         </div>
         <div className="shrink-0">

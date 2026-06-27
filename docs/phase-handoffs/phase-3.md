@@ -10,10 +10,10 @@ Implement the core draw, already-heard skip, fresh-pick, and rating flows with a
 
 Read before implementation:
 
-- `../../design_handoff_rsd500_codex/app/screens-week.jsx`
+- the draw-machine prototype
 - `../../design_handoff_rsd500_codex/app/components.jsx`
 - `../../design_handoff_rsd500_codex/app/sleeves.jsx`
-- `../../design_handoff_rsd500_codex/screens/02-week.png`
+- the draw-machine screenshot
 - `../../design_handoff_rsd500_codex/app/theme.css`
 
 ## Completed Work

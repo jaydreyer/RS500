@@ -29,7 +29,7 @@
   - Shows external Spotify/Apple Music links only when seeded data includes them.
 - `app/(club)/history/page.tsx`
   - Adds latest-log album detail links as a Phase 5 reachability bridge.
-  - Full members-by-weeks history remains Phase 6 work.
+  - Full member review history remains Phase 6 work.
 - `app/globals.css`
   - Adds stable catalog grid tracks and mobile collapse behavior.
 
@@ -64,7 +64,7 @@ Start with History and Stats, without changing draw mechanics:
    - `design_handoff_rsd500_codex/screens/05-history.png`
    - `design_handoff_rsd500_codex/screens/06-stats.png`
    - `design_handoff_rsd500_codex/app/theme.css`
-4. Build the real History scorecard grid with members by week and album detail links.
+4. Build the real History scorecard grid with member review and album detail links.
 5. Build Stats from real listens with the minimum sample threshold for rater rankings.
 
 ## Copy/Paste Prompt for Next Session
@@ -103,7 +103,7 @@ Phase 5 not fully live-tested:
 - No local .env/PocketBase authenticated session/seeded data was available, so authenticated catalog/detail browsing still needs to be exercised against the owner's PocketBase instance.
 
 Phase 6 goal:
-- Build History scorecard grid with members by week.
+- Build History scorecard grid with member review.
 - Include album cover, album, and score/listening state per cell.
 - Add per-member detail view showing all logged fresh picks and skips.
 - Build Stats cards for harshest rater, most generous rater, most albums logged, skip count per member, highest-rated albums, lowest-rated albums, and albums logged by two or more members with score comparison.

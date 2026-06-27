@@ -70,7 +70,6 @@ export type FeedPost = {
 export type FeedCurrentListen = {
   id: string;
   albumId: string;
-  week: string;
   created: string;
   album: FeedAlbum;
 };
@@ -242,7 +241,6 @@ function mapCurrentListen(record: RecordLike): FeedCurrentListen {
   return {
     id: record.id,
     albumId: asString(record.album),
-    week: asString(record.week),
     created: asString(record.created),
     album: mapAlbum(getExpandedRecord(record, "album")),
   };

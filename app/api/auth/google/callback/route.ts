@@ -61,7 +61,7 @@ export async function GET(request: NextRequest) {
       requestKey: null,
     });
 
-    const response = NextResponse.redirect(new URL("/week", request.url), { status: 303 });
+    const response = NextResponse.redirect(new URL("/pick", request.url), { status: 303 });
     response.cookies.set(
       createAuthCookie(userPb, {
         secure: shouldUseSecureAuthCookie(request.headers),

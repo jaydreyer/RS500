@@ -1,12 +1,12 @@
 import { notFound } from "next/navigation";
 
-import { WeekDrawMachine } from "@/components/week-draw-machine";
-import type { WeekState } from "@/lib/draw";
+import { PickDrawMachine } from "@/components/pick-draw-machine";
+import type { PickState } from "@/lib/draw";
 import type { UserGroupDrawState } from "@/lib/group-draw-types";
 
 export const dynamic = "force-dynamic";
 
-export default async function DevWeekPreviewPage({
+export default async function DevPickPreviewPage({
   searchParams,
 }: {
   searchParams: Promise<{ state?: string }>;
@@ -16,12 +16,12 @@ export default async function DevWeekPreviewPage({
   }
 
   const { state } = await searchParams;
-  const weekState = state === "empty" ? emptyWeekState : activePickWeekState;
+  const pickState = state === "empty" ? emptyPickState : activePickState;
 
-  return <WeekDrawMachine weekState={weekState} groupDrawState={emptyGroupDrawState} />;
+  return <PickDrawMachine pickState={pickState} groupDrawState={emptyGroupDrawState} />;
 }
 
-const activePickWeekState: WeekState = {
+const activePickState: PickState = {
   activeFresh: {
     id: "preview-listen-1",
     albumId: "preview-album-163",
@@ -29,7 +29,6 @@ const activePickWeekState: WeekState = {
     status: "listening",
     rating: null,
     take: "",
-    week: "2026 W23",
     ratedAt: null,
     created: "2026-06-15T00:00:00.000Z",
     album: {
@@ -48,15 +47,13 @@ const activePickWeekState: WeekState = {
   skipCount: 1,
   poolLeft: 495,
   totalAlbums: 500,
-  weekKey: "2026 W23",
 };
 
-const emptyWeekState: WeekState = {
-  ...activePickWeekState,
+const emptyPickState: PickState = {
+  ...activePickState,
   activeFresh: null,
 };
 
 const emptyGroupDrawState: UserGroupDrawState = {
-  weekKey: "2026 W23",
   groups: [],
 };

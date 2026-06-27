@@ -39,7 +39,7 @@
 - Local dev server on `http://localhost:3000` responds.
 - HTTP probes confirmed:
   - `/auth` returns `200`.
-  - `/week`, `/board`, `/catalog`, `/history`, `/stats`, and `/albums/example` return `307` redirects to `/auth` when unauthenticated.
+  - the pick route, `/board`, `/catalog`, `/history`, `/stats`, and `/albums/example` return `307` redirects to `/auth` when unauthenticated.
 
 ## Known Gaps or Risks
 

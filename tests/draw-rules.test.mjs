@@ -3,7 +3,10 @@ import test from "node:test"
 
 import {
   assertActiveFreshListen,
+  assertIndividualFreshListen,
+  assertSoloDrawAllowed,
   DrawRuleError,
+  SOLO_DRAW_GROUP_BLOCKED_MESSAGE,
   TAKE_MAX_LENGTH,
   getDrawablePool,
   normalizeTake,
@@ -35,6 +38,27 @@ test("active fresh guard only allows unrated fresh picks", () => {
   )
 })
 
+test("individual fresh guard blocks group draw picks from skip/redraw handling", () => {
+  assert.doesNotThrow(() => assertIndividualFreshListen({ kind: "fresh", status: "listening" }))
+  assert.throws(
+    () =>
+      assertIndividualFreshListen({
+        groupDrawId: "group-draw-1",
+        kind: "fresh",
+        status: "listening",
+      }),
+    /Group picks should be reviewed as group picks/,
+  )
+})
+
+test("solo draw guard blocks active group members", () => {
+  assert.doesNotThrow(() => assertSoloDrawAllowed(0))
+  assert.throws(
+    () => assertSoloDrawAllowed(1),
+    new RegExp(SOLO_DRAW_GROUP_BLOCKED_MESSAGE),
+  )
+})
+
 test("rating parser allows one decimal place within scale bounds", () => {
   const scale = { min: 0, max: 10, step: 0.1, precision: 1 }
 
@@ -55,4 +79,13 @@ test("rating parser allows one decimal place within scale bounds", () => {
 test("takes are trimmed and capped", () => {
   assert.equal(normalizeTake("  A tight little note  "), "A tight little note")
   assert.equal(normalizeTake("x".repeat(TAKE_MAX_LENGTH + 50)).length, TAKE_MAX_LENGTH)
+})
+
+test("takes are truncated without splitting emoji surrogate pairs", () => {
+  const take = `${"x".repeat(TAKE_MAX_LENGTH - 1)}😆 extra`
+  const normalized = normalizeTake(take)
+
+  assert.equal([...normalized].length, TAKE_MAX_LENGTH)
+  assert.equal(normalized.endsWith("😆"), true)
+  assert.equal(normalized.includes("\uFFFD"), false)
 })

@@ -95,7 +95,7 @@ export async function signupAction(
     return { message: formatPocketBaseError(error, "Could not create that account.") };
   }
 
-  redirect("/week");
+  redirect("/pick");
 }
 
 export async function loginAction(
@@ -124,7 +124,7 @@ export async function loginAction(
     return { message: formatPocketBaseError(error, "That login did not work.") };
   }
 
-  redirect("/week");
+  redirect("/pick");
 }
 
 export async function logoutAction() {

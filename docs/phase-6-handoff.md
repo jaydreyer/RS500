@@ -3,7 +3,7 @@
 ## What Was Built
 
 - Replaced the Phase 5 `/history` bridge with a real PocketBase-backed scorecard.
-- History now renders members by week from real `fresh` listens.
+- History now renders member review from real `fresh` listens.
 - Each populated history cell links to album detail and shows album cover, album title, and score or listening state.
 - Member names link to a per-member detail view at `/history?member=<id>`.
 - Member detail shows all logged albums for that member, including both fresh picks and already-heard skips.
@@ -16,7 +16,7 @@
 - `lib/history.ts`
   - New server-only Phase 6 data mapper.
   - Fetches authenticated-readable users and listens with expanded album data.
-  - Builds newest-first week columns from fresh listens.
+  - Builds newest-first review columns from fresh listens.
   - Computes member summaries, skip counts, fresh-pick averages, album rating summaries, and shared-album spreads.
 - `app/(club)/history/page.tsx`
   - Forces dynamic rendering.
@@ -78,7 +78,7 @@ Phase 0 through Phase 6 are complete. Read:
 Then start Phase 7 from the PRD.
 
 Important Phase 6 context:
-- /history renders a real PocketBase-backed members-by-weeks scorecard from kind=fresh listens.
+- /history renders a real PocketBase-backed member review scorecard from kind=fresh listens.
 - History cells show album cover, title, score/listening state, and link to /albums/[albumId].
 - Member names link to /history?member=<id>, which shows that member's full log including fresh picks and already-heard skips.
 - /stats renders real derived crew stats from lib/history.ts.

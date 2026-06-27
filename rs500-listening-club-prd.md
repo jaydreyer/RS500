@@ -1,6 +1,6 @@
 # Spin 500 - Product Requirements Document
 
-> A private weekly album-listening challenge for a small crew, built around Rolling Stone's 500 Greatest Albums list.
+> A private recurring album-listening challenge for a small crew, built around Rolling Stone's 500 Greatest Albums list.
 >
 > Site URL: https://spin500.club
 >
@@ -24,9 +24,9 @@ Use `design_handoff_rsd500_codex/` as the visual and interaction design source o
 
 ### Goals
 
-- Make the weekly draw feel like a small event, not a list lookup.
+- Make the recurring draw feel like a small event, not a list lookup.
 - Capture each member's pick, rating, and one-line take with minimal friction.
-- Give the crew a shared board worth opening twice a week.
+- Give the crew a shared board worth opening regularly.
 - Make it easy to listen immediately via Spotify and Apple Music links.
 
 ### Non-goals
@@ -90,11 +90,11 @@ If a member draws an album they have already listened to, they may rate/review i
 
 ### 3.5 Cadence
 
-Draws are timestamped and grouped into ISO weeks for display, for example `2026-W23`.
+Draws are timestamped for audit history and sorting.
 
-Do not build timezone windows, weekly reset jobs, or lockouts for MVP.
+Do not build timezone windows, cadence reset jobs, or lockouts for MVP.
 
-Fresh picks belong to the draw week, even if rated later.
+Fresh picks remain active until rated, regardless of when the rating happens.
 
 ### 3.6 One active fresh pick
 
@@ -239,7 +239,6 @@ One row per logged album, including active fresh picks and already-heard skips.
 | `status` | select | `listening` or `rated` |
 | `rating` | number | null while listening; 1-10 when rated |
 | `take` | text | optional one-liner |
-| `week` | text | ISO week key set at creation, e.g. `2026-W23` |
 | `rated_at` | date | null while listening; set when rating is completed |
 | `created` | autodate | PocketBase creation timestamp |
 
@@ -305,7 +304,7 @@ Uniqueness:
 - Email/password auth is acceptable for MVP
 - Email one-time code may be used if straightforward with PocketBase
 
-### 8.2 My Week
+### 8.2 My Pick
 
 The draw experience.
 
@@ -324,7 +323,7 @@ The reveal should feel like a small event, not an instant text swap.
 
 ### 8.3 The Board
 
-Current week view showing everyone's fresh pick:
+Active board view showing everyone's latest fresh pick:
 
 - Member
 - Album cover
@@ -343,7 +342,7 @@ The board updates live using PocketBase realtime.
 
 Scorecard grid:
 
-- Members by week
+- Member review
 - Each cell shows album, cover, and score
 - Include per-member detail view showing everything logged by that member, including fresh picks and skips
 
@@ -411,7 +410,7 @@ Importer requirements:
 - Streaks, badges, achievements
 - Public profiles
 - Any re-roll mechanism other than the already-heard exception
-- Complex timezone enforcement or weekly lockouts
+- Complex timezone enforcement or recurring lockouts
 
 ## 12. Config Decisions
 
@@ -450,7 +449,7 @@ Design files to read:
 - `design_handoff_rsd500_codex/app/theme.css`
 - `design_handoff_rsd500_codex/app/app.jsx`
 - `design_handoff_rsd500_codex/screens/01-auth.png`
-- `design_handoff_rsd500_codex/screens/02-week.png`
+- Draw-machine screenshot from the design handoff
 
 Build:
 
@@ -464,7 +463,7 @@ Done when:
 
 - The app runs locally.
 - Global styling matches the Midnight design direction.
-- Empty route shells exist for Auth, My Week, Board, Catalog, History, Stats, and Album Detail.
+- Empty route shells exist for Auth, My Pick, Board, Catalog, History, Stats, and Album Detail.
 - No PocketBase integration or business logic is required yet.
 
 ### Phase 1 - PocketBase Schema, Rules, and Seed Importer
@@ -522,10 +521,10 @@ Purpose: implement the core product rule: each user draws from their own unlogge
 
 Design files to read:
 
-- `design_handoff_rsd500_codex/app/screens-week.jsx`
+- Draw-machine prototype from the design handoff
 - `design_handoff_rsd500_codex/app/components.jsx`
 - `design_handoff_rsd500_codex/app/sleeves.jsx`
-- `design_handoff_rsd500_codex/screens/02-week.png`
+- Draw-machine screenshot from the design handoff
 - `design_handoff_rsd500_codex/app/theme.css`
 
 Build:
@@ -536,18 +535,18 @@ Build:
 - Create `skip` listens as immediately `rated` with `rated_at`.
 - Create unheard `fresh` listens as `listening` with null `rating` and null `rated_at`.
 - Update fresh ratings to `rated`, set `rating`, optional `take`, and `rated_at`.
-- Build the My Week screen, draw machine, already-heard branch, skip rating form, fresh confirmation, active-pick blocked state, and "I've finished - rate it" flow.
+- Build the My Pick screen, draw machine, already-heard branch, skip rating form, fresh confirmation, active-pick blocked state, and "I've finished - rate it" flow.
 - Include a brief spin/flip/reveal animation and honor `prefers-reduced-motion`.
 
 Done when:
 
 - All draw and rating acceptance criteria pass.
 - The browser never decides random selection or state transitions.
-- The My Week experience feels like the design handoff, including the reveal moment.
+- The My Pick experience feels like the design handoff, including the reveal moment.
 
 ### Phase 4 - Live Board and Reactions
 
-Purpose: make the shared weekly crew board useful and alive.
+Purpose: make the shared recurring crew board useful and alive.
 
 Design files to read:
 
@@ -558,7 +557,7 @@ Design files to read:
 
 Build:
 
-- Build current-week Board view with member, cover, title, artist, status, rating, take, Spotify/Apple Music actions, and reactions/comments.
+- Build current Board view with member, cover, title, artist, status, rating, take, Spotify/Apple Music actions, and reactions/comments.
 - Subscribe to PocketBase realtime updates for listens and reactions.
 - Implement one editable reaction/comment row per user per listen.
 - Add the live-event/ticker treatment from the handoff.
@@ -611,7 +610,7 @@ Design files to read:
 
 Build:
 
-- Build History scorecard grid with members by week.
+- Build History scorecard grid with member review.
 - Include album cover, album, and score/listening state per cell.
 - Add per-member detail view showing all logged fresh picks and skips.
 - Build Stats cards for harshest rater, most generous rater, most albums logged, skip count per member, highest-rated albums, lowest-rated albums, and albums logged by two or more members with score comparison.
@@ -661,7 +660,7 @@ Done when:
 - All authenticated members can read everyone's board activity.
 - A user can have only one reaction row per listen.
 - The Board reflects another member's draw, rating, or reaction without manual refresh.
-- The History grid shows members by weeks with album cover, album, and score per cell.
+- The History grid shows member review with album cover, album, and score per cell.
 - Album covers render on Board, History, and detail views.
 - Spotify links render when `spotify_url` is present.
 - Apple Music links render when `apple_music_url` is present.

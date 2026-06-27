@@ -15,7 +15,7 @@ Read before implementation:
 - `../../design_handoff_rsd500_codex/app/theme.css`
 - `../../design_handoff_rsd500_codex/app/app.jsx`
 - `../../design_handoff_rsd500_codex/screens/01-auth.png`
-- `../../design_handoff_rsd500_codex/screens/02-week.png`
+- the draw-machine screenshot
 
 ## Completed Work
 

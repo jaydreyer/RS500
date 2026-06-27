@@ -6,6 +6,8 @@ import type PocketBase from "pocketbase";
 import { RATING_SCALE } from "@/lib/config";
 import {
   assertActiveFreshListen,
+  assertIndividualFreshListen,
+  assertSoloDrawAllowed,
   DrawRuleError,
   getDrawablePool,
   normalizeTake,
@@ -34,19 +36,17 @@ export type ListenSummary = {
   status: "listening" | "rated";
   rating: number | null;
   take: string;
-  week: string;
   ratedAt: string | null;
   created: string;
   album: AlbumSummary;
 };
 
-export type WeekState = {
+export type PickState = {
   activeFresh: ListenSummary | null;
   freshCount: number;
   skipCount: number;
   poolLeft: number;
   totalAlbums: number;
-  weekKey: string;
 };
 
 type RecordLike = {
@@ -56,7 +56,7 @@ type RecordLike = {
   [key: string]: unknown;
 };
 
-export async function getWeekState(pb: PocketBase, userId: string): Promise<WeekState> {
+export async function getPickState(pb: PocketBase, userId: string): Promise<PickState> {
   const [listens, albumPage] = await Promise.all([
     getUserListens(pb, userId),
     pb.collection("albums").getList(1, 1, { requestKey: null }),
@@ -73,11 +73,12 @@ export async function getWeekState(pb: PocketBase, userId: string): Promise<Week
     skipCount: listens.filter((listen) => listen.kind === "skip").length,
     poolLeft: Math.max(0, albumPage.totalItems - loggedAlbumIds.size),
     totalAlbums: albumPage.totalItems,
-    weekKey: getIsoWeekKey(),
   };
 }
 
 export async function drawAlbum(pb: PocketBase, userId: string): Promise<ListenSummary> {
+  await assertUserCanDrawSolo(pb, userId);
+
   const activeFresh = await getActiveFresh(pb, userId);
   if (activeFresh) {
     throw new DrawRuleError("Rate your active pick before drawing again.");
@@ -144,7 +145,7 @@ export async function rateDrawnSkip({
   take: string;
 }) {
   const listen = await getOwnedListen(pb, userId, listenId);
-  assertActiveFresh(listen);
+  assertIndividualFresh(listen);
 
   const updated = await pb.collection("listens").update(
     listenId,
@@ -173,8 +174,10 @@ export async function replaceUnavailablePick({
   userId: string;
   listenId: string;
 }) {
+  await assertUserCanDrawSolo(pb, userId);
+
   const listen = await getOwnedListen(pb, userId, listenId);
-  assertActiveFresh(listen);
+  assertIndividualFresh(listen);
 
   await pb.collection("listens").update(
     listenId,
@@ -319,6 +322,20 @@ async function getUserListens(pb: PocketBase, userId: string): Promise<RecordLik
   });
 }
 
+async function assertUserCanDrawSolo(pb: PocketBase, userId: string) {
+  const memberships = await pb.collection("group_members").getFullList({
+    filter: pb.filter("user = {:user} && active = true", { user: userId }),
+    expand: "group",
+    requestKey: null,
+  });
+  const activeGroupCount = memberships.filter((membership) => {
+    const group = getExpandedRecord(membership, "group");
+    return group?.active === true;
+  }).length;
+
+  assertSoloDrawAllowed(activeGroupCount);
+}
+
 async function getActiveFresh(pb: PocketBase, userId: string) {
   try {
     return await pb.collection("listens").getFirstListItem(
@@ -371,6 +388,15 @@ async function getOwnedAlbumListen(pb: PocketBase, userId: string, albumId: stri
 
 function assertActiveFresh(listen: RecordLike) {
   assertActiveFreshListen({
+    groupDrawId: asNullableString(listen.group_draw),
+    kind: listen.kind === "skip" ? "skip" : "fresh",
+    status: listen.status === "rated" ? "rated" : "listening",
+  });
+}
+
+function assertIndividualFresh(listen: RecordLike) {
+  assertIndividualFreshListen({
+    groupDrawId: asNullableString(listen.group_draw),
     kind: listen.kind === "skip" ? "skip" : "fresh",
     status: listen.status === "rated" ? "rated" : "listening",
   });
@@ -387,7 +413,6 @@ function mapListen(record: RecordLike): ListenSummary {
     status,
     rating: mapStoredRating(status, record.rating),
     take: typeof record.take === "string" ? record.take : "",
-    week: typeof record.week === "string" ? record.week : "",
     ratedAt: typeof record.rated_at === "string" ? record.rated_at : null,
     created: typeof record.created === "string" ? record.created : "",
     album: mapAlbum(album),
@@ -395,14 +420,20 @@ function mapListen(record: RecordLike): ListenSummary {
 }
 
 function getExpandedAlbum(record: RecordLike): RecordLike {
-  const expanded = record.expand?.album;
-  const album = Array.isArray(expanded) ? expanded[0] : expanded;
+  const album = getExpandedRecord(record, "album", "Album data was not included with that pick.");
 
-  if (!album || typeof album !== "object" || !("id" in album)) {
-    throw new DrawRuleError("Album data was not included with that pick.");
+  return album;
+}
+
+function getExpandedRecord(record: RecordLike, key: string, missingMessage?: string): RecordLike {
+  const expanded = record.expand?.[key];
+  const value = Array.isArray(expanded) ? expanded[0] : expanded;
+
+  if (!value || typeof value !== "object" || !("id" in value)) {
+    throw new DrawRuleError(missingMessage ?? "Expanded data was not included.");
   }
 
-  return album as RecordLike;
+  return value as RecordLike;
 }
 
 function mapAlbum(record: RecordLike): AlbumSummary {
@@ -420,6 +451,11 @@ function mapAlbum(record: RecordLike): AlbumSummary {
 
 function asString(value: unknown) {
   return typeof value === "string" ? value : "";
+}
+
+function asNullableString(value: unknown) {
+  const stringValue = asString(value).trim();
+  return stringValue || null;
 }
 
 function asNumber(value: unknown) {

@@ -65,7 +65,7 @@ export async function knownAlbumRatingAction(
     revalidatePath("/catalog");
     revalidatePath("/history");
     revalidatePath("/stats");
-    revalidatePath("/week");
+    revalidatePath("/pick");
 
     return {
       status: "success",
@@ -106,7 +106,7 @@ export async function replaceUnavailableAlbumAction(
     revalidatePath("/catalog");
     revalidatePath("/history");
     revalidatePath("/stats");
-    revalidatePath("/week");
+    revalidatePath("/pick");
 
     return {
       status: "success",

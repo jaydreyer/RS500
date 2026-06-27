@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 
 export const clubNavItems = [
-  { href: "/week", label: "My Pick", Icon: Disc3 },
+  { href: "/pick", label: "My Pick", Icon: Disc3 },
   { href: "/board", label: "The Board", Icon: Grid3X3 },
   { href: "/feed", label: "The Feed", Icon: MessageSquareText },
   { href: "/catalog", label: "The 500", Icon: ListMusic },

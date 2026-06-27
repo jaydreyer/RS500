@@ -9,6 +9,23 @@ export type ReleaseNote = {
 
 export const releaseNotes = [
   {
+    date: "2026-06-27",
+    title: "My Pick, group reviews, and emoji fixes",
+    summary:
+      "The draw flow is cleaner, group reviews stay in the shared review stream, and long reviews can include emoji safely.",
+    added: [
+      "My Pick now has the canonical `/pick` route, with the old route redirecting there for existing links.",
+    ],
+    improved: [
+      "Calendar-period labels were removed from pick, board, review, stats, and documentation surfaces.",
+      "Group draw picks stay in the group review flow instead of being treated like individual skips.",
+    ],
+    fixed: [
+      "Long reviews are trimmed without splitting emoji characters.",
+      "Active group members are blocked from solo draw creation at the draw service layer.",
+    ],
+  },
+  {
     date: "2026-06-24",
     title: "Reviews display polish",
     summary:
@@ -43,7 +60,7 @@ export const releaseNotes = [
     summary:
       "Members in an active group now stay in the shared draw flow, keeping solo picks from blocking the crew.",
     improved: [
-      "The Week page shows group mode instead of the personal draw machine for active group members.",
+      "The pick page shows group mode instead of the personal draw machine for active group members.",
       "Group members get a direct jump to the group draw cards when it is time to spin together.",
     ],
     fixed: [

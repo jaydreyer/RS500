@@ -36,7 +36,6 @@ export type BoardListen = {
   status: "listening" | "rated";
   rating: number | null;
   take: string;
-  week: string;
   ratedAt: string | null;
   created: string;
   album: BoardAlbum;
@@ -142,7 +141,6 @@ function mapListen(record: RecordLike): BoardListen {
     status,
     rating: mapStoredRating(status, record.rating),
     take: asString(record.take),
-    week: asString(record.week),
     ratedAt: asNullableString(record.rated_at),
     created: asString(record.created),
     album: mapAlbum(getExpandedRecord(record, "album")),
