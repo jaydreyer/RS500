@@ -26,6 +26,20 @@ export const releaseNotes = [
     ],
   },
   {
+    date: "2026-06-25",
+    title: "Longer album reviews",
+    summary:
+      "Unleash your inner Lester Bangs and write up to 6,000 characters in album reviews.",
+    added: [
+      "Album reviews now support up to 6,000 characters, including spaces and line breaks.",
+      "Review editors show a live character counter so members can see exactly how much room is left.",
+    ],
+    improved: [
+      "Over-limit review text stays visible instead of being silently chopped during paste.",
+      "Save buttons now explain whether a missing rating or an over-limit review is blocking the submission.",
+    ],
+  },
+  {
     date: "2026-06-24",
     title: "Reviews display polish",
     summary:

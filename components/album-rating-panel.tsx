@@ -13,7 +13,7 @@ import { ReviewMarkdown } from "@/components/review-markdown";
 import { ReviewTextarea } from "@/components/review-textarea";
 import { Button } from "@/components/ui/button";
 import { RATING_SCALE } from "@/lib/config";
-import { TAKE_MAX_LENGTH } from "@/lib/draw-rules";
+import { countTakeCharacters, TAKE_MAX_LENGTH } from "@/lib/draw-rules";
 import type { AlbumDetailListen } from "@/lib/catalog";
 
 type RatingPanelListen = Pick<
@@ -69,6 +69,13 @@ export function AlbumRatingPanel({
   const canReplace =
     initialListen?.kind === "fresh" && initialListen.status === "listening";
   const actionLabel = hasRating ? "Update rating" : "Save rating";
+  const isRatingMissing = !rating.trim();
+  const isTakeOverLimit = countTakeCharacters(take) > TAKE_MAX_LENGTH;
+  const disabledReason = isRatingMissing
+    ? "Add a rating to save."
+    : isTakeOverLimit
+      ? `Shorten the review to ${TAKE_MAX_LENGTH.toLocaleString()} characters or less.`
+      : null;
 
   useEffect(() => {
     if (state.status !== "success") {
@@ -185,7 +192,11 @@ export function AlbumRatingPanel({
             </p>
           )}
           <div className="flex flex-wrap gap-3">
-            <Button type="submit" variant="accent" disabled={!rating.trim() || isPending}>
+            <Button
+              type="submit"
+              variant="accent"
+              disabled={isRatingMissing || isPending || isTakeOverLimit}
+            >
               <Save className="size-4" />
               {isPending ? "Saving..." : actionLabel}
             </Button>
@@ -215,6 +226,9 @@ export function AlbumRatingPanel({
               </Button>
             )}
           </div>
+          {disabledReason && !isPending && (
+            <p className="text-sm text-[var(--ink-soft)]">{disabledReason}</p>
+          )}
         </form>
       )}
       {canReplace && (

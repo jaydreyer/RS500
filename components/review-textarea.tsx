@@ -4,6 +4,7 @@ import { Bold, Italic } from "lucide-react";
 import { useRef, type TextareaHTMLAttributes } from "react";
 
 import { Button } from "@/components/ui/button";
+import { countTakeCharacters } from "@/lib/draw-rules";
 import { cn } from "@/lib/utils";
 
 type ReviewTextareaProps = Omit<
@@ -67,6 +68,14 @@ export function ReviewTextarea({
   ...props
 }: ReviewTextareaProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const characterCount = countTakeCharacters(value);
+  const remainingCharacters =
+    typeof maxLength === "number" ? Math.max(0, maxLength - characterCount) : null;
+  const characterOverage =
+    typeof maxLength === "number" ? Math.max(0, characterCount - maxLength) : null;
+  const characterLimitLabel =
+    typeof maxLength === "number" ? maxLength.toLocaleString() : null;
+  const characterCountLabel = characterCount.toLocaleString();
 
   function wrapSelection(marker: "*" | "**") {
     const textarea = textareaRef.current;
@@ -78,10 +87,6 @@ export function ReviewTextarea({
     const end = textarea.selectionEnd;
     const selected = value.slice(start, end);
     const nextValue = `${value.slice(0, start)}${marker}${selected}${marker}${value.slice(end)}`;
-
-    if (typeof maxLength === "number" && nextValue.length > maxLength) {
-      return;
-    }
 
     onChange(nextValue);
 
@@ -105,13 +110,30 @@ export function ReviewTextarea({
         ref={textareaRef}
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        maxLength={maxLength}
         className={cn(
           "block min-h-32 w-full resize-y bg-transparent px-3.5 py-3 leading-6 outline-none",
           className,
         )}
         {...props}
       />
+      {remainingCharacters !== null && (
+        <div className="flex justify-end border-t border-[var(--line)] bg-[var(--paper-2)] px-3 py-1.5">
+          <span
+            className={cn(
+              "mono text-[10px] font-bold uppercase text-[var(--ink-faint)]",
+              ((remainingCharacters !== null && remainingCharacters <= 100) ||
+                (characterOverage !== null && characterOverage > 0)) &&
+                "text-[var(--accent)]",
+            )}
+            aria-live="polite"
+          >
+            {characterOverage && characterOverage > 0
+              ? `${characterOverage.toLocaleString()} over`
+              : `${remainingCharacters.toLocaleString()} left`}
+            {characterLimitLabel ? ` - ${characterCountLabel} / ${characterLimitLabel}` : null}
+          </span>
+        </div>
+      )}
     </div>
   );
 }

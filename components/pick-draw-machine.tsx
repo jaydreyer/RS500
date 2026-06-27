@@ -21,7 +21,7 @@ import { ClubAvatar, Eyebrow, RatingInput } from "@/components/primitives";
 import { ReviewTextarea } from "@/components/review-textarea";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { RATING_SCALE } from "@/lib/config";
-import { TAKE_MAX_LENGTH } from "@/lib/draw-rules";
+import { countTakeCharacters, TAKE_MAX_LENGTH } from "@/lib/draw-rules";
 import type { ListenSummary, PickState } from "@/lib/draw";
 import type { UserGroupDraw, UserGroupDrawState } from "@/lib/group-draw-types";
 import { cn } from "@/lib/utils";
@@ -705,6 +705,13 @@ function RatingForm({
   const [rating, setRating] = useState("");
   const [take, setTake] = useState("");
   const inputId = useMemo(() => `take-${listenId}`, [listenId]);
+  const isRatingMissing = !rating.trim();
+  const isTakeOverLimit = countTakeCharacters(take) > TAKE_MAX_LENGTH;
+  const disabledReason = isRatingMissing
+    ? "Add a rating to save."
+    : isTakeOverLimit
+      ? `Shorten the review to ${TAKE_MAX_LENGTH.toLocaleString()} characters or less.`
+      : null;
 
   return (
     <form action={action} className="grid place-items-center gap-4 text-center">
@@ -726,9 +733,17 @@ function RatingForm({
         className="text-left"
       />
       {errorMessage && <p className="text-sm text-[var(--accent)]">{errorMessage}</p>}
-      <Button type="submit" variant="accent" size="lg" disabled={!rating.trim() || pending}>
+      <Button
+        type="submit"
+        variant="accent"
+        size="lg"
+        disabled={isRatingMissing || pending || isTakeOverLimit}
+      >
         {pending ? "SAVING..." : buttonLabel}
       </Button>
+      {disabledReason && !pending && (
+        <p className="text-sm text-[var(--ink-soft)]">{disabledReason}</p>
+      )}
     </form>
   );
 }

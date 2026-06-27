@@ -5,8 +5,12 @@ import {
   assertActiveFreshListen,
   assertIndividualFreshListen,
   assertSoloDrawAllowed,
+  clampStoredTake,
+  clampTake,
+  countTakeCharacters,
   DrawRuleError,
   SOLO_DRAW_GROUP_BLOCKED_MESSAGE,
+  TAKE_STORAGE_MAX_LENGTH,
   TAKE_MAX_LENGTH,
   getDrawablePool,
   normalizeTake,
@@ -78,14 +82,22 @@ test("rating parser allows one decimal place within scale bounds", () => {
 
 test("takes are trimmed and capped", () => {
   assert.equal(normalizeTake("  A tight little note  "), "A tight little note")
-  assert.equal(normalizeTake("x".repeat(TAKE_MAX_LENGTH + 50)).length, TAKE_MAX_LENGTH)
+  assert.equal(countTakeCharacters("a b\nc"), 5)
+  assert.equal(countTakeCharacters(clampTake("x".repeat(TAKE_MAX_LENGTH + 50))), TAKE_MAX_LENGTH)
+  assert.equal(clampStoredTake("x".repeat(TAKE_STORAGE_MAX_LENGTH + 50)).length, TAKE_STORAGE_MAX_LENGTH)
+  assert.equal(countTakeCharacters("🎧".repeat(10)), 10)
+  assert.equal(countTakeCharacters("🇺🇸".repeat(10)), 10)
+  assert.equal(countTakeCharacters("👨‍👩‍👧‍👦".repeat(10)), 10)
+  assert.equal(countTakeCharacters("e\u0301".repeat(10)), 10)
+  assert.equal(countTakeCharacters(clampTake("🎧".repeat(TAKE_MAX_LENGTH + 50))), TAKE_MAX_LENGTH)
+  assert.equal(countTakeCharacters(clampTake("👨‍👩‍👧‍👦".repeat(TAKE_MAX_LENGTH + 50))), TAKE_MAX_LENGTH)
 })
 
 test("takes are truncated without splitting emoji surrogate pairs", () => {
-  const take = `${"x".repeat(TAKE_MAX_LENGTH - 1)}😆 extra`
+  const take = `${"x".repeat(TAKE_STORAGE_MAX_LENGTH - 1)}😆 extra`
   const normalized = normalizeTake(take)
 
-  assert.equal([...normalized].length, TAKE_MAX_LENGTH)
+  assert.equal(countTakeCharacters(normalized), TAKE_STORAGE_MAX_LENGTH)
   assert.equal(normalized.endsWith("😆"), true)
   assert.equal(normalized.includes("\uFFFD"), false)
 })
