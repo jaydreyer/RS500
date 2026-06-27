@@ -4,10 +4,10 @@
 
 - Scaffolded a production Next.js App Router app with TypeScript, Tailwind CSS v4, ESLint, and shadcn/ui configuration.
 - Mapped the design handoff's Midnight theme into `app/globals.css`, including CSS variables, typography hooks, film grain, sharp radii, hairlines, shadows, scrollbar styling, motion keyframes, and reduced-motion handling.
-- Added the authenticated app shell with desktop top navigation and mobile bottom navigation for My Week, The Board, The 500, History, and Stats.
+- Added the authenticated app shell with desktop top navigation and mobile bottom navigation for My Pick, The Board, The 500, History, and Stats.
 - Added empty production route shells for:
   - `/auth`
-  - `/week`
+  - the pick route
   - `/board`
   - `/catalog`
   - `/history`
@@ -29,9 +29,9 @@
 - `app/layout.tsx`: Root App Router layout, metadata, Google font loading, and global CSS import.
 - `app/globals.css`: Tailwind v4 CSS-first theme mapping, design tokens, Midnight default theme, alternate theme variables, base styles, film grain, and animation keyframes.
 - `app/(club)/layout.tsx`: Authenticated-area shell wrapper.
-- `components/app-shell.tsx`: Client shell that owns active route detection, top nav, bottom nav, current-week label, and avatar placement.
+- `components/app-shell.tsx`: Client shell that owns active route detection, top nav, bottom nav, current label, and avatar placement.
 - `lib/navigation.ts`: Single nav item source for both desktop and mobile navigation.
-- `lib/config.ts`: Central product constants for `RATING_SCALE`, `STATS_SAMPLE_THRESHOLD`, and the temporary week display label.
+- `lib/config.ts`: Central product constants for `RATING_SCALE`, `STATS_SAMPLE_THRESHOLD`, and the temporary draw display label.
 - `components/primitives.tsx`: Shared design primitives that later phases can connect to real data.
 - `components/ui/button.tsx`: shadcn-style local Button primitive using `class-variance-authority`.
 - `components.json`: shadcn/ui project configuration for App Router, TypeScript, Tailwind CSS variables, aliases, and lucide icons.
@@ -45,7 +45,7 @@ The design handoff was treated as visual and interaction reference only. The pro
 - `npm run build` passes.
 - Browser checked locally:
   - `/auth` renders the split invite screen with Midnight styling.
-  - `/week` renders the app shell, active nav state, status strip, and idle draw machine.
+  - the pick route renders the app shell, active nav state, status strip, and idle draw machine.
   - No browser console warnings or errors were observed during the check.
 
 Local dev server is running at:
@@ -58,7 +58,7 @@ http://localhost:3000
 
 - Phase 0 intentionally includes no PocketBase integration, auth/session handling, draw logic, realtime subscriptions, seed importer, or business rule enforcement.
 - Route shells contain static placeholder UI only. Later phases should replace placeholder values with server-backed data.
-- `CURRENT_WEEK_LABEL` is a temporary display constant and should be replaced by a real ISO week helper when the draw flow is implemented.
+- `DRAW_LABEL` is a temporary display constant and should be replaced by a real legacy draw metadata helper when the draw flow is implemented.
 - Album cover fallback is a production-safe visual placeholder, not a substitute for required seeded `cover_url` data.
 - shadcn/ui is configured and a local Button primitive exists. Additional shadcn components should be added only as later phases need them.
 - `npm audit --audit-level=moderate` reports two moderate advisories through Next's nested `postcss <8.5.10` dependency. The offered `npm audit fix --force` would install `next@9.3.3`, which is a breaking downgrade and should not be applied casually.
@@ -87,7 +87,7 @@ Then start Phase 1 from the PRD.
 Important Phase 0 context:
 - The production Next.js App Router scaffold exists with TypeScript, Tailwind CSS v4, and shadcn/ui configuration.
 - Global Midnight design tokens, typography, film grain, motion keyframes, responsive top/bottom navigation, and static route shells are in place.
-- Route shells exist for /auth, /week, /board, /catalog, /history, /stats, and /albums/[albumId].
+- Route shells exist for /auth, the pick route, /board, /catalog, /history, /stats, and /albums/[albumId].
 - Shared UI primitives exist in components/ and config constants exist in lib/config.ts.
 - Do not implement Phase 2+ UI behavior yet.
 - Do not add client-side draw/auth/business-rule enforcement.
@@ -106,7 +106,7 @@ Phase 1 goal:
 Verification already completed in Phase 0:
 - npm run lint passes.
 - npm run build passes.
-- Browser checked /auth and /week.
+- Browser checked /auth and the pick route.
 
 At the end of Phase 1, write a phase handoff document and include a copy/paste prompt for the next session.
 ```

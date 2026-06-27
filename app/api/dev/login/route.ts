@@ -82,7 +82,7 @@ function getSafeNextPath(request: NextRequest) {
   const nextPath = request.nextUrl.searchParams.get("next")?.trim();
 
   if (!nextPath || !nextPath.startsWith("/") || nextPath.startsWith("//")) {
-    return "/week";
+    return "/pick";
   }
 
   return nextPath;

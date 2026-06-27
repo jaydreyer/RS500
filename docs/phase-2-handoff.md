@@ -8,7 +8,7 @@
 - Stored authenticated PocketBase session data in an HTTP-only `pb_auth` cookie.
 - Added server-side authenticated route gating:
   - Unauthenticated users are redirected from the club routes to `/auth`.
-  - Authenticated users are redirected from `/auth` to `/week`.
+  - Authenticated users are redirected from `/auth` to the pick route.
 - Threaded the authenticated user's `display_name` and initials into the app shell.
 - Replaced the static auth screen form with a working two-mode signup/login form that preserves the split-screen design handoff.
 - Added a PocketBase migration that locks direct public `users` creation so the public PocketBase URL cannot bypass invite validation.
@@ -30,7 +30,7 @@
   - Uses React/Next server actions rather than direct browser-side PocketBase auth.
 - `app/auth/page.tsx`
   - Renders the design handoff auth page.
-  - Redirects already-authenticated users to `/week`.
+  - Redirects already-authenticated users to the pick route.
 - `app/(club)/layout.tsx`
   - Forces dynamic rendering and redirects unauthenticated users to `/auth`.
 - `components/app-shell.tsx`
@@ -61,10 +61,10 @@ Start with the server-owned draw flow before replacing board/catalog/history pla
 1. Read `rs500-listening-club-prd.md`, especially sections 3, 4, 5, 6, 8.2, 12, and Phase 3.
 2. Read `docs/phase-0-handoff.md`, `docs/phase-1-handoff.md`, and this handoff.
 3. Read the Phase 3 design files:
-   - `design_handoff_rsd500_codex/app/screens-week.jsx`
+   - the draw-machine prototype
    - `design_handoff_rsd500_codex/app/components.jsx`
    - `design_handoff_rsd500_codex/app/sleeves.jsx`
-   - `design_handoff_rsd500_codex/screens/02-week.png`
+   - the draw-machine screenshot
    - `design_handoff_rsd500_codex/app/theme.css`
 4. Implement trusted server routes/actions for draw, skip rating, keep fresh pick, and rate fresh pick.
 5. Do not implement board realtime, catalog, history, or stats yet unless required for Phase 3 coherence.
@@ -89,7 +89,7 @@ Important Phase 2 context:
 - Direct public PocketBase users creation is locked by pb_migrations/1781006404_lock_users_signup.js.
 - The app stores the PocketBase auth token/record in an HTTP-only pb_auth cookie.
 - app/(club)/layout.tsx redirects unauthenticated users to /auth.
-- app/auth/page.tsx redirects authenticated users to /week.
+- app/auth/page.tsx redirects authenticated users to the pick route.
 - components/app-shell.tsx receives the authenticated user and includes logout.
 - Do not move draw/random-selection/business-rule enforcement to the browser.
 
@@ -99,7 +99,7 @@ Phase 3 goal:
 - Enforce one active fresh pick per user server-side.
 - Create skip listens as immediately rated with rated_at.
 - Create unheard fresh listens as listening with null rating and rated_at.
-- Build the My Week draw machine against real PocketBase data.
+- Build the My Pick draw machine against real PocketBase data.
 - Include the already-heard branch, skip rating form, fresh confirmation, active-pick blocked state, and fresh rating flow.
 - Preserve the design handoff's reveal/spin feel and honor prefers-reduced-motion.
 

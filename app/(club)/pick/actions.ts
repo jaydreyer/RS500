@@ -5,8 +5,8 @@ import { redirect } from "next/navigation";
 
 import type {
   GroupDrawActionState,
-  WeekActionState,
-} from "@/app/(club)/week/action-state";
+  PickActionState,
+} from "@/app/(club)/pick/action-state";
 import { consumeUserActionLimit } from "@/lib/action-rate-limit";
 import { createSuperuserPocketBase, getAuthenticatedPocketBase } from "@/lib/auth";
 import { formatRating, RATING_SCALE } from "@/lib/config";
@@ -21,6 +21,7 @@ import {
   rateFreshPick,
   replaceUnavailablePick,
 } from "@/lib/draw";
+import { SOLO_DRAW_GROUP_BLOCKED_MESSAGE } from "@/lib/draw-rules";
 import {
   drawForGroup,
   getUserGroupDrawState,
@@ -34,9 +35,9 @@ const REVIEW_WRITE_RATE_LIMIT = {
 };
 
 export async function drawAction(
-  previousState: WeekActionState,
+  previousState: PickActionState,
   formData: FormData,
-): Promise<WeekActionState> {
+): Promise<PickActionState> {
   void previousState;
   void formData;
 
@@ -46,14 +47,14 @@ export async function drawAction(
     if (groupDrawState.groups.length > 0) {
       return {
         status: "error",
-        message: "Solo draws are paused while you are in an active group.",
+        message: SOLO_DRAW_GROUP_BLOCKED_MESSAGE,
         listen: null,
       };
     }
 
     const adminPb = await createSuperuserPocketBase();
     const listen = await drawAlbum(adminPb, user.id);
-    revalidatePath("/week");
+    revalidatePath("/pick");
     revalidatePath("/stats");
 
     return {
@@ -67,15 +68,15 @@ export async function drawAction(
 }
 
 export async function keepFreshPickAction(
-  _previousState: WeekActionState,
+  _previousState: PickActionState,
   formData: FormData,
-): Promise<WeekActionState> {
+): Promise<PickActionState> {
   try {
     const listenId = parseListenId(formData.get("listenId"));
     const { user } = await getAuthenticatedPocketBase();
     const adminPb = await createSuperuserPocketBase();
     const listen = await keepFreshPick(adminPb, user.id, listenId);
-    revalidatePath("/week");
+    revalidatePath("/pick");
 
     return {
       status: "success",
@@ -88,9 +89,9 @@ export async function keepFreshPickAction(
 }
 
 export async function skipRatingAction(
-  _previousState: WeekActionState,
+  _previousState: PickActionState,
   formData: FormData,
-): Promise<WeekActionState> {
+): Promise<PickActionState> {
   try {
     const listenId = parseListenId(formData.get("listenId"));
     const rating = parseRating(formData.get("rating"));
@@ -116,7 +117,7 @@ export async function skipRatingAction(
       rating,
       take,
     });
-    revalidatePath("/week");
+    revalidatePath("/pick");
     revalidatePath("/stats");
 
     return {
@@ -130,9 +131,9 @@ export async function skipRatingAction(
 }
 
 export async function replaceUnavailablePickAction(
-  _previousState: WeekActionState,
+  _previousState: PickActionState,
   formData: FormData,
-): Promise<WeekActionState> {
+): Promise<PickActionState> {
   try {
     const listenId = parseListenId(formData.get("listenId"));
     const { user } = await getAuthenticatedPocketBase();
@@ -142,7 +143,7 @@ export async function replaceUnavailablePickAction(
       userId: user.id,
       listenId,
     });
-    revalidatePath("/week");
+    revalidatePath("/pick");
     revalidatePath("/catalog");
     revalidatePath("/history");
     revalidatePath("/stats");
@@ -158,9 +159,9 @@ export async function replaceUnavailablePickAction(
 }
 
 export async function freshRatingAction(
-  _previousState: WeekActionState,
+  _previousState: PickActionState,
   formData: FormData,
-): Promise<WeekActionState> {
+): Promise<PickActionState> {
   try {
     const listenId = parseListenId(formData.get("listenId"));
     const rating = parseRating(formData.get("rating"));
@@ -186,7 +187,7 @@ export async function freshRatingAction(
       rating,
       take,
     });
-    revalidatePath("/week");
+    revalidatePath("/pick");
     revalidatePath("/stats");
 
     return {
@@ -211,7 +212,7 @@ export async function groupDrawAction(
       groupId,
     });
 
-    revalidatePath("/week");
+    revalidatePath("/pick");
     revalidatePath("/board");
     revalidatePath("/history");
     revalidatePath("/stats");
@@ -235,7 +236,7 @@ export async function groupDrawAction(
   }
 }
 
-function handleActionError(error: unknown): WeekActionState {
+function handleActionError(error: unknown): PickActionState {
   if (error instanceof Error && error.message === "Unauthorized.") {
     redirect("/auth");
   }

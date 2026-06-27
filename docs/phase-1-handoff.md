@@ -31,7 +31,7 @@
   - Locks create/update/delete to superusers with `null` rules.
   - Enforces idempotent rank identity with a unique `rank` index.
 - `pb_migrations/1781006402_create_listens_collection.js`
-  - Defines listen ownership, album relation, kind/status selects, rating, take, week, and `rated_at`.
+  - Defines listen ownership, album relation, kind/status selects, rating, take, draw, and `rated_at`.
   - Enforces one `(user, album)` row.
   - Does not enforce draw/rating business rules in PocketBase hooks; those remain for Phase 3 trusted server routes/actions.
 - `pb_migrations/1781006403_create_reactions_collection.js`

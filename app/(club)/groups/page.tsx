@@ -17,7 +17,7 @@ export default async function GroupsPage() {
   try {
     auth = await getAuthenticatedPocketBase();
     if (!auth.user.isAdmin) {
-      redirect("/week");
+      redirect("/pick");
     }
 
     groupState = await getAllGroupDrawState();

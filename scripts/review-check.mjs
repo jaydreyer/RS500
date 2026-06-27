@@ -51,7 +51,7 @@ async function assertSampleLogin(pbUrl) {
 }
 
 async function assertDevLogin(appUrl) {
-  const response = await fetch(new URL("/api/dev/login?user=maya&next=/week", appUrl), {
+  const response = await fetch(new URL("/api/dev/login?user=maya&next=/pick", appUrl), {
     redirect: "manual",
   })
   const setCookie = response.headers.get("set-cookie") || ""

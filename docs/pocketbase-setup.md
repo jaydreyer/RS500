@@ -89,7 +89,7 @@ Phase 2 uses email/password auth against the PocketBase `users` collection:
 - Google auth posts to a Next.js route, validates the invite code for new members, completes Google's OAuth code flow server-side, then creates or impersonates the PocketBase user with superuser credentials.
 - The authenticated PocketBase token/record are stored in an HTTP-only `pb_auth` cookie.
 - The authenticated route group redirects unauthenticated requests to `/auth`.
-- `/auth` redirects authenticated members to `/week`.
+- `/auth` redirects authenticated members to the pick route.
 
 Because `NEXT_PUBLIC_PB_URL` is intentionally visible to the browser, keeping `users.createRule = null` is important. Without that rule, a stranger could bypass the app form and call PocketBase signup directly.
 

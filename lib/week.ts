@@ -9,7 +9,3 @@ export function getIsoWeekKey(date = new Date()) {
 
   return `${target.getUTCFullYear()}-W${String(weekNumber).padStart(2, "0")}`;
 }
-
-export function formatIsoWeekLabel(weekKey: string) {
-  return weekKey.replace("-W", " W");
-}

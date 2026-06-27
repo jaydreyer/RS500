@@ -32,4 +32,4 @@ Read before implementation:
 
 ## Recommended Start for Phase 3
 
-After Phase 2 is complete, begin Phase 3 by reading `../../rs500-listening-club-prd.md`, this handoff, `phase-1.md`, and the My Week design files listed in the PRD.
+After Phase 2 is complete, begin Phase 3 by reading `../../rs500-listening-club-prd.md`, this handoff, `phase-1.md`, and the My Pick design files listed in the PRD.

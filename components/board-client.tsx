@@ -191,7 +191,7 @@ function BoardCard({
           <p className="tag mt-2">{isMe ? "haven't drawn yet" : "no pick yet"}</p>
           {isMe && (
             <Link
-              href="/week"
+              href="/pick"
               className={cn(buttonVariants({ variant: "accent", size: "sm" }), "mt-5")}
             >
                 <Disc3 className="size-4" />

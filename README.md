@@ -7,7 +7,7 @@ Invite-only Rolling Stone 500 listening club app built with Next.js App Router a
 - Next.js, React, TypeScript, Tailwind CSS v4
 - PocketBase for auth, albums, listens, review replies, and reactions
 - Server actions for signup, draw/rating, logout, review replies, and reaction writes
-- PocketBase realtime for the current-week Board refresh loop
+- PocketBase realtime for the current Board refresh loop
 
 ## Local Setup
 
@@ -137,11 +137,11 @@ The tests cover invite-code validation, draw/rating rule helpers, stats threshol
 
 ## Group Draws
 
-Groups are admin-managed in PocketBase. Create an active `groups` record, then add active `group_members` records for each user. Any active member of an active group will see the group draw panel on `/week`.
+Groups are admin-managed in PocketBase. Create an active `groups` record, then add active `group_members` records for each user. Any active member of an active group will see the group draw panel on `/pick`.
 
 A group draw is manual. When a member spins for the group, the server picks one album no active group member has logged, creates one `group_draws` record, and creates one individual fresh `listens` row per member. A group draw is blocked while any active member has an unrated fresh pick; the next group draw unlocks once those active picks are rated.
 
-Active group members do not get the personal draw machine. The `/week` page routes them to group mode, and `drawAction` rejects direct solo draw submissions while the user belongs to an active group. This prevents an accidental personal `fresh/listening` row from blocking the shared group redraw.
+Active group members do not get the personal draw machine. `/pick` routes them to group mode, and the draw service rejects direct solo draw submissions while the user belongs to an active group. This prevents an accidental personal `fresh/listening` row from blocking the shared group redraw.
 
 ## Deployment
 

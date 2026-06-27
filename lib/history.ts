@@ -20,7 +20,6 @@ import {
   type StatsMember,
 } from "@/lib/history-rules";
 import { mapStoredRating } from "@/lib/listen-rating";
-import { formatIsoWeekLabel } from "@/lib/week";
 
 export type HistoryMember = StatsMember;
 
@@ -42,8 +41,6 @@ export type HistoryListen = StatsListen & {
   status: "listening" | "rated";
   rating: number | null;
   take: string;
-  week: string;
-  weekLabel: string;
   ratedAt: string | null;
   created: string;
   album: HistoryAlbum;
@@ -79,7 +76,6 @@ export type HistoryState = {
   currentUser: ClubUser;
   totalAlbums: number;
   members: HistoryMember[];
-  weeks: string[];
   listens: HistoryListen[];
   freshGridListens: HistoryListen[];
   memberSummaries: MemberSummary[];
@@ -121,9 +117,6 @@ export async function getHistoryState(
   const freshGridListens = mappedListens.filter(
     (listen) => listen.kind === "fresh" && listen.status === "rated" && listen.rating != null,
   );
-  const weeks = Array.from(new Set(freshGridListens.map((listen) => listen.week))).sort((a, b) =>
-    b.localeCompare(a),
-  );
   const memberSummaries = buildMemberSummaries(mappedMembers, mappedListens);
   const stats = buildStats(memberSummaries, mappedListens, STATS_SAMPLE_THRESHOLD);
 
@@ -131,7 +124,6 @@ export async function getHistoryState(
     currentUser,
     totalAlbums: albumPage.totalItems,
     members: mappedMembers,
-    weeks,
     listens: mappedListens,
     freshGridListens,
     memberSummaries,
@@ -148,7 +140,6 @@ export function formatAverage(value: number | null) {
 }
 
 function mapListen(record: RecordLike): HistoryListen {
-  const week = asString(record.week);
   const status = record.status === "rated" ? "rated" : "listening";
 
   return {
@@ -160,8 +151,6 @@ function mapListen(record: RecordLike): HistoryListen {
     status,
     rating: mapStoredRating(status, record.rating),
     take: asString(record.take),
-    week,
-    weekLabel: formatIsoWeekLabel(week),
     ratedAt: asNullableString(record.rated_at),
     created: asString(record.created),
     album: mapAlbum(getExpandedRecord(record, "album")),

@@ -9,7 +9,7 @@ Build the long-term listening history scorecard, per-member detail, and lightwei
 ## Completed Work
 
 - Built real `/history` scorecard from PocketBase listens and users.
-- Added newest-first week columns based on logged fresh picks.
+- Added newest-first review columns based on logged fresh picks.
 - Added album detail links, cover art, album title, and score/listening state per history cell.
 - Added per-member detail view at `/history?member=<id>`.
 - Included both fresh picks and already-heard skips in member detail.

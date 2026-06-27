@@ -18,7 +18,6 @@ export type CurrentGroupDraw = {
   id: string;
   groupId: string;
   albumId: string;
-  week: string;
   createdById: string;
   created: string;
   album: GroupDrawAlbum;
@@ -35,6 +34,5 @@ export type UserGroupDraw = {
 };
 
 export type UserGroupDrawState = {
-  weekKey: string;
   groups: UserGroupDraw[];
 };

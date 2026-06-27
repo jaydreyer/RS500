@@ -1,12 +1,12 @@
 import type { ListenSummary } from "@/lib/draw";
 
-export type WeekActionState = {
+export type PickActionState = {
   status: "idle" | "success" | "error";
   message: string | null;
   listen: ListenSummary | null;
 };
 
-export const initialWeekActionState: WeekActionState = {
+export const initialPickActionState: PickActionState = {
   status: "idle",
   message: null,
   listen: null,
