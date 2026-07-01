@@ -9,6 +9,15 @@ export type ReleaseNote = {
 
 export const releaseNotes = [
   {
+    date: "2026-07-01",
+    title: "Cleaner review text",
+    summary:
+      "Review cards now read more naturally across the app without decorative quotation marks around every take.",
+    improved: [
+      "Album review text on Board, Reviews, and rating panels no longer appears wrapped in extra quotes.",
+    ],
+  },
+  {
     date: "2026-06-27",
     title: "My Pick, group reviews, and emoji fixes",
     summary:

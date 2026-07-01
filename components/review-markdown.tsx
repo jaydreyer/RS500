@@ -7,7 +7,7 @@ const REVIEW_ALLOWED_ELEMENTS = ["p", "strong", "em", "br"] as const;
 export function ReviewMarkdown({
   children,
   className,
-  quoted = true,
+  quoted = false,
 }: {
   children: string;
   className?: string;
