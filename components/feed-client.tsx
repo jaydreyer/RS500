@@ -4,6 +4,7 @@ import {
   Children,
   cloneElement,
   isValidElement,
+  type ChangeEvent,
   type KeyboardEvent,
   type ReactNode,
   type RefObject,
@@ -56,6 +57,16 @@ const INITIAL_POST_STATE: FeedPostActionState = {
   status: "idle",
   message: null,
 };
+
+const FEED_IMAGE_MAX_SIZE = 8 * 1024 * 1024;
+const FEED_IMAGE_SAFE_UPLOAD_SIZE = 4 * 1024 * 1024;
+const FEED_IMAGE_TYPES = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/gif",
+]);
+const FEED_COMPRESSIBLE_IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
 
 const QUICK_REACTIONS = [
   { key: "heart", emoji: "❤️", label: "Love" },
@@ -411,6 +422,9 @@ function FeedComposer({
   const formRef = useRef<HTMLFormElement>(null);
   const [resetKey, setResetKey] = useState(0);
   const [body, setBody] = useState("");
+  const [imageMessage, setImageMessage] = useState<string | null>(null);
+  const [imageError, setImageError] = useState<string | null>(null);
+  const [isImageProcessing, setIsImageProcessing] = useState(false);
   const [selectedAlbumId, setSelectedAlbumId] = useState("");
 
   async function postAction(previousState: FeedPostActionState, formData: FormData) {
@@ -419,11 +433,75 @@ function FeedComposer({
     if (result.status === "success") {
       formRef.current?.reset();
       setBody("");
+      setImageMessage(null);
+      setImageError(null);
       setSelectedAlbumId("");
       setResetKey((key) => key + 1);
     }
 
     return result;
+  }
+
+  async function handleImageChange(event: ChangeEvent<HTMLInputElement>) {
+    const input = event.currentTarget;
+    const file = input.files?.[0] ?? null;
+
+    setImageMessage(null);
+    setImageError(null);
+
+    if (!file) {
+      return;
+    }
+
+    if (!FEED_IMAGE_TYPES.has(file.type)) {
+      input.value = "";
+      setImageError("Use a JPG, PNG, WEBP, or GIF image.");
+      return;
+    }
+
+    if (file.size > FEED_IMAGE_MAX_SIZE) {
+      input.value = "";
+      setImageError("Images need to be 8 MB or smaller.");
+      return;
+    }
+
+    if (file.size <= FEED_IMAGE_SAFE_UPLOAD_SIZE) {
+      setImageMessage(`${file.name} selected.`);
+      return;
+    }
+
+    if (!FEED_COMPRESSIBLE_IMAGE_TYPES.has(file.type)) {
+      input.value = "";
+      setImageError("GIFs need to be 4 MB or smaller.");
+      return;
+    }
+
+    setIsImageProcessing(true);
+    setImageMessage(`Optimizing ${file.name} for upload...`);
+
+    try {
+      const compressedFile = await compressFeedImage(file);
+
+      if (compressedFile.size > FEED_IMAGE_SAFE_UPLOAD_SIZE) {
+        input.value = "";
+        setImageMessage(null);
+        setImageError("That image is too large to post. Try a smaller photo or screenshot.");
+        return;
+      }
+
+      const transfer = new DataTransfer();
+      transfer.items.add(compressedFile);
+      input.files = transfer.files;
+      setImageMessage(
+        `${compressedFile.name} optimized to ${formatFileSize(compressedFile.size)}.`,
+      );
+    } catch {
+      input.value = "";
+      setImageMessage(null);
+      setImageError("Could not prepare that image. Try a smaller JPG, PNG, or WEBP.");
+    } finally {
+      setIsImageProcessing(false);
+    }
   }
 
   const [state, formAction, isPending] = useActionState(
@@ -481,6 +559,8 @@ function FeedComposer({
           name="image"
           type="file"
           accept="image/jpeg,image/png,image/webp,image/gif"
+          disabled={isPending || isImageProcessing}
+          onChange={handleImageChange}
         />
 
         <AlbumAttachPicker
@@ -490,10 +570,20 @@ function FeedComposer({
           onSelectedAlbumIdChange={setSelectedAlbumId}
         />
 
-        <Button type="submit" variant="accent" disabled={isPending}>
+        <Button type="submit" variant="accent" disabled={isPending || isImageProcessing}>
           <Send className="size-4" aria-hidden="true" />
-          {isPending ? "Posting" : "Post"}
+          {isPending ? "Posting" : isImageProcessing ? "Preparing" : "Post"}
         </Button>
+        {(imageMessage || imageError) && (
+          <p
+            className={cn(
+              "basis-full text-sm",
+              imageError ? "text-[var(--accent)]" : "text-[var(--ink-soft)]",
+            )}
+          >
+            {imageError || imageMessage}
+          </p>
+        )}
         {state.message && (
           <p
             className={cn(
@@ -507,6 +597,105 @@ function FeedComposer({
       </div>
     </form>
   );
+}
+
+async function compressFeedImage(file: File) {
+  const image = await loadImageFile(file);
+  const canvas = document.createElement("canvas");
+  const context = canvas.getContext("2d");
+
+  if (!context) {
+    throw new Error("Canvas is not available.");
+  }
+
+  let width = image.naturalWidth;
+  let height = image.naturalHeight;
+  const longestSide = Math.max(width, height);
+  const initialMaxSide = 1800;
+
+  if (longestSide > initialMaxSide) {
+    const ratio = initialMaxSide / longestSide;
+    width = Math.max(1, Math.round(width * ratio));
+    height = Math.max(1, Math.round(height * ratio));
+  }
+
+  const qualities = [0.86, 0.78, 0.7, 0.62, 0.54];
+  const scaleSteps = [1, 0.85, 0.72, 0.6];
+  let bestBlob: Blob | null = null;
+
+  for (const scale of scaleSteps) {
+    canvas.width = Math.max(1, Math.round(width * scale));
+    canvas.height = Math.max(1, Math.round(height * scale));
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+    for (const quality of qualities) {
+      const blob = await canvasToBlob(canvas, "image/jpeg", quality);
+      bestBlob = !bestBlob || blob.size < bestBlob.size ? blob : bestBlob;
+
+      if (blob.size <= FEED_IMAGE_SAFE_UPLOAD_SIZE) {
+        return new File([blob], getCompressedImageName(file.name), {
+          type: "image/jpeg",
+          lastModified: Date.now(),
+        });
+      }
+    }
+  }
+
+  if (!bestBlob) {
+    throw new Error("Image compression failed.");
+  }
+
+  return new File([bestBlob], getCompressedImageName(file.name), {
+    type: "image/jpeg",
+    lastModified: Date.now(),
+  });
+}
+
+function loadImageFile(file: File) {
+  return new Promise<HTMLImageElement>((resolve, reject) => {
+    const image = new window.Image();
+    const url = URL.createObjectURL(file);
+
+    image.onload = () => {
+      URL.revokeObjectURL(url);
+      resolve(image);
+    };
+    image.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error("Could not load image."));
+    };
+    image.src = url;
+  });
+}
+
+function canvasToBlob(canvas: HTMLCanvasElement, type: string, quality: number) {
+  return new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob(
+      (blob) => {
+        if (blob) {
+          resolve(blob);
+        } else {
+          reject(new Error("Could not create image blob."));
+        }
+      },
+      type,
+      quality,
+    );
+  });
+}
+
+function getCompressedImageName(name: string) {
+  const baseName = name.replace(/\.[^.]*$/, "") || "feed-image";
+  return `${baseName}.jpg`;
+}
+
+function formatFileSize(size: number) {
+  if (size >= 1024 * 1024) {
+    return `${(size / (1024 * 1024)).toFixed(1)} MB`;
+  }
+
+  return `${Math.max(1, Math.round(size / 1024))} KB`;
 }
 
 function CurrentListeningShare({
