@@ -6,8 +6,6 @@ import { ClubAvatar, ScoreBadge } from "@/components/primitives";
 import { RouteShell } from "@/components/route-shell";
 import { getAuthenticatedPocketBase } from "@/lib/auth";
 import { formatRating, RATING_SCALE, STATS_SAMPLE_THRESHOLD } from "@/lib/config";
-import { getUserGroupDrawState } from "@/lib/group-draw";
-import type { UserGroupDrawState } from "@/lib/group-draw-types";
 import {
   formatAverage,
   getHistoryState,
@@ -24,14 +22,10 @@ export const dynamic = "force-dynamic";
 
 export default async function StatsPage() {
   let historyState: HistoryState;
-  let groupDrawState: UserGroupDrawState;
 
   try {
     const { pb, user } = await getAuthenticatedPocketBase();
-    [historyState, groupDrawState] = await Promise.all([
-      getHistoryState(pb, user),
-      getUserGroupDrawState(user.id),
-    ]);
+    historyState = await getHistoryState(pb, user);
   } catch (error) {
     if (error instanceof Error && error.message === "Unauthorized.") {
       redirect("/auth");
@@ -83,7 +77,7 @@ export default async function StatsPage() {
 
       <ProgressSection historyState={historyState} />
       <RecentPaceSection historyState={historyState} now={now} />
-      <ActivePicksSection historyState={historyState} groupDrawState={groupDrawState} />
+      <ActivePicksSection historyState={historyState} />
 
       <div className="mt-4 grid gap-4 lg:grid-cols-3">
         <MemberSuperlative
@@ -375,105 +369,58 @@ function RecentPaceSection({
 
 function ActivePicksSection({
   historyState,
-  groupDrawState,
 }: {
   historyState: HistoryState;
-  groupDrawState: UserGroupDrawState;
 }) {
   const activeMemberEntries = historyState.memberSummaries.flatMap((summary) =>
     summary.activeFreshListens.map((listen) => ({ summary, listen })),
   );
 
   return (
-    <section className="mt-4 grid gap-4 xl:grid-cols-2">
-      <div className="surface-panel rounded-lg p-5">
-        <div className="mb-4 flex flex-wrap items-baseline justify-between gap-3">
-          <h2 className="text-2xl">Active picks</h2>
-          <p className="tag">solo and assigned listens</p>
-        </div>
-        {activeMemberEntries.length === 0 ? (
-          <p className="tag">No active picks are waiting on reviews</p>
-        ) : (
-          <div className="grid gap-3">
-            {activeMemberEntries.map(({ summary, listen }) => (
-              <Link
-                key={listen.id}
-                href={`/albums/${listen.album.id}`}
-                className="grid grid-cols-[64px_1fr] gap-3 rounded-md border border-[var(--line-strong)] p-3 transition-colors hover:bg-[var(--paper-2)] sm:grid-cols-[72px_1fr_auto] sm:items-center"
-              >
-                <AlbumCover
-                  rank={listen.album.rank}
-                  src={listen.album.coverUrl}
-                  title={listen.album.title}
-                  sizes="72px"
-                  className="cover-lift rounded-sm"
-                />
-                <div className="min-w-0">
-                  <div className="mb-1 flex items-center gap-2">
-                    <ClubAvatar
-                      imageUrl={summary.member.avatarUrl}
-                      initials={summary.member.initials}
-                      label={summary.member.displayName}
-                      size="sm"
-                    />
-                    <p className="tag">
-                      {getMemberLabel(summary.member, historyState.currentUser.id)}
-                    </p>
-                  </div>
-                  <h3 className="truncate text-xl">{listen.album.title}</h3>
-                  <p className="truncate font-quote text-base text-[var(--ink-soft)]">
-                    {listen.album.artist}
+    <section className="surface-panel mt-4 rounded-lg p-5">
+      <div className="mb-4 flex flex-wrap items-baseline justify-between gap-3">
+        <h2 className="text-2xl">Active picks</h2>
+        <p className="tag">solo and assigned listens</p>
+      </div>
+      {activeMemberEntries.length === 0 ? (
+        <p className="tag">No active picks are waiting on reviews</p>
+      ) : (
+        <div className="grid gap-3">
+          {activeMemberEntries.map(({ summary, listen }) => (
+            <Link
+              key={listen.id}
+              href={`/albums/${listen.album.id}`}
+              className="grid grid-cols-[64px_1fr] gap-3 rounded-md border border-[var(--line-strong)] p-3 transition-colors hover:bg-[var(--paper-2)] sm:grid-cols-[72px_1fr_auto] sm:items-center"
+            >
+              <AlbumCover
+                rank={listen.album.rank}
+                src={listen.album.coverUrl}
+                title={listen.album.title}
+                sizes="72px"
+                className="cover-lift rounded-sm"
+              />
+              <div className="min-w-0">
+                <div className="mb-1 flex items-center gap-2">
+                  <ClubAvatar
+                    imageUrl={summary.member.avatarUrl}
+                    initials={summary.member.initials}
+                    label={summary.member.displayName}
+                    size="sm"
+                  />
+                  <p className="tag">
+                    {getMemberLabel(summary.member, historyState.currentUser.id)}
                   </p>
                 </div>
-                <span className="tag text-[var(--accent)] max-sm:col-start-2">review due</span>
-              </Link>
-            ))}
-          </div>
-        )}
-      </div>
-
-      <div className="surface-panel rounded-lg p-5">
-        <div className="mb-4 flex flex-wrap items-baseline justify-between gap-3">
-          <h2 className="text-2xl">Group readiness</h2>
-          <p className="tag">spin when reviews clear</p>
-        </div>
-        {groupDrawState.groups.length === 0 ? (
-          <p className="tag">No active groups yet</p>
-        ) : (
-          <div className="grid gap-3">
-            {groupDrawState.groups.map((group) => (
-              <div
-                key={group.id}
-                className="rounded-md border border-[var(--line-strong)] bg-[var(--paper-2)] p-3"
-              >
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <h3 className="truncate text-xl">{group.name}</h3>
-                  <span
-                    className={cn(
-                      "tag rounded-sm border px-2 py-1",
-                      group.blockedMembers.length > 0
-                        ? "border-[var(--line-strong)] text-[var(--accent)]"
-                        : "border-[color-mix(in_srgb,var(--good)_45%,var(--line-strong))] text-[var(--good)]",
-                    )}
-                  >
-                    {group.blockedMembers.length > 0 ? "waiting" : "ready"}
-                  </span>
-                </div>
-                <p className="mt-2 font-quote text-base text-[var(--ink-soft)]">
-                  {group.currentDraw
-                    ? `${group.currentDraw.album.title} / ${group.currentDraw.album.artist}`
-                    : `${group.poolLeft} shared albums left`}
+                <h3 className="truncate text-xl">{listen.album.title}</h3>
+                <p className="truncate font-quote text-base text-[var(--ink-soft)]">
+                  {listen.album.artist}
                 </p>
-                {group.blockedMembers.length > 0 && (
-                  <p className="tag mt-2">
-                    due from {group.blockedMembers.map((member) => member.displayName).join(", ")}
-                  </p>
-                )}
               </div>
-            ))}
-          </div>
-        )}
-      </div>
+              <span className="tag text-[var(--accent)] max-sm:col-start-2">review due</span>
+            </Link>
+          ))}
+        </div>
+      )}
     </section>
   );
 }
