@@ -58,10 +58,19 @@ export default async function AuthPage({ searchParams }: AuthPageProps) {
       </section>
 
       <section className="grid place-items-center px-5 py-12 md:px-12">
-        <AuthForm message={getGoogleAuthMessage(params.google)} />
+        <AuthForm
+          initialMode={getAuthMode(params.mode)}
+          message={getGoogleAuthMessage(params.google)}
+        />
       </section>
     </main>
   );
+}
+
+function getAuthMode(value: string | string[] | undefined) {
+  const mode = Array.isArray(value) ? value[0] : value;
+
+  return mode === "login" ? "login" : "signup";
 }
 
 function getGoogleAuthMessage(value: string | string[] | undefined) {

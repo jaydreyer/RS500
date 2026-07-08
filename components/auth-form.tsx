@@ -17,8 +17,14 @@ const initialAuthFormState: AuthFormState = {
   message: null,
 };
 
-export function AuthForm({ message }: { message?: string | null }) {
-  const [mode, setMode] = useState<AuthMode>("signup");
+export function AuthForm({
+  initialMode = "signup",
+  message,
+}: {
+  initialMode?: AuthMode;
+  message?: string | null;
+}) {
+  const [mode, setMode] = useState<AuthMode>(initialMode);
   const [signupState, signupFormAction] = useActionState(
     signupAction,
     initialAuthFormState,
@@ -33,10 +39,18 @@ export function AuthForm({ message }: { message?: string | null }) {
   return (
     <div className="w-full max-w-sm">
       <div className="mb-7 grid grid-cols-2 gap-1 rounded-md border border-[var(--ink)] p-1">
-        <ModeButton active={mode === "signup"} onClick={() => setMode("signup")}>
+        <ModeButton
+          active={mode === "signup"}
+          href="/auth?mode=signup"
+          onClick={() => setMode("signup")}
+        >
           Join with code
         </ModeButton>
-        <ModeButton active={mode === "login"} onClick={() => setMode("login")}>
+        <ModeButton
+          active={mode === "login"}
+          href="/auth?mode=login"
+          onClick={() => setMode("login")}
+        >
           Log in
         </ModeButton>
       </div>
@@ -156,26 +170,33 @@ function Divider({ label }: { label: string }) {
 function ModeButton({
   active,
   children,
+  href,
   onClick,
 }: {
   active: boolean;
   children: React.ReactNode;
+  href: string;
   onClick: () => void;
 }) {
   return (
-    <button
+    <a
       aria-pressed={active}
       className={cn(
-        "rounded-sm px-4 py-3 font-display font-extrabold transition-colors",
+        "rounded-sm px-4 py-3 text-center font-display font-extrabold transition-colors",
         active
           ? "bg-[var(--ink)] text-[var(--paper)]"
           : "text-[var(--ink-soft)] hover:text-[var(--ink)]",
       )}
-      onClick={onClick}
-      type="button"
+      href={href}
+      onClick={(event) => {
+        event.preventDefault();
+        onClick();
+        window.history.replaceState(null, "", href);
+      }}
+      role="button"
     >
       {children}
-    </button>
+    </a>
   );
 }
 

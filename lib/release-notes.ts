@@ -9,6 +9,18 @@ export type ReleaseNote = {
 
 export const releaseNotes = [
   {
+    date: "2026-07-08",
+    title: "Login tab works harder",
+    summary:
+      "The auth screen now gives the Log in tab a direct URL fallback for browsers that do not switch modes reliably.",
+    improved: [
+      "The Log in tab now updates the address to `/auth?mode=login`, so members can land on the password login form directly.",
+    ],
+    fixed: [
+      "Edge-only login tab clicks that appeared to do nothing now have a native navigation fallback.",
+    ],
+  },
+  {
     date: "2026-07-01",
     title: "Cleaner review text",
     summary:

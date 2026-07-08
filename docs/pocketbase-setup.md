@@ -90,6 +90,7 @@ Phase 2 uses email/password auth against the PocketBase `users` collection:
 - The authenticated PocketBase token/record are stored in an HTTP-only `pb_auth` cookie.
 - The authenticated route group redirects unauthenticated requests to `/auth`.
 - `/auth` redirects authenticated members to the pick route.
+- `/auth?mode=login` renders the password login form directly; the auth mode tabs use these URLs as a browser-safe fallback.
 
 Because `NEXT_PUBLIC_PB_URL` is intentionally visible to the browser, keeping `users.createRule = null` is important. Without that rule, a stranger could bypass the app form and call PocketBase signup directly.
 
