@@ -238,7 +238,7 @@ One row per logged album, including active fresh picks and already-heard skips.
 | `kind` | select | `fresh` or `skip` |
 | `status` | select | `listening` or `rated` |
 | `rating` | number | null while listening; 1-10 when rated |
-| `take` | text | optional album review; app limit is 6,000 characters including spaces and line breaks |
+| `take` | text | optional album review; app limit is 6,000 characters including spaces and line breaks; the review editor supports bold, italic, bulleted list, and numbered list Markdown formatting |
 | `rated_at` | date | null while listening; set when rating is completed |
 | `created` | autodate | PocketBase creation timestamp |
 
