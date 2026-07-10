@@ -10,6 +10,18 @@ export type ReleaseNote = {
 export const releaseNotes = [
   {
     date: "2026-07-09",
+    title: "Reviews make a list",
+    summary:
+      "Review writing now supports bulleted and numbered lists for takes that need a little structure.",
+    added: [
+      "Review and Feed editors now include bulleted and numbered list controls alongside bold and italic formatting.",
+    ],
+    improved: [
+      "List formatting works across selected lines, toggles off cleanly, and switches directly between bullet and number styles.",
+    ],
+  },
+  {
+    date: "2026-07-09",
     title: "Review drafts survive sign-in",
     summary:
       "Long reviews are protected while you type, and active login sessions now stay active for the intended 30 days.",

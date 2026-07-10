@@ -1,10 +1,14 @@
 "use client";
 
-import { Bold, Italic } from "lucide-react";
+import { Bold, Italic, List, ListOrdered } from "lucide-react";
 import { useRef, type TextareaHTMLAttributes } from "react";
 
 import { Button } from "@/components/ui/button";
 import { countTakeCharacters } from "@/lib/draw-rules";
+import {
+  applyReviewMarkdownFormat,
+  type ReviewMarkdownFormat,
+} from "@/lib/review-markdown-formatting";
 import { cn } from "@/lib/utils";
 
 type ReviewTextareaProps = Omit<
@@ -17,14 +21,12 @@ type ReviewTextareaProps = Omit<
   value: string;
 };
 
-export type ReviewMarkdownMarker = "*" | "**";
-
 export function ReviewMarkdownToolbar({
   className,
-  onWrap,
+  onFormat,
 }: {
   className?: string;
-  onWrap: (marker: ReviewMarkdownMarker) => void;
+  onFormat: (format: ReviewMarkdownFormat) => void;
 }) {
   return (
     <div
@@ -40,7 +42,7 @@ export function ReviewMarkdownToolbar({
         className="size-8"
         aria-label="Bold"
         title="Bold"
-        onClick={() => onWrap("**")}
+        onClick={() => onFormat("**")}
       >
         <Bold className="size-4" aria-hidden="true" />
       </Button>
@@ -51,9 +53,31 @@ export function ReviewMarkdownToolbar({
         className="size-8"
         aria-label="Italic"
         title="Italic"
-        onClick={() => onWrap("*")}
+        onClick={() => onFormat("*")}
       >
         <Italic className="size-4" aria-hidden="true" />
+      </Button>
+      <Button
+        type="button"
+        variant="quiet"
+        size="icon"
+        className="size-8"
+        aria-label="Bulleted list"
+        title="Bulleted list"
+        onClick={() => onFormat("bullet-list")}
+      >
+        <List className="size-4" aria-hidden="true" />
+      </Button>
+      <Button
+        type="button"
+        variant="quiet"
+        size="icon"
+        className="size-8"
+        aria-label="Numbered list"
+        title="Numbered list"
+        onClick={() => onFormat("numbered-list")}
+      >
+        <ListOrdered className="size-4" aria-hidden="true" />
       </Button>
     </div>
   );
@@ -77,24 +101,24 @@ export function ReviewTextarea({
     typeof maxLength === "number" ? maxLength.toLocaleString() : null;
   const characterCountLabel = characterCount.toLocaleString();
 
-  function wrapSelection(marker: "*" | "**") {
+  function applyFormat(format: ReviewMarkdownFormat) {
     const textarea = textareaRef.current;
     if (!textarea) {
       return;
     }
 
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    const selected = value.slice(start, end);
-    const nextValue = `${value.slice(0, start)}${marker}${selected}${marker}${value.slice(end)}`;
+    const result = applyReviewMarkdownFormat(
+      value,
+      textarea.selectionStart,
+      textarea.selectionEnd,
+      format,
+    );
 
-    onChange(nextValue);
+    onChange(result.value);
 
     window.requestAnimationFrame(() => {
       textarea.focus();
-      const nextStart = start + marker.length;
-      const nextEnd = end + marker.length;
-      textarea.setSelectionRange(nextStart, selected ? nextEnd : nextStart);
+      textarea.setSelectionRange(result.selectionStart, result.selectionEnd);
     });
   }
 
@@ -105,7 +129,7 @@ export function ReviewTextarea({
         containerClassName,
       )}
     >
-      <ReviewMarkdownToolbar onWrap={wrapSelection} />
+      <ReviewMarkdownToolbar onFormat={applyFormat} />
       <textarea
         ref={textareaRef}
         value={value}

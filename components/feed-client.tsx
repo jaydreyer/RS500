@@ -39,11 +39,12 @@ import {
 } from "@/app/(club)/feed/actions";
 import { AlbumCover } from "@/components/album-cover";
 import { ClubAvatar, Eyebrow } from "@/components/primitives";
-import {
-  ReviewMarkdownToolbar,
-  type ReviewMarkdownMarker,
-} from "@/components/review-textarea";
+import { ReviewMarkdownToolbar } from "@/components/review-textarea";
 import { Button, buttonVariants } from "@/components/ui/button";
+import {
+  applyReviewMarkdownFormat,
+  type ReviewMarkdownFormat,
+} from "@/lib/review-markdown-formatting";
 import { cn } from "@/lib/utils";
 import type {
   FeedAlbum,
@@ -1091,28 +1092,28 @@ function MentionTextarea({
     value,
   });
 
-  function wrapSelection(marker: ReviewMarkdownMarker) {
+  function applyFormat(format: ReviewMarkdownFormat) {
     const textarea = ref.current;
     if (!textarea) {
       return;
     }
 
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    const selected = value.slice(start, end);
-    const nextValue = `${value.slice(0, start)}${marker}${selected}${marker}${value.slice(end)}`;
+    const result = applyReviewMarkdownFormat(
+      value,
+      textarea.selectionStart,
+      textarea.selectionEnd,
+      format,
+    );
 
-    if (nextValue.length > maxLength) {
+    if (result.value.length > maxLength) {
       return;
     }
 
-    onValueChange(nextValue);
-    const nextStart = start + marker.length;
-    const nextEnd = end + marker.length;
+    onValueChange(result.value);
 
     window.requestAnimationFrame(() => {
       textarea.focus();
-      textarea.setSelectionRange(nextStart, selected ? nextEnd : nextStart);
+      textarea.setSelectionRange(result.selectionStart, result.selectionEnd);
     });
   }
 
@@ -1123,7 +1124,7 @@ function MentionTextarea({
         containerClassName,
       )}
     >
-      <ReviewMarkdownToolbar onWrap={wrapSelection} />
+      <ReviewMarkdownToolbar onFormat={applyFormat} />
       <textarea
         ref={ref}
         id={id}
