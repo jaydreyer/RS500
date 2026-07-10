@@ -117,3 +117,7 @@ If production Google login returns to `/auth?google=failed` after Google consent
 ## Session Note: Review Replies
 
 On June 24, 2026, `review_replies` was missing from the live `ai-lab:8091` backend, causing `/history` reply creation to fail with "Missing or invalid collection context." The collection was created through the superuser Collections API with `listen -> listens`, `user -> users`, `body`, `created`, and `updated` fields, plus the `idx_review_replies_listen_created` and `idx_review_replies_user_created` indexes. The matching migration `pb_migrations/1781006419_create_review_replies.js` is now idempotent, and live create/delete was verified through an impersonated member token.
+
+## Session Note: 30-Day Authentication
+
+On July 9, 2026, the live `ai-lab:8091` `users.authToken.duration` was found at five days and restored to 30 days through the superuser Collections API. The setting was read back as 2,592,000 seconds after the update. The matching migration is `pb_migrations/1781006422_extend_auth_session.js`.

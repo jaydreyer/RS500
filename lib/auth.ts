@@ -1,12 +1,19 @@
 import "server-only";
 
 import { cookies, headers } from "next/headers";
-import PocketBase, { getTokenPayload, type AuthRecord } from "pocketbase";
+import PocketBase, { type AuthRecord } from "pocketbase";
 
 import { shouldUseSecureAuthCookie } from "@/lib/auth-cookie";
 import { isAdminEmail } from "@/lib/auth-rules";
+import {
+  createAuthCookie,
+  createPocketBase,
+  getPocketBaseUrl,
+  loadPocketBaseAuthCookie,
+  PB_AUTH_COOKIE,
+} from "@/lib/auth-session";
 
-export const PB_AUTH_COOKIE = "pb_auth";
+export { createAuthCookie, createPocketBase, getPocketBaseUrl, PB_AUTH_COOKIE };
 
 export type ClubUser = {
   id: string;
@@ -19,29 +26,11 @@ export type ClubUser = {
 
 export const DELETED_MEMBER_DISPLAY_NAME = "Deleted member";
 
-export function getPocketBaseUrl() {
-  const url = process.env.NEXT_PUBLIC_PB_URL;
-  if (!url) {
-    throw new Error("Missing NEXT_PUBLIC_PB_URL.");
-  }
-
-  return url;
-}
-
-export function createPocketBase() {
-  const pb = new PocketBase(getPocketBaseUrl());
-  pb.autoCancellation(false);
-  return pb;
-}
-
 export async function createPocketBaseFromCookie() {
   const pb = createPocketBase();
   const cookieStore = await cookies();
   const authCookie = cookieStore.get(PB_AUTH_COOKIE);
-
-  if (authCookie?.value) {
-    pb.authStore.loadFromCookie(`${PB_AUTH_COOKIE}=${authCookie.value}`, PB_AUTH_COOKIE);
-  }
+  loadPocketBaseAuthCookie(pb, authCookie?.value);
 
   return pb;
 }
@@ -107,27 +96,6 @@ export async function setAuthCookie(pb: PocketBase) {
   });
 
   cookieStore.set(authCookie);
-}
-
-export function createAuthCookie(pb: PocketBase, options: { secure?: boolean } = {}) {
-  const token = pb.authStore.token;
-  const record = pb.authStore.record;
-
-  if (!token || !record) {
-    throw new Error("PocketBase auth store is empty.");
-  }
-
-  const expires = getTokenExpires(token);
-
-  return {
-    name: PB_AUTH_COOKIE,
-    value: encodeURIComponent(JSON.stringify({ token, record })),
-    httpOnly: true,
-    secure: options.secure ?? shouldUseSecureAuthCookie(),
-    sameSite: "lax",
-    path: "/",
-    ...(expires ? { expires } : { maxAge: 60 * 60 * 24 * 7 }),
-  } as const;
 }
 
 export async function clearAuthCookie() {
@@ -200,19 +168,6 @@ export function getClubUserInitials(record: { [key: string]: unknown }) {
 
 export function isDeactivatedUserRecord(record: { [key: string]: unknown }) {
   return Boolean(asString(record.deactivated_at));
-}
-
-function getTokenExpires(token: string) {
-  try {
-    const payload = getTokenPayload(token);
-    if (typeof payload.exp !== "number") {
-      return null;
-    }
-
-    return new Date(payload.exp * 1000);
-  } catch {
-    return null;
-  }
 }
 
 function getInitials(value: string) {

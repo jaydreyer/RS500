@@ -1,7 +1,6 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 import type {
   GroupDrawActionState,
@@ -223,7 +222,10 @@ export async function groupDrawAction(
     };
   } catch (error) {
     if (error instanceof Error && error.message === "Unauthorized.") {
-      redirect("/auth");
+      return {
+        status: "unauthorized",
+        message: "Your session expired. Log in again to finish saving.",
+      };
     }
 
     return {
@@ -238,7 +240,11 @@ export async function groupDrawAction(
 
 function handleActionError(error: unknown): PickActionState {
   if (error instanceof Error && error.message === "Unauthorized.") {
-    redirect("/auth");
+    return {
+      status: "unauthorized",
+      message: "Your session expired. Log in again to finish saving.",
+      listen: null,
+    };
   }
 
   return {

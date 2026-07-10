@@ -6,6 +6,7 @@ import type { AuthRecord, RecordModel } from "pocketbase";
 
 import { createAuthCookie, createSuperuserPocketBase, isDeactivatedUserRecord } from "@/lib/auth";
 import { shouldUseSecureAuthCookie } from "@/lib/auth-cookie";
+import { getSafeReturnPath } from "@/lib/auth-return";
 import {
   decodeGoogleOAuthState,
   getGoogleOAuthConfig,
@@ -61,7 +62,10 @@ export async function GET(request: NextRequest) {
       requestKey: null,
     });
 
-    const response = NextResponse.redirect(new URL("/pick", request.url), { status: 303 });
+    const response = NextResponse.redirect(
+      new URL(getSafeReturnPath(storedState.nextPath), request.url),
+      { status: 303 },
+    );
     response.cookies.set(
       createAuthCookie(userPb, {
         secure: shouldUseSecureAuthCookie(request.headers),

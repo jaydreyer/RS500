@@ -12,12 +12,13 @@ import {
 } from "../lib/google-oauth.ts"
 
 test("google oauth state round-trips and expires after ten minutes", () => {
-  const state = createGoogleOAuthState("signup", "Mavis")
+  const state = createGoogleOAuthState("signup", "Mavis", "/albums/abc")
   const decoded = decodeGoogleOAuthState(encodeGoogleOAuthState(state))
 
   assert.deepEqual(decoded, state)
   assert.equal(isExpiredGoogleOAuthState(state, state.createdAt + 10 * 60 * 1000), false)
   assert.equal(isExpiredGoogleOAuthState(state, state.createdAt + 10 * 60 * 1000 + 1), true)
+  assert.equal(decoded.nextPath, "/albums/abc")
 })
 
 test("google authorization url includes PKCE and requested scopes", () => {

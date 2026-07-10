@@ -1,6 +1,7 @@
 import { BrandMark } from "@/components/brand-mark";
 import { AuthForm } from "@/components/auth-form";
 import { getCurrentUser } from "@/lib/auth";
+import { getSafeReturnPath } from "@/lib/auth-return";
 import { cn } from "@/lib/utils";
 import { Archivo_Black } from "next/font/google";
 import { redirect } from "next/navigation";
@@ -19,6 +20,7 @@ type AuthPageProps = {
 export default async function AuthPage({ searchParams }: AuthPageProps) {
   const user = await getCurrentUser();
   const params = searchParams ? await searchParams : {};
+  const nextPath = getSafeReturnPath(getParam(params.next));
 
   if (user) {
     redirect("/pick");
@@ -60,7 +62,8 @@ export default async function AuthPage({ searchParams }: AuthPageProps) {
       <section className="grid place-items-center px-5 py-12 md:px-12">
         <AuthForm
           initialMode={getAuthMode(params.mode)}
-          message={getGoogleAuthMessage(params.google)}
+          message={getAuthMessage(params)}
+          nextPath={nextPath}
         />
       </section>
     </main>
@@ -71,6 +74,14 @@ function getAuthMode(value: string | string[] | undefined) {
   const mode = Array.isArray(value) ? value[0] : value;
 
   return mode === "login" ? "login" : "signup";
+}
+
+function getAuthMessage(params: Record<string, string | string[] | undefined>) {
+  if (getParam(params.reason) === "session-expired") {
+    return "Your session expired. Your review draft is safe on this device—log in to continue.";
+  }
+
+  return getGoogleAuthMessage(params.google);
 }
 
 function getGoogleAuthMessage(value: string | string[] | undefined) {
@@ -96,4 +107,8 @@ function getGoogleAuthMessage(value: string | string[] | undefined) {
     default:
       return null;
   }
+}
+
+function getParam(value: string | string[] | undefined) {
+  return Array.isArray(value) ? value[0] : value;
 }

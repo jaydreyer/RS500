@@ -60,6 +60,10 @@ Added Reviews migration:
 - `1781006421_expand_listen_take_storage_length.js`: adds storage headroom for the `listens.take` field while the app enforces the user-facing 6,000-character review limit.
   On the live `ai-lab:8091` instance, this collection was created once through the PocketBase superuser Collections API after `/history` replies exposed the missing schema; the migration is idempotent for future official migration runs.
 
+Added Authentication migration:
+
+- `1781006422_extend_auth_session.js`: sets the member auth-token duration to 30 days. The same setting was applied and verified on the live `ai-lab:8091` backend on July 9, 2026.
+
 Run migrations from the PocketBase directory that contains or can see this app's `pb_migrations` folder. For local development, prefer the combined helper:
 
 ```bash
@@ -88,6 +92,8 @@ Phase 2 uses email/password auth against the PocketBase `users` collection:
 - Login posts to a Next.js server action and calls `users.authWithPassword`.
 - Google auth posts to a Next.js route, validates the invite code for new members, completes Google's OAuth code flow server-side, then creates or impersonates the PocketBase user with superuser credentials.
 - The authenticated PocketBase token/record are stored in an HTTP-only `pb_auth` cookie.
+- Member auth tokens last 30 days. The Next.js proxy refreshes active tokens and writes the refreshed cookie back to the browser, so regular use rolls the session forward.
+- Review editors save the current rating and review text in browser `localStorage` while a member types. Drafts are scoped to the listen or album, expire after 45 days, and are removed after a successful save or an explicit cancel. Authentication tokens remain in the HTTP-only cookie and are never written to `localStorage`.
 - The authenticated route group redirects unauthenticated requests to `/auth`.
 - `/auth` redirects authenticated members to the pick route.
 - `/auth?mode=login` renders the password login form directly; the auth mode tabs use these URLs as a browser-safe fallback.
