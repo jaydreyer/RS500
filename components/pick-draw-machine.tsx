@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import {
   initialGroupDrawActionState,
   initialPickActionState,
+  type PickActionState,
 } from "@/app/(club)/pick/action-state";
 import {
   drawAction,
@@ -22,9 +23,11 @@ import { ReviewTextarea } from "@/components/review-textarea";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { RATING_SCALE } from "@/lib/config";
 import { countTakeCharacters, TAKE_MAX_LENGTH } from "@/lib/draw-rules";
+import { getLoginUrl } from "@/lib/auth-return";
 import type { ListenSummary, PickState } from "@/lib/draw";
 import type { UserGroupDraw, UserGroupDrawState } from "@/lib/group-draw-types";
 import { cn } from "@/lib/utils";
+import { useReviewDraft } from "@/lib/use-review-draft";
 
 type Phase = "idle" | "spinning" | "presented" | "rate-skip" | "kept";
 
@@ -174,6 +177,21 @@ export function PickDrawMachine({
     }
   }, [groupState, router]);
 
+  const sessionExpired =
+    drawState.status === "unauthorized" ||
+    keepState.status === "unauthorized" ||
+    skipState.status === "unauthorized" ||
+    replaceState.status === "unauthorized" ||
+    groupState.status === "unauthorized";
+
+  useEffect(() => {
+    if (!sessionExpired) {
+      return;
+    }
+
+    window.location.assign(getLoginUrl(`${window.location.pathname}${window.location.search}`));
+  }, [sessionExpired]);
+
   useEffect(() => {
     if (!toast) {
       return;
@@ -246,6 +264,8 @@ export function PickDrawMachine({
                   listen={drawnListen}
                   keepAction={keepFormAction}
                   skipAction={skipFormAction}
+                  skipStatus={skipState.status}
+                  skipMessage={skipState.message}
                   replaceAction={replaceFormAction}
                   isKeepPending={isKeepPending}
                   isSkipPending={isSkipPending}
@@ -495,6 +515,8 @@ function PresentedFace({
   listen,
   keepAction,
   skipAction,
+  skipStatus,
+  skipMessage,
   replaceAction,
   isKeepPending,
   isSkipPending,
@@ -506,6 +528,8 @@ function PresentedFace({
   listen: ListenSummary;
   keepAction: (payload: FormData) => void;
   skipAction: (payload: FormData) => void;
+  skipStatus: PickActionState["status"];
+  skipMessage: string | null;
   replaceAction: (payload: FormData) => void;
   isKeepPending: boolean;
   isSkipPending: boolean;
@@ -569,6 +593,8 @@ function PresentedFace({
           pending={isSkipPending}
           buttonLabel="Log skip and draw again"
           hint="You have heard it. Log a quick score, then the crate unlocks."
+          saved={skipStatus === "success"}
+          errorMessage={skipStatus === "error" ? skipMessage : null}
         />
       )}
 
@@ -693,6 +719,7 @@ function RatingForm({
   pending,
   buttonLabel,
   hint,
+  saved,
   errorMessage,
 }: {
   action: (payload: FormData) => void;
@@ -700,10 +727,14 @@ function RatingForm({
   pending: boolean;
   buttonLabel: string;
   hint?: string;
+  saved: boolean;
   errorMessage?: string | null;
 }) {
-  const [rating, setRating] = useState("");
-  const [take, setTake] = useState("");
+  const { rating, setRating, take, setTake, restored, clearDraft } = useReviewDraft({
+    id: `listen:${listenId}`,
+    initialRating: "",
+    initialTake: "",
+  });
   const inputId = useMemo(() => `take-${listenId}`, [listenId]);
   const isRatingMissing = !rating.trim();
   const isTakeOverLimit = countTakeCharacters(take) > TAKE_MAX_LENGTH;
@@ -712,6 +743,12 @@ function RatingForm({
     : isTakeOverLimit
       ? `Shorten the review to ${TAKE_MAX_LENGTH.toLocaleString()} characters or less.`
       : null;
+
+  useEffect(() => {
+    if (saved) {
+      clearDraft();
+    }
+  }, [clearDraft, saved]);
 
   return (
     <form action={action} className="grid place-items-center gap-4 text-center">
@@ -732,6 +769,11 @@ function RatingForm({
         containerClassName="max-w-xl"
         className="text-left"
       />
+      <p className="text-sm text-[var(--ink-soft)]">
+        {restored
+          ? "Recovered your unsaved draft. It stays on this device until the review is saved."
+          : "Your rating and review are saved on this device as you type."}
+      </p>
       {errorMessage && <p className="text-sm text-[var(--accent)]">{errorMessage}</p>}
       <Button
         type="submit"

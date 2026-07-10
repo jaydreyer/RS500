@@ -1,7 +1,6 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 import { consumeUserActionLimit } from "@/lib/action-rate-limit";
 import { createSuperuserPocketBase, getAuthenticatedPocketBase } from "@/lib/auth";
@@ -22,12 +21,12 @@ const REVIEW_WRITE_RATE_LIMIT = {
 };
 
 type AlbumRatingActionState = {
-  status: "idle" | "success" | "error";
+  status: "idle" | "success" | "error" | "unauthorized";
   message: string | null;
 };
 
 type AlbumReplacementActionState = {
-  status: "idle" | "success" | "error";
+  status: "idle" | "success" | "error" | "unauthorized";
   message: string | null;
   replacementAlbumId: string | null;
 };
@@ -73,7 +72,10 @@ export async function knownAlbumRatingAction(
     };
   } catch (error) {
     if (error instanceof Error && error.message === "Unauthorized.") {
-      redirect("/auth");
+      return {
+        status: "unauthorized",
+        message: "Your session expired. Log in again to finish saving.",
+      };
     }
 
     return {
@@ -115,7 +117,11 @@ export async function replaceUnavailableAlbumAction(
     };
   } catch (error) {
     if (error instanceof Error && error.message === "Unauthorized.") {
-      redirect("/auth");
+      return {
+        status: "unauthorized",
+        message: "Your session expired. Log in again to finish saving.",
+        replacementAlbumId: null,
+      };
     }
 
     return {

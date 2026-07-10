@@ -20,9 +20,11 @@ const initialAuthFormState: AuthFormState = {
 export function AuthForm({
   initialMode = "signup",
   message,
+  nextPath = "/pick",
 }: {
   initialMode?: AuthMode;
   message?: string | null;
+  nextPath?: string;
 }) {
   const [mode, setMode] = useState<AuthMode>(initialMode);
   const [signupState, signupFormAction] = useActionState(
@@ -41,14 +43,14 @@ export function AuthForm({
       <div className="mb-7 grid grid-cols-2 gap-1 rounded-md border border-[var(--ink)] p-1">
         <ModeButton
           active={mode === "signup"}
-          href="/auth?mode=signup"
+          href={getModeHref("signup", nextPath)}
           onClick={() => setMode("signup")}
         >
           Join with code
         </ModeButton>
         <ModeButton
           active={mode === "login"}
-          href="/auth?mode=login"
+          href={getModeHref("login", nextPath)}
           onClick={() => setMode("login")}
         >
           Log in
@@ -67,6 +69,7 @@ export function AuthForm({
         className="mt-7 grid gap-4"
       >
         <input name="mode" type="hidden" value={mode} />
+        <input name="next" type="hidden" value={nextPath} />
 
         {mode === "signup" ? (
           <>
@@ -129,6 +132,15 @@ export function AuthForm({
       </p>
     </div>
   );
+}
+
+function getModeHref(mode: AuthMode, nextPath: string) {
+  const params = new URLSearchParams({ mode });
+  if (nextPath !== "/pick") {
+    params.set("next", nextPath);
+  }
+
+  return `/auth?${params.toString()}`;
 }
 
 function GoogleButton({ mode }: { mode: AuthMode }) {

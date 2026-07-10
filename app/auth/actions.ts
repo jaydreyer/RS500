@@ -9,6 +9,7 @@ import {
   createSuperuserPocketBase,
   setAuthCookie,
 } from "@/lib/auth";
+import { getSafeReturnPath } from "@/lib/auth-return";
 import { validateSignupInput } from "@/lib/auth-rules";
 import { consumeRateLimit, type RateLimitOptions } from "@/lib/rate-limit";
 import { getSignupAlbumAssignment } from "@/lib/signup-album-assignment";
@@ -36,6 +37,7 @@ export async function signupAction(
   const displayName = getFormValue(formData, "displayName");
   const email = getFormValue(formData, "email").toLowerCase();
   const password = getFormValue(formData, "password");
+  const nextPath = getSafeReturnPath(formData.get("next"));
 
   const rateLimitError = await checkAuthRateLimit("signup", email, SIGNUP_RATE_LIMIT);
   if (rateLimitError) {
@@ -95,7 +97,7 @@ export async function signupAction(
     return { message: formatPocketBaseError(error, "Could not create that account.") };
   }
 
-  redirect("/pick");
+  redirect(nextPath);
 }
 
 export async function loginAction(
@@ -104,6 +106,7 @@ export async function loginAction(
 ): Promise<AuthFormState> {
   const email = getFormValue(formData, "email").toLowerCase();
   const password = getFormValue(formData, "password");
+  const nextPath = getSafeReturnPath(formData.get("next"));
 
   if (!email || !password) {
     return { message: "Enter your email and password." };
@@ -124,7 +127,7 @@ export async function loginAction(
     return { message: formatPocketBaseError(error, "That login did not work.") };
   }
 
-  redirect("/pick");
+  redirect(nextPath);
 }
 
 export async function logoutAction() {

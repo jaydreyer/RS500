@@ -9,6 +9,23 @@ export type ReleaseNote = {
 
 export const releaseNotes = [
   {
+    date: "2026-07-09",
+    title: "Review drafts survive sign-in",
+    summary:
+      "Long reviews are protected while you type, and active login sessions now stay active for the intended 30 days.",
+    added: [
+      "Ratings and review drafts are saved on the current device as they are written and restored after signing in again.",
+    ],
+    improved: [
+      "Expired-session login returns members to the page where they were writing, including Google sign-in.",
+      "Active sessions roll forward when PocketBase refreshes the authentication token.",
+    ],
+    fixed: [
+      "Submitting a review after session expiry no longer destroys the unsaved review text.",
+      "The PocketBase member token duration is restored from five days to 30 days.",
+    ],
+  },
+  {
     date: "2026-07-08",
     title: "Login tab works harder",
     summary:

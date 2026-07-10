@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { shouldUseSecureAuthCookie } from "@/lib/auth-cookie";
 import { validateInviteProfileInput } from "@/lib/auth-rules";
+import { getSafeReturnPath } from "@/lib/auth-return";
 import {
   createGoogleOAuthState,
   encodeGoogleOAuthState,
@@ -39,7 +40,11 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  const state = createGoogleOAuthState(mode, displayName);
+  const state = createGoogleOAuthState(
+    mode,
+    displayName,
+    getSafeReturnPath(formData.get("next")),
+  );
   const response = NextResponse.redirect(buildGoogleAuthorizationUrl(config, state), {
     status: 303,
   });

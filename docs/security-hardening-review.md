@@ -55,15 +55,16 @@ Fix: Add a seeded PocketBase test environment and Playwright smoke tests for sig
 
 ## Positive Security Notes
 
-- Auth helpers are marked server-only in `lib/auth.ts:1`.
-- Auth cookie is set HttpOnly, SameSite lax, path `/`, and uses request-aware Secure handling for HTTPS while allowing local HTTP testing in `lib/auth.ts` and `lib/auth-cookie.ts`.
+- Request-bound auth helpers are marked server-only in `lib/auth.ts:1`; proxy-safe session and cookie helpers live separately in `lib/auth-session.ts`.
+- Auth cookies are set HttpOnly, SameSite lax, path `/`, and use request-aware Secure handling for HTTPS while allowing local HTTP testing in `lib/auth-session.ts` and `lib/auth-cookie.ts`.
 - Signup validation happens server-side before account creation in `app/auth/actions.ts`.
 - Google signup validates the invite code in the app route before creating a PocketBase user, keeping public PocketBase user creation locked.
 - Signup/login attempts are rate-limited before PocketBase auth calls in `app/auth/actions.ts`.
 - PocketBase user self-signup is disabled in `pb_migrations/1781006404_lock_users_signup.js:1-6`.
 - PocketBase rules restrict listen/reaction writes to the authenticated owner in `pb_migrations/1781006402_create_listens_collection.js:10-14` and `pb_migrations/1781006403_create_reactions_collection.js:10-14`.
 - Unique indexes prevent duplicate user-album listens and duplicate user-listen reactions in `pb_migrations/1781006402_create_listens_collection.js:68-73` and `pb_migrations/1781006403_create_reactions_collection.js:43-46`.
-- No `dangerouslySetInnerHTML`, `eval`, `new Function`, direct `innerHTML`, `localStorage`, `sessionStorage`, or `document.cookie` usage was found in the app source during this review.
+- No `dangerouslySetInnerHTML`, `eval`, `new Function`, direct `innerHTML`, `sessionStorage`, or client-side `document.cookie` usage was found in the app source during this review.
+- Review editors intentionally use `localStorage` for rating and review-text drafts so an expired session cannot destroy a long review. Drafts contain no auth token, are scoped to a listen or album, expire after 45 days, and are cleared after save or cancel.
 
 ## Recommended Next Steps
 

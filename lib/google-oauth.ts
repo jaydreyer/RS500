@@ -12,6 +12,7 @@ export type GoogleOAuthState = {
   codeVerifier: string;
   mode: GoogleOAuthMode;
   displayName: string;
+  nextPath: string;
   createdAt: number;
 };
 
@@ -53,12 +54,17 @@ export function getGoogleRedirectUri(requestUrl: string) {
   return new URL("/api/auth/google/callback", requestUrl).href;
 }
 
-export function createGoogleOAuthState(mode: GoogleOAuthMode, displayName: string): GoogleOAuthState {
+export function createGoogleOAuthState(
+  mode: GoogleOAuthMode,
+  displayName: string,
+  nextPath = "/pick",
+): GoogleOAuthState {
   return {
     state: randomBase64Url(32),
     codeVerifier: randomBase64Url(64),
     mode,
     displayName,
+    nextPath,
     createdAt: Date.now(),
   };
 }
@@ -149,6 +155,7 @@ function isGoogleOAuthState(value: unknown): value is GoogleOAuthState {
     typeof state.codeVerifier === "string" &&
     (state.mode === "login" || state.mode === "signup") &&
     typeof state.displayName === "string" &&
+    typeof state.nextPath === "string" &&
     typeof state.createdAt === "number"
   );
 }

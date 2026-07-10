@@ -14,7 +14,9 @@ import { ReviewTextarea } from "@/components/review-textarea";
 import { Button } from "@/components/ui/button";
 import { RATING_SCALE } from "@/lib/config";
 import { countTakeCharacters, TAKE_MAX_LENGTH } from "@/lib/draw-rules";
+import { getLoginUrl } from "@/lib/auth-return";
 import type { AlbumDetailListen } from "@/lib/catalog";
+import { useReviewDraft } from "@/lib/use-review-draft";
 
 type RatingPanelListen = Pick<
   AlbumDetailListen,
@@ -22,12 +24,12 @@ type RatingPanelListen = Pick<
 >;
 
 type AlbumRatingActionState = {
-  status: "idle" | "success" | "error";
+  status: "idle" | "success" | "error" | "unauthorized";
   message: string | null;
 };
 
 type AlbumReplacementActionState = {
-  status: "idle" | "success" | "error";
+  status: "idle" | "success" | "error" | "unauthorized";
   message: string | null;
   replacementAlbumId: string | null;
 };
@@ -62,8 +64,13 @@ export function AlbumRatingPanel({
     initialAlbumReplacementActionState,
   );
   const [isEditing, setIsEditing] = useState(initialListen?.rating == null);
-  const [rating, setRating] = useState(initialListen?.rating == null ? "" : String(initialListen.rating));
-  const [take, setTake] = useState(initialListen?.take ?? "");
+  const initialRating = initialListen?.rating == null ? "" : String(initialListen.rating);
+  const initialTake = initialListen?.take ?? "";
+  const { rating, setRating, take, setTake, restored, clearDraft } = useReviewDraft({
+    id: initialListen ? `listen:${initialListen.id}` : `album:${albumId}`,
+    initialRating,
+    initialTake,
+  });
   const takeId = useMemo(() => `known-album-take-${albumId}`, [albumId]);
   const hasRating = initialListen?.rating != null;
   const canReplace =
@@ -82,13 +89,22 @@ export function AlbumRatingPanel({
       return;
     }
 
+    clearDraft();
     const timer = window.setTimeout(() => {
       setIsEditing(false);
       router.refresh();
     }, 0);
 
     return () => window.clearTimeout(timer);
-  }, [router, state.status]);
+  }, [clearDraft, router, state.status]);
+
+  useEffect(() => {
+    if (state.status !== "unauthorized" && replacementState.status !== "unauthorized") {
+      return;
+    }
+
+    window.location.assign(getLoginUrl(`${window.location.pathname}${window.location.search}`));
+  }, [replacementState.status, state.status]);
 
   useEffect(() => {
     if (replacementState.status !== "success" || !replacementState.replacementAlbumId) {
@@ -169,6 +185,11 @@ export function AlbumRatingPanel({
             placeholder="review (optional)"
             rows={5}
           />
+          <p className="text-sm text-[var(--ink-soft)]">
+            {restored
+              ? "Recovered your unsaved draft. It stays on this device until the review is saved."
+              : "Your rating and review are saved on this device as you type."}
+          </p>
           {state.message && (
             <p
               className={
@@ -216,8 +237,9 @@ export function AlbumRatingPanel({
                 type="button"
                 variant="ghost"
                 onClick={() => {
-                  setRating(String(initialListen.rating));
-                  setTake(initialListen.take);
+                  setRating(initialRating);
+                  setTake(initialTake);
+                  clearDraft();
                   setIsEditing(false);
                 }}
               >

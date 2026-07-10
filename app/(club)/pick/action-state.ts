@@ -1,7 +1,7 @@
 import type { ListenSummary } from "@/lib/draw";
 
 export type PickActionState = {
-  status: "idle" | "success" | "error";
+  status: "idle" | "success" | "error" | "unauthorized";
   message: string | null;
   listen: ListenSummary | null;
 };
@@ -13,7 +13,7 @@ export const initialPickActionState: PickActionState = {
 };
 
 export type GroupDrawActionState = {
-  status: "idle" | "success" | "error";
+  status: "idle" | "success" | "error" | "unauthorized";
   message: string | null;
 };
 
