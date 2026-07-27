@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 
+import { AchievementBadge } from "@/components/achievement-badge";
 import { AlbumCover } from "@/components/album-cover";
 import {
   Our500AlbumDetails,
@@ -11,6 +12,12 @@ import { ClubAvatar, ScoreBadge } from "@/components/primitives";
 import { RouteShell } from "@/components/route-shell";
 import { buttonVariants } from "@/components/ui/button";
 import { getAuthenticatedPocketBase } from "@/lib/auth";
+import {
+  buildBadgeProgress,
+  countTrackProgress,
+  WRITTEN_REVIEW_MIN_LENGTH,
+  type BadgeTrack,
+} from "@/lib/badges";
 import { STATS_SAMPLE_THRESHOLD } from "@/lib/config";
 import {
   formatAverage,
@@ -81,6 +88,7 @@ export default async function StatsPage() {
         />
       </div>
 
+      <AchievementSection summary={currentUserSummary} />
       <Our500Preview historyState={historyState} />
       <ProgressSection historyState={historyState} />
       <RecentPaceSection historyState={historyState} now={now} />
@@ -132,6 +140,85 @@ export default async function StatsPage() {
       </div>
 
     </RouteShell>
+  );
+}
+
+function AchievementSection({ summary }: { summary?: MemberSummary }) {
+  const listens = summary?.listens ?? [];
+
+  return (
+    <section className="surface-panel mt-4 overflow-hidden rounded-lg">
+      <div className="border-b border-[var(--line)] p-5">
+        <p className="tag text-[var(--accent)]">your collection</p>
+        <div className="mt-2 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 className="text-3xl md:text-4xl">Achievement badges</h2>
+            <p className="mt-2 max-w-2xl text-sm text-[var(--ink-soft)]">
+              Complete fresh picks and put your takes in writing to fill the badge case.
+            </p>
+          </div>
+          <p className="tag">earned badges stay in your collection</p>
+        </div>
+      </div>
+
+      <AchievementTrack
+        description="Completed fresh picks. Quick already-heard scores do not count."
+        listens={listens}
+        title="Albums reviewed"
+        track="listening"
+      />
+      <AchievementTrack
+        description={`Written takes with at least ${WRITTEN_REVIEW_MIN_LENGTH} characters.`}
+        listens={listens}
+        title="Written takes"
+        track="writing"
+      />
+    </section>
+  );
+}
+
+function AchievementTrack({
+  title,
+  description,
+  listens,
+  track,
+}: {
+  title: string;
+  description: string;
+  listens: HistoryListen[];
+  track: BadgeTrack;
+}) {
+  const badges = buildBadgeProgress(listens, track);
+  const count = countTrackProgress(listens, track);
+  const nextBadge = badges.find((badge) => badge.state === "next");
+
+  return (
+    <div className="border-b border-[var(--line)] p-5 last:border-b-0">
+      <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <h3 className="text-2xl">{title}</h3>
+            <span className="mono text-lg font-bold text-[var(--accent)]">{count}</span>
+          </div>
+          <p className="mt-1 text-sm text-[var(--ink-soft)]">{description}</p>
+        </div>
+        <p className="tag">
+          {nextBadge
+            ? `${nextBadge.remaining} until ${nextBadge.name}`
+            : "Every badge earned"}
+        </p>
+      </div>
+      <div
+        className={cn(
+          "grid grid-cols-2 gap-3 sm:grid-cols-3",
+          badges.length >= 6 ? "xl:grid-cols-6" : "lg:grid-cols-5",
+        )}
+      >
+        {badges.map((badge, index) => (
+          <AchievementBadge badge={badge} index={index} key={badge.id} />
+        ))}
+      </div>
+    </div>
   );
 }
 
