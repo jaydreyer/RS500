@@ -46,13 +46,6 @@ export type AlbumRatingSummary<TListen extends StatsListen = StatsListen> = {
   spread: number;
 };
 
-export type RankingMovementSummary<TListen extends StatsListen = StatsListen> = {
-  summary: AlbumRatingSummary<TListen>;
-  crewRank: number;
-  eligibleRsRank: number;
-  movement: number;
-};
-
 export type MemberCrewComparison<TListen extends StatsListen = StatsListen> = {
   summary: AlbumRatingSummary<TListen>;
   memberRating: number;
@@ -96,8 +89,8 @@ export type HistoryStats<TMember extends StatsMember = StatsMember, TListen exte
   provisionalAlbums: AlbumRatingSummary<TListen>[];
   sharedAlbums: AlbumRatingSummary<TListen>[];
   strongestConsensus: AlbumRatingSummary<TListen>[];
-  biggestClimbers: RankingMovementSummary<TListen>[];
-  biggestDrops: RankingMovementSummary<TListen>[];
+  overlookedByRs: AlbumRatingSummary<TListen>[];
+  rsClassicsCrewRatesLowest: AlbumRatingSummary<TListen>[];
   decadeSummaries: DecadeSummary[];
   fastestGroupCompletions: GroupCompletionSummary<TListen>[];
 };
@@ -159,7 +152,6 @@ export function buildStats<
   const crewRankedAlbums = albumSummaries
     .filter((summary) => getReviewerCount(summary) >= crewRankMinReviews)
     .toSorted(compareCrewRankedAlbums);
-  const rankingMovements = buildRankingMovements(crewRankedAlbums);
 
   return {
     memberSummaries,
@@ -196,22 +188,16 @@ export function buildStats<
           a.album.rank - b.album.rank,
       )
       .slice(0, 5),
-    biggestClimbers: rankingMovements
-      .filter((summary) => summary.movement > 0)
-      .toSorted(
-        (a, b) =>
-          b.movement - a.movement ||
-          a.crewRank - b.crewRank ||
-          a.summary.album.rank - b.summary.album.rank,
-      )
+    overlookedByRs: crewRankedAlbums
+      .filter((summary) => summary.album.rank > 250)
       .slice(0, 5),
-    biggestDrops: rankingMovements
-      .filter((summary) => summary.movement < 0)
+    rsClassicsCrewRatesLowest: crewRankedAlbums
+      .filter((summary) => summary.album.rank <= 100)
       .toSorted(
         (a, b) =>
-          a.movement - b.movement ||
-          a.crewRank - b.crewRank ||
-          a.summary.album.rank - b.summary.album.rank,
+          a.averageRating - b.averageRating ||
+          b.ratingCount - a.ratingCount ||
+          a.album.rank - b.album.rank,
       )
       .slice(0, 5),
     decadeSummaries: buildDecadeSummaries(listens),
@@ -236,33 +222,6 @@ export function getReviewerCount<TListen extends StatsListen>(
   summary: AlbumRatingSummary<TListen>,
 ) {
   return new Set(summary.listens.map((listen) => listen.userId)).size;
-}
-
-export function buildRankingMovements<TListen extends StatsListen>(
-  crewRankedAlbums: AlbumRatingSummary<TListen>[],
-): RankingMovementSummary<TListen>[] {
-  const eligibleRsRanks = new Map(
-    crewRankedAlbums
-      .toSorted(
-        (a, b) =>
-          a.album.rank - b.album.rank ||
-          a.album.title.localeCompare(b.album.title) ||
-          a.album.id.localeCompare(b.album.id),
-      )
-      .map((summary, index) => [summary.album.id, index + 1]),
-  );
-
-  return crewRankedAlbums.map((summary, index) => {
-    const crewRank = index + 1;
-    const eligibleRsRank = eligibleRsRanks.get(summary.album.id) ?? crewRank;
-
-    return {
-      summary,
-      crewRank,
-      eligibleRsRank,
-      movement: eligibleRsRank - crewRank,
-    };
-  });
 }
 
 export function buildMemberCrewComparisons<TListen extends StatsListen>(

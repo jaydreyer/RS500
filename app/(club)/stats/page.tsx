@@ -26,7 +26,6 @@ import {
   buildMemberCrewComparisons,
   buildRankingMomentum,
   type MemberCrewComparison,
-  type RankingMovementSummary,
 } from "@/lib/history-rules";
 import { cn } from "@/lib/utils";
 
@@ -581,8 +580,8 @@ function GroupCompletionSection({ historyState }: { historyState: HistoryState }
 }
 
 function AlbumInsightsSection({ historyState }: { historyState: HistoryState }) {
-  const climbers = historyState.stats.biggestClimbers.slice(0, 3);
-  const drops = historyState.stats.biggestDrops.slice(0, 3);
+  const overlooked = historyState.stats.overlookedByRs.slice(0, 3);
+  const classics = historyState.stats.rsClassicsCrewRatesLowest.slice(0, 3);
   const consensus = historyState.stats.strongestConsensus.slice(0, 3);
   const divisive = historyState.stats.sharedAlbums.slice(0, 3);
 
@@ -590,12 +589,11 @@ function AlbumInsightsSection({ historyState }: { historyState: HistoryState }) 
     <section className="mt-4">
       <div className="mb-3 flex flex-wrap items-baseline justify-between gap-3 px-1">
         <div>
-          <p className="tag text-[var(--accent)]">our order, their order</p>
-          <h2 className="mt-1 text-3xl">Where our order differs</h2>
+          <p className="tag text-[var(--accent)]">our taste, their canon</p>
+          <h2 className="mt-1 text-3xl">Where the crew differs</h2>
           <p className="mt-2 max-w-2xl text-sm text-[var(--ink-soft)]">
-            This compares only the {historyState.stats.crewRankedAlbums.length} albums
-            currently in Our 500—not all 500. We sort that same group by Rolling Stone
-            rank, then show how far the crew moves each album.
+            The highest crew scores from Rolling Stone&apos;s lower 250, and the
+            lowest crew scores among its top 100.
           </p>
         </div>
         <Link href="/stats/our-500" className="tag text-[var(--accent)] hover:underline">
@@ -605,21 +603,19 @@ function AlbumInsightsSection({ historyState }: { historyState: HistoryState }) 
       </div>
       <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 lg:grid lg:grid-cols-2 lg:overflow-visible lg:pb-0">
         <div className="min-w-[88%] snap-start lg:min-w-0">
-          <MovementInsightColumn
-            title="Biggest climbers"
-            helper="the crew lifts them higher"
-            movements={climbers}
+          <AlbumInsightColumn
+            title="Crew favorites overlooked by RS"
+            helper="RS #251–500 · highest crew scores"
+            summaries={overlooked}
             historyState={historyState}
-            eligibleAlbumCount={historyState.stats.crewRankedAlbums.length}
           />
         </div>
         <div className="min-w-[88%] snap-start lg:min-w-0">
-          <MovementInsightColumn
-            title="Biggest drops"
-            helper="the crew sends them lower"
-            movements={drops}
+          <AlbumInsightColumn
+            title="RS classics the crew doesn’t love"
+            helper="RS top 100 · lowest crew scores"
+            summaries={classics}
             historyState={historyState}
-            eligibleAlbumCount={historyState.stats.crewRankedAlbums.length}
           />
         </div>
         <div className="min-w-[88%] snap-start lg:min-w-0">
@@ -640,81 +636,6 @@ function AlbumInsightsSection({ historyState }: { historyState: HistoryState }) 
             showSpread
           />
         </div>
-      </div>
-    </section>
-  );
-}
-
-function MovementInsightColumn({
-  title,
-  helper,
-  movements,
-  historyState,
-  eligibleAlbumCount,
-}: {
-  title: string;
-  helper: string;
-  movements: RankingMovementSummary<HistoryListen>[];
-  historyState: HistoryState;
-  eligibleAlbumCount: number;
-}) {
-  return (
-    <section className="surface-panel rounded-lg p-5">
-      <h3 className="text-2xl">{title}</h3>
-      <p className="tag mt-1">{helper}</p>
-      <div className="mt-4 grid gap-3">
-        {movements.length === 0 && (
-          <p className="tag">Movement appears as more albums enter Our 500</p>
-        )}
-        {movements.map((movement) => (
-          <article
-            key={movement.summary.album.id}
-            className="grid grid-cols-[56px_minmax(0,1fr)] gap-3 rounded-md border border-[var(--line-strong)] p-3"
-          >
-            <Link href={`/albums/${movement.summary.album.id}`}>
-              <AlbumCover
-                rank={movement.summary.album.rank}
-                src={movement.summary.album.coverUrl}
-                title={movement.summary.album.title}
-                sizes="56px"
-                className="cover-lift rounded-sm"
-              />
-            </Link>
-            <div className="min-w-0">
-              <Our500AlbumDetails
-                album={movement.summary.album}
-                averageRating={movement.summary.averageRating}
-                ratingCount={movement.summary.ratingCount}
-                titleLevel="h4"
-              />
-              <p className="mt-2 font-display text-xl font-extrabold text-[var(--accent)]">
-                {formatSignedMovement(movement.movement)}
-              </p>
-              <p className="tag mt-1 text-[var(--ink-soft)]">
-                Rolling Stone: {formatOrdinal(movement.eligibleRsRank)} of{" "}
-                {eligibleAlbumCount} / crew: {formatOrdinal(movement.crewRank)} of{" "}
-                {eligibleAlbumCount}
-              </p>
-            </div>
-            <div className="col-span-2 flex flex-wrap gap-2">
-              <Our500RatingChips
-                albumId={movement.summary.album.id}
-                ratings={movement.summary.listens.flatMap((listen) =>
-                  listen.rating == null
-                    ? []
-                    : [{
-                        id: listen.id,
-                        userId: listen.userId,
-                        rating: listen.rating,
-                      }],
-                )}
-                members={historyState.members}
-                currentUserId={historyState.currentUser.id}
-                maxVisible={3}
-              />
-            </div>
-          </article>
-        ))}
       </div>
     </section>
   );
@@ -1036,31 +957,6 @@ function countRecentRatings(listens: HistoryListen[], days: number, now: Date) {
     const ratedMs = Date.parse(listen.ratedAt);
     return Number.isFinite(ratedMs) && ratedMs >= cutoff;
   }).length;
-}
-
-function formatSignedMovement(movement: number) {
-  return movement > 0
-    ? `Up ${movement} ${movement === 1 ? "place" : "places"}`
-    : `Down ${Math.abs(movement)} ${Math.abs(movement) === 1 ? "place" : "places"}`;
-}
-
-function formatOrdinal(value: number) {
-  const remainder100 = value % 100;
-
-  if (remainder100 >= 11 && remainder100 <= 13) {
-    return `${value}th`;
-  }
-
-  switch (value % 10) {
-    case 1:
-      return `${value}st`;
-    case 2:
-      return `${value}nd`;
-    case 3:
-      return `${value}rd`;
-    default:
-      return `${value}th`;
-  }
 }
 
 function formatSignedDifference(difference: number) {

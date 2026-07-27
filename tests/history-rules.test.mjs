@@ -154,29 +154,31 @@ test("crew ranking uses album average, review count, then original rank", () => 
   )
 })
 
-test("ranking movement compares crew and Rolling Stone order within the eligible set", () => {
+test("crew and Rolling Stone contrast lists use clear source-rank bands", () => {
   const members = [
     { id: "one", displayName: "One", initials: "O" },
     { id: "two", displayName: "Two", initials: "T" },
   ]
   const rankedListens = [
-    { ...listen({ id: "a1", userId: "one", albumId: "a", rating: 4 }), album: { ...album("a"), rank: 10 } },
-    { ...listen({ id: "a2", userId: "two", albumId: "a", rating: 4 }), album: { ...album("a"), rank: 10 } },
-    { ...listen({ id: "b1", userId: "one", albumId: "b", rating: 7 }), album: { ...album("b"), rank: 100 } },
-    { ...listen({ id: "b2", userId: "two", albumId: "b", rating: 7 }), album: { ...album("b"), rank: 100 } },
-    { ...listen({ id: "c1", userId: "one", albumId: "c", rating: 9 }), album: { ...album("c"), rank: 400 } },
-    { ...listen({ id: "c2", userId: "two", albumId: "c", rating: 9 }), album: { ...album("c"), rank: 400 } },
+    { ...listen({ id: "a1", userId: "one", albumId: "classic-low", rating: 3 }), album: { ...album("classic-low"), rank: 10 } },
+    { ...listen({ id: "a2", userId: "two", albumId: "classic-low", rating: 3 }), album: { ...album("classic-low"), rank: 10 } },
+    { ...listen({ id: "b1", userId: "one", albumId: "classic-high", rating: 8 }), album: { ...album("classic-high"), rank: 20 } },
+    { ...listen({ id: "b2", userId: "two", albumId: "classic-high", rating: 8 }), album: { ...album("classic-high"), rank: 20 } },
+    { ...listen({ id: "c1", userId: "one", albumId: "overlooked-high", rating: 9 }), album: { ...album("overlooked-high"), rank: 400 } },
+    { ...listen({ id: "c2", userId: "two", albumId: "overlooked-high", rating: 9 }), album: { ...album("overlooked-high"), rank: 400 } },
+    { ...listen({ id: "d1", userId: "one", albumId: "overlooked-low", rating: 7 }), album: { ...album("overlooked-low"), rank: 300 } },
+    { ...listen({ id: "d2", userId: "two", albumId: "overlooked-low", rating: 7 }), album: { ...album("overlooked-low"), rank: 300 } },
   ]
 
   const stats = buildStats(buildMemberSummaries(members, rankedListens), rankedListens)
 
   assert.deepEqual(
-    stats.biggestClimbers.map(({ summary, movement }) => [summary.album.id, movement]),
-    [["c", 2]],
+    stats.overlookedByRs.map((summary) => summary.album.id),
+    ["overlooked-high", "overlooked-low"],
   )
   assert.deepEqual(
-    stats.biggestDrops.map(({ summary, movement }) => [summary.album.id, movement]),
-    [["a", -2]],
+    stats.rsClassicsCrewRatesLowest.map((summary) => summary.album.id),
+    ["classic-low", "classic-high"],
   )
 })
 
