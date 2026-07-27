@@ -80,6 +80,47 @@ test("shared albums include only albums rated by at least two members", () => {
   assert.equal(stats.sharedAlbums[0].spread, 6)
 })
 
+test("crew ranking uses album average, review count, then original rank", () => {
+  const members = [
+    { id: "one", displayName: "One", initials: "O", email: "one@example.com" },
+    { id: "two", displayName: "Two", initials: "T", email: "two@example.com" },
+    { id: "three", displayName: "Three", initials: "TH", email: "three@example.com" },
+  ]
+  const listens = [
+    {
+      ...listen({ id: "a-1", userId: "one", albumId: "average-eight", rating: 7 }),
+      album: { ...album("average-eight"), rank: 50 },
+    },
+    {
+      ...listen({ id: "a-2", userId: "two", albumId: "average-eight", rating: 9 }),
+      album: { ...album("average-eight"), rank: 50 },
+    },
+    listen({ id: "b-1", userId: "one", albumId: "more-reviews", rating: 8 }),
+    listen({ id: "b-2", userId: "two", albumId: "more-reviews", rating: 8 }),
+    listen({ id: "b-3", userId: "three", albumId: "more-reviews", rating: 8 }),
+    {
+      ...listen({ id: "c-1", userId: "one", albumId: "original-rank", rating: 8 }),
+      album: { ...album("original-rank"), rank: 12 },
+    },
+    {
+      ...listen({ id: "c-2", userId: "two", albumId: "original-rank", rating: 8 }),
+      album: { ...album("original-rank"), rank: 12 },
+    },
+    listen({ id: "solo", userId: "one", albumId: "provisional", rating: 10 }),
+  ]
+
+  const stats = buildStats(buildMemberSummaries(members, listens), listens)
+
+  assert.deepEqual(
+    stats.crewRankedAlbums.map((summary) => summary.album.id),
+    ["more-reviews", "original-rank", "average-eight"],
+  )
+  assert.deepEqual(
+    stats.provisionalAlbums.map((summary) => summary.album.id),
+    ["provisional"],
+  )
+})
+
 test("album leaderboards rank individual member ratings instead of album averages", () => {
   const members = [
     { id: "one", displayName: "One", initials: "O", email: "one@example.com" },

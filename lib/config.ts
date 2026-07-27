@@ -11,3 +11,4 @@ export function formatRating(value: number) {
 }
 
 export const STATS_SAMPLE_THRESHOLD = 3;
+export const CREW_RANK_MIN_REVIEWS = 2;
