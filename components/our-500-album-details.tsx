@@ -23,11 +23,13 @@ export function Our500AlbumDetails({
   averageRating,
   ratingCount,
   titleLevel = "h2",
+  prominentScore = false,
 }: {
   album: Our500AlbumInfo;
   averageRating: number | null;
   ratingCount: number;
-  titleLevel?: "h2" | "h3";
+  titleLevel?: "h2" | "h3" | "h4";
+  prominentScore?: boolean;
 }) {
   const Heading = titleLevel;
 
@@ -42,12 +44,31 @@ export function Our500AlbumDetails({
           {album.year}
         </span>
       </p>
-      <p className="tag mt-1">
-        {averageRating == null
-          ? "not reviewed"
-          : `crew ${averageRating.toFixed(RATING_SCALE.precision)}`}{" "}
-        / {ratingCount} {ratingCount === 1 ? "rating" : "ratings"} / RS #{album.rank}
-      </p>
+      {prominentScore ? (
+        <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
+          <span className="inline-flex items-baseline gap-1.5 rounded-md border border-[var(--line-strong)] bg-[var(--paper-2)] px-2.5 py-1">
+            <span className="font-display text-2xl font-extrabold leading-none text-[var(--accent)]">
+              {averageRating == null
+                ? "—"
+                : averageRating.toFixed(RATING_SCALE.precision)}
+            </span>
+            <span className="mono text-[9px] font-bold uppercase tracking-[0.12em] text-[var(--ink-soft)]">
+              crew score
+            </span>
+          </span>
+          <span className="tag">
+            {ratingCount} {ratingCount === 1 ? "rating" : "ratings"}
+          </span>
+          <span className="tag">RS #{album.rank}</span>
+        </div>
+      ) : (
+        <p className="tag mt-1">
+          {averageRating == null
+            ? "not reviewed"
+            : `crew ${averageRating.toFixed(RATING_SCALE.precision)}`}{" "}
+          / {ratingCount} {ratingCount === 1 ? "rating" : "ratings"} / RS #{album.rank}
+        </p>
+      )}
     </>
   );
 }

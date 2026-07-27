@@ -18,14 +18,12 @@ export type StatsListen = {
   };
 };
 
-const RATED_ALBUM_LEADERBOARD_LIMIT = 10;
-
 export type StatsMember = {
   id: string;
   displayName: string;
   initials: string;
   avatarUrl: string | null;
-  email: string;
+  isDeactivated?: boolean;
 };
 
 export type MemberSummary<TMember extends StatsMember = StatsMember, TListen extends StatsListen = StatsListen> = {
@@ -63,8 +61,6 @@ export type HistoryStats<TMember extends StatsMember = StatsMember, TListen exte
   mostGenerousRater: MemberSummary<TMember, TListen> | null;
   mostAlbumsLogged: MemberSummary<TMember, TListen> | null;
   mostAssignedCompleted: MemberSummary<TMember, TListen> | null;
-  highestRatedAlbums: TListen[];
-  lowestRatedAlbums: TListen[];
   crewRankedAlbums: AlbumRatingSummary<TListen>[];
   provisionalAlbums: AlbumRatingSummary<TListen>[];
   sharedAlbums: AlbumRatingSummary<TListen>[];
@@ -112,11 +108,16 @@ export function buildStats<
   sampleThreshold = 3,
   crewRankMinReviews = 2,
 ): HistoryStats<TMember, TListen> {
-  const sampleReady = memberSummaries.filter(
+  const activeMemberSummaries = memberSummaries.filter(
+    (summary) => !summary.member.isDeactivated,
+  );
+  const sampleReady = activeMemberSummaries.filter(
     (summary) => summary.ratedFreshListens.length >= sampleThreshold,
   );
-  const loggedMembers = memberSummaries.filter((summary) => summary.loggedListens.length > 0);
-  const assignedMembers = memberSummaries.filter(
+  const loggedMembers = activeMemberSummaries.filter(
+    (summary) => summary.loggedListens.length > 0,
+  );
+  const freshMembers = activeMemberSummaries.filter(
     (summary) => summary.completedFreshListens.length > 0,
   );
   const albumSummaries = buildAlbumSummaries(listens);
@@ -135,17 +136,9 @@ export function buildStats<
       loggedMembers.toSorted((a, b) => b.loggedListens.length - a.loggedListens.length)[0] ??
       null,
     mostAssignedCompleted:
-      assignedMembers.toSorted(
+      freshMembers.toSorted(
         (a, b) => b.completedFreshListens.length - a.completedFreshListens.length,
       )[0] ?? null,
-    highestRatedAlbums: buildRankedRatedListens(listens, "high").slice(
-      0,
-      RATED_ALBUM_LEADERBOARD_LIMIT,
-    ),
-    lowestRatedAlbums: buildRankedRatedListens(listens, "low").slice(
-      0,
-      RATED_ALBUM_LEADERBOARD_LIMIT,
-    ),
     crewRankedAlbums: albumSummaries
       .filter((summary) => getReviewerCount(summary) >= crewRankMinReviews)
       .toSorted(compareCrewRankedAlbums),
@@ -177,25 +170,6 @@ export function getReviewerCount<TListen extends StatsListen>(
   summary: AlbumRatingSummary<TListen>,
 ) {
   return new Set(summary.listens.map((listen) => listen.userId)).size;
-}
-
-export function buildRankedRatedListens<TListen extends StatsListen>(
-  listens: TListen[],
-  direction: "high" | "low",
-): TListen[] {
-  const rated = listens.filter(isLoggedListen);
-  const ratingOrder =
-    direction === "high"
-      ? (a: TListen, b: TListen) => (b.rating ?? 0) - (a.rating ?? 0)
-      : (a: TListen, b: TListen) => (a.rating ?? 0) - (b.rating ?? 0);
-
-  return rated.toSorted(
-    (a, b) =>
-      ratingOrder(a, b) ||
-      getListenSortDate(b).localeCompare(getListenSortDate(a)) ||
-      a.album.title.localeCompare(b.album.title) ||
-      a.id.localeCompare(b.id),
-  );
 }
 
 export function buildAlbumSummaries<TListen extends StatsListen>(
@@ -284,8 +258,4 @@ export function buildGroupCompletionSummaries<TListen extends StatsListen>(
 
 function isLoggedListen(listen: StatsListen) {
   return listen.status === "rated" && listen.rating != null;
-}
-
-function getListenSortDate(listen: StatsListen) {
-  return listen.ratedAt || listen.created || "";
 }
