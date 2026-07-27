@@ -2,8 +2,11 @@ import assert from "node:assert/strict"
 import test from "node:test"
 
 import {
+  buildDecadeSummaries,
   buildGroupCompletionSummaries,
+  buildMemberCrewComparisons,
   buildMemberSummaries,
+  buildRankingMomentum,
   buildStats,
 } from "../lib/history-rules.ts"
 
@@ -149,6 +152,141 @@ test("crew ranking uses album average, review count, then original rank", () => 
     stats.provisionalAlbums.map((summary) => summary.album.id),
     ["provisional"],
   )
+})
+
+test("ranking movement compares crew and Rolling Stone order within the eligible set", () => {
+  const members = [
+    { id: "one", displayName: "One", initials: "O" },
+    { id: "two", displayName: "Two", initials: "T" },
+  ]
+  const rankedListens = [
+    { ...listen({ id: "a1", userId: "one", albumId: "a", rating: 4 }), album: { ...album("a"), rank: 10 } },
+    { ...listen({ id: "a2", userId: "two", albumId: "a", rating: 4 }), album: { ...album("a"), rank: 10 } },
+    { ...listen({ id: "b1", userId: "one", albumId: "b", rating: 7 }), album: { ...album("b"), rank: 100 } },
+    { ...listen({ id: "b2", userId: "two", albumId: "b", rating: 7 }), album: { ...album("b"), rank: 100 } },
+    { ...listen({ id: "c1", userId: "one", albumId: "c", rating: 9 }), album: { ...album("c"), rank: 400 } },
+    { ...listen({ id: "c2", userId: "two", albumId: "c", rating: 9 }), album: { ...album("c"), rank: 400 } },
+  ]
+
+  const stats = buildStats(buildMemberSummaries(members, rankedListens), rankedListens)
+
+  assert.deepEqual(
+    stats.biggestClimbers.map(({ summary, movement }) => [summary.album.id, movement]),
+    [["c", 2]],
+  )
+  assert.deepEqual(
+    stats.biggestDrops.map(({ summary, movement }) => [summary.album.id, movement]),
+    [["a", -2]],
+  )
+})
+
+test("strongest consensus requires three reviewers and favors smaller spreads", () => {
+  const members = ["one", "two", "three"].map((id) => ({
+    id,
+    displayName: id,
+    initials: id[0],
+  }))
+  const consensusListens = [
+    listen({ id: "tight-1", userId: "one", albumId: "tight", rating: 8 }),
+    listen({ id: "tight-2", userId: "two", albumId: "tight", rating: 8.2 }),
+    listen({ id: "tight-3", userId: "three", albumId: "tight", rating: 8.1 }),
+    listen({ id: "wide-1", userId: "one", albumId: "wide", rating: 5 }),
+    listen({ id: "wide-2", userId: "two", albumId: "wide", rating: 9 }),
+    listen({ id: "wide-3", userId: "three", albumId: "wide", rating: 7 }),
+    listen({ id: "two-1", userId: "one", albumId: "two-only", rating: 8 }),
+    listen({ id: "two-2", userId: "two", albumId: "two-only", rating: 8 }),
+  ]
+
+  const stats = buildStats(
+    buildMemberSummaries(members, consensusListens),
+    consensusListens,
+  )
+
+  assert.deepEqual(
+    stats.strongestConsensus.map((summary) => summary.album.id),
+    ["tight", "wide"],
+  )
+})
+
+test("member crew comparisons exclude the member's own score from the crew average", () => {
+  const members = ["me", "one", "two"].map((id) => ({
+    id,
+    displayName: id,
+    initials: id[0],
+  }))
+  const comparisonListens = [
+    listen({ id: "me", userId: "me", albumId: "shared", rating: 10 }),
+    listen({ id: "one", userId: "one", albumId: "shared", rating: 4 }),
+    listen({ id: "two", userId: "two", albumId: "shared", rating: 6 }),
+  ]
+  const stats = buildStats(
+    buildMemberSummaries(members, comparisonListens),
+    comparisonListens,
+  )
+  const [comparison] = buildMemberCrewComparisons(stats.crewRankedAlbums, "me")
+
+  assert.equal(comparison.memberRating, 10)
+  assert.equal(comparison.otherCrewAverage, 5)
+  assert.equal(comparison.difference, 5)
+  assert.equal(comparison.otherRatingCount, 2)
+})
+
+test("decade and momentum summaries use rated history without snapshots", () => {
+  const historyListens = [
+    {
+      ...listen({
+        id: "sixties-1",
+        userId: "one",
+        albumId: "sixties",
+        rating: 8,
+        ratedAt: "2026-07-20T00:00:00.000Z",
+      }),
+      album: { ...album("sixties"), year: 1969 },
+    },
+    {
+      ...listen({
+        id: "sixties-2",
+        userId: "two",
+        albumId: "sixties",
+        rating: 6,
+        ratedAt: "2026-07-21T00:00:00.000Z",
+      }),
+      album: { ...album("sixties"), year: 1969 },
+    },
+    {
+      ...listen({
+        id: "seventies-1",
+        userId: "one",
+        albumId: "seventies",
+        rating: 9,
+        ratedAt: "2026-06-01T00:00:00.000Z",
+      }),
+      album: { ...album("seventies"), year: 1977 },
+    },
+  ]
+  const stats = buildStats(
+    buildMemberSummaries(
+      [
+        { id: "one", displayName: "One", initials: "O" },
+        { id: "two", displayName: "Two", initials: "T" },
+      ],
+      historyListens,
+    ),
+    historyListens,
+  )
+  const momentum = buildRankingMomentum(
+    stats.crewRankedAlbums,
+    new Date("2026-07-01T00:00:00.000Z"),
+  )
+
+  assert.deepEqual(buildDecadeSummaries(historyListens), [
+    { decade: 1960, averageRating: 7, ratingCount: 2, albumCount: 1 },
+    { decade: 1970, averageRating: 9, ratingCount: 1, albumCount: 1 },
+  ])
+  assert.equal(momentum.ratingCount, 2)
+  assert.equal(momentum.albumCount, 1)
+  assert.equal(momentum.newlyRanked[0].summary.album.id, "sixties")
+  assert.equal(momentum.newlyRanked[0].rankedAt, "2026-07-21T00:00:00.000Z")
 })
 
 test("member averages ignore unrated listens but include rated zeroes", () => {

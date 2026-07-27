@@ -46,6 +46,37 @@ export type AlbumRatingSummary<TListen extends StatsListen = StatsListen> = {
   spread: number;
 };
 
+export type RankingMovementSummary<TListen extends StatsListen = StatsListen> = {
+  summary: AlbumRatingSummary<TListen>;
+  crewRank: number;
+  eligibleRsRank: number;
+  movement: number;
+};
+
+export type MemberCrewComparison<TListen extends StatsListen = StatsListen> = {
+  summary: AlbumRatingSummary<TListen>;
+  memberRating: number;
+  otherCrewAverage: number;
+  otherRatingCount: number;
+  difference: number;
+};
+
+export type DecadeSummary = {
+  decade: number;
+  averageRating: number;
+  ratingCount: number;
+  albumCount: number;
+};
+
+export type RankingMomentum<TListen extends StatsListen = StatsListen> = {
+  ratingCount: number;
+  albumCount: number;
+  newlyRanked: Array<{
+    summary: AlbumRatingSummary<TListen>;
+    rankedAt: string;
+  }>;
+};
+
 export type GroupCompletionSummary<TListen extends StatsListen = StatsListen> = {
   groupDrawId: string;
   album: TListen["album"];
@@ -64,6 +95,10 @@ export type HistoryStats<TMember extends StatsMember = StatsMember, TListen exte
   crewRankedAlbums: AlbumRatingSummary<TListen>[];
   provisionalAlbums: AlbumRatingSummary<TListen>[];
   sharedAlbums: AlbumRatingSummary<TListen>[];
+  strongestConsensus: AlbumRatingSummary<TListen>[];
+  biggestClimbers: RankingMovementSummary<TListen>[];
+  biggestDrops: RankingMovementSummary<TListen>[];
+  decadeSummaries: DecadeSummary[];
   fastestGroupCompletions: GroupCompletionSummary<TListen>[];
 };
 
@@ -121,6 +156,10 @@ export function buildStats<
     (summary) => summary.completedFreshListens.length > 0,
   );
   const albumSummaries = buildAlbumSummaries(listens);
+  const crewRankedAlbums = albumSummaries
+    .filter((summary) => getReviewerCount(summary) >= crewRankMinReviews)
+    .toSorted(compareCrewRankedAlbums);
+  const rankingMovements = buildRankingMovements(crewRankedAlbums);
 
   return {
     memberSummaries,
@@ -139,9 +178,7 @@ export function buildStats<
       freshMembers.toSorted(
         (a, b) => b.completedFreshListens.length - a.completedFreshListens.length,
       )[0] ?? null,
-    crewRankedAlbums: albumSummaries
-      .filter((summary) => getReviewerCount(summary) >= crewRankMinReviews)
-      .toSorted(compareCrewRankedAlbums),
+    crewRankedAlbums,
     provisionalAlbums: albumSummaries
       .filter((summary) => getReviewerCount(summary) < crewRankMinReviews)
       .toSorted(compareCrewRankedAlbums),
@@ -149,6 +186,35 @@ export function buildStats<
       .filter((summary) => getReviewerCount(summary) >= crewRankMinReviews)
       .toSorted((a, b) => b.spread - a.spread || b.ratingCount - a.ratingCount)
       .slice(0, 5),
+    strongestConsensus: crewRankedAlbums
+      .filter((summary) => getReviewerCount(summary) >= 3)
+      .toSorted(
+        (a, b) =>
+          a.spread - b.spread ||
+          b.ratingCount - a.ratingCount ||
+          b.averageRating - a.averageRating ||
+          a.album.rank - b.album.rank,
+      )
+      .slice(0, 5),
+    biggestClimbers: rankingMovements
+      .filter((summary) => summary.movement > 0)
+      .toSorted(
+        (a, b) =>
+          b.movement - a.movement ||
+          a.crewRank - b.crewRank ||
+          a.summary.album.rank - b.summary.album.rank,
+      )
+      .slice(0, 5),
+    biggestDrops: rankingMovements
+      .filter((summary) => summary.movement < 0)
+      .toSorted(
+        (a, b) =>
+          a.movement - b.movement ||
+          a.crewRank - b.crewRank ||
+          a.summary.album.rank - b.summary.album.rank,
+      )
+      .slice(0, 5),
+    decadeSummaries: buildDecadeSummaries(listens),
     fastestGroupCompletions: buildGroupCompletionSummaries(listens).slice(0, 5),
   };
 }
@@ -170,6 +236,146 @@ export function getReviewerCount<TListen extends StatsListen>(
   summary: AlbumRatingSummary<TListen>,
 ) {
   return new Set(summary.listens.map((listen) => listen.userId)).size;
+}
+
+export function buildRankingMovements<TListen extends StatsListen>(
+  crewRankedAlbums: AlbumRatingSummary<TListen>[],
+): RankingMovementSummary<TListen>[] {
+  const eligibleRsRanks = new Map(
+    crewRankedAlbums
+      .toSorted(
+        (a, b) =>
+          a.album.rank - b.album.rank ||
+          a.album.title.localeCompare(b.album.title) ||
+          a.album.id.localeCompare(b.album.id),
+      )
+      .map((summary, index) => [summary.album.id, index + 1]),
+  );
+
+  return crewRankedAlbums.map((summary, index) => {
+    const crewRank = index + 1;
+    const eligibleRsRank = eligibleRsRanks.get(summary.album.id) ?? crewRank;
+
+    return {
+      summary,
+      crewRank,
+      eligibleRsRank,
+      movement: eligibleRsRank - crewRank,
+    };
+  });
+}
+
+export function buildMemberCrewComparisons<TListen extends StatsListen>(
+  crewRankedAlbums: AlbumRatingSummary<TListen>[],
+  memberId: string,
+  minOtherRatings = 2,
+): MemberCrewComparison<TListen>[] {
+  return crewRankedAlbums.flatMap((summary) => {
+    const memberRatings = summary.listens
+      .filter((listen) => listen.userId === memberId && isLoggedListen(listen))
+      .map((listen) => listen.rating ?? 0);
+    const otherRatingsByMember = new Map<string, number[]>();
+
+    for (const listen of summary.listens) {
+      if (listen.userId === memberId || !isLoggedListen(listen)) {
+        continue;
+      }
+
+      const memberScores = otherRatingsByMember.get(listen.userId);
+
+      if (memberScores) {
+        memberScores.push(listen.rating ?? 0);
+      } else {
+        otherRatingsByMember.set(listen.userId, [listen.rating ?? 0]);
+      }
+    }
+
+    const otherRatings = Array.from(otherRatingsByMember.values()).map(average);
+
+    if (memberRatings.length === 0 || otherRatings.length < minOtherRatings) {
+      return [];
+    }
+
+    const memberRating = average(memberRatings);
+    const otherCrewAverage = average(otherRatings);
+
+    return [{
+      summary,
+      memberRating,
+      otherCrewAverage,
+      otherRatingCount: otherRatings.length,
+      difference: memberRating - otherCrewAverage,
+    }];
+  });
+}
+
+export function buildDecadeSummaries<TListen extends StatsListen>(
+  listens: TListen[],
+): DecadeSummary[] {
+  const byDecade = new Map<number, TListen[]>();
+
+  for (const listen of listens) {
+    if (!isLoggedListen(listen)) {
+      continue;
+    }
+
+    const decade = Math.floor(listen.album.year / 10) * 10;
+    const decadeListens = byDecade.get(decade);
+
+    if (decadeListens) {
+      decadeListens.push(listen);
+    } else {
+      byDecade.set(decade, [listen]);
+    }
+  }
+
+  return Array.from(byDecade.entries())
+    .map(([decade, decadeListens]) => ({
+      decade,
+      averageRating: average(decadeListens.map((listen) => listen.rating ?? 0)),
+      ratingCount: decadeListens.length,
+      albumCount: new Set(decadeListens.map((listen) => listen.albumId)).size,
+    }))
+    .toSorted((a, b) => a.decade - b.decade);
+}
+
+export function buildRankingMomentum<TListen extends StatsListen>(
+  crewRankedAlbums: AlbumRatingSummary<TListen>[],
+  since: Date,
+): RankingMomentum<TListen> {
+  const sinceMs = since.getTime();
+  const recentRatings = crewRankedAlbums.flatMap((summary) =>
+    summary.listens.filter((listen) => {
+      const ratedMs = listen.ratedAt ? Date.parse(listen.ratedAt) : Number.NaN;
+      return Number.isFinite(ratedMs) && ratedMs >= sinceMs;
+    }),
+  );
+  const newlyRanked = crewRankedAlbums
+    .flatMap((summary) => {
+      const orderedRatings = summary.listens
+        .filter((listen) => listen.ratedAt)
+        .toSorted((a, b) => (a.ratedAt ?? "").localeCompare(b.ratedAt ?? ""));
+      const reviewers = new Set<string>();
+
+      for (const listen of orderedRatings) {
+        reviewers.add(listen.userId);
+
+        if (reviewers.size >= 2 && listen.ratedAt) {
+          return Date.parse(listen.ratedAt) >= sinceMs
+            ? [{ summary, rankedAt: listen.ratedAt }]
+            : [];
+        }
+      }
+
+      return [];
+    })
+    .toSorted((a, b) => b.rankedAt.localeCompare(a.rankedAt));
+
+  return {
+    ratingCount: recentRatings.length,
+    albumCount: new Set(recentRatings.map((listen) => listen.albumId)).size,
+    newlyRanked,
+  };
 }
 
 export function buildAlbumSummaries<TListen extends StatsListen>(
@@ -258,4 +464,8 @@ export function buildGroupCompletionSummaries<TListen extends StatsListen>(
 
 function isLoggedListen(listen: StatsListen) {
   return listen.status === "rated" && listen.rating != null;
+}
+
+function average(values: number[]) {
+  return values.reduce((total, value) => total + value, 0) / values.length;
 }
