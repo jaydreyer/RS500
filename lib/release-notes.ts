@@ -23,6 +23,38 @@ export const releaseNotes = [
     ],
   },
   {
+    date: "2026-07-27",
+    title: "Stats finds the signal",
+    summary:
+      "Stats is easier to scan, clearer about what the numbers mean, and more focused on how the crew is moving through the 500.",
+    added: [
+      "Album insights now surface the crew’s favorites, misses, and most divisive records.",
+    ],
+    improved: [
+      "The Our 500 preview shows five albums with a more prominent crew score.",
+      "The full Our 500 ranking has focused views for ranked albums, one-review albums, and unheard albums, plus faster progressive loading.",
+      "Crew progress, recent pace, active picks, and member superlatives have a tighter hierarchy with clearer labels and less repetition.",
+    ],
+    fixed: [
+      "Deactivated members no longer appear in active-member progress or superlatives, while their historical album scores remain part of the crew record.",
+    ],
+  },
+  {
+    date: "2026-07-27",
+    title: "Our 500 takes shape",
+    summary:
+      "The crew now has its own evolving order of the Rolling Stone 500, built from everyone’s album ratings.",
+    added: [
+      "Stats now opens with an Our 500 preview of the crew’s five highest-ranked eligible albums.",
+      "The full Our 500 page includes ranked and needs-review views, album and artist search, and multiple sorting options.",
+    ],
+    improved: [
+      "Albums enter the crew ranking after two members rate them, using the average of every crew score.",
+      "Ties favor albums with more ratings, then the higher original Rolling Stone placement.",
+      "Album details and compact member scores stay consistent between Stats and the full ranking, with overflow ratings available from album detail.",
+    ],
+  },
+  {
     date: "2026-07-09",
     title: "Reviews make a list",
     summary:

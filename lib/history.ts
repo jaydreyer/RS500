@@ -3,6 +3,7 @@ import "server-only";
 import type PocketBase from "pocketbase";
 
 import {
+  createSuperuserPocketBase,
   getClubUserAvatarUrl,
   getClubUserDisplayName,
   getClubUserInitials,
@@ -97,9 +98,10 @@ export async function getHistoryState(
   pb: PocketBase,
   currentUser: ClubUser,
 ): Promise<HistoryState> {
+  const adminPb = await createSuperuserPocketBase();
   const [members, listens, albumPage] = await Promise.all([
-    pb.collection("users").getFullList({
-      sort: "display_name,email",
+    adminPb.collection("users").getFullList({
+      sort: "display_name",
       requestKey: null,
     }),
     pb.collection("listens").getFullList({
@@ -254,14 +256,13 @@ function mapAlbum(record: RecordLike): HistoryAlbum {
 
 function mapMember(record: RecordLike): HistoryMember {
   const displayName = getClubUserDisplayName(record);
-  const email = isDeactivatedUserRecord(record) ? "" : asString(record.email);
 
   return {
     id: record.id,
     displayName,
     initials: getClubUserInitials(record),
     avatarUrl: getClubUserAvatarUrl(record),
-    email,
+    isDeactivated: isDeactivatedUserRecord(record),
   };
 }
 

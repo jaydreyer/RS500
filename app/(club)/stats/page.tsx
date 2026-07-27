@@ -8,7 +8,7 @@ import {
   Our500AlbumDetails,
   Our500RatingChips,
 } from "@/components/our-500-album-details";
-import { ClubAvatar, ScoreBadge } from "@/components/primitives";
+import { ClubAvatar } from "@/components/primitives";
 import { RouteShell } from "@/components/route-shell";
 import { buttonVariants } from "@/components/ui/button";
 import { getAuthenticatedPocketBase } from "@/lib/auth";
@@ -48,6 +48,9 @@ export default async function StatsPage() {
   }
 
   const now = new Date();
+  const activeMemberSummaries = historyState.memberSummaries.filter(
+    (summary) => !summary.member.isDeactivated,
+  );
   const currentUserSummary = historyState.memberSummaries.find(
     (summary) => summary.member.id === historyState.currentUser.id,
   );
@@ -56,7 +59,7 @@ export default async function StatsPage() {
       summary.loggedListens.map((listen) => listen.albumId),
     ),
   ).size;
-  const activeFreshCount = historyState.memberSummaries.reduce(
+  const activeFreshCount = activeMemberSummaries.reduce(
     (total, summary) => total + summary.activeFreshListens.length,
     0,
   );
@@ -64,81 +67,72 @@ export default async function StatsPage() {
 
   return (
     <RouteShell eyebrow="CRATE TELEMETRY" title="Stats">
-      <div className="grid gap-4 lg:grid-cols-4">
-        <MetricCard
-          title="Crew progress"
-          value={`${uniqueCrewAlbums}/${historyState.totalAlbums}`}
-          helper="unique albums logged"
-        />
-        <MetricCard
-          title="Your progress"
-          value={`${currentUserSummary?.loggedListens.length ?? 0}/${historyState.totalAlbums}`}
-          helper="albums you logged"
-          accent
-        />
-        <MetricCard
-          title="Active picks"
-          value={activeFreshCount}
-          helper="waiting for reviews"
-        />
-        <MetricCard
-          title="Last 30 days"
-          value={ratedLast30}
-          helper="reviews logged"
-        />
+      <div className="stats-readable">
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <MetricCard
+            title="Officially ranked"
+            value={`${historyState.stats.crewRankedAlbums.length}/${historyState.totalAlbums}`}
+            helper="two or more reviewers"
+            accent
+          />
+          <MetricCard
+            title="Crew coverage"
+            value={`${uniqueCrewAlbums}/${historyState.totalAlbums}`}
+            helper="heard at least once"
+          />
+          <MetricCard
+            title="Your progress"
+            value={`${currentUserSummary?.loggedListens.length ?? 0}/${historyState.totalAlbums}`}
+            helper="albums you logged"
+          />
+          <MetricCard
+            title="Active picks"
+            value={activeFreshCount}
+            helper="waiting for reviews"
+          />
+        </div>
+
+        <AchievementSection summary={currentUserSummary} />
+        <Our500Preview historyState={historyState} />
+        <ProgressSection historyState={historyState} />
+
+        <div className="mt-4 grid gap-4 xl:grid-cols-2">
+          <RecentPaceSection
+            historyState={historyState}
+            now={now}
+            ratedLast30={ratedLast30}
+          />
+          <ActivePicksSection historyState={historyState} />
+        </div>
+
+        <div className="mt-4 grid gap-4 lg:grid-cols-3">
+          <MemberSuperlative
+            title="Harshest rater"
+            summary={historyState.stats.harshestRater}
+            currentUserId={historyState.currentUser.id}
+            value={formatAverage(historyState.stats.harshestRater?.averageFreshRating ?? null)}
+            helper="lowest fresh average"
+          />
+          <MemberSuperlative
+            title="Most generous"
+            summary={historyState.stats.mostGenerousRater}
+            currentUserId={historyState.currentUser.id}
+            value={formatAverage(historyState.stats.mostGenerousRater?.averageFreshRating ?? null)}
+            helper="highest fresh average"
+            accent
+          />
+          <MemberSuperlative
+            title="Most fresh listens"
+            summary={historyState.stats.mostAssignedCompleted}
+            currentUserId={historyState.currentUser.id}
+            value={historyState.stats.mostAssignedCompleted?.completedFreshListens.length ?? "-"}
+            helper="new albums completed"
+          />
+        </div>
+
+        <GroupCompletionSection historyState={historyState} />
+        <AlbumInsightsSection historyState={historyState} />
       </div>
-
-      <AchievementSection summary={currentUserSummary} />
-      <Our500Preview historyState={historyState} />
-      <ProgressSection historyState={historyState} />
-      <RecentPaceSection historyState={historyState} now={now} />
-      <ActivePicksSection historyState={historyState} />
-
-      <div className="mt-4 grid gap-4 lg:grid-cols-3">
-        <MemberSuperlative
-          title="Harshest rater"
-          summary={historyState.stats.harshestRater}
-          currentUserId={historyState.currentUser.id}
-          value={formatAverage(historyState.stats.harshestRater?.averageFreshRating ?? null)}
-          helper="lowest fresh average"
-        />
-        <MemberSuperlative
-          title="Most generous"
-          summary={historyState.stats.mostGenerousRater}
-          currentUserId={historyState.currentUser.id}
-          value={formatAverage(historyState.stats.mostGenerousRater?.averageFreshRating ?? null)}
-          helper="highest fresh average"
-          accent
-        />
-        <MemberSuperlative
-          title="Most assigned"
-          summary={historyState.stats.mostAssignedCompleted}
-          currentUserId={historyState.currentUser.id}
-          value={historyState.stats.mostAssignedCompleted?.completedFreshListens.length ?? "-"}
-          helper="fresh listens completed"
-        />
-      </div>
-
-      <FreshVsHeardSection historyState={historyState} />
-      <GroupCompletionSection historyState={historyState} />
-
-      <div className="mt-4 grid gap-4 xl:grid-cols-2">
-        <AlbumLeaderboard
-          title="Highest-rated albums"
-          listens={historyState.stats.highestRatedAlbums}
-          members={historyState.members}
-          currentUserId={historyState.currentUser.id}
-          tone="high"
-        />
-        <AlbumLeaderboard
-          title="Lowest-rated albums"
-          listens={historyState.stats.lowestRatedAlbums}
-          members={historyState.members}
-          currentUserId={historyState.currentUser.id}
-          tone="low"
-        />
-      </div>
-
     </RouteShell>
   );
 }
@@ -296,14 +290,14 @@ function MetricCard({
   return (
     <article
       className={cn(
-        "rounded-lg border bg-[var(--card)] p-5 shadow-[var(--shadow)]",
+        "min-w-0 rounded-lg border bg-[var(--card)] p-4 shadow-[var(--shadow)] md:p-5",
         accent && "border-[var(--accent)] shadow-[0_0_0_1px_color-mix(in_srgb,var(--accent)_20%,transparent)]",
       )}
     >
       <p className={cn("tag", accent && "text-[var(--accent)]")}>{title}</p>
       <div
         className={cn(
-          "mt-4 font-display text-5xl font-extrabold leading-none",
+          "mt-3 truncate font-display text-3xl font-extrabold leading-none sm:text-4xl xl:text-5xl",
           accent && "text-[var(--accent)]",
         )}
       >
@@ -377,26 +371,27 @@ function MemberSuperlative({
 }
 
 function ProgressSection({ historyState }: { historyState: HistoryState }) {
-  const maxLogged = Math.max(
-    1,
-    ...historyState.memberSummaries.map((summary) => summary.loggedListens.length),
+  const activeMemberSummaries = historyState.memberSummaries.filter(
+    (summary) => !summary.member.isDeactivated,
   );
 
   return (
     <section className="surface-panel mt-4 rounded-lg p-5">
       <div className="mb-4 flex flex-wrap items-baseline justify-between gap-3">
-        <h2 className="text-2xl">Progress</h2>
-        <p className="tag">albums logged / assigned completed / active</p>
+        <div>
+          <p className="tag text-[var(--accent)]">active crew</p>
+          <h2 className="mt-1 text-2xl">Crew progress</h2>
+        </div>
+        <p className="tag">logged / fresh / heard / active</p>
       </div>
       <div className="grid gap-3">
-        {historyState.memberSummaries
+        {activeMemberSummaries
           .toSorted((a, b) => b.loggedListens.length - a.loggedListens.length)
           .map((summary) => (
             <ProgressRow
               key={summary.member.id}
               summary={summary}
               currentUserId={historyState.currentUser.id}
-              maxLogged={maxLogged}
               totalAlbums={historyState.totalAlbums}
             />
           ))}
@@ -408,17 +403,17 @@ function ProgressSection({ historyState }: { historyState: HistoryState }) {
 function ProgressRow({
   summary,
   currentUserId,
-  maxLogged,
   totalAlbums,
 }: {
   summary: MemberSummary;
   currentUserId: string;
-  maxLogged: number;
   totalAlbums: number;
 }) {
   const logged = summary.loggedListens.length;
-  const width = `${Math.round((logged / maxLogged) * 100)}%`;
   const percent = totalAlbums > 0 ? Math.round((logged / totalAlbums) * 100) : 0;
+  const width = `${percent}%`;
+  const fresh = summary.completedFreshListens.length;
+  const heard = summary.skipListens.length;
 
   return (
     <div className="grid gap-2 md:grid-cols-[minmax(150px,190px)_1fr_auto] md:items-center">
@@ -436,12 +431,20 @@ function ProgressRow({
           {getMemberLabel(summary.member, currentUserId)}
         </span>
       </Link>
-      <div className="h-6 overflow-hidden rounded-sm border border-[var(--line-strong)] bg-[var(--paper-2)]">
+      <div
+        className="h-6 overflow-hidden rounded-sm border border-[var(--line-strong)] bg-[var(--paper-2)]"
+        role="progressbar"
+        aria-label={`${summary.member.displayName} album progress`}
+        aria-valuemin={0}
+        aria-valuemax={totalAlbums}
+        aria-valuenow={logged}
+      >
         <div className="h-full bg-[var(--accent)]" style={{ width }} />
       </div>
       <div className="flex flex-wrap gap-3 md:justify-end">
         <span className="mono text-sm font-bold">{logged} logged</span>
-        <span className="tag">{summary.completedFreshListens.length} assigned</span>
+        <span className="tag">{fresh} fresh</span>
+        <span className="tag">{heard} heard</span>
         <span className="tag">{summary.activeFreshListens.length} active</span>
         <span className="tag">{percent}%</span>
       </div>
@@ -452,26 +455,40 @@ function ProgressRow({
 function RecentPaceSection({
   historyState,
   now,
+  ratedLast30,
 }: {
   historyState: HistoryState;
   now: Date;
+  ratedLast30: number;
 }) {
   const pace = historyState.memberSummaries
+    .filter((summary) => !summary.member.isDeactivated)
     .map((summary) => ({
       summary,
       last7: countRecentRatings(summary.listens, 7, now),
       last30: countRecentRatings(summary.listens, 30, now),
     }))
-    .toSorted((a, b) => b.last30 - a.last30 || b.last7 - a.last7);
+    .filter(({ last7, last30 }) => last7 > 0 || last30 > 0)
+    .toSorted((a, b) => b.last30 - a.last30 || b.last7 - a.last7)
+    .slice(0, 5);
 
   return (
-    <section className="surface-panel mt-4 rounded-lg p-5">
+    <section className="surface-panel rounded-lg p-5">
       <div className="mb-4 flex flex-wrap items-baseline justify-between gap-3">
-        <h2 className="text-2xl">Recent pace</h2>
-        <p className="tag">reviews logged / rolling windows</p>
+        <div>
+          <p className="tag text-[var(--accent)]">{ratedLast30} reviews in 30 days</p>
+          <h2 className="mt-1 text-2xl">Recent pace</h2>
+        </div>
+        <p className="tag">top five / rolling windows</p>
       </div>
-      <div className="grid gap-3">
-        {pace.map(({ summary, last7, last30 }) => (
+      {pace.length === 0 ? (
+        <div className="rounded-md border border-[var(--line-strong)] bg-[var(--paper-2)] p-4">
+          <p className="font-display text-xl font-extrabold">A quiet month so far</p>
+          <p className="tag mt-2">New reviews will appear here</p>
+        </div>
+      ) : (
+        <div className="grid gap-3">
+          {pace.map(({ summary, last7, last30 }) => (
           <div
             key={summary.member.id}
             className="grid gap-3 rounded-md border border-[var(--line-strong)] bg-[var(--paper-2)] p-3 sm:grid-cols-[minmax(150px,1fr)_auto] sm:items-center"
@@ -495,8 +512,9 @@ function RecentPaceSection({
               <PaceBadge value={last30} label="30d" accent={last30 > 0} />
             </div>
           </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </section>
   );
 }
@@ -506,21 +524,24 @@ function ActivePicksSection({
 }: {
   historyState: HistoryState;
 }) {
-  const activeMemberEntries = historyState.memberSummaries.flatMap((summary) =>
-    summary.activeFreshListens.map((listen) => ({ summary, listen })),
-  );
+  const activeMemberEntries = historyState.memberSummaries
+    .filter((summary) => !summary.member.isDeactivated)
+    .flatMap((summary) =>
+      summary.activeFreshListens.map((listen) => ({ summary, listen })),
+    );
+  const visibleEntries = activeMemberEntries.slice(0, 5);
 
   return (
-    <section className="surface-panel mt-4 rounded-lg p-5">
+    <section className="surface-panel rounded-lg p-5">
       <div className="mb-4 flex flex-wrap items-baseline justify-between gap-3">
         <h2 className="text-2xl">Active picks</h2>
-        <p className="tag">solo and assigned listens</p>
+        <p className="tag">{activeMemberEntries.length} waiting for reviews</p>
       </div>
       {activeMemberEntries.length === 0 ? (
         <p className="tag">No active picks are waiting on reviews</p>
       ) : (
         <div className="grid gap-3">
-          {activeMemberEntries.map(({ summary, listen }) => (
+          {visibleEntries.map(({ summary, listen }) => (
             <Link
               key={listen.id}
               href={`/albums/${listen.album.id}`}
@@ -553,6 +574,15 @@ function ActivePicksSection({
               <span className="tag text-[var(--accent)] max-sm:col-start-2">review due</span>
             </Link>
           ))}
+          {activeMemberEntries.length > visibleEntries.length && (
+            <Link
+              href="/board"
+              className={cn(buttonVariants({ variant: "ghost" }), "justify-center")}
+            >
+              View all active picks
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
+          )}
         </div>
       )}
     </section>
@@ -585,75 +615,6 @@ function PaceBadge({
       </span>
       <span className="tag">{label}</span>
     </span>
-  );
-}
-
-function FreshVsHeardSection({ historyState }: { historyState: HistoryState }) {
-  const maxTotal = Math.max(
-    1,
-    ...historyState.memberSummaries.map(
-      (summary) => summary.completedFreshListens.length + summary.skipListens.length,
-    ),
-  );
-
-  return (
-    <section className="surface-panel mt-4 rounded-lg p-5">
-      <div className="mb-4 flex flex-wrap items-baseline justify-between gap-3">
-        <h2 className="text-2xl">Fresh vs already heard</h2>
-        <p className="tag">assigned completions / skips</p>
-      </div>
-      <div className="grid gap-3">
-        {historyState.memberSummaries
-          .toSorted(
-            (a, b) =>
-              b.completedFreshListens.length +
-              b.skipListens.length -
-              (a.completedFreshListens.length + a.skipListens.length),
-          )
-          .map((summary) => {
-            const fresh = summary.completedFreshListens.length;
-            const skips = summary.skipListens.length;
-            const total = fresh + skips;
-
-            return (
-              <div
-                key={summary.member.id}
-                className="grid gap-2 md:grid-cols-[minmax(150px,190px)_1fr_auto] md:items-center"
-              >
-                <Link
-                  href={`/history?member=${summary.member.id}`}
-                  className="flex min-w-0 items-center gap-2 text-[var(--ink)]"
-                >
-                  <ClubAvatar
-                    imageUrl={summary.member.avatarUrl}
-                    initials={summary.member.initials}
-                    label={summary.member.displayName}
-                    size="sm"
-                  />
-                  <span className="truncate font-display font-extrabold">
-                    {getMemberLabel(summary.member, historyState.currentUser.id)}
-                  </span>
-                </Link>
-                <div className="flex h-6 overflow-hidden rounded-sm border border-[var(--line-strong)] bg-[var(--paper-2)]">
-                  <div
-                    className="h-full bg-[var(--good)]"
-                    style={{ width: `${Math.round((fresh / maxTotal) * 100)}%` }}
-                  />
-                  <div
-                    className="h-full bg-[var(--accent)]"
-                    style={{ width: `${Math.round((skips / maxTotal) * 100)}%` }}
-                  />
-                </div>
-                <div className="flex gap-3 md:justify-end">
-                  <span className="tag">{fresh} fresh</span>
-                  <span className="tag">{skips} heard</span>
-                  <span className="mono text-sm font-bold">{total}</span>
-                </div>
-              </div>
-            );
-          })}
-      </div>
-    </section>
   );
 }
 
@@ -699,66 +660,121 @@ function GroupCompletionSection({ historyState }: { historyState: HistoryState }
   );
 }
 
-function AlbumLeaderboard({
+function AlbumInsightsSection({ historyState }: { historyState: HistoryState }) {
+  const favorites = historyState.stats.crewRankedAlbums.slice(0, 3);
+  const misses = historyState.stats.crewRankedAlbums
+    .toSorted(
+      (a, b) =>
+        a.averageRating - b.averageRating ||
+        b.ratingCount - a.ratingCount ||
+        a.album.rank - b.album.rank,
+    )
+    .slice(0, 3);
+  const divisive = historyState.stats.sharedAlbums.slice(0, 3);
+
+  return (
+    <section className="mt-4">
+      <div className="mb-3 flex flex-wrap items-baseline justify-between gap-3 px-1">
+        <div>
+          <p className="tag text-[var(--accent)]">collective taste</p>
+          <h2 className="mt-1 text-3xl">Album insights</h2>
+        </div>
+        <Link href="/stats/our-500" className="tag text-[var(--accent)] hover:underline">
+          Explore all rankings →
+        </Link>
+      </div>
+      <div className="grid gap-4 xl:grid-cols-3">
+        <AlbumInsightColumn
+          title="Crew favorites"
+          helper="highest crew averages"
+          summaries={favorites}
+          historyState={historyState}
+        />
+        <AlbumInsightColumn
+          title="Crew misses"
+          helper="lowest crew averages"
+          summaries={misses}
+          historyState={historyState}
+        />
+        <AlbumInsightColumn
+          title="Most divisive"
+          helper="widest score spreads"
+          summaries={divisive}
+          historyState={historyState}
+          showSpread
+        />
+      </div>
+    </section>
+  );
+}
+
+function AlbumInsightColumn({
   title,
-  listens,
-  members,
-  currentUserId,
-  tone,
+  helper,
+  summaries,
+  historyState,
+  showSpread = false,
 }: {
   title: string;
-  listens: HistoryListen[];
-  members: HistoryMember[];
-  currentUserId: string;
-  tone: "high" | "low";
+  helper: string;
+  summaries: AlbumRatingSummary[];
+  historyState: HistoryState;
+  showSpread?: boolean;
 }) {
   return (
     <section className="surface-panel rounded-lg p-5">
-      <h2 className="text-2xl">{title}</h2>
+      <h3 className="text-2xl">{title}</h3>
+      <p className="tag mt-1">{helper}</p>
       <div className="mt-4 grid gap-3">
-        {listens.length === 0 && <p className="tag">No rated albums yet</p>}
-        {listens.map((listen) => {
-          const member = members.find((entry) => entry.id === listen.userId);
-
-          return (
-            <Link
-              key={listen.id}
-              href={`/albums/${listen.album.id}`}
-              className="grid grid-cols-[64px_1fr_auto] items-center gap-3 rounded-md border border-[var(--line-strong)] p-3 transition-colors hover:bg-[var(--paper-2)]"
-            >
+        {summaries.length === 0 && (
+          <p className="tag">Albums appear after two members review them</p>
+        )}
+        {summaries.map((summary) => (
+          <article
+            key={summary.album.id}
+            className="grid grid-cols-[56px_minmax(0,1fr)] gap-3 rounded-md border border-[var(--line-strong)] p-3"
+          >
+            <Link href={`/albums/${summary.album.id}`}>
               <AlbumCover
-                rank={listen.album.rank}
-                src={listen.album.coverUrl}
-                title={listen.album.title}
-                sizes="64px"
+                rank={summary.album.rank}
+                src={summary.album.coverUrl}
+                title={summary.album.title}
+                sizes="56px"
                 className="cover-lift rounded-sm"
               />
-              <div className="min-w-0">
-                <p
-                  className={cn(
-                    "tag flex min-w-0 items-center gap-1.5",
-                    tone === "high" && "text-[var(--good)]",
-                  )}
-                >
-                  <ClubAvatar
-                    imageUrl={member?.avatarUrl}
-                    initials={member?.initials ?? "??"}
-                    label={member?.displayName}
-                    size="sm"
-                  />
-                  <span className="truncate">
-                    {member ? getMemberLabel(member, currentUserId) : "Crew"}
-                  </span>
-                </p>
-                <h3 className="mt-1 truncate text-xl">{listen.album.title}</h3>
-                <p className="truncate font-quote text-base text-[var(--ink-soft)]">
-                  {listen.album.artist}
-                </p>
-              </div>
-              <ScoreBadge score={listen.rating} label="" />
             </Link>
-          );
-        })}
+            <div className="min-w-0">
+              <Our500AlbumDetails
+                album={summary.album}
+                averageRating={summary.averageRating}
+                ratingCount={summary.ratingCount}
+                titleLevel="h4"
+              />
+              {showSpread && (
+                <p className="tag mt-1 text-[var(--accent)]">
+                  {summary.spread.toFixed(1)} point spread
+                </p>
+              )}
+            </div>
+            <div className="col-span-2 flex flex-wrap gap-2">
+              <Our500RatingChips
+                albumId={summary.album.id}
+                ratings={summary.listens.flatMap((listen) =>
+                  listen.rating == null
+                    ? []
+                    : [{
+                        id: listen.id,
+                        userId: listen.userId,
+                        rating: listen.rating,
+                      }],
+                )}
+                members={historyState.members}
+                currentUserId={historyState.currentUser.id}
+                maxVisible={3}
+              />
+            </div>
+          </article>
+        ))}
       </div>
     </section>
   );
@@ -795,6 +811,7 @@ function CrewRankingRow({
           averageRating={summary.averageRating}
           ratingCount={summary.ratingCount}
           titleLevel="h3"
+          prominentScore
         />
       </div>
       <div className="col-start-3 flex flex-wrap gap-2 md:col-start-auto md:justify-end">

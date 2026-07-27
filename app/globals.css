@@ -169,6 +169,10 @@ a {
   text-transform: uppercase;
 }
 
+.stats-readable {
+  --ink-faint: var(--ink-soft);
+}
+
 .hairline {
   height: 1px;
   border: 0;
