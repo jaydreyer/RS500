@@ -591,10 +591,11 @@ function AlbumInsightsSection({ historyState }: { historyState: HistoryState }) 
       <div className="mb-3 flex flex-wrap items-baseline justify-between gap-3 px-1">
         <div>
           <p className="tag text-[var(--accent)]">our order, their order</p>
-          <h2 className="mt-1 text-3xl">How the list moves</h2>
+          <h2 className="mt-1 text-3xl">Where our order differs</h2>
           <p className="mt-2 max-w-2xl text-sm text-[var(--ink-soft)]">
-            Movement compares crew order with Rolling Stone order among the same
-            officially ranked albums.
+            This compares only the {historyState.stats.crewRankedAlbums.length} albums
+            currently in Our 500—not all 500. We sort that same group by Rolling Stone
+            rank, then show how far the crew moves each album.
           </p>
         </div>
         <Link href="/stats/our-500" className="tag text-[var(--accent)] hover:underline">
@@ -609,6 +610,7 @@ function AlbumInsightsSection({ historyState }: { historyState: HistoryState }) 
             helper="the crew lifts them higher"
             movements={climbers}
             historyState={historyState}
+            eligibleAlbumCount={historyState.stats.crewRankedAlbums.length}
           />
         </div>
         <div className="min-w-[88%] snap-start lg:min-w-0">
@@ -617,6 +619,7 @@ function AlbumInsightsSection({ historyState }: { historyState: HistoryState }) 
             helper="the crew sends them lower"
             movements={drops}
             historyState={historyState}
+            eligibleAlbumCount={historyState.stats.crewRankedAlbums.length}
           />
         </div>
         <div className="min-w-[88%] snap-start lg:min-w-0">
@@ -647,11 +650,13 @@ function MovementInsightColumn({
   helper,
   movements,
   historyState,
+  eligibleAlbumCount,
 }: {
   title: string;
   helper: string;
   movements: RankingMovementSummary<HistoryListen>[];
   historyState: HistoryState;
+  eligibleAlbumCount: number;
 }) {
   return (
     <section className="surface-panel rounded-lg p-5">
@@ -684,9 +689,11 @@ function MovementInsightColumn({
               />
               <p className="mt-2 font-display text-xl font-extrabold text-[var(--accent)]">
                 {formatSignedMovement(movement.movement)}
-                <span className="tag ml-2 text-[var(--ink-soft)]">
-                  RS order #{movement.eligibleRsRank} → crew #{movement.crewRank}
-                </span>
+              </p>
+              <p className="tag mt-1 text-[var(--ink-soft)]">
+                Rolling Stone: {formatOrdinal(movement.eligibleRsRank)} of{" "}
+                {eligibleAlbumCount} / crew: {formatOrdinal(movement.crewRank)} of{" "}
+                {eligibleAlbumCount}
               </p>
             </div>
             <div className="col-span-2 flex flex-wrap gap-2">
@@ -1032,7 +1039,28 @@ function countRecentRatings(listens: HistoryListen[], days: number, now: Date) {
 }
 
 function formatSignedMovement(movement: number) {
-  return movement > 0 ? `↑ ${movement}` : `↓ ${Math.abs(movement)}`;
+  return movement > 0
+    ? `Up ${movement} ${movement === 1 ? "place" : "places"}`
+    : `Down ${Math.abs(movement)} ${Math.abs(movement) === 1 ? "place" : "places"}`;
+}
+
+function formatOrdinal(value: number) {
+  const remainder100 = value % 100;
+
+  if (remainder100 >= 11 && remainder100 <= 13) {
+    return `${value}th`;
+  }
+
+  switch (value % 10) {
+    case 1:
+      return `${value}st`;
+    case 2:
+      return `${value}nd`;
+    case 3:
+      return `${value}rd`;
+    default:
+      return `${value}th`;
+  }
 }
 
 function formatSignedDifference(difference: number) {
