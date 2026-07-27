@@ -14,7 +14,7 @@ export const releaseNotes = [
     summary:
       "The crew’s ratings now reveal where Our 500 breaks from Rolling Stone, where everyone agrees, and where your taste stands apart.",
     added: [
-      "Biggest climbers and drops compare crew order with Rolling Stone order across the same officially ranked albums.",
+      "Crew favorites overlooked by Rolling Stone and top-100 classics the crew rates lowest show where club taste departs from the canon.",
       "You vs. the crew highlights your closest matches, biggest disagreements, and average score distance without counting your own rating in the crew comparison.",
       "Strongest consensus, 30-day ranking momentum, and decade-by-decade ratings add new ways to read the club’s listening history.",
     ],
