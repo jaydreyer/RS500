@@ -9,7 +9,10 @@ import {
   isDeactivatedUserRecord,
   type ClubUser,
 } from "@/lib/auth";
-import { STATS_SAMPLE_THRESHOLD } from "@/lib/config";
+import {
+  CREW_RANK_MIN_REVIEWS,
+  STATS_SAMPLE_THRESHOLD,
+} from "@/lib/config";
 import {
   buildMemberSummaries,
   buildStats,
@@ -118,7 +121,12 @@ export async function getHistoryState(
     (listen) => listen.kind === "fresh" && listen.status === "rated" && listen.rating != null,
   );
   const memberSummaries = buildMemberSummaries(mappedMembers, mappedListens);
-  const stats = buildStats(memberSummaries, mappedListens, STATS_SAMPLE_THRESHOLD);
+  const stats = buildStats(
+    memberSummaries,
+    mappedListens,
+    STATS_SAMPLE_THRESHOLD,
+    CREW_RANK_MIN_REVIEWS,
+  );
 
   return {
     currentUser,

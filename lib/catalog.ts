@@ -87,10 +87,7 @@ export async function getCatalogState(
   userId: string,
 ): Promise<CatalogState> {
   const [albums, myListens] = await Promise.all([
-    pb.collection("albums").getFullList({
-      sort: "rank",
-      requestKey: null,
-    }),
+    getCatalogAlbums(pb),
     pb.collection("listens").getFullList({
       filter: pb.filter("user = {:user}", { user: userId }),
       sort: "-created",
@@ -99,9 +96,18 @@ export async function getCatalogState(
   ]);
 
   return {
-    albums: albums.map((album) => mapAlbum(album)),
+    albums,
     myListens: myListens.map((listen) => mapListen(listen)),
   };
+}
+
+export async function getCatalogAlbums(pb: PocketBase): Promise<CatalogAlbum[]> {
+  const albums = await pb.collection("albums").getFullList({
+    sort: "rank",
+    requestKey: null,
+  });
+
+  return albums.map((album) => mapAlbum(album));
 }
 
 export async function getAlbumDetailState(

@@ -1,11 +1,17 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { ArrowRight } from "lucide-react";
 
 import { AlbumCover } from "@/components/album-cover";
+import {
+  Our500AlbumDetails,
+  Our500RatingChips,
+} from "@/components/our-500-album-details";
 import { ClubAvatar, ScoreBadge } from "@/components/primitives";
 import { RouteShell } from "@/components/route-shell";
+import { buttonVariants } from "@/components/ui/button";
 import { getAuthenticatedPocketBase } from "@/lib/auth";
-import { formatRating, RATING_SCALE, STATS_SAMPLE_THRESHOLD } from "@/lib/config";
+import { STATS_SAMPLE_THRESHOLD } from "@/lib/config";
 import {
   formatAverage,
   getHistoryState,
@@ -75,6 +81,7 @@ export default async function StatsPage() {
         />
       </div>
 
+      <Our500Preview historyState={historyState} />
       <ProgressSection historyState={historyState} />
       <RecentPaceSection historyState={historyState} now={now} />
       <ActivePicksSection historyState={historyState} />
@@ -124,27 +131,67 @@ export default async function StatsPage() {
         />
       </div>
 
-      <section className="surface-panel mt-4 rounded-lg p-5">
-        <div className="mb-4 flex flex-wrap items-baseline justify-between gap-3">
-          <h2 className="text-2xl">Shared albums</h2>
-          <p className="tag">two or more members / score comparison</p>
-        </div>
-        {historyState.stats.sharedAlbums.length === 0 ? (
-          <p className="tag">No albums have been rated by multiple members yet</p>
-        ) : (
-          <div className="grid gap-4">
-            {historyState.stats.sharedAlbums.map((summary) => (
-              <SharedAlbumRow
-                key={summary.album.id}
-                summary={summary}
-                members={historyState.members}
-                currentUserId={historyState.currentUser.id}
-              />
-            ))}
-          </div>
-        )}
-      </section>
     </RouteShell>
+  );
+}
+
+function Our500Preview({ historyState }: { historyState: HistoryState }) {
+  const rankedAlbums = historyState.stats.crewRankedAlbums.slice(0, 5);
+
+  return (
+    <section className="surface-panel mt-4 overflow-hidden rounded-lg">
+      <div className="border-b border-[var(--line)] p-5 md:flex md:items-end md:justify-between md:gap-6">
+        <div>
+          <p className="tag text-[var(--accent)]">the collective list</p>
+          <h2 className="mt-2 text-3xl md:text-4xl">Our 500</h2>
+          <p className="mt-2 max-w-2xl text-sm text-[var(--ink-soft)]">
+            The crew&apos;s evolving order, ranked by average score once at least two
+            members have weighed in.
+          </p>
+        </div>
+        <Link
+          href="/stats/our-500"
+          className={cn(buttonVariants({ variant: "solid" }), "mt-4 shrink-0 md:mt-0")}
+        >
+          View full ranking
+          <ArrowRight className="size-4" aria-hidden="true" />
+        </Link>
+      </div>
+
+      {rankedAlbums.length === 0 ? (
+        <div className="p-5">
+          <p className="tag">No albums have two crew ratings yet</p>
+          <p className="mt-2 text-sm text-[var(--ink-soft)]">
+            The first collective ranking will appear as soon as an album gets its
+            second review.
+          </p>
+        </div>
+      ) : (
+        <div className="divide-y divide-[var(--line)] px-5">
+          {rankedAlbums.map((summary, index) => (
+            <CrewRankingRow
+              key={summary.album.id}
+              crewRank={index + 1}
+              summary={summary}
+              members={historyState.members}
+              currentUserId={historyState.currentUser.id}
+            />
+          ))}
+        </div>
+      )}
+
+      <div className="flex flex-wrap gap-x-5 gap-y-1 border-t border-[var(--line)] bg-[var(--paper-2)] px-5 py-3">
+        <span className="tag">
+          {historyState.stats.crewRankedAlbums.length} ranked
+        </span>
+        <span className="tag">
+          {historyState.stats.provisionalAlbums.length} awaiting another review
+        </span>
+        <span className="tag">
+          positions cover eligible reviewed albums
+        </span>
+      </div>
+    </section>
   );
 }
 
@@ -630,18 +677,23 @@ function AlbumLeaderboard({
   );
 }
 
-function SharedAlbumRow({
+function CrewRankingRow({
+  crewRank,
   summary,
   members,
   currentUserId,
 }: {
+  crewRank: number;
   summary: AlbumRatingSummary;
   members: HistoryMember[];
   currentUserId: string;
 }) {
   return (
-    <div className="grid gap-3 border-b border-[var(--line)] pb-4 last:border-b-0 last:pb-0 md:grid-cols-[72px_minmax(0,1fr)_auto] md:items-center">
-      <Link href={`/albums/${summary.album.id}`} className="w-[72px]">
+    <div className="grid grid-cols-[38px_64px_minmax(0,1fr)] items-center gap-3 py-4 md:grid-cols-[46px_72px_minmax(240px,1fr)_minmax(0,1.2fr)]">
+      <span className="font-display text-3xl font-extrabold text-[var(--accent)]">
+        {crewRank}
+      </span>
+      <Link href={`/albums/${summary.album.id}`} className="w-16 md:w-[72px]">
         <AlbumCover
           rank={summary.album.rank}
           src={summary.album.coverUrl}
@@ -651,59 +703,30 @@ function SharedAlbumRow({
         />
       </Link>
       <div className="min-w-0">
-        <Link href={`/albums/${summary.album.id}`}>
-          <h3 className="truncate text-xl">{summary.album.title}</h3>
-        </Link>
-        <p className="truncate font-quote text-base text-[var(--ink-soft)]">
-          {summary.album.artist}
-        </p>
-        <p className="tag mt-1">
-          {summary.ratingCount} member ratings / spread{" "}
-          {formatRating(Number(summary.spread.toFixed(RATING_SCALE.precision)))}
-        </p>
+        <Our500AlbumDetails
+          album={summary.album}
+          averageRating={summary.averageRating}
+          ratingCount={summary.ratingCount}
+          titleLevel="h3"
+        />
       </div>
-      <div className="flex flex-wrap gap-2 md:justify-end">
-        {summary.listens.map((listen) => (
-          <ScoreChip
-            key={listen.id}
-            listen={listen}
-            member={members.find((entry) => entry.id === listen.userId)}
-            currentUserId={currentUserId}
-          />
-        ))}
+      <div className="col-start-3 flex flex-wrap gap-2 md:col-start-auto md:justify-end">
+        <Our500RatingChips
+          albumId={summary.album.id}
+          ratings={summary.listens.flatMap((listen) =>
+            listen.rating == null
+              ? []
+              : [{
+                  id: listen.id,
+                  userId: listen.userId,
+                  rating: listen.rating,
+                }],
+          )}
+          members={members}
+          currentUserId={currentUserId}
+        />
       </div>
     </div>
-  );
-}
-
-function ScoreChip({
-  listen,
-  member,
-  currentUserId,
-}: {
-  listen: HistoryListen;
-  member?: HistoryMember;
-  currentUserId: string;
-}) {
-  const label = member ? getMemberLabel(member, currentUserId) : "Crew";
-
-  return (
-    <Link
-      href={member ? `/history?member=${member.id}` : `/albums/${listen.album.id}`}
-      className="flex items-center gap-2 rounded-md border border-[var(--line-strong)] bg-[var(--paper-2)] px-2 py-1"
-    >
-      <ClubAvatar
-        imageUrl={member?.avatarUrl}
-        initials={member?.initials ?? "??"}
-        label={member?.displayName}
-        size="sm"
-      />
-      <span className="max-w-[96px] truncate text-sm font-bold">{label}</span>
-      <span className="font-display text-xl font-extrabold">
-        {listen.rating == null ? "-" : formatRating(listen.rating)}
-      </span>
-      <span className="mono text-[10px] text-[var(--ink-faint)]">/{RATING_SCALE.max}</span>
-    </Link>
   );
 }
 

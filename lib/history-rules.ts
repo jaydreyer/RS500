@@ -65,6 +65,8 @@ export type HistoryStats<TMember extends StatsMember = StatsMember, TListen exte
   mostAssignedCompleted: MemberSummary<TMember, TListen> | null;
   highestRatedAlbums: TListen[];
   lowestRatedAlbums: TListen[];
+  crewRankedAlbums: AlbumRatingSummary<TListen>[];
+  provisionalAlbums: AlbumRatingSummary<TListen>[];
   sharedAlbums: AlbumRatingSummary<TListen>[];
   fastestGroupCompletions: GroupCompletionSummary<TListen>[];
 };
@@ -108,6 +110,7 @@ export function buildStats<
   memberSummaries: MemberSummary<TMember, TListen>[],
   listens: TListen[],
   sampleThreshold = 3,
+  crewRankMinReviews = 2,
 ): HistoryStats<TMember, TListen> {
   const sampleReady = memberSummaries.filter(
     (summary) => summary.ratedFreshListens.length >= sampleThreshold,
@@ -143,12 +146,37 @@ export function buildStats<
       0,
       RATED_ALBUM_LEADERBOARD_LIMIT,
     ),
+    crewRankedAlbums: albumSummaries
+      .filter((summary) => getReviewerCount(summary) >= crewRankMinReviews)
+      .toSorted(compareCrewRankedAlbums),
+    provisionalAlbums: albumSummaries
+      .filter((summary) => getReviewerCount(summary) < crewRankMinReviews)
+      .toSorted(compareCrewRankedAlbums),
     sharedAlbums: albumSummaries
-      .filter((summary) => new Set(summary.listens.map((listen) => listen.userId)).size >= 2)
+      .filter((summary) => getReviewerCount(summary) >= crewRankMinReviews)
       .toSorted((a, b) => b.spread - a.spread || b.ratingCount - a.ratingCount)
       .slice(0, 5),
     fastestGroupCompletions: buildGroupCompletionSummaries(listens).slice(0, 5),
   };
+}
+
+export function compareCrewRankedAlbums<TListen extends StatsListen>(
+  a: AlbumRatingSummary<TListen>,
+  b: AlbumRatingSummary<TListen>,
+) {
+  return (
+    b.averageRating - a.averageRating ||
+    getReviewerCount(b) - getReviewerCount(a) ||
+    a.album.rank - b.album.rank ||
+    a.album.title.localeCompare(b.album.title) ||
+    a.album.id.localeCompare(b.album.id)
+  );
+}
+
+export function getReviewerCount<TListen extends StatsListen>(
+  summary: AlbumRatingSummary<TListen>,
+) {
+  return new Set(summary.listens.map((listen) => listen.userId)).size;
 }
 
 export function buildRankedRatedListens<TListen extends StatsListen>(
