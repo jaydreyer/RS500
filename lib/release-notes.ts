@@ -9,6 +9,21 @@ export type ReleaseNote = {
 
 export const releaseNotes = [
   {
+    date: "2026-07-27",
+    title: "Our 500 takes shape",
+    summary:
+      "The crew now has its own evolving order of the Rolling Stone 500, built from everyone’s album ratings.",
+    added: [
+      "Stats now opens with an Our 500 preview of the crew’s five highest-ranked eligible albums.",
+      "The full Our 500 page includes ranked and needs-review views, album and artist search, and multiple sorting options.",
+    ],
+    improved: [
+      "Albums enter the crew ranking after two members rate them, using the average of every crew score.",
+      "Ties favor albums with more ratings, then the higher original Rolling Stone placement.",
+      "Album details and compact member scores stay consistent between Stats and the full ranking, with overflow ratings available from album detail.",
+    ],
+  },
+  {
     date: "2026-07-09",
     title: "Reviews make a list",
     summary:
