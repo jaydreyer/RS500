@@ -22,6 +22,12 @@ import {
   type HistoryState,
   type MemberSummary,
 } from "@/lib/history";
+import {
+  buildMemberCrewComparisons,
+  buildRankingMomentum,
+  type MemberCrewComparison,
+  type RankingMovementSummary,
+} from "@/lib/history-rules";
 import { cn } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
@@ -124,6 +130,7 @@ export default async function StatsPage() {
 
         <GroupCompletionSection historyState={historyState} />
         <AlbumInsightsSection historyState={historyState} />
+        <PersonalInsightsSection historyState={historyState} now={now} />
       </div>
     </RouteShell>
   );
@@ -574,48 +581,133 @@ function GroupCompletionSection({ historyState }: { historyState: HistoryState }
 }
 
 function AlbumInsightsSection({ historyState }: { historyState: HistoryState }) {
-  const favorites = historyState.stats.crewRankedAlbums.slice(0, 3);
-  const misses = historyState.stats.crewRankedAlbums
-    .toSorted(
-      (a, b) =>
-        a.averageRating - b.averageRating ||
-        b.ratingCount - a.ratingCount ||
-        a.album.rank - b.album.rank,
-    )
-    .slice(0, 3);
+  const climbers = historyState.stats.biggestClimbers.slice(0, 3);
+  const drops = historyState.stats.biggestDrops.slice(0, 3);
+  const consensus = historyState.stats.strongestConsensus.slice(0, 3);
   const divisive = historyState.stats.sharedAlbums.slice(0, 3);
 
   return (
     <section className="mt-4">
       <div className="mb-3 flex flex-wrap items-baseline justify-between gap-3 px-1">
         <div>
-          <p className="tag text-[var(--accent)]">collective taste</p>
-          <h2 className="mt-1 text-3xl">Album insights</h2>
+          <p className="tag text-[var(--accent)]">our order, their order</p>
+          <h2 className="mt-1 text-3xl">How the list moves</h2>
+          <p className="mt-2 max-w-2xl text-sm text-[var(--ink-soft)]">
+            Movement compares crew order with Rolling Stone order among the same
+            officially ranked albums.
+          </p>
         </div>
         <Link href="/stats/our-500" className="tag text-[var(--accent)] hover:underline">
           Explore all rankings →
         </Link>
+        <p className="tag w-full text-right lg:hidden">swipe for more insights →</p>
       </div>
-      <div className="grid gap-4 xl:grid-cols-3">
-        <AlbumInsightColumn
-          title="Crew favorites"
-          helper="highest crew averages"
-          summaries={favorites}
-          historyState={historyState}
-        />
-        <AlbumInsightColumn
-          title="Crew misses"
-          helper="lowest crew averages"
-          summaries={misses}
-          historyState={historyState}
-        />
-        <AlbumInsightColumn
-          title="Most divisive"
-          helper="widest score spreads"
-          summaries={divisive}
-          historyState={historyState}
-          showSpread
-        />
+      <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 lg:grid lg:grid-cols-2 lg:overflow-visible lg:pb-0">
+        <div className="min-w-[88%] snap-start lg:min-w-0">
+          <MovementInsightColumn
+            title="Biggest climbers"
+            helper="the crew lifts them higher"
+            movements={climbers}
+            historyState={historyState}
+          />
+        </div>
+        <div className="min-w-[88%] snap-start lg:min-w-0">
+          <MovementInsightColumn
+            title="Biggest drops"
+            helper="the crew sends them lower"
+            movements={drops}
+            historyState={historyState}
+          />
+        </div>
+        <div className="min-w-[88%] snap-start lg:min-w-0">
+          <AlbumInsightColumn
+            title="Strongest consensus"
+            helper="smallest score spreads · 3+ reviewers"
+            summaries={consensus}
+            historyState={historyState}
+            showSpread
+          />
+        </div>
+        <div className="min-w-[88%] snap-start lg:min-w-0">
+          <AlbumInsightColumn
+            title="Most divisive"
+            helper="widest score spreads"
+            summaries={divisive}
+            historyState={historyState}
+            showSpread
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function MovementInsightColumn({
+  title,
+  helper,
+  movements,
+  historyState,
+}: {
+  title: string;
+  helper: string;
+  movements: RankingMovementSummary<HistoryListen>[];
+  historyState: HistoryState;
+}) {
+  return (
+    <section className="surface-panel rounded-lg p-5">
+      <h3 className="text-2xl">{title}</h3>
+      <p className="tag mt-1">{helper}</p>
+      <div className="mt-4 grid gap-3">
+        {movements.length === 0 && (
+          <p className="tag">Movement appears as more albums enter Our 500</p>
+        )}
+        {movements.map((movement) => (
+          <article
+            key={movement.summary.album.id}
+            className="grid grid-cols-[56px_minmax(0,1fr)] gap-3 rounded-md border border-[var(--line-strong)] p-3"
+          >
+            <Link href={`/albums/${movement.summary.album.id}`}>
+              <AlbumCover
+                rank={movement.summary.album.rank}
+                src={movement.summary.album.coverUrl}
+                title={movement.summary.album.title}
+                sizes="56px"
+                className="cover-lift rounded-sm"
+              />
+            </Link>
+            <div className="min-w-0">
+              <Our500AlbumDetails
+                album={movement.summary.album}
+                averageRating={movement.summary.averageRating}
+                ratingCount={movement.summary.ratingCount}
+                titleLevel="h4"
+              />
+              <p className="mt-2 font-display text-xl font-extrabold text-[var(--accent)]">
+                {formatSignedMovement(movement.movement)}
+                <span className="tag ml-2 text-[var(--ink-soft)]">
+                  RS order #{movement.eligibleRsRank} → crew #{movement.crewRank}
+                </span>
+              </p>
+            </div>
+            <div className="col-span-2 flex flex-wrap gap-2">
+              <Our500RatingChips
+                albumId={movement.summary.album.id}
+                ratings={movement.summary.listens.flatMap((listen) =>
+                  listen.rating == null
+                    ? []
+                    : [{
+                        id: listen.id,
+                        userId: listen.userId,
+                        rating: listen.rating,
+                      }],
+                )}
+                members={historyState.members}
+                currentUserId={historyState.currentUser.id}
+                maxVisible={3}
+              />
+            </div>
+          </article>
+        ))}
       </div>
     </section>
   );
@@ -693,6 +785,185 @@ function AlbumInsightColumn({
   );
 }
 
+function PersonalInsightsSection({
+  historyState,
+  now,
+}: {
+  historyState: HistoryState;
+  now: Date;
+}) {
+  const comparisons = buildMemberCrewComparisons(
+    historyState.stats.crewRankedAlbums,
+    historyState.currentUser.id,
+  );
+  const agreements = comparisons
+    .toSorted(
+      (a, b) =>
+        Math.abs(a.difference) - Math.abs(b.difference) ||
+        b.otherRatingCount - a.otherRatingCount ||
+        a.summary.album.rank - b.summary.album.rank,
+    )
+    .slice(0, 3);
+  const disagreements = comparisons
+    .toSorted(
+      (a, b) =>
+        Math.abs(b.difference) - Math.abs(a.difference) ||
+        b.otherRatingCount - a.otherRatingCount ||
+        a.summary.album.rank - b.summary.album.rank,
+    )
+    .slice(0, 3);
+  const averageDistance =
+    comparisons.length === 0
+      ? null
+      : comparisons.reduce(
+          (total, comparison) => total + Math.abs(comparison.difference),
+          0,
+        ) / comparisons.length;
+  const since = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+  const momentum = buildRankingMomentum(historyState.stats.crewRankedAlbums, since);
+
+  return (
+    <section className="mt-4">
+      <div className="mb-3 px-1">
+        <p className="tag text-[var(--accent)]">more ways to read the crew</p>
+        <h2 className="mt-1 text-3xl">Taste and momentum</h2>
+      </div>
+      <div className="grid items-start gap-4 lg:grid-cols-[1.2fr_1fr_1fr]">
+        <section className="surface-panel rounded-lg p-5">
+          <h3 className="text-2xl">You vs. the crew</h3>
+          <p className="tag mt-1">your score compared with everyone else</p>
+
+          <div className="mt-4 rounded-md border border-[var(--line-strong)] bg-[var(--paper-2)] p-4">
+            <p className="font-display text-3xl font-extrabold text-[var(--accent)]">
+              {averageDistance == null ? "—" : averageDistance.toFixed(1)}
+            </p>
+            <p className="tag mt-1">
+              average point distance across {comparisons.length} shared{" "}
+              {comparisons.length === 1 ? "album" : "albums"}
+            </p>
+          </div>
+
+          <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-1 2xl:grid-cols-2">
+            <ComparisonList
+              title="Closest matches"
+              comparisons={agreements}
+            />
+            <ComparisonList
+              title="Biggest disagreements"
+              comparisons={disagreements}
+            />
+          </div>
+        </section>
+
+        <section className="surface-panel rounded-lg p-5">
+          <h3 className="text-2xl">Ranking momentum</h3>
+          <p className="tag mt-1">official-list activity · last 30 days</p>
+          <div className="mt-4 grid grid-cols-3 gap-2">
+            <PaceBadge value={momentum.ratingCount} label="ratings" />
+            <PaceBadge value={momentum.albumCount} label="albums" />
+            <PaceBadge value={momentum.newlyRanked.length} label="newly ranked" accent />
+          </div>
+          <div className="mt-5">
+            <p className="tag">Newest entries</p>
+            <div className="mt-2 grid gap-2">
+              {momentum.newlyRanked.length === 0 && (
+                <p className="text-sm text-[var(--ink-soft)]">
+                  No albums became officially ranked in this window.
+                </p>
+              )}
+              {momentum.newlyRanked.slice(0, 4).map(({ summary, rankedAt }) => (
+                <Link
+                  key={summary.album.id}
+                  href={`/albums/${summary.album.id}`}
+                  className="flex items-baseline justify-between gap-3 rounded-md border border-[var(--line-strong)] px-3 py-2 transition-colors hover:bg-[var(--paper-2)]"
+                >
+                  <span className="truncate font-display font-bold">
+                    {summary.album.title}
+                  </span>
+                  <span className="tag shrink-0">{formatShortDate(rankedAt)}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="surface-panel rounded-lg p-5">
+          <h3 className="text-2xl">Decade report</h3>
+          <p className="tag mt-1">all crew ratings by release decade</p>
+          <div className="mt-4 grid gap-3">
+            {historyState.stats.decadeSummaries.map((summary) => (
+              <div
+                key={summary.decade}
+                className="grid grid-cols-[48px_minmax(0,1fr)_auto] items-center gap-3"
+              >
+                <span className="font-display font-extrabold">{summary.decade}s</span>
+                <div className="h-2 overflow-hidden rounded-full bg-[var(--paper-3)]">
+                  <div
+                    className="h-full rounded-full bg-[var(--accent)]"
+                    style={{
+                      width: `${Math.max(0, Math.min(100, summary.averageRating * 10))}%`,
+                    }}
+                  />
+                </div>
+                <div className="text-right">
+                  <p className="mono text-sm font-bold">
+                    {summary.averageRating.toFixed(1)}
+                  </p>
+                  <p className="mono text-[9px] uppercase text-[var(--ink-faint)]">
+                    {summary.albumCount} albums
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="mt-4 text-xs text-[var(--ink-soft)]">
+            Averages are weighted by every submitted crew rating.
+          </p>
+        </section>
+      </div>
+    </section>
+  );
+}
+
+function ComparisonList({
+  title,
+  comparisons,
+}: {
+  title: string;
+  comparisons: MemberCrewComparison<HistoryListen>[];
+}) {
+  return (
+    <div>
+      <p className="tag">{title}</p>
+      <div className="mt-2 grid gap-2">
+        {comparisons.length === 0 && (
+          <p className="text-sm text-[var(--ink-soft)]">
+            Shared albums appear after you and at least two other members rate them.
+          </p>
+        )}
+        {comparisons.map((comparison) => (
+          <Link
+            key={comparison.summary.album.id}
+            href={`/albums/${comparison.summary.album.id}`}
+            className="rounded-md border border-[var(--line-strong)] px-3 py-2 transition-colors hover:bg-[var(--paper-2)]"
+          >
+            <p className="truncate font-display font-bold">
+              {comparison.summary.album.title}
+            </p>
+            <p className="tag mt-1">
+              You {comparison.memberRating.toFixed(1)} / crew{" "}
+              {comparison.otherCrewAverage.toFixed(1)}
+              <span className="ml-2 text-[var(--accent)]">
+                {formatSignedDifference(comparison.difference)}
+              </span>
+            </p>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function CrewRankingRow({
   crewRank,
   summary,
@@ -758,6 +1029,27 @@ function countRecentRatings(listens: HistoryListen[], days: number, now: Date) {
     const ratedMs = Date.parse(listen.ratedAt);
     return Number.isFinite(ratedMs) && ratedMs >= cutoff;
   }).length;
+}
+
+function formatSignedMovement(movement: number) {
+  return movement > 0 ? `↑ ${movement}` : `↓ ${Math.abs(movement)}`;
+}
+
+function formatSignedDifference(difference: number) {
+  const rounded = Number(difference.toFixed(1));
+  const formatted = rounded.toFixed(1);
+  return rounded > 0 ? `+${formatted}` : formatted;
+}
+
+function formatShortDate(value: string) {
+  const date = new Date(value);
+
+  return Number.isNaN(date.getTime())
+    ? "recently"
+    : new Intl.DateTimeFormat("en-US", {
+        month: "short",
+        day: "numeric",
+      }).format(date);
 }
 
 function formatDuration(milliseconds: number) {

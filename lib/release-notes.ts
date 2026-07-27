@@ -10,6 +10,17 @@ export type ReleaseNote = {
 export const releaseNotes = [
   {
     date: "2026-07-27",
+    title: "Stats digs deeper",
+    summary:
+      "The crew’s ratings now reveal where Our 500 breaks from Rolling Stone, where everyone agrees, and where your taste stands apart.",
+    added: [
+      "Biggest climbers and drops compare crew order with Rolling Stone order across the same officially ranked albums.",
+      "You vs. the crew highlights your closest matches, biggest disagreements, and average score distance without counting your own rating in the crew comparison.",
+      "Strongest consensus, 30-day ranking momentum, and decade-by-decade ratings add new ways to read the club’s listening history.",
+    ],
+  },
+  {
+    date: "2026-07-27",
     title: "Stats finds the signal",
     summary:
       "Stats is easier to scan, clearer about what the numbers mean, and more focused on how the crew is moving through the 500.",
