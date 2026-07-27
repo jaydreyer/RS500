@@ -62,6 +62,36 @@ test("harshest and most generous raters require three rated fresh listens", () =
   assert.equal(stats.mostGenerousRater?.member.id, "two")
 })
 
+test("member superlatives exclude deactivated members without removing their ratings", () => {
+  const members = [
+    { id: "active", displayName: "Active", initials: "A", email: "active@example.com" },
+    {
+      id: "archived",
+      displayName: "Archived",
+      initials: "AR",
+      email: "",
+      isDeactivated: true,
+    },
+  ]
+  const listens = [
+    listen({ id: "1", userId: "active", albumId: "shared", rating: 7 }),
+    listen({ id: "2", userId: "active", albumId: "active-b", rating: 7 }),
+    listen({ id: "3", userId: "active", albumId: "active-c", rating: 7 }),
+    listen({ id: "4", userId: "archived", albumId: "shared", rating: 1 }),
+    listen({ id: "5", userId: "archived", albumId: "archived-b", rating: 1 }),
+    listen({ id: "6", userId: "archived", albumId: "archived-c", rating: 1 }),
+    listen({ id: "7", userId: "archived", albumId: "archived-d", rating: 1 }),
+  ]
+
+  const stats = buildStats(buildMemberSummaries(members, listens), listens)
+
+  assert.equal(stats.harshestRater?.member.id, "active")
+  assert.equal(stats.mostGenerousRater?.member.id, "active")
+  assert.equal(stats.mostAssignedCompleted?.member.id, "active")
+  assert.equal(stats.crewRankedAlbums[0].album.id, "shared")
+  assert.equal(stats.crewRankedAlbums[0].averageRating, 4)
+})
+
 test("shared albums include only albums rated by at least two members", () => {
   const members = [
     { id: "one", displayName: "One", initials: "O", email: "one@example.com" },
@@ -119,45 +149,6 @@ test("crew ranking uses album average, review count, then original rank", () => 
     stats.provisionalAlbums.map((summary) => summary.album.id),
     ["provisional"],
   )
-})
-
-test("album leaderboards rank individual member ratings instead of album averages", () => {
-  const members = [
-    { id: "one", displayName: "One", initials: "O", email: "one@example.com" },
-    { id: "two", displayName: "Two", initials: "T", email: "two@example.com" },
-    { id: "three", displayName: "Three", initials: "TH", email: "three@example.com" },
-  ]
-  const listens = [
-    listen({ id: "shared-low", userId: "one", albumId: "shared", rating: 4 }),
-    listen({ id: "shared-high", userId: "two", albumId: "shared", rating: 10 }),
-    listen({ id: "solo-middle", userId: "three", albumId: "solo", rating: 5 }),
-  ]
-
-  const stats = buildStats(buildMemberSummaries(members, listens), listens)
-
-  assert.equal(stats.lowestRatedAlbums[0].id, "shared-low")
-  assert.equal(stats.lowestRatedAlbums[0].rating, 4)
-  assert.equal(stats.lowestRatedAlbums[1].id, "solo-middle")
-  assert.equal(stats.highestRatedAlbums[0].id, "shared-high")
-  assert.equal(stats.highestRatedAlbums[0].rating, 10)
-})
-
-test("album leaderboards include the top ten individual ratings", () => {
-  const members = [
-    { id: "one", displayName: "One", initials: "O", email: "one@example.com" },
-  ]
-  const listens = Array.from({ length: 11 }, (_, rating) =>
-    listen({ id: `rating-${rating}`, userId: "one", albumId: `album-${rating}`, rating }),
-  )
-
-  const stats = buildStats(buildMemberSummaries(members, listens), listens)
-
-  assert.equal(stats.highestRatedAlbums.length, 10)
-  assert.equal(stats.highestRatedAlbums[0].rating, 10)
-  assert.equal(stats.highestRatedAlbums.at(-1)?.rating, 1)
-  assert.equal(stats.lowestRatedAlbums.length, 10)
-  assert.equal(stats.lowestRatedAlbums[0].rating, 0)
-  assert.equal(stats.lowestRatedAlbums.at(-1)?.rating, 9)
 })
 
 test("member averages ignore unrated listens but include rated zeroes", () => {

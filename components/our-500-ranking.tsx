@@ -32,8 +32,10 @@ export type Our500Entry = {
   }[];
 };
 
-type RankingView = "ranked" | "needs";
-type RankingSort = "crew" | "original" | "reviews" | "spread";
+type RankingView = "ranked" | "provisional" | "unheard";
+type RankingSort = "crew" | "original" | "reviews" | "spread" | "score";
+
+const PAGE_SIZE = 25;
 
 export function Our500Ranking({
   entries,
@@ -47,6 +49,7 @@ export function Our500Ranking({
   const [view, setView] = useState<RankingView>("ranked");
   const [sort, setSort] = useState<RankingSort>("crew");
   const [query, setQuery] = useState("");
+  const [visibleLimit, setVisibleLimit] = useState(PAGE_SIZE);
 
   const rankedCount = entries.filter((entry) => entry.crewRank != null).length;
   const provisionalCount = entries.filter(
@@ -58,9 +61,17 @@ export function Our500Ranking({
     const normalizedQuery = query.trim().toLocaleLowerCase();
 
     return entries
-      .filter((entry) =>
-        view === "ranked" ? entry.crewRank != null : entry.crewRank == null,
-      )
+      .filter((entry) => {
+        if (view === "ranked") {
+          return entry.crewRank != null;
+        }
+
+        if (view === "provisional") {
+          return entry.crewRank == null && entry.reviewerCount === 1;
+        }
+
+        return entry.reviewerCount === 0;
+      })
       .filter((entry) => {
         if (!normalizedQuery) {
           return true;
@@ -72,18 +83,20 @@ export function Our500Ranking({
       })
       .toSorted(getEntryComparator(sort));
   }, [entries, query, sort, view]);
+  const displayedEntries = visibleEntries.slice(0, visibleLimit);
+  const remainingCount = Math.max(0, visibleEntries.length - displayedEntries.length);
 
   return (
     <>
-      <div className="grid gap-3 sm:grid-cols-3">
+      <div className="grid grid-cols-3 gap-2 sm:gap-3">
         <CountCard value={rankedCount} label="officially ranked" accent />
         <CountCard value={provisionalCount} label="one review so far" />
         <CountCard value={unreviewedCount} label="still unheard" />
       </div>
 
-      <section className="surface-panel mt-4 overflow-hidden rounded-lg">
-        <div className="border-b border-[var(--line)] p-4 md:flex md:items-center md:justify-between md:gap-4">
-          <div className="flex gap-2">
+      <section className="surface-panel mt-4 rounded-lg">
+        <div className="sticky top-[60px] z-20 rounded-t-lg border-b border-[var(--line)] bg-[var(--card)] p-4 md:flex md:items-center md:justify-between md:gap-4">
+          <div className="flex flex-wrap gap-2">
             <ViewButton
               active={view === "ranked"}
               count={rankedCount}
@@ -91,15 +104,27 @@ export function Our500Ranking({
               onClick={() => {
                 setView("ranked");
                 setSort("crew");
+                setVisibleLimit(PAGE_SIZE);
               }}
             />
             <ViewButton
-              active={view === "needs"}
-              count={provisionalCount + unreviewedCount}
-              label="Needs reviews"
+              active={view === "provisional"}
+              count={provisionalCount}
+              label="One review"
               onClick={() => {
-                setView("needs");
+                setView("provisional");
+                setSort("score");
+                setVisibleLimit(PAGE_SIZE);
+              }}
+            />
+            <ViewButton
+              active={view === "unheard"}
+              count={unreviewedCount}
+              label="Unheard"
+              onClick={() => {
+                setView("unheard");
                 setSort("original");
+                setVisibleLimit(PAGE_SIZE);
               }}
             />
           </div>
@@ -114,22 +139,29 @@ export function Our500Ranking({
               <input
                 type="search"
                 value={query}
-                onChange={(event) => setQuery(event.target.value)}
+                onChange={(event) => {
+                  setQuery(event.target.value);
+                  setVisibleLimit(PAGE_SIZE);
+                }}
                 placeholder="Search albums or artists"
-                className="h-10 w-full rounded-md border border-[var(--line-strong)] bg-[var(--paper)] pl-9 pr-3 text-sm outline-none transition-colors placeholder:text-[var(--ink-faint)] focus:border-[var(--accent)] sm:w-64"
+                className="h-10 w-full rounded-md border border-[var(--line-strong)] bg-[var(--paper)] pl-9 pr-3 text-sm outline-none transition-colors placeholder:text-[var(--ink-soft)] focus:border-[var(--accent)] sm:w-64"
               />
             </label>
             <label>
               <span className="sr-only">Sort albums</span>
               <select
                 value={sort}
-                onChange={(event) => setSort(event.target.value as RankingSort)}
+                onChange={(event) => {
+                  setSort(event.target.value as RankingSort);
+                  setVisibleLimit(PAGE_SIZE);
+                }}
                 className="h-10 w-full rounded-md border border-[var(--line-strong)] bg-[var(--paper)] px-3 text-sm font-bold outline-none focus:border-[var(--accent)] sm:w-auto"
               >
-                <option value="crew">Crew rank</option>
+                {view === "ranked" && <option value="crew">Crew rank</option>}
                 <option value="original">Original RS rank</option>
-                <option value="reviews">Most reviewed</option>
-                <option value="spread">Most divisive</option>
+                {view === "ranked" && <option value="reviews">Most reviewed</option>}
+                {view === "ranked" && <option value="spread">Most divisive</option>}
+                {view === "provisional" && <option value="score">Highest score</option>}
               </select>
             </label>
           </div>
@@ -141,22 +173,40 @@ export function Our500Ranking({
             <p className="tag mt-2">
               {query
                 ? "Try a different album or artist"
-                : view === "ranked"
+                  : view === "ranked"
                   ? "Albums appear after two members review them"
-                  : "Every album already has enough reviews"}
+                  : view === "provisional"
+                    ? "No albums are waiting for a second review"
+                    : "Every album has been heard at least once"}
             </p>
           </div>
         ) : (
-          <div className="divide-y divide-[var(--line)]">
-            {visibleEntries.map((entry) => (
-              <RankingRow
-                key={entry.album.id}
-                entry={entry}
-                members={members}
-                currentUserId={currentUserId}
-              />
-            ))}
-          </div>
+          <>
+            <div className="divide-y divide-[var(--line)]">
+              {displayedEntries.map((entry) => (
+                <RankingRow
+                  key={entry.album.id}
+                  entry={entry}
+                  members={members}
+                  currentUserId={currentUserId}
+                />
+              ))}
+            </div>
+            <div className="flex flex-col items-center gap-3 border-t border-[var(--line)] bg-[var(--paper-2)] p-4">
+              <p className="tag">
+                Showing {displayedEntries.length} of {visibleEntries.length}
+              </p>
+              {remainingCount > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setVisibleLimit((current) => current + PAGE_SIZE)}
+                  className="rounded-md border border-[var(--line-strong)] bg-[var(--card)] px-4 py-2 font-display text-sm font-extrabold transition-colors hover:border-[var(--ink)]"
+                >
+                  Load {Math.min(PAGE_SIZE, remainingCount)} more
+                </button>
+              )}
+            </div>
+          </>
         )}
       </section>
     </>
@@ -175,19 +225,19 @@ function CountCard({
   return (
     <article
       className={cn(
-        "rounded-lg border bg-[var(--card)] p-4 shadow-[var(--shadow)]",
+        "min-w-0 rounded-lg border bg-[var(--card)] p-3 shadow-[var(--shadow)] sm:p-4",
         accent && "border-[var(--accent)]",
       )}
     >
       <span
         className={cn(
-          "font-display text-4xl font-extrabold",
+          "block font-display text-3xl font-extrabold sm:text-4xl",
           accent && "text-[var(--accent)]",
         )}
       >
         {value}
       </span>
-      <span className="tag ml-2">{label}</span>
+      <span className="tag mt-1 block leading-tight">{label}</span>
     </article>
   );
 }
@@ -262,6 +312,7 @@ function RankingRow({
           album={entry.album}
           averageRating={entry.averageRating}
           ratingCount={entry.reviewerCount}
+          prominentScore
         />
       </div>
 
@@ -295,6 +346,13 @@ function getEntryComparator(sort: RankingSort) {
       return (
         b.spread - a.spread ||
         b.reviewerCount - a.reviewerCount ||
+        a.album.rank - b.album.rank
+      );
+    }
+
+    if (sort === "score") {
+      return (
+        (b.averageRating ?? -1) - (a.averageRating ?? -1) ||
         a.album.rank - b.album.rank
       );
     }

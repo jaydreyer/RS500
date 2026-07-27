@@ -76,30 +76,32 @@ export default async function Our500Page() {
 
   return (
     <RouteShell eyebrow="THE COLLECTIVE LIST" title="Our 500">
-      <div className="mb-5 max-w-3xl">
-        <p className="text-lg text-[var(--ink-soft)]">
-          Our evolving order of Rolling Stone&apos;s 500, built from every crew
-          score. An album becomes officially ranked after{" "}
-          {CREW_RANK_MIN_REVIEWS} members review it.
-        </p>
-        <p className="tag mt-3 max-w-3xl leading-relaxed">
-          Crew positions cover eligible reviewed albums—not yet all 500. Rankings
-          use the average of every crew rating; ties favor more ratings, then the
-          higher original RS placement.
-        </p>
-        <Link
-          href="/stats"
-          className="tag mt-4 inline-block text-[var(--accent)] hover:underline"
-        >
-          ← Back to Stats
-        </Link>
-      </div>
+      <div className="stats-readable">
+        <div className="mb-5 max-w-3xl">
+          <p className="text-lg text-[var(--ink-soft)]">
+            Our evolving order of Rolling Stone&apos;s 500, built from every crew
+            score. An album becomes officially ranked after{" "}
+            {CREW_RANK_MIN_REVIEWS} members review it.
+          </p>
+          <p className="tag mt-3 max-w-3xl leading-relaxed">
+            Crew positions cover eligible reviewed albums—not yet all 500. Rankings
+            use the average of every crew rating; ties favor more ratings, then the
+            higher original RS placement.
+          </p>
+          <Link
+            href="/stats"
+            className="tag mt-4 inline-block text-[var(--accent)] hover:underline"
+          >
+            ← Back to Stats
+          </Link>
+        </div>
 
-      <Our500Ranking
-        entries={entries}
-        members={historyState.members}
-        currentUserId={historyState.currentUser.id}
-      />
+        <Our500Ranking
+          entries={entries}
+          members={historyState.members}
+          currentUserId={historyState.currentUser.id}
+        />
+      </div>
     </RouteShell>
   );
 }
