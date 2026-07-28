@@ -68,7 +68,7 @@ export function ScoreBadge({
   emptyLabel = "listening",
 }: {
   score?: number | null;
-  label?: string;
+  label?: string | null;
   emptyLabel?: string;
 }) {
   if (score == null) {
@@ -83,7 +83,7 @@ export function ScoreBadge({
   return (
     <span className="inline-flex items-baseline rounded-md bg-[var(--ink)] px-2.5 py-1 font-display font-extrabold text-[var(--paper)] shadow-[0_10px_18px_-14px_#000]">
       <span className="text-lg leading-none">{formatRating(score)}</span>
-      <span className="mono ml-0.5 text-[10px] opacity-70">{label}</span>
+      {label && <span className="mono ml-0.5 text-[10px] opacity-70">{label}</span>}
     </span>
   );
 }

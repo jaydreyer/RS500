@@ -6,7 +6,6 @@ import { useMemo, useState } from "react";
 
 import { AlbumCover } from "@/components/album-cover";
 import { ScoreBadge } from "@/components/primitives";
-import { RATING_SCALE } from "@/lib/config";
 import type { CatalogAlbum, CatalogListen, CatalogState } from "@/lib/catalog";
 import { cn } from "@/lib/utils";
 
@@ -260,7 +259,7 @@ function ListenStatus({ listen }: { listen?: CatalogListen }) {
   return (
     <span className="inline-flex items-center gap-2">
       {listen.kind === "skip" && <span className="tag">already heard</span>}
-      <ScoreBadge score={listen.rating} label={`/${RATING_SCALE.max}`} emptyLabel="no score" />
+      <ScoreBadge score={listen.rating} label={null} emptyLabel="no score" />
     </span>
   );
 }
