@@ -1611,7 +1611,6 @@ function EmojiReactionPicker({ postId }: { postId: string }) {
                     className="grid size-10 place-items-center rounded-md text-xl transition-colors hover:bg-[var(--paper-2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
                     title={reaction.label}
                     aria-label={`React ${reaction.emoji} ${reaction.label}`}
-                    onClick={() => setOpen(false)}
                   >
                     {reaction.emoji}
                   </button>
