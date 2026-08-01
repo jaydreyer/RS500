@@ -12,6 +12,7 @@ import {
   useMemo,
   useRef,
   useState,
+  useTransition,
 } from "react";
 import {
   Disc3,
@@ -1528,6 +1529,8 @@ function EmojiReactionPicker({ postId }: { postId: string }) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [categoryKey, setCategoryKey] = useState<string>(EXTRA_REACTION_GROUPS[0].key);
+  const [reactionError, setReactionError] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
   const normalizedQuery = normalizeEmojiSearch(query);
   const activeGroup =
     EXTRA_REACTION_GROUPS.find((group) => group.key === categoryKey) ?? EXTRA_REACTION_GROUPS[0];
@@ -1541,6 +1544,22 @@ function EmojiReactionPicker({ postId }: { postId: string }) {
     ).slice(0, 60);
   }, [activeGroup.reactions, normalizedQuery]);
 
+  function selectReaction(emoji: string) {
+    const formData = new FormData();
+    formData.set("postId", postId);
+    formData.set("emoji", emoji);
+    setReactionError(null);
+
+    startTransition(async () => {
+      try {
+        await toggleFeedReactionAction(formData);
+        setOpen(false);
+      } catch {
+        setReactionError("Could not add that reaction. Try again.");
+      }
+    });
+  }
+
   return (
     <div className="relative">
       <Button
@@ -1551,13 +1570,19 @@ function EmojiReactionPicker({ postId }: { postId: string }) {
         aria-label="More emoji"
         title="More emoji"
         aria-expanded={open}
-        onClick={() => setOpen((value) => !value)}
+        onClick={() => {
+          setReactionError(null);
+          setOpen((value) => !value);
+        }}
       >
         <SmilePlus className="size-4" aria-hidden="true" />
       </Button>
 
       {open && (
-        <div className="absolute left-0 top-full z-30 mt-2 w-[min(360px,calc(100vw-2rem))] overflow-hidden rounded-md border border-[var(--line-strong)] bg-[var(--card)] shadow-[0_18px_44px_-24px_#000] sm:left-auto sm:right-0">
+        <div
+          className="fixed inset-x-4 bottom-20 z-50 w-auto overflow-hidden rounded-md border border-[var(--line-strong)] bg-[var(--card)] shadow-[0_18px_44px_-24px_#000] sm:absolute sm:inset-x-auto sm:bottom-auto sm:right-0 sm:top-full sm:z-30 sm:mt-2 sm:w-[min(360px,calc(100vw-2rem))]"
+          aria-busy={isPending}
+        >
           <div className="border-b border-[var(--line)] bg-[var(--paper-2)] p-2">
             <label className="sr-only" htmlFor={`emoji-search-${postId}`}>
               Search emoji
@@ -1598,26 +1623,36 @@ function EmojiReactionPicker({ postId }: { postId: string }) {
               </button>
             ))}
           </div>
-          <div className="grid max-h-72 grid-cols-6 gap-1 overflow-auto p-2">
+          <div className="grid max-h-[min(18rem,calc(100dvh-14rem))] grid-cols-6 gap-1 overflow-auto p-2">
             {matches.length === 0 ? (
               <p className="tag col-span-6 px-1 py-2">No emoji found</p>
             ) : (
               matches.map((reaction) => (
-                <form key={`${reaction.emoji}-${reaction.label}`} action={toggleFeedReactionAction}>
-                  <input type="hidden" name="postId" value={postId} />
-                  <input type="hidden" name="emoji" value={reaction.emoji} />
-                  <button
-                    type="submit"
-                    className="grid size-10 place-items-center rounded-md text-xl transition-colors hover:bg-[var(--paper-2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
-                    title={reaction.label}
-                    aria-label={`React ${reaction.emoji} ${reaction.label}`}
-                  >
-                    {reaction.emoji}
-                  </button>
-                </form>
+                <button
+                  key={`${reaction.emoji}-${reaction.label}`}
+                  type="button"
+                  className="grid size-10 place-items-center rounded-md text-xl transition-colors hover:bg-[var(--paper-2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] disabled:cursor-wait disabled:opacity-50"
+                  title={reaction.label}
+                  aria-label={`React ${reaction.emoji} ${reaction.label}`}
+                  disabled={isPending}
+                  onClick={() => selectReaction(reaction.emoji)}
+                >
+                  {reaction.emoji}
+                </button>
               ))
             )}
           </div>
+          {(isPending || reactionError) && (
+            <p
+              className={cn(
+                "border-t border-[var(--line)] px-3 py-2 text-sm",
+                reactionError ? "text-[var(--accent)]" : "text-[var(--ink-soft)]",
+              )}
+              role="status"
+            >
+              {reactionError ?? "Adding reaction…"}
+            </p>
+          )}
         </div>
       )}
     </div>
