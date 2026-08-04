@@ -2,6 +2,7 @@ import "server-only";
 
 import type PocketBase from "pocketbase";
 
+import { getAlbumCoverUrl } from "@/lib/album-cover-url";
 import {
   getClubUserAvatarUrl,
   getClubUserDisplayName,
@@ -167,7 +168,7 @@ function mapAlbum(record: RecordLike): BoardAlbum {
     title: asString(record.title),
     artist: asString(record.artist),
     year: asNumber(record.year),
-    coverUrl: asString(record.cover_url),
+    coverUrl: getAlbumCoverUrl(record),
     spotifyUrl: asString(record.spotify_url),
     appleMusicUrl: asString(record.apple_music_url),
   };

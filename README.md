@@ -58,6 +58,12 @@ npm run import:albums -- --file ./data/rs500.csv --dry-run
 npm run import:albums -- --file ./data/rs500.csv
 ```
 
+Album imports persist each source `cover_url` into the public `cover_image` file
+field on the album record. Re-running the import backfills records that do not
+yet have a stored cover and refreshes a stored cover when its source URL
+changes. Downloads retry transient upstream failures and validate image type
+and size before upload.
+
 Or fill a local development backend with the complete RS500 album/artwork dataset plus sample users, listens, reviews, review replies, reactions, groups, group draws, feed posts, replies, mentions, and feed read state:
 
 ```bash

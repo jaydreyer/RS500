@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 
 import { cn } from "@/lib/utils";
@@ -19,6 +22,9 @@ export function AlbumCover({
   loading?: "eager" | "lazy";
   fetchPriority?: "high" | "low" | "auto";
 }) {
+  const [failedSrc, setFailedSrc] = useState<string | undefined>();
+  const showImage = Boolean(src && failedSrc !== src);
+
   return (
     <div
       className={cn(
@@ -26,14 +32,15 @@ export function AlbumCover({
         className,
       )}
     >
-      {src ? (
+      {showImage ? (
         <Image
-          src={src}
+          src={src!}
           alt={title ? `${title} album cover` : `Album cover for rank ${rank}`}
           fill
           sizes={sizes}
           loading={loading}
           fetchPriority={fetchPriority}
+          onError={() => setFailedSrc(src)}
           className="absolute inset-0 size-full object-cover"
         />
       ) : (

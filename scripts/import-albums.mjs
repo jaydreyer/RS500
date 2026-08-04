@@ -16,6 +16,15 @@ const ALL_FIELDS = [
   "external_ids",
   "review_links",
 ]
+const COVER_IMAGE_FIELD = "cover_image"
+const COVER_MAX_BYTES = 5 * 1024 * 1024
+const COVER_MIME_EXTENSIONS = new Map([
+  ["image/jpeg", "jpg"],
+  ["image/png", "png"],
+  ["image/webp", "webp"],
+])
+const COVER_DOWNLOAD_ATTEMPTS = 4
+const COVER_DOWNLOAD_TIMEOUT_MS = 20_000
 
 export function loadDotenvFile(filePath) {
   if (!fs.existsSync(filePath)) {
@@ -303,6 +312,64 @@ export function hasAlbumChanges(existing, nextAlbum) {
   })
 }
 
+export async function downloadAlbumCoverFile(
+  coverUrl,
+  rank,
+  {
+    fetchImpl = fetch,
+    attempts = COVER_DOWNLOAD_ATTEMPTS,
+    retryDelayMs = 750,
+    timeoutMs = COVER_DOWNLOAD_TIMEOUT_MS,
+  } = {},
+) {
+  let lastError
+
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    try {
+      const response = await fetchImpl(coverUrl, {
+        redirect: "follow",
+        signal: AbortSignal.timeout(timeoutMs),
+      })
+
+      if (!response.ok) {
+        throw new Error(`cover download returned HTTP ${response.status}`)
+      }
+
+      const contentType = response.headers.get("content-type")?.split(";")[0]?.trim().toLowerCase()
+      const extension = COVER_MIME_EXTENSIONS.get(contentType)
+      if (!extension) {
+        throw new Error(`cover download returned unsupported content type: ${contentType || "missing"}`)
+      }
+
+      const declaredSize = Number(response.headers.get("content-length") || 0)
+      if (declaredSize > COVER_MAX_BYTES) {
+        throw new Error(`cover download exceeds ${COVER_MAX_BYTES} bytes`)
+      }
+
+      const bytes = await response.arrayBuffer()
+      if (bytes.byteLength === 0) {
+        throw new Error("cover download returned an empty file")
+      }
+      if (bytes.byteLength > COVER_MAX_BYTES) {
+        throw new Error(`cover download exceeds ${COVER_MAX_BYTES} bytes`)
+      }
+
+      return new File([bytes], `rs500-${rank}-cover.${extension}`, {
+        type: contentType,
+      })
+    } catch (error) {
+      lastError = error
+      if (attempt < attempts && retryDelayMs > 0) {
+        await new Promise((resolve) => setTimeout(resolve, retryDelayMs * attempt))
+      }
+    }
+  }
+
+  throw new Error(
+    `unable to download cover after ${attempts} attempts: ${lastError?.message ?? String(lastError)}`,
+  )
+}
+
 export function summarizeDuplicateTitleArtists(validRows) {
   const groups = new Map()
 
@@ -384,23 +451,41 @@ export async function findAlbumByRank(pb, rank) {
   }
 }
 
-export async function upsertAlbum(pb, album, dryRun) {
+export async function upsertAlbum(
+  pb,
+  album,
+  dryRun,
+  { downloadCover = downloadAlbumCoverFile } = {},
+) {
   const existing = await findAlbumByRank(pb, album.rank)
+  const metadataChanged = existing ? hasAlbumChanges(existing, album) : true
+  const storedCoverMissing = !asTrimmedString(existing?.[COVER_IMAGE_FIELD])
+  const coverSourceChanged =
+    existing && asTrimmedString(existing.cover_url) !== asTrimmedString(album.cover_url)
+  const shouldStoreCover = !existing || storedCoverMissing || coverSourceChanged
 
   if (!existing) {
     if (!dryRun) {
-      await pb.collection("albums").create(album, { requestKey: null })
+      const coverImage = await downloadCover(album.cover_url, album.rank)
+      await pb.collection("albums").create(
+        { ...album, [COVER_IMAGE_FIELD]: coverImage },
+        { requestKey: null },
+      )
     }
 
     return "created"
   }
 
-  if (!hasAlbumChanges(existing, album)) {
+  if (!metadataChanged && !shouldStoreCover) {
     return "skipped"
   }
 
   if (!dryRun) {
-    await pb.collection("albums").update(existing.id, album, { requestKey: null })
+    const payload = { ...album }
+    if (shouldStoreCover) {
+      payload[COVER_IMAGE_FIELD] = await downloadCover(album.cover_url, album.rank)
+    }
+    await pb.collection("albums").update(existing.id, payload, { requestKey: null })
   }
 
   return "updated"
