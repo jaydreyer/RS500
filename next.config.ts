@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const isDev = process.env.NODE_ENV === "development";
 const pocketBaseOrigin = getOrigin(process.env.NEXT_PUBLIC_PB_URL);
+const pocketBaseFilePattern = getPocketBaseFilePattern(process.env.NEXT_PUBLIC_PB_URL);
 const serverActionAllowedOrigins = parseCsv(process.env.SERVER_ACTION_ALLOWED_ORIGINS);
 const serverActions: NonNullable<NonNullable<NextConfig["experimental"]>["serverActions"]> = {
   bodySizeLimit: "10mb",
@@ -50,6 +51,7 @@ const nextConfig: NextConfig = {
   images: {
     minimumCacheTTL: 60 * 60 * 24 * 30,
     remotePatterns: [
+      ...(pocketBaseFilePattern ? [pocketBaseFilePattern] : []),
       {
         protocol: "https",
         hostname: "coverartarchive.org",
@@ -113,6 +115,29 @@ function getOrigin(value: string | undefined) {
     return new URL(value).origin;
   } catch {
     return "";
+  }
+}
+
+function getPocketBaseFilePattern(value: string | undefined) {
+  if (!value) {
+    return null;
+  }
+
+  try {
+    const url = new URL(value);
+    if (url.protocol !== "http:" && url.protocol !== "https:") {
+      return null;
+    }
+
+    return {
+      protocol: url.protocol.slice(0, -1) as "http" | "https",
+      hostname: url.hostname,
+      port: url.port,
+      pathname: "/api/files/**",
+      search: "",
+    };
+  } catch {
+    return null;
   }
 }
 
