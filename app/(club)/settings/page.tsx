@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { deactivateAccountAction, updateProfileAction } from "@/app/(club)/settings/actions";
 import { AvatarUploadField } from "@/app/(club)/settings/avatar-upload-field";
 import { ClubAvatar } from "@/components/primitives";
+import { ReviewCsvExportLink } from "@/components/review-csv-export-link";
 import { RouteShell } from "@/components/route-shell";
 import { Button } from "@/components/ui/button";
 import { getAuthenticatedPocketBase } from "@/lib/auth";
@@ -117,6 +118,15 @@ export default async function SettingsPage({ searchParams }: SettingsPageProps) 
             Password and email changes stay manual for now so the invite-only account list remains
             easy to supervise.
           </p>
+
+          <div className="mt-5 border-t border-[var(--line-strong)] pt-4">
+            <h3 className="font-display text-lg font-extrabold">Your review data</h3>
+            <p className="mt-2 text-sm leading-6 text-[var(--ink-soft)]">
+              Download your rated fresh picks and skips, including album details, scores, and
+              review text.
+            </p>
+            <ReviewCsvExportLink className="mt-3 h-10 px-4 text-sm" label="Download my reviews" />
+          </div>
 
           <Link
             href="/updates"
