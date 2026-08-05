@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { AlbumCover } from "@/components/album-cover";
 import { CopyMemberRatingListButton } from "@/components/member-rating-list-actions";
 import { ClubAvatar, ScoreBadge } from "@/components/primitives";
+import { ReviewCsvExportLink } from "@/components/review-csv-export-link";
 import { ReviewMarkdown } from "@/components/review-markdown";
 import { ReviewSocialPanel } from "@/components/review-social-panel";
 import { RouteShell } from "@/components/route-shell";
@@ -356,6 +357,9 @@ function MemberHistoryDetail({
             memberName={summary.member.displayName}
             ratings={reviewedListens}
           />
+          {summary.member.id === historyState.currentUser.id && (
+            <ReviewCsvExportLink className="h-8 px-2.5" />
+          )}
         </div>
       </div>
 
