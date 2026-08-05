@@ -1,8 +1,9 @@
-import { ArrowLeft, ArrowUpDown, Search, Users } from "lucide-react";
+import { ArrowLeft, ArrowUpDown, List, MessageSquareText, Search, Users } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { AlbumCover } from "@/components/album-cover";
+import { CopyMemberRatingListButton } from "@/components/member-rating-list-actions";
 import { ClubAvatar, ScoreBadge } from "@/components/primitives";
 import { ReviewMarkdown } from "@/components/review-markdown";
 import { ReviewSocialPanel } from "@/components/review-social-panel";
@@ -25,6 +26,7 @@ export const dynamic = "force-dynamic";
 
 type HistorySortKey = "date" | "score" | "discussion" | "reactions";
 type HistorySortDirection = "asc" | "desc";
+type HistoryView = "full" | "list";
 type HistorySortState = {
   sort: HistorySortKey;
   dir: HistorySortDirection;
@@ -45,6 +47,7 @@ type HistorySearchParams = {
   reviewer?: string;
   score?: string;
   sort?: string;
+  view?: string;
 };
 
 const HISTORY_SORT_OPTIONS: Array<HistorySortState & { label: string }> = [
@@ -75,8 +78,10 @@ export default async function HistoryPage({
     score,
     sort,
     dir,
+    view,
   } = await searchParams;
   const sortState = getHistorySortState(sort, dir);
+  const historyView: HistoryView = view === "list" ? "list" : "full";
   let historyState: HistoryState;
 
   try {
@@ -101,6 +106,7 @@ export default async function HistoryPage({
         historyState={historyState}
         summary={selectedSummary}
         sortState={sortState}
+        view={historyView}
       />
     );
   }
@@ -256,10 +262,12 @@ function MemberHistoryDetail({
   historyState,
   summary,
   sortState,
+  view,
 }: {
   historyState: HistoryState;
   summary: MemberSummary;
   sortState: HistorySortState;
+  view: HistoryView;
 }) {
   const memberLabel = getMemberLabel(summary.member, historyState.currentUser.id);
   const reviewedListens = sortHistoryListens(summary.loggedListens, sortState);
@@ -299,12 +307,57 @@ function MemberHistoryDetail({
         </div>
       </div>
 
-      <HistorySortControls
-        className="mb-4"
-        filterState={DEFAULT_HISTORY_FILTER_STATE}
-        memberId={summary.member.id}
-        sortState={sortState}
-      />
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <HistorySortControls
+          filterState={DEFAULT_HISTORY_FILTER_STATE}
+          memberId={summary.member.id}
+          sortState={sortState}
+          view={view}
+        />
+        <div className="flex flex-wrap items-center gap-2">
+          <div
+            className="flex rounded-md border border-[var(--line-strong)] p-0.5"
+            aria-label="Review display"
+          >
+            <Link
+              href={buildHistoryHref({
+                filterState: DEFAULT_HISTORY_FILTER_STATE,
+                memberId: summary.member.id,
+                sortState,
+                view: "full",
+              })}
+              aria-current={view === "full" ? "page" : undefined}
+              className={cn(
+                buttonVariants({ variant: view === "full" ? "solid" : "quiet", size: "sm" }),
+                "h-7 border-0 px-2",
+              )}
+            >
+              <MessageSquareText className="size-3.5" aria-hidden="true" />
+              Full
+            </Link>
+            <Link
+              href={buildHistoryHref({
+                filterState: DEFAULT_HISTORY_FILTER_STATE,
+                memberId: summary.member.id,
+                sortState,
+                view: "list",
+              })}
+              aria-current={view === "list" ? "page" : undefined}
+              className={cn(
+                buttonVariants({ variant: view === "list" ? "solid" : "quiet", size: "sm" }),
+                "h-7 border-0 px-2",
+              )}
+            >
+              <List className="size-3.5" aria-hidden="true" />
+              List
+            </Link>
+          </div>
+          <CopyMemberRatingListButton
+            memberName={summary.member.displayName}
+            ratings={reviewedListens}
+          />
+        </div>
+      </div>
 
       <div className="hard-panel overflow-visible rounded-lg">
         {reviewedListens.length === 0 ? (
@@ -312,14 +365,18 @@ function MemberHistoryDetail({
             <p className="tag">No reviewed albums yet</p>
           </div>
         ) : (
-          reviewedListens.map((listen) => (
-            <MemberListenRow
-              key={listen.id}
-              listen={listen}
-              member={summary.member}
-              currentUserId={historyState.currentUser.id}
-            />
-          ))
+          reviewedListens.map((listen) =>
+            view === "list" ? (
+              <CompactMemberListenRow key={listen.id} listen={listen} />
+            ) : (
+              <MemberListenRow
+                key={listen.id}
+                listen={listen}
+                member={summary.member}
+                currentUserId={historyState.currentUser.id}
+              />
+            ),
+          )
         )}
       </div>
     </section>
@@ -347,6 +404,30 @@ function MemberStat({
       </div>
       <div className="tag mt-1">{label}</div>
     </div>
+  );
+}
+
+function CompactMemberListenRow({ listen }: { listen: HistoryListen }) {
+  return (
+    <article className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 border-b border-[var(--line)] px-4 py-3 last:border-b-0 hover:bg-[var(--paper-2)] sm:grid-cols-[minmax(0,1fr)_auto_auto]">
+      <div className="min-w-0">
+        <Link href={`/albums/${listen.album.id}`} className="block min-w-0">
+          <h2 className="truncate text-lg transition-colors hover:text-[var(--accent)]">
+            {listen.album.title}
+          </h2>
+        </Link>
+        <p className="mt-0.5 truncate font-quote text-base leading-tight text-[var(--ink-soft)]">
+          {listen.album.artist}
+        </p>
+      </div>
+      <div className="hidden text-right sm:block">
+        <p className="tag">RS #{listen.album.rank}</p>
+        <p className="tag mt-1">
+          {listen.kind} / {formatReviewDate(listen)}
+        </p>
+      </div>
+      <ScoreBadge score={listen.rating} label={`/${RATING_SCALE.max}`} emptyLabel="no score" />
+    </article>
   );
 }
 
@@ -520,11 +601,13 @@ function HistorySortControls({
   filterState,
   sortState,
   memberId,
+  view = "full",
 }: {
   className?: string;
   filterState: HistoryFilterState;
   sortState: HistorySortState;
   memberId?: string;
+  view?: HistoryView;
 }) {
   return (
     <div className={cn("flex flex-wrap items-center gap-2", className)}>
@@ -538,7 +621,7 @@ function HistorySortControls({
         return (
           <Link
             key={`${option.sort}-${option.dir}`}
-            href={buildHistoryHref({ filterState, memberId, sortState: option })}
+            href={buildHistoryHref({ filterState, memberId, sortState: option, view })}
             aria-current={active ? "page" : undefined}
             className={cn(
               buttonVariants({ variant: active ? "solid" : "ghost", size: "sm" }),
@@ -660,10 +743,12 @@ function buildHistoryHref({
   filterState,
   memberId,
   sortState,
+  view = "full",
 }: {
   filterState: HistoryFilterState;
   memberId?: string;
   sortState: HistorySortState;
+  view?: HistoryView;
 }) {
   const params = new URLSearchParams({
     sort: sortState.sort,
@@ -688,6 +773,10 @@ function buildHistoryHref({
 
   if (memberId) {
     params.set("member", memberId);
+  }
+
+  if (view === "list") {
+    params.set("view", "list");
   }
 
   return `/history?${params.toString()}`;
