@@ -10,13 +10,27 @@ export type ReleaseNote = {
 export const releaseNotes = [
   {
     date: "2026-08-04",
+    title: "Your reviews, yours to keep",
+    summary:
+      "Your Spin 500 history can now leave the app with you—ready for a personal backup, a spreadsheet, or whatever you want to build from it.",
+    added: [
+      "Export CSV appears beside Copy list on your own Reviews page, with another download option in Profile settings.",
+      "Each export includes the Rolling Stone rank, album, artist, release year, score, review text, review date, listen type, and group-draw status.",
+    ],
+    improved: [
+      "Dated, spreadsheet-friendly files make it easy to sort your listening history, keep a backup, or move your reviews into Excel, Numbers, or Google Sheets.",
+      "Multiline reviews, punctuation, and special characters stay intact in the download.",
+      "Exports are private: you can copy another member’s public rating list, but you can only download your own complete review data.",
+    ],
+  },
+  {
+    date: "2026-08-04",
     title: "Your ratings, ready to share",
     summary:
       "Member review pages now make it easy to see—and share—the albums someone has rated without all the review text.",
     added: [
       "Switch between the complete review feed and a compact list of album titles, artists, and scores.",
       "Copy any member’s ratings as clean plain text, ready to paste into a message, post, or document.",
-      "Download your own ratings, review text, dates, and album details as a CSV from your review page or Profile settings.",
     ],
     improved: [
       "List view has its own shareable address, and copied ratings follow the sort order currently on screen.",
