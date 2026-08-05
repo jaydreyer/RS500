@@ -129,7 +129,11 @@ export function mapClubUser(record: NonNullable<AuthRecord>): ClubUser {
     displayName,
     initials: getClubUserInitials(record),
     avatarUrl: getClubUserAvatarUrl(record),
-    isAdmin: isAdminEmail(email, process.env.PB_ADMIN_EMAIL),
+    isAdmin: isAdminEmail(
+      email,
+      process.env.PB_ADMIN_EMAIL,
+      process.env.CLUB_ADMIN_EMAILS,
+    ),
   };
 }
 

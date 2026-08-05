@@ -28,11 +28,19 @@ Required variables:
 - `NEXT_PUBLIC_PB_URL`: PocketBase URL, for example `http://127.0.0.1:8090`.
 - `PB_ADMIN_EMAIL`: PocketBase superuser email for migrations/import/signup.
 - `PB_ADMIN_PASSWORD`: PocketBase superuser password.
+- `CLUB_ADMIN_EMAILS`: Optional comma-separated app member emails that can manage feedback and other admin-only screens.
 - `CREW_INVITE_CODE`: Shared invite code for server-side signup validation.
 - `SERVER_ACTION_ALLOWED_ORIGINS`: Comma-separated trusted hosts for Next.js Server Actions, for example `localhost:3000` locally and your production app host in deployment.
 - `GOOGLE_OAUTH_CLIENT_ID`: Google OAuth web client ID for Google account signup/login.
 - `GOOGLE_OAUTH_CLIENT_SECRET`: Google OAuth web client secret.
 - `GOOGLE_OAUTH_REDIRECT_URI`: Optional explicit callback URL when request-origin inference does not match the Google OAuth client.
+
+Optional feedback-to-GitHub variables:
+
+- `GITHUB_FEEDBACK_REPOSITORY`: Target repository in `owner/repo` form.
+- `GITHUB_APP_ID`, `GITHUB_APP_INSTALLATION_ID`, and `GITHUB_APP_PRIVATE_KEY`: Preferred GitHub App authentication with Issues write permission.
+- `GITHUB_FEEDBACK_TOKEN`: Optional fine-grained token fallback for local testing.
+- `GITHUB_WEBHOOK_SECRET`: Enables signed issue-state synchronization at `/api/github/webhook`.
 
 Rotate the shared signup code before production use; it is validated server-side.
 
@@ -148,6 +156,14 @@ Groups are admin-managed in PocketBase. Create an active `groups` record, then a
 A group draw is manual. When a member spins for the group, the server picks one album no active group member has logged, creates one `group_draws` record, and creates one individual fresh `listens` row per member. A group draw is blocked while any active member has an unrated fresh pick; the next group draw unlocks once those active picks are rated.
 
 Active group members do not get the personal draw machine. `/pick` routes them to group mode, and the draw service rejects direct solo draw submissions while the user belongs to an active group. This prevents an accidental personal `fresh/listening` row from blocking the shared group redraw.
+
+## Ideas and Feedback
+
+Authenticated members can submit private feedback, attach a screenshot, follow status changes, and reply to owner responses from `/feedback`. Curated suggestions can be published to the Ideas board, where other members can choose “I want this too” and optionally add their use case.
+
+Admins use `/feedback/admin` to triage submissions, send user-visible explanations, keep private notes, publish or merge ideas, and selectively promote actionable work to GitHub. User identity and private conversation are not copied into generated GitHub issues.
+
+Manual GitHub issue linking works without API credentials. Automatic issue creation requires either a GitHub App or `GITHUB_FEEDBACK_TOKEN`; signed issue webhooks can synchronize planned, in-progress, shipped, and not-planned statuses back to every linked submission.
 
 ## Deployment
 

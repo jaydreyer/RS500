@@ -1,6 +1,6 @@
 "use client";
 
-import { LogOut, Megaphone } from "lucide-react";
+import { Lightbulb, LogOut, Megaphone } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useSyncExternalStore } from "react";
@@ -22,10 +22,12 @@ export function AppShell({
   children,
   user,
   feedUnreadCount,
+  feedbackUnreadCount,
 }: {
   children: React.ReactNode;
   user: ClubUser;
   feedUnreadCount: number;
+  feedbackUnreadCount: number;
 }) {
   const pathname = usePathname();
   const [remoteFeedUnreadCount, setRemoteFeedUnreadCount] = useState(feedUnreadCount);
@@ -88,13 +90,18 @@ export function AppShell({
       <TopNav
         user={user}
         feedUnreadCount={visibleFeedUnreadCount}
+        feedbackUnreadCount={feedbackUnreadCount}
         hasUnreadReleaseNotes={hasUnreadReleaseNotes}
         navItems={visibleNavItems}
       />
       <main className="mx-auto w-full max-w-7xl px-4 py-7 sm:px-6 md:px-10 md:py-10">
         {children}
       </main>
-      <BottomNav feedUnreadCount={visibleFeedUnreadCount} navItems={visibleNavItems} />
+      <BottomNav
+        feedUnreadCount={visibleFeedUnreadCount}
+        feedbackUnreadCount={feedbackUnreadCount}
+        navItems={visibleNavItems}
+      />
     </div>
   );
 }
@@ -102,30 +109,34 @@ export function AppShell({
 function TopNav({
   user,
   feedUnreadCount,
+  feedbackUnreadCount,
   hasUnreadReleaseNotes,
   navItems,
 }: {
   user: ClubUser;
   feedUnreadCount: number;
+  feedbackUnreadCount: number;
   hasUnreadReleaseNotes: boolean;
   navItems: readonly ClubNavItem[];
 }) {
   const pathname = usePathname();
+  const desktopNavItems = navItems.filter((item) => item.href !== "/feedback");
 
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--line-strong)] bg-[color-mix(in_srgb,var(--paper)_86%,transparent)] backdrop-blur-xl">
       <div className="mx-auto flex h-[61px] max-w-7xl items-center gap-4 px-4 sm:px-6 md:px-10">
         <BrandMark />
         <nav className="ml-5 hidden items-center gap-1 md:flex">
-          {navItems.map(({ href, label }) => {
+          {desktopNavItems.map(({ href, label }) => {
             const active = pathname === href || pathname.startsWith(`${href}/`);
-            const showUnread = href === "/feed" && !active && feedUnreadCount > 0;
+            const unreadCount = href === "/feed" ? feedUnreadCount : 0;
+            const showUnread = !active && unreadCount > 0;
 
             return (
               <Link
                 key={href}
                 href={href}
-                aria-label={showUnread ? `${label}, ${feedUnreadCount} unread` : label}
+                aria-label={showUnread ? `${label}, ${unreadCount} unread` : label}
                 className={cn(
                   "relative rounded-md px-4 py-2.5 font-display text-[15px] font-extrabold transition-colors",
                   active
@@ -134,7 +145,7 @@ function TopNav({
                 )}
               >
                 {label}
-                {showUnread && <UnreadBadge count={feedUnreadCount} className="-right-1 top-1" />}
+                {showUnread && <UnreadBadge count={unreadCount} className="-right-1 top-1" />}
                 {active && (
                   <span className="absolute inset-x-3 -bottom-[11px] h-0.5 bg-[var(--accent)]" />
                 )}
@@ -143,6 +154,26 @@ function TopNav({
           })}
         </nav>
         <div className="ml-auto flex items-center gap-3">
+          <Link
+            aria-label={
+              feedbackUnreadCount > 0 && !pathname.startsWith("/feedback")
+                ? `Ideas, ${feedbackUnreadCount} unread`
+                : "Ideas"
+            }
+            className={cn(
+              buttonVariants({ variant: "quiet", size: "icon" }),
+              "relative size-9 px-0",
+              pathname.startsWith("/feedback")
+                && "bg-[color-mix(in_srgb,var(--ink)_12%,transparent)] text-[var(--ink)]",
+            )}
+            href="/feedback"
+            title="Ideas & feedback"
+          >
+            <Lightbulb className="size-4" aria-hidden="true" />
+            {feedbackUnreadCount > 0 && !pathname.startsWith("/feedback") && (
+              <UnreadBadge count={feedbackUnreadCount} className="-right-1 -top-1" />
+            )}
+          </Link>
           <Link
             aria-label={
               hasReleaseNotes
@@ -205,9 +236,11 @@ function UpdateIndicator() {
 
 function BottomNav({
   feedUnreadCount,
+  feedbackUnreadCount,
   navItems,
 }: {
   feedUnreadCount: number;
+  feedbackUnreadCount: number;
   navItems: readonly ClubNavItem[];
 }) {
   const pathname = usePathname();
@@ -220,20 +253,26 @@ function BottomNav({
       >
         {navItems.map(({ href, label, Icon }) => {
           const active = pathname === href || pathname.startsWith(`${href}/`);
-          const showUnread = href === "/feed" && !active && feedUnreadCount > 0;
+          const unreadCount =
+            href === "/feed"
+              ? feedUnreadCount
+              : href === "/feedback"
+                ? feedbackUnreadCount
+                : 0;
+          const showUnread = !active && unreadCount > 0;
 
           return (
             <Link
               key={href}
               href={href}
-              aria-label={showUnread ? `${label}, ${feedUnreadCount} unread` : label}
+              aria-label={showUnread ? `${label}, ${unreadCount} unread` : label}
               className={cn(
                 "relative flex min-h-16 flex-col items-center justify-center gap-1 px-0.5 text-center transition-colors",
                 active ? "text-[var(--ink)]" : "text-[var(--ink-soft)]",
               )}
             >
               {active && <span className="absolute top-0 h-0.5 w-8 bg-[var(--accent)]" />}
-              {showUnread && <UnreadBadge count={feedUnreadCount} className="right-4 top-2" />}
+              {showUnread && <UnreadBadge count={unreadCount} className="right-4 top-2" />}
               <Icon className="size-4" strokeWidth={2.2} />
               <span className="mono text-[9px]">{label}</span>
             </Link>
