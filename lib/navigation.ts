@@ -12,11 +12,11 @@ export const clubNavItems = [
   { href: "/pick", label: "My Pick", Icon: Disc3 },
   { href: "/board", label: "The Board", Icon: Grid3X3 },
   { href: "/feed", label: "The Feed", Icon: MessageSquareText },
-  { href: "/feedback", label: "Ideas", Icon: Lightbulb },
   { href: "/catalog", label: "The 500", Icon: ListMusic },
   { href: "/groups", label: "Groups", Icon: Users },
   { href: "/history", label: "Reviews", Icon: MessageSquareText },
   { href: "/stats", label: "Stats", Icon: ChartNoAxesColumn },
+  { href: "/feedback", label: "Ideas", Icon: Lightbulb },
 ] as const;
 
 export type ClubNavItem = (typeof clubNavItems)[number];
