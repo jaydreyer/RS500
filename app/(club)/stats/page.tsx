@@ -104,7 +104,7 @@ export default async function StatsPage() {
 
         <div className="mt-4 grid gap-4 lg:grid-cols-3">
           <MemberSuperlative
-            title="Harshest rater"
+            title="Most Critical"
             summary={historyState.stats.harshestRater}
             currentUserId={historyState.currentUser.id}
             value={formatAverage(historyState.stats.harshestRater?.averageFreshRating ?? null)}
