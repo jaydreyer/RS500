@@ -27,6 +27,10 @@ export function loadReviewEnv({ enableDevLogin = true } = {}) {
   if (enableDevLogin) {
     process.env.ENABLE_DEV_LOGIN = "1"
   }
+  process.env.CLUB_ADMIN_EMAILS = withAllowedEmail(
+    process.env.CLUB_ADMIN_EMAILS,
+    "maya.dev@example.com",
+  )
 
   process.env.SERVER_ACTION_ALLOWED_ORIGINS = withAllowedOrigin(
     process.env.SERVER_ACTION_ALLOWED_ORIGINS,
@@ -103,4 +107,16 @@ function withAllowedOrigin(value, originHost) {
   origins.add(originHost)
 
   return [...origins].join(",")
+}
+
+function withAllowedEmail(value, email) {
+  const emails = new Set(
+    (value || "")
+      .split(",")
+      .map((item) => item.trim().toLowerCase())
+      .filter(Boolean),
+  )
+  emails.add(email)
+
+  return [...emails].join(",")
 }

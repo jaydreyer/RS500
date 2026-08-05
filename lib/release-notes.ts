@@ -9,6 +9,20 @@ export type ReleaseNote = {
 
 export const releaseNotes = [
   {
+    date: "2026-08-04",
+    title: "Ideas get a proper feedback loop",
+    summary:
+      "Members can now share feedback privately, follow a response, and support curated ideas they would use too.",
+    added: [
+      "Ideas provides a curated board with plain-language statuses, owner responses, supporter counts, and optional use-case notes.",
+      "My feedback keeps each submission, status update, and conversation together without exposing internal work.",
+      "The admin feedback inbox supports public replies, private notes, duplicate grouping, idea publishing, and selective GitHub promotion.",
+    ],
+    improved: [
+      "Meaningful feedback updates now appear as an unread indicator in navigation.",
+    ],
+  },
+  {
     date: "2026-07-27",
     title: "Stats digs deeper",
     summary:

@@ -57,6 +57,142 @@ const SAMPLE_GROUPS = [
   },
 ]
 
+const SAMPLE_FEEDBACK = {
+  ideas: [
+    {
+      key: "export-history",
+      title: "Export listening history",
+      summary:
+        "Download personal listening history, ratings, and reviews as a CSV for backups or personal analysis.",
+      status: "planned",
+      response:
+        "We agree this would make your listening history more useful outside the app. CSV is the leading format.",
+      supporters: ["maya", "ben", "lena", "omar", "ivy", "nate", "zoe"],
+    },
+    {
+      key: "album-filters",
+      title: "More ways to filter The 500",
+      summary:
+        "Filter the catalog by decade, listening status, rating range, and albums that still need a review.",
+      status: "under_review",
+      response:
+        "We’re looking at a small set of filters that stay useful without making the catalog feel like a spreadsheet.",
+      supporters: ["maya", "lena", "ivy", "rhea"],
+    },
+    {
+      key: "weekly-recap",
+      title: "A weekly club recap",
+      summary:
+        "Show the week’s new reviews, most-discussed albums, and interesting rating movement in one place.",
+      status: "in_progress",
+      response:
+        "A compact recap is in progress. The first version will live inside the app rather than arrive by email.",
+      supporters: ["ben", "omar", "nate", "sam", "jules", "tess"],
+    },
+  ],
+  submissions: [
+    {
+      key: "maya-export",
+      userKey: "maya",
+      kind: "idea",
+      title: "Let me export my reviews",
+      body:
+        "I’d like a CSV with album, artist, rating, review, and date so I can keep a personal archive and play with the data.",
+      status: "planned",
+      ideaKey: "export-history",
+      pageContext: "Reviews",
+      messages: [
+        {
+          authorKey: "maya",
+          fromAdmin: false,
+          body: "CSV would be perfect. I don’t need a styled PDF.",
+        },
+        {
+          authorKey: "maya",
+          fromAdmin: true,
+          body: "That helps. We’re planning around CSV first and will keep the columns straightforward.",
+        },
+      ],
+    },
+    {
+      key: "ben-recap",
+      userKey: "ben",
+      kind: "idea",
+      title: "What happened this week?",
+      body:
+        "When I miss a few days, I want one place to catch up on notable reviews and the albums everyone was talking about.",
+      status: "in_progress",
+      ideaKey: "weekly-recap",
+      pageContext: "The Feed",
+      messages: [
+        {
+          authorKey: "maya",
+          fromAdmin: true,
+          body: "We like this framing. A concise in-app recap is now in progress.",
+        },
+      ],
+    },
+    {
+      key: "lena-filters",
+      userKey: "lena",
+      kind: "idea",
+      title: "Filter the catalog by decade",
+      body:
+        "I’m doing a 1970s run and would love to narrow The 500 by decade and whether I’ve already listened.",
+      status: "under_review",
+      ideaKey: "album-filters",
+      pageContext: "The 500",
+      messages: [],
+    },
+    {
+      key: "omar-rating-edit",
+      userKey: "omar",
+      kind: "question",
+      title: "Can I revise a rating later?",
+      body:
+        "Sometimes an album grows on me after a second listen. Is there a way to update my rating without losing the original review?",
+      status: "needs_clarification",
+      pageContext: "Album detail",
+      messages: [
+        {
+          authorKey: "maya",
+          fromAdmin: true,
+          body: "Would you want the original rating preserved as history, or is replacing it enough?",
+        },
+      ],
+    },
+    {
+      key: "ivy-mobile-scroll",
+      userKey: "ivy",
+      kind: "bug",
+      title: "Catalog jumps on mobile",
+      body:
+        "On my phone, returning from an album sometimes takes me back to the top of the catalog instead of the row I opened.",
+      status: "received",
+      pageContext: "The 500 · iPhone",
+      messages: [],
+    },
+    {
+      key: "nate-private-note",
+      userKey: "nate",
+      kind: "other",
+      title: "Keep my written reviews private",
+      body:
+        "I like sharing ratings but would sometimes prefer a review to be visible only to me. I’m not sure if that fits the club.",
+      status: "not_planned",
+      pageContext: "Reviews",
+      messages: [
+        {
+          authorKey: "maya",
+          fromAdmin: true,
+          body:
+            "We’re keeping club reviews shared because conversation is central to the experience. We may explore private draft notes separately.",
+        },
+      ],
+    },
+  ],
+}
+
 const CURRENT_GROUP_USER_KEYS = new Set(
   SAMPLE_GROUPS.find((group) => group.activeDraw)?.members ?? [],
 )
@@ -296,6 +432,7 @@ export function buildDevSeedPlan({
       lastReadAt: isoDate(baseDate, -1 - index),
       userEmail: user.email,
     })),
+    feedback: SAMPLE_FEEDBACK,
   }
 }
 
@@ -520,6 +657,7 @@ async function seedPocketBase(plan, options) {
   await seedReviewReplies(pb, listenRecords, plan.users, userRecords, options.dryRun, summary)
   const feedPostRecords = await seedFeed(pb, plan.feedPosts, albumRecords, userRecords, options.dryRun, summary)
   await seedFeedReads(pb, plan.feedReads, userRecords, options.dryRun, summary)
+  await seedFeedback(pb, plan.feedback, userRecords, options.dryRun, summary)
 
   return {
     summary,
@@ -1080,6 +1218,130 @@ async function seedFeedReads(pb, feedReads, userRecords, dryRun, summary) {
   }
 }
 
+async function seedFeedback(pb, feedback, userRecords, dryRun, summary) {
+  const ideaRecords = new Map()
+
+  for (const idea of feedback.ideas) {
+    const existing = await getFirst(
+      pb,
+      "feedback_ideas",
+      pb.filter("title = {:title}", { title: idea.title }),
+    )
+    const payload = {
+      title: idea.title,
+      summary: idea.summary,
+      status: idea.status,
+      response: idea.response,
+      support_count: idea.supporters.length,
+    }
+    const record = existing
+      ? dryRun
+        ? { ...existing, ...payload }
+        : await pb.collection("feedback_ideas").update(existing.id, payload, { requestKey: null })
+      : dryRun
+        ? { id: `dry-feedback-idea-${idea.key}`, ...payload }
+        : await pb.collection("feedback_ideas").create(payload, { requestKey: null })
+
+    ideaRecords.set(idea.key, record)
+    summary.feedbackIdeas[existing ? "updated" : "created"] += 1
+
+    for (const supporterKey of idea.supporters) {
+      const user = findUserByKey(userRecords, supporterKey)
+      const support = await getFirst(
+        pb,
+        "feedback_idea_support",
+        pb.filter("idea = {:idea} && user = {:user}", {
+          idea: record.id,
+          user: user.id,
+        }),
+      )
+
+      if (support) {
+        summary.feedbackSupports.skipped += 1
+      } else {
+        if (!dryRun) {
+          await pb.collection("feedback_idea_support").create(
+            {
+              idea: record.id,
+              user: user.id,
+              reason:
+                supporterKey === "maya" && idea.key === "export-history"
+                  ? "I keep a personal spreadsheet of everything I listen to."
+                  : "",
+            },
+            { requestKey: null },
+          )
+        }
+        summary.feedbackSupports.created += 1
+      }
+    }
+  }
+
+  for (const submission of feedback.submissions) {
+    const user = findUserByKey(userRecords, submission.userKey)
+    const idea = submission.ideaKey ? ideaRecords.get(submission.ideaKey) : null
+    const existing = await getFirst(
+      pb,
+      "feedback_submissions",
+      pb.filter("user = {:user} && title = {:title}", {
+        user: user.id,
+        title: submission.title,
+      }),
+    )
+    const payload = {
+      user: user.id,
+      kind: submission.kind,
+      title: submission.title,
+      body: submission.body,
+      status: submission.status,
+      page_context: submission.pageContext,
+      user_unread: submission.messages.some((message) => message.fromAdmin),
+      ...(idea ? { idea: idea.id } : {}),
+    }
+    const record = existing
+      ? dryRun
+        ? { ...existing, ...payload }
+        : await pb.collection("feedback_submissions").update(existing.id, payload, {
+          requestKey: null,
+        })
+      : dryRun
+        ? { id: `dry-feedback-${submission.key}`, ...payload }
+        : await pb.collection("feedback_submissions").create(payload, { requestKey: null })
+
+    summary.feedbackSubmissions[existing ? "updated" : "created"] += 1
+
+    for (const message of submission.messages) {
+      const author = findUserByKey(userRecords, message.authorKey)
+      const existingMessage = await getFirst(
+        pb,
+        "feedback_messages",
+        pb.filter("submission = {:submission} && author = {:author} && body = {:body}", {
+          submission: record.id,
+          author: author.id,
+          body: message.body,
+        }),
+      )
+
+      if (existingMessage) {
+        summary.feedbackMessages.skipped += 1
+      } else {
+        if (!dryRun) {
+          await pb.collection("feedback_messages").create(
+            {
+              submission: record.id,
+              author: author.id,
+              from_admin: message.fromAdmin,
+              body: message.body,
+            },
+            { requestKey: null },
+          )
+        }
+        summary.feedbackMessages.created += 1
+      }
+    }
+  }
+}
+
 function createSummary() {
   return {
     albums: emptyChangeSummary(),
@@ -1088,6 +1350,10 @@ function createSummary() {
     feedReactions: emptyChangeSummary(),
     feedReads: emptyChangeSummary(),
     feedReplies: emptyChangeSummary(),
+    feedbackIdeas: emptyChangeSummary(),
+    feedbackMessages: emptyChangeSummary(),
+    feedbackSubmissions: emptyChangeSummary(),
+    feedbackSupports: emptyChangeSummary(),
     groupDraws: emptyChangeSummary(),
     groupMembers: emptyChangeSummary(),
     groups: emptyChangeSummary(),
@@ -1121,6 +1387,8 @@ function printPlanSummary(plan, label) {
   console.log(`- Albums covered by listens: ${coveredAlbumRanks.size}`)
   console.log(`- Active fresh picks: ${activeListens.length}`)
   console.log(`- Feed posts: ${plan.feedPosts.length}`)
+  console.log(`- Feedback submissions: ${plan.feedback.submissions.length}`)
+  console.log(`- Public feedback ideas: ${plan.feedback.ideas.length}`)
   console.log(
     `- Feed replies: ${plan.feedPosts.reduce((total, post) => total + post.replies.length, 0)}`,
   )

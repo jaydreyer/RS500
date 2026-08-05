@@ -74,6 +74,10 @@ test("display names must be recognizable but compact", () => {
 
 test("admin email matching is case-insensitive and requires configuration", () => {
   assert.equal(isAdminEmail(" owner@example.com ", "OWNER@example.com"), true)
+  assert.equal(
+    isAdminEmail("maya@example.com", "owner@example.com", "maya@example.com,ben@example.com"),
+    true,
+  )
   assert.equal(isAdminEmail("member@example.com", "owner@example.com"), false)
   assert.equal(isAdminEmail("owner@example.com", undefined), false)
 })

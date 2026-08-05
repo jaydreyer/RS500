@@ -22,10 +22,12 @@ export function AppShell({
   children,
   user,
   feedUnreadCount,
+  feedbackUnreadCount,
 }: {
   children: React.ReactNode;
   user: ClubUser;
   feedUnreadCount: number;
+  feedbackUnreadCount: number;
 }) {
   const pathname = usePathname();
   const [remoteFeedUnreadCount, setRemoteFeedUnreadCount] = useState(feedUnreadCount);
@@ -88,13 +90,18 @@ export function AppShell({
       <TopNav
         user={user}
         feedUnreadCount={visibleFeedUnreadCount}
+        feedbackUnreadCount={feedbackUnreadCount}
         hasUnreadReleaseNotes={hasUnreadReleaseNotes}
         navItems={visibleNavItems}
       />
       <main className="mx-auto w-full max-w-7xl px-4 py-7 sm:px-6 md:px-10 md:py-10">
         {children}
       </main>
-      <BottomNav feedUnreadCount={visibleFeedUnreadCount} navItems={visibleNavItems} />
+      <BottomNav
+        feedUnreadCount={visibleFeedUnreadCount}
+        feedbackUnreadCount={feedbackUnreadCount}
+        navItems={visibleNavItems}
+      />
     </div>
   );
 }
@@ -102,11 +109,13 @@ export function AppShell({
 function TopNav({
   user,
   feedUnreadCount,
+  feedbackUnreadCount,
   hasUnreadReleaseNotes,
   navItems,
 }: {
   user: ClubUser;
   feedUnreadCount: number;
+  feedbackUnreadCount: number;
   hasUnreadReleaseNotes: boolean;
   navItems: readonly ClubNavItem[];
 }) {
@@ -119,13 +128,19 @@ function TopNav({
         <nav className="ml-5 hidden items-center gap-1 md:flex">
           {navItems.map(({ href, label }) => {
             const active = pathname === href || pathname.startsWith(`${href}/`);
-            const showUnread = href === "/feed" && !active && feedUnreadCount > 0;
+            const unreadCount =
+              href === "/feed"
+                ? feedUnreadCount
+                : href === "/feedback"
+                  ? feedbackUnreadCount
+                  : 0;
+            const showUnread = !active && unreadCount > 0;
 
             return (
               <Link
                 key={href}
                 href={href}
-                aria-label={showUnread ? `${label}, ${feedUnreadCount} unread` : label}
+                aria-label={showUnread ? `${label}, ${unreadCount} unread` : label}
                 className={cn(
                   "relative rounded-md px-4 py-2.5 font-display text-[15px] font-extrabold transition-colors",
                   active
@@ -134,7 +149,7 @@ function TopNav({
                 )}
               >
                 {label}
-                {showUnread && <UnreadBadge count={feedUnreadCount} className="-right-1 top-1" />}
+                {showUnread && <UnreadBadge count={unreadCount} className="-right-1 top-1" />}
                 {active && (
                   <span className="absolute inset-x-3 -bottom-[11px] h-0.5 bg-[var(--accent)]" />
                 )}
@@ -205,9 +220,11 @@ function UpdateIndicator() {
 
 function BottomNav({
   feedUnreadCount,
+  feedbackUnreadCount,
   navItems,
 }: {
   feedUnreadCount: number;
+  feedbackUnreadCount: number;
   navItems: readonly ClubNavItem[];
 }) {
   const pathname = usePathname();
@@ -220,20 +237,26 @@ function BottomNav({
       >
         {navItems.map(({ href, label, Icon }) => {
           const active = pathname === href || pathname.startsWith(`${href}/`);
-          const showUnread = href === "/feed" && !active && feedUnreadCount > 0;
+          const unreadCount =
+            href === "/feed"
+              ? feedUnreadCount
+              : href === "/feedback"
+                ? feedbackUnreadCount
+                : 0;
+          const showUnread = !active && unreadCount > 0;
 
           return (
             <Link
               key={href}
               href={href}
-              aria-label={showUnread ? `${label}, ${feedUnreadCount} unread` : label}
+              aria-label={showUnread ? `${label}, ${unreadCount} unread` : label}
               className={cn(
                 "relative flex min-h-16 flex-col items-center justify-center gap-1 px-0.5 text-center transition-colors",
                 active ? "text-[var(--ink)]" : "text-[var(--ink-soft)]",
               )}
             >
               {active && <span className="absolute top-0 h-0.5 w-8 bg-[var(--accent)]" />}
-              {showUnread && <UnreadBadge count={feedUnreadCount} className="right-4 top-2" />}
+              {showUnread && <UnreadBadge count={unreadCount} className="right-4 top-2" />}
               <Icon className="size-4" strokeWidth={2.2} />
               <span className="mono text-[9px]">{label}</span>
             </Link>

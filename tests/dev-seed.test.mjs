@@ -56,6 +56,8 @@ test("dev seed plan creates rich sample activity across app surfaces", () => {
   assert.equal(plan.groups.length, 3)
   assert.ok(plan.groupDraws.length >= 18)
   assert.ok(plan.feedPosts.length >= 60)
+  assert.ok(plan.feedback.ideas.length >= 3)
+  assert.ok(plan.feedback.submissions.length >= 6)
   assert.ok(plan.listens.length > 900)
   assert.ok(Array.from(activeByUser.values()).every((count) => count === 1))
 })
