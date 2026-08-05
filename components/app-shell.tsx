@@ -1,6 +1,6 @@
 "use client";
 
-import { LogOut, Megaphone } from "lucide-react";
+import { Lightbulb, LogOut, Megaphone } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useSyncExternalStore } from "react";
@@ -120,20 +120,16 @@ function TopNav({
   navItems: readonly ClubNavItem[];
 }) {
   const pathname = usePathname();
+  const desktopNavItems = navItems.filter((item) => item.href !== "/feedback");
 
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--line-strong)] bg-[color-mix(in_srgb,var(--paper)_86%,transparent)] backdrop-blur-xl">
       <div className="mx-auto flex h-[61px] max-w-7xl items-center gap-4 px-4 sm:px-6 md:px-10">
         <BrandMark />
         <nav className="ml-5 hidden items-center gap-1 md:flex">
-          {navItems.map(({ href, label }) => {
+          {desktopNavItems.map(({ href, label }) => {
             const active = pathname === href || pathname.startsWith(`${href}/`);
-            const unreadCount =
-              href === "/feed"
-                ? feedUnreadCount
-                : href === "/feedback"
-                  ? feedbackUnreadCount
-                  : 0;
+            const unreadCount = href === "/feed" ? feedUnreadCount : 0;
             const showUnread = !active && unreadCount > 0;
 
             return (
@@ -158,6 +154,26 @@ function TopNav({
           })}
         </nav>
         <div className="ml-auto flex items-center gap-3">
+          <Link
+            aria-label={
+              feedbackUnreadCount > 0 && !pathname.startsWith("/feedback")
+                ? `Ideas, ${feedbackUnreadCount} unread`
+                : "Ideas"
+            }
+            className={cn(
+              buttonVariants({ variant: "quiet", size: "icon" }),
+              "relative size-9 px-0",
+              pathname.startsWith("/feedback")
+                && "bg-[color-mix(in_srgb,var(--ink)_12%,transparent)] text-[var(--ink)]",
+            )}
+            href="/feedback"
+            title="Ideas & feedback"
+          >
+            <Lightbulb className="size-4" aria-hidden="true" />
+            {feedbackUnreadCount > 0 && !pathname.startsWith("/feedback") && (
+              <UnreadBadge count={feedbackUnreadCount} className="-right-1 -top-1" />
+            )}
+          </Link>
           <Link
             aria-label={
               hasReleaseNotes
