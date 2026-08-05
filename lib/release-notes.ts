@@ -9,6 +9,19 @@ export type ReleaseNote = {
 
 export const releaseNotes = [
   {
+    date: "2026-08-04",
+    title: "Your ratings, ready to share",
+    summary:
+      "Member review pages now make it easy to see—and share—the albums someone has rated without all the review text.",
+    added: [
+      "Switch between the complete review feed and a compact list of album titles, artists, and scores.",
+      "Copy any member’s ratings as clean plain text, ready to paste into a message, post, or document.",
+    ],
+    improved: [
+      "List view has its own shareable address, and copied ratings follow the sort order currently on screen.",
+    ],
+  },
+  {
     date: "2026-07-27",
     title: "Stats digs deeper",
     summary:
