@@ -16,6 +16,7 @@ export const releaseNotes = [
     added: [
       "Switch between the complete review feed and a compact list of album titles, artists, and scores.",
       "Copy any member’s ratings as clean plain text, ready to paste into a message, post, or document.",
+      "Download your own ratings, review text, dates, and album details as a CSV from your review page or Profile settings.",
     ],
     improved: [
       "List view has its own shareable address, and copied ratings follow the sort order currently on screen.",
