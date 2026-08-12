@@ -183,3 +183,5 @@ Before production use:
 - Rehearse schema/rule changes against a non-production PocketBase instance.
 
 See [docs/pocketbase-setup.md](docs/pocketbase-setup.md) for backend details and [docs/mvp-verification-checklist.md](docs/mvp-verification-checklist.md) for the acceptance checklist.
+
+For the proposed future option of moving the home-hosted PocketBase backend to Amazon Lightsail, including estimated costs, backups, migration, rollback, and an AWS learning path, see [docs/aws-hosting-plan.md](docs/aws-hosting-plan.md). This is a reference plan only; the current production hosting has not changed.
