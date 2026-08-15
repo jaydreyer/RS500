@@ -34,6 +34,7 @@ export type FeedAlbum = {
   artist: string;
   year: number;
   coverUrl: string;
+  coverImage: string;
 };
 
 export type FeedReaction = {
@@ -60,6 +61,8 @@ export type FeedPost = {
   albumId: string | null;
   body: string;
   imageUrl: string | null;
+  imageIsAlbumCover: boolean;
+  albumCoverImage: string | null;
   created: string;
   updated: string;
   user: FeedMember;
@@ -207,6 +210,8 @@ function mapPost(record: RecordLike): FeedPost {
     albumId: asNullableString(record.album),
     body: asString(record.body),
     imageUrl: getFileUrl(record, "image", "960x0"),
+    imageIsAlbumCover: asBoolean(record.image_is_album_cover),
+    albumCoverImage: asNullableString(record.album_cover_image),
     created: asString(record.created),
     updated: asString(record.updated),
     user: mapMember(getExpandedRecord(record, "user")),
@@ -255,6 +260,7 @@ function mapAlbum(record: RecordLike): FeedAlbum {
     artist: asString(record.artist),
     year: asNumber(record.year),
     coverUrl: getAlbumCoverUrl(record),
+    coverImage: asString(record.cover_image),
   };
 }
 
@@ -327,4 +333,8 @@ function asNullableString(value: unknown) {
 
 function asNumber(value: unknown) {
   return typeof value === "number" && Number.isFinite(value) ? value : 0;
+}
+
+function asBoolean(value: unknown) {
+  return value === true;
 }

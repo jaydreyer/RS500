@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 
 import { consumeUserActionLimit } from "@/lib/action-rate-limit";
 import { getAuthenticatedPocketBase } from "@/lib/auth";
+import { filesHaveMatchingContents } from "@/lib/feed-album-cover-match";
 import {
   extractMentionHandles,
   resolveMentionRecipients,
@@ -74,6 +75,16 @@ export async function createFeedPostAction(
 
     if (image) {
       payload.set("image", image);
+    }
+
+    const albumCoverCheck = await checkUploadedAlbumCover({ albumId, image, pb });
+
+    if (albumCoverCheck.checked) {
+      payload.set("image_is_album_cover", String(Boolean(albumCoverCheck.coverImage)));
+    }
+
+    if (albumCoverCheck.coverImage) {
+      payload.set("album_cover_image", albumCoverCheck.coverImage);
     }
 
     const post = await pb.collection("feed_posts").create(payload, {
@@ -377,6 +388,47 @@ function parseOptionalImage(value: FormDataEntryValue | null) {
   }
 
   return value;
+}
+
+async function checkUploadedAlbumCover({
+  albumId,
+  image,
+  pb,
+}: {
+  albumId: string;
+  image: File | null;
+  pb: Awaited<ReturnType<typeof getAuthenticatedPocketBase>>["pb"];
+}) {
+  if (!albumId || !image) {
+    return { checked: false, coverImage: null };
+  }
+
+  try {
+    const album = await pb.collection("albums").getOne(albumId, {
+      fields: "id,collectionId,collectionName,cover_image",
+      requestKey: null,
+    });
+    const coverImage = asString(album.cover_image);
+
+    if (!coverImage) {
+      return { checked: true, coverImage: null };
+    }
+
+    const response = await fetch(pb.files.getURL(album, coverImage));
+
+    if (!response.ok) {
+      return { checked: false, coverImage: null };
+    }
+
+    return {
+      checked: true,
+      coverImage: (await filesHaveMatchingContents(image, await response.blob()))
+        ? coverImage
+        : null,
+    };
+  } catch {
+    return { checked: false, coverImage: null };
+  }
 }
 
 function isFileLike(value: FormDataEntryValue | null): value is File {
