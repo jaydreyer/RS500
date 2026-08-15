@@ -15,6 +15,7 @@ import {
   useTransition,
 } from "react";
 import {
+  ChevronRight,
   Disc3,
   ImagePlus,
   Link2,
@@ -46,6 +47,7 @@ import {
   applyReviewMarkdownFormat,
   type ReviewMarkdownFormat,
 } from "@/lib/review-markdown-formatting";
+import { shouldShowFeedAlbumCard } from "@/lib/feed-album-card";
 import { cn } from "@/lib/utils";
 import type {
   FeedAlbum,
@@ -913,7 +915,6 @@ function FeedPostCard({
             <span className="mono text-xs text-[var(--ink-faint)]">
               {formatTime(post.created)}
             </span>
-            {post.album && <AlbumChip album={post.album} />}
           </div>
           {post.body && (
             <FeedMarkdown
@@ -921,6 +922,13 @@ function FeedPostCard({
               className="mt-3 font-quote text-xl leading-snug text-[var(--ink)]"
             />
           )}
+          {post.album &&
+            shouldShowFeedAlbumCard({
+              albumCoverImage: post.albumCoverImage,
+              currentAlbumCoverImage: post.album.coverImage,
+              hasImage: Boolean(post.imageUrl),
+              imageIsAlbumCover: post.imageIsAlbumCover,
+            }) && <AlbumAttachmentCard album={post.album} />}
         </div>
         {isMine && (
           <form action={deleteFeedPostAction}>
@@ -1734,16 +1742,32 @@ function getExtraReactionLabel(emoji: string) {
   return EXTRA_REACTIONS.find((reaction) => reaction.emoji === emoji)?.label ?? "Emoji reaction";
 }
 
-function AlbumChip({ album }: { album: FeedAlbum }) {
+function AlbumAttachmentCard({ album }: { album: FeedAlbum }) {
   return (
     <Link
       href={`/albums/${album.id}`}
-      className="mono inline-flex max-w-full items-center gap-1.5 rounded-full border border-[var(--line-strong)] bg-[var(--paper-2)] px-2 py-1 text-[10px] text-[var(--ink-soft)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
+      className="group mt-4 grid w-full grid-cols-[64px_minmax(0,1fr)_auto] items-center gap-3 rounded-md border border-[var(--line-strong)] bg-[var(--paper-2)] p-2.5 text-left transition-colors hover:border-[var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
     >
-      <Music2 className="size-3 shrink-0" aria-hidden="true" />
-      <span className="truncate">
-        #{album.rank} {album.title}
+      <AlbumCover
+        rank={album.rank}
+        src={album.coverUrl}
+        title={album.title}
+        sizes="64px"
+        className="rounded-sm shadow-none"
+      />
+      <span className="min-w-0">
+        <span className="tag block text-[var(--ink-faint)]">album</span>
+        <span className="title-wrap block font-display text-base font-extrabold leading-tight text-[var(--ink)] group-hover:text-[var(--accent)]">
+          {album.title}
+        </span>
+        <span className="block truncate text-sm text-[var(--ink-soft)]">
+          {album.artist} <span aria-hidden="true">·</span> {album.year}
+        </span>
       </span>
+      <ChevronRight
+        className="size-5 shrink-0 text-[var(--ink-faint)] transition-colors group-hover:text-[var(--accent)]"
+        aria-hidden="true"
+      />
     </Link>
   );
 }
