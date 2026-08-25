@@ -1,6 +1,9 @@
 import Markdown from "react-markdown";
 
-const REVIEW_ALLOWED_ELEMENTS = ["p", "strong", "em", "br", "ol", "ul", "li"] as const;
+import {
+  REVIEW_ALLOWED_ELEMENTS,
+  REVIEW_MARKDOWN_PLUGINS,
+} from "@/lib/review-markdown";
 
 export function ReviewMarkdown({
   children,
@@ -15,6 +18,7 @@ export function ReviewMarkdown({
     <div className={className}>
       <Markdown
         allowedElements={[...REVIEW_ALLOWED_ELEMENTS]}
+        remarkPlugins={REVIEW_MARKDOWN_PLUGINS}
         skipHtml
         unwrapDisallowed
         components={{
@@ -49,6 +53,60 @@ export function ReviewMarkdown({
           },
           em({ children }) {
             return <em className="italic">{children}</em>;
+          },
+          del({ children }) {
+            return <del className="line-through">{children}</del>;
+          },
+          h1({ children }) {
+            return <h1 className="mt-5 text-3xl first:mt-0">{children}</h1>;
+          },
+          h2({ children }) {
+            return <h2 className="mt-5 text-2xl first:mt-0">{children}</h2>;
+          },
+          h3({ children }) {
+            return <h3 className="mt-4 text-xl first:mt-0">{children}</h3>;
+          },
+          h4({ children }) {
+            return <h4 className="mt-4 text-lg first:mt-0">{children}</h4>;
+          },
+          h5({ children }) {
+            return <h5 className="mt-4 text-base first:mt-0">{children}</h5>;
+          },
+          h6({ children }) {
+            return <h6 className="mt-4 text-sm first:mt-0">{children}</h6>;
+          },
+          a({ children, href }) {
+            return (
+              <a
+                className="font-semibold text-[var(--accent)] underline decoration-1 underline-offset-2 hover:text-[var(--ink)]"
+                href={href}
+                rel="noreferrer"
+                target="_blank"
+              >
+                {children}
+              </a>
+            );
+          },
+          blockquote({ children }) {
+            return (
+              <blockquote className="mt-3 border-l-2 border-[var(--accent)] pl-4 text-[var(--ink-soft)]">
+                {children}
+              </blockquote>
+            );
+          },
+          pre({ children }) {
+            return (
+              <pre className="mt-3 overflow-x-auto rounded-md bg-[var(--paper-3)] p-3 text-sm leading-6">
+                {children}
+              </pre>
+            );
+          },
+          code({ children }) {
+            return (
+              <code className="rounded bg-[var(--paper-3)] px-1 py-0.5 font-mono text-[0.9em]">
+                {children}
+              </code>
+            );
           },
         }}
       >
