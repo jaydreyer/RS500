@@ -48,6 +48,7 @@ import {
   type ReviewMarkdownFormat,
 } from "@/lib/review-markdown-formatting";
 import { shouldShowFeedAlbumCard } from "@/lib/feed-album-card";
+import { FEED_POST_MAX_LENGTH } from "@/lib/feed-post";
 import { cn } from "@/lib/utils";
 import type {
   FeedAlbum,
@@ -512,6 +513,9 @@ function FeedComposer({
     postAction,
     INITIAL_POST_STATE,
   );
+  const postCharacterCount = body.length;
+  const postCharacterOverage = Math.max(0, postCharacterCount - FEED_POST_MAX_LENGTH);
+  const isPostOverLimit = postCharacterOverage > 0;
 
   return (
     <form
@@ -539,11 +543,12 @@ function FeedComposer({
             id="feed-post-body"
             className="min-h-28 text-xl leading-snug"
             containerClassName="border-0 bg-transparent shadow-none focus-within:shadow-none"
-            maxLength={560}
+            maxLength={FEED_POST_MAX_LENGTH}
             members={members}
             name="body"
             onValueChange={setBody}
             placeholder="Post to The Feed"
+            preserveOverLimit
             value={body}
           />
         </div>
@@ -574,10 +579,25 @@ function FeedComposer({
           onSelectedAlbumIdChange={setSelectedAlbumId}
         />
 
-        <Button type="submit" variant="accent" disabled={isPending || isImageProcessing}>
+        <Button
+          type="submit"
+          variant="accent"
+          disabled={isPending || isImageProcessing || isPostOverLimit}
+        >
           <Send className="size-4" aria-hidden="true" />
           {isPending ? "Posting" : isImageProcessing ? "Preparing" : "Post"}
         </Button>
+        <span
+          className={cn(
+            "ml-auto tag",
+            isPostOverLimit && "text-[var(--accent)]",
+          )}
+          aria-live="polite"
+        >
+          {isPostOverLimit
+            ? `${postCharacterCount.toLocaleString()} / ${FEED_POST_MAX_LENGTH.toLocaleString()} · ${postCharacterOverage.toLocaleString()} over`
+            : `${postCharacterCount.toLocaleString()} / ${FEED_POST_MAX_LENGTH.toLocaleString()}`}
+        </span>
         {(imageMessage || imageError) && (
           <p
             className={cn(
@@ -1080,6 +1100,7 @@ function MentionTextarea({
   name,
   onValueChange,
   placeholder,
+  preserveOverLimit = false,
   value,
 }: {
   className?: string;
@@ -1090,12 +1111,13 @@ function MentionTextarea({
   name: string;
   onValueChange: (value: string) => void;
   placeholder: string;
+  preserveOverLimit?: boolean;
   value: string;
 }) {
   const ref = useRef<HTMLTextAreaElement>(null);
   const mention = useMentionEditor({
     inputRef: ref,
-    maxLength,
+    maxLength: preserveOverLimit ? undefined : maxLength,
     members,
     onValueChange,
     value,
@@ -1114,7 +1136,7 @@ function MentionTextarea({
       format,
     );
 
-    if (result.value.length > maxLength) {
+    if (!preserveOverLimit && result.value.length > maxLength) {
       return;
     }
 
@@ -1141,7 +1163,7 @@ function MentionTextarea({
           "block w-full resize-y bg-transparent px-3.5 py-3 outline-none placeholder:text-[var(--ink-soft)]",
           className,
         )}
-        maxLength={maxLength}
+        maxLength={preserveOverLimit ? undefined : maxLength}
         name={name}
         onChange={(event) => mention.handleChange(event.currentTarget)}
         onKeyDown={mention.handleKeyDown}
@@ -1225,7 +1247,7 @@ function useMentionEditor<TElement extends MentionEditorElement>({
   value,
 }: {
   inputRef: RefObject<TElement | null>;
-  maxLength: number;
+  maxLength?: number;
   members: FeedMentionMember[];
   onValueChange: (value: string) => void;
   value: string;
@@ -1261,11 +1283,12 @@ function useMentionEditor<TElement extends MentionEditorElement>({
       insertedMention,
       value.slice(activeMention.end),
     ]
-      .join("")
-      .slice(0, maxLength);
-    const nextCaret = Math.min(activeMention.start + insertedMention.length, nextValue.length);
+      .join("");
+    const boundedValue =
+      typeof maxLength === "number" ? nextValue.slice(0, maxLength) : nextValue;
+    const nextCaret = Math.min(activeMention.start + insertedMention.length, boundedValue.length);
 
-    onValueChange(nextValue);
+    onValueChange(boundedValue);
     setCaret(nextCaret);
     setActiveIndex(0);
     window.requestAnimationFrame(() => {
