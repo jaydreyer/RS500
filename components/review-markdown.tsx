@@ -108,6 +108,35 @@ export function ReviewMarkdown({
               </code>
             );
           },
+          table({ children }) {
+            return (
+              <div className="mt-3 overflow-x-auto">
+                <table className="w-full min-w-max border-collapse text-left text-sm leading-6">
+                  {children}
+                </table>
+              </div>
+            );
+          },
+          thead({ children }) {
+            return <thead className="border-b-2 border-[var(--line)]">{children}</thead>;
+          },
+          tbody({ children }) {
+            return <tbody className="divide-y divide-[var(--line)]">{children}</tbody>;
+          },
+          th({ children, ...props }) {
+            return (
+              <th className="px-3 py-2 font-extrabold text-[var(--ink)]" {...props}>
+                {children}
+              </th>
+            );
+          },
+          td({ children, ...props }) {
+            return (
+              <td className="px-3 py-2 align-top" {...props}>
+                {children}
+              </td>
+            );
+          },
         }}
       >
         {children}
