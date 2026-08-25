@@ -55,10 +55,20 @@ test("preserves the original review Markdown subset", () => {
   assert.match(html, /<ol>\n?<li>Thriller<\/li>\n?<li>Human Nature<\/li>\n?<\/ol>/);
 });
 
+test("renders Markdown tables while preserving their alignment and inline formatting", () => {
+  const html = renderReviewMarkdown(`| Rank | Artist | Album | Sales |
+| :--- | :----: | ----: | ---: |
+| 1 | Michael Jackson | *Thriller* | **70M** |`);
+
+  assert.match(html, /<table>/);
+  assert.match(html, /<thead>\n?<tr>\n?<th style="text-align:left">Rank<\/th>\n?<th style="text-align:center">Artist<\/th>\n?<th style="text-align:right">Album<\/th>\n?<th style="text-align:right">Sales<\/th>/);
+  assert.match(html, /<tbody>\n?<tr>\n?<td style="text-align:left">1<\/td>\n?<td style="text-align:center">Michael Jackson<\/td>\n?<td style="text-align:right"><em>Thriller<\/em><\/td>\n?<td style="text-align:right"><strong>70M<\/strong><\/td>/);
+});
+
 test("keeps raw HTML and unsupported visual elements out of reviews", () => {
   const html = renderReviewMarkdown(
-    '<script>alert("nope")</script>\n\n![album art](https://example.com/cover.png)\n\n| Track | Score |\n| --- | --- |\n| Beat It | 10 |',
+    '<script>alert("nope")</script>\n\n![album art](https://example.com/cover.png)',
   );
 
-  assert.doesNotMatch(html, /<script|<img|<table/i);
+  assert.doesNotMatch(html, /<script|<img/i);
 });

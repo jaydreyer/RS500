@@ -1,5 +1,7 @@
 import { gfmStrikethroughFromMarkdown } from "mdast-util-gfm-strikethrough";
+import { gfmTableFromMarkdown } from "mdast-util-gfm-table";
 import { gfmStrikethrough } from "micromark-extension-gfm-strikethrough";
+import { gfmTable } from "micromark-extension-gfm-table";
 import type { Processor } from "unified";
 
 export const REVIEW_ALLOWED_ELEMENTS = [
@@ -21,6 +23,12 @@ export const REVIEW_ALLOWED_ELEMENTS = [
   "blockquote",
   "pre",
   "code",
+  "table",
+  "thead",
+  "tbody",
+  "tr",
+  "th",
+  "td",
 ] as const;
 
 type ReviewMarkdownData = {
@@ -38,4 +46,14 @@ function remarkReviewStrikethrough(this: Processor) {
   fromMarkdownExtensions.push(gfmStrikethroughFromMarkdown());
 }
 
-export const REVIEW_MARKDOWN_PLUGINS = [remarkReviewStrikethrough];
+function remarkReviewTable(this: Processor) {
+  const data = this.data() as ReviewMarkdownData;
+  const micromarkExtensions = data.micromarkExtensions ?? (data.micromarkExtensions = []);
+  const fromMarkdownExtensions =
+    data.fromMarkdownExtensions ?? (data.fromMarkdownExtensions = []);
+
+  micromarkExtensions.push(gfmTable());
+  fromMarkdownExtensions.push(gfmTableFromMarkdown());
+}
+
+export const REVIEW_MARKDOWN_PLUGINS = [remarkReviewStrikethrough, remarkReviewTable];
