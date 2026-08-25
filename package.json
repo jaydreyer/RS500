@@ -26,6 +26,8 @@
     "clsx": "2.1.1",
     "csv-parse": "6.2.1",
     "lucide-react": "1.17.0",
+    "mdast-util-gfm-strikethrough": "^2.0.0",
+    "micromark-extension-gfm-strikethrough": "^2.1.0",
     "next": "16.2.7",
     "pocketbase": "0.27.0",
     "react": "19.2.7",
