@@ -11,6 +11,7 @@ import {
   resolveMentionRecipients,
   type MentionUserRecord,
 } from "@/lib/feed-mentions";
+import { getFeedPostLengthError, normalizeFeedPostBody } from "@/lib/feed-post";
 
 const POST_LIMIT = {
   limit: 24,
@@ -22,7 +23,6 @@ const INLINE_LIMIT = {
   windowMs: 10 * 60 * 1000,
 };
 
-const MAX_POST_BODY = 560;
 const MAX_REPLY_BODY = 280;
 const MAX_IMAGE_SIZE = 8 * 1024 * 1024;
 const ALLOWED_IMAGE_TYPES = new Set([
@@ -45,6 +45,21 @@ export async function createFeedPostAction(
 ): Promise<FeedPostActionState> {
   try {
     const { pb, user } = await getAuthenticatedPocketBase();
+    const submittedBody = formData.get("body");
+    const bodyLengthError = getFeedPostLengthError(
+      typeof submittedBody === "string" ? submittedBody : "",
+    );
+    const body = normalizeFeedPostBody(submittedBody);
+    const albumId = parseOptionalId(formData.get("albumId"));
+    const image = parseOptionalImage(formData.get("image"));
+
+    if (bodyLengthError) {
+      return {
+        status: "error",
+        message: bodyLengthError,
+      };
+    }
+
     const rateLimitError = consumeUserActionLimit("feed:post", user.id, POST_LIMIT);
 
     if (rateLimitError) {
@@ -53,10 +68,6 @@ export async function createFeedPostAction(
         message: rateLimitError,
       };
     }
-
-    const body = parseBody(formData.get("body"), MAX_POST_BODY);
-    const albumId = parseOptionalId(formData.get("albumId"));
-    const image = parseOptionalImage(formData.get("image"));
 
     if (!body && !image) {
       return {
