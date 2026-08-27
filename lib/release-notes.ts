@@ -63,6 +63,20 @@ export const releaseNotes = [
   },
   {
     date: "2026-07-27",
+    title: "Achievements join the collection",
+    summary:
+      "Listening milestones and thoughtful written takes now earn collectible badges on Stats.",
+    added: [
+      "A six-badge listening track celebrates completed fresh picks from First Stack at 10 through The Full Spin at 500.",
+      "A separate writing track rewards substantial album reviews, from First Draft at 5 through Long-Form Legend at 250.",
+      "The badge case shows what is earned, what comes next, milestone dates, and live progress toward the next unlock.",
+    ],
+    improved: [
+      "Already-heard quick scores do not count toward listening badges, and written-review badges require at least 40 characters.",
+    ],
+  },
+  {
+    date: "2026-07-27",
     title: "Stats finds the signal",
     summary:
       "Stats is easier to scan, clearer about what the numbers mean, and more focused on how the crew is moving through the 500.",
